@@ -1,4 +1,3 @@
-// RegisterForm.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
@@ -54,60 +53,7 @@ const SignUp = () => {
   }, [isLoggedIn, navigate]);
 
   return (
-    // <Container className="mt-5 pt-5">
-    //   <form onSubmit={handleSubmit}>
-    //     <input
-    //       type="text"
-    //       name="username"
-    //       value={formData.username}
-    //       onChange={handleChange}
-    //       placeholder="Tên đăng nhập"
-    //     />
-    //     <input
-    //       type="password"
-    //       name="password"
-    //       value={formData.password}
-    //       onChange={handleChange}
-    //       placeholder="Mật khẩu"
-    //     />
-    //     <input
-    //       type="text"
-    //       name="name"
-    //       value={formData.name}
-    //       onChange={handleChange}
-    //       placeholder="Họ và tên"
-    //     />
-    //     <input
-    //       type="date"
-    //       name="birth_of_date"
-    //       value={formData.birth_of_date}
-    //       onChange={handleChange}
-    //     />
-    //     <input
-    //       type="text"
-    //       name="phone_number"
-    //       value={formData.phone_number}
-    //       onChange={handleChange}
-    //       placeholder="Số điện thoại"
-    //     />
-    //     <input
-    //       type="text"
-    //       name="address"
-    //       value={formData.address}
-    //       onChange={handleChange}
-    //       placeholder="Địa chỉ"
-    //     />
-    //     <input
-    //       type="email"
-    //       name="email"
-    //       value={formData.email}
-    //       onChange={handleChange}
-    //       placeholder="Email"
-    //     />
-    //     {error && <p style={{ color: "red" }}>{error}</p>}
-    //     <button type="submit">Đăng ký</button>
-    //   </form>
-    // </Container>
+
     <>
       <motion.div
         initial={{ opacity: 0, y: 98 }}
