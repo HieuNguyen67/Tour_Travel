@@ -1,0 +1,123 @@
+.white {
+  color: white;
+}
+
+.black {
+  color: black;
+}
+
+@media (max-width: 992px) {
+  .fontttts {
+    font-size: 1rem;
+  }
+  .fontwelcome {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+  .fonttttt {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .background {
+    background-image: url("../../../assets/image/Vietnam-4K-Wallpapers.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 20rem;
+  }
+  .fonttt {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: Georgia, serif;
+  }
+  .myVideo {
+    height: 22rem;
+    position: fixed;
+  }
+  .zindex {
+    position: absolute;
+    top: 0;
+  }
+  .boxhome {
+    background-color: white;
+    position: absolute;
+    top: 22rem;
+    width: 100%;
+    background-image: url(../../../assets/image/section-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+}
+@media (min-width: 600px) and (max-width: 992px) {
+  .zindex {
+    position: absolute;
+    top: 0;
+  }
+  .boxhome {
+    background-color: white;
+    position: absolute;
+    top: 28rem;
+    width: 100%;
+    background-image: url(../../../assets/image/section-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  .myVideo {
+    width: 100%;
+    height: auto;
+  }
+  .fonttt {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: Georgia, serif;
+  }
+  .fonttts {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+}
+@media (min-width: 992px) {
+  .boxhome {
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    top: 50rem;
+    background-image: url(../../../assets/image/section-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  .zindex {
+    position: absolute;
+    top: 0;
+  }
+  .myVideo {
+    width: 100%;
+    height: auto;
+  }
+  .fonttt {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: Georgia, serif;
+  }
+  .fonttts {
+    font-size: 4rem;
+    font-weight: bold;
+  }
+  .background {
+    background-image: url("../../../assets/image/Vietnam-4K-Wallpapers.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 50rem;
+  }
+}
+.font-family {
+  font-family: Georgia, serif;
+}
+
+.textshadow {
+  text-shadow: 5px 5px 10px black;
+}
