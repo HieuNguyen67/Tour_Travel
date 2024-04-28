@@ -9,6 +9,7 @@ import SignUp from "../../page/customer/SignUp";
 import Introduce from "../../page/customer/Introduce";
 import Image from "../../page/customer/Image";
 import Contact from "../../page/customer/Contact";
+import Information from "../../page/information";
 
 const Apps=()=>{
     const role=2;
@@ -46,6 +47,7 @@ const Apps=()=>{
           <Route path="/introduce" element={<Introduce />} />
           <Route path="/image" element={<Image />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/information/*" element={<Information />} />
         </Routes>
       </>
     );

@@ -37,7 +37,7 @@ const Home = () => {
         </video>
 
         <div>
-          <Container className=" ">
+          <Container className="">
             <div className="pt-lg-5 zindex">
               <div className="pt-5 me-lg-5">
                 <Row className="d-flex flex-column mt-5">

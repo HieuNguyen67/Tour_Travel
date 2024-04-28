@@ -27,10 +27,7 @@ const Header = (props) => {
   window.addEventListener("scroll", changeNavbarColor);
   const navigate = useNavigate();
 
-//   const handleEdit = (userID) => {
-//     console.log(`Sửa thông tin của user có ID: ${userID}`);
-//     navigate(`/profile/${userID}`);
-//   };
+  
  const location = useLocation();
  const isHomePage =
    location.pathname === "/";
@@ -119,10 +116,11 @@ const Header = (props) => {
                             whileTap={{ scale: 0.8 }}
                           >
                             {" "}
-                            {/* <a
-                              onClick={() => handleEdit(user.id)}
+                            <NavLink
+                             to="/information/profile"
                               style={{ cursor: "pointer" }}
-                            > */}
+                              className="text-decoration-none"
+                            >
                             <h5
                            
                               className={
@@ -133,7 +131,7 @@ const Header = (props) => {
                             >
                               Hi, {username}
                             </h5>{" "}
-                            {/* </a> */}
+                            </NavLink>
                           </motion.div>
                           <Button
                             className="mx-2 shadow"

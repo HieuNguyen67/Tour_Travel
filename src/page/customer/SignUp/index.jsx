@@ -53,14 +53,13 @@ const SignUp = () => {
   }, [isLoggedIn, navigate]);
 
   return (
-
     <>
       <motion.div
         initial={{ opacity: 0, y: 98 }}
         animate={{ opacity: 1, y: 1 }}
         transition={{ type: "spring", duration: 0.6 }}
       >
-        <Container className="mt-5 mx-auto  pt-5">
+        <Container className="mt-5 mx-auto  pt-lg-5 pt-3">
           <div className="mt-5">
             <Row>
               <Col></Col>

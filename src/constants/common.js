@@ -4,5 +4,5 @@ const HEADER = [
   { id: 3, name: "HÌNH ẢNH", link: "/image" },
   { id: 4, name: "LIÊN HỆ", link: "/contact" },
 ];
-
-export { HEADER };
+const BASE_URL = "http://localhost:5020/v1/api/admin";
+export { HEADER ,BASE_URL};
