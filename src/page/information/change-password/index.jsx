@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context";
+import { toast } from "react-toastify";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { TbPasswordUser } from "react-icons/tb";
 
 const ChangePassword = () => {
       const { accountId, isLoggedIn } = useAuth();
@@ -32,7 +35,13 @@ const ChangePassword = () => {
         `http://localhost:5020/v1/api/admin/account/change-password/${accountId}`,
         passwords
       );
-      alert("Mật khẩu đã được thay đổi.");
+                  toast.success("Mật khẩu đã được thay đổi.");
+          setPasswords({
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          });
+
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message);
@@ -44,40 +53,72 @@ const ChangePassword = () => {
   };
 
   return (
-    <div>
-      <h2>Thay đổi mật khẩu</h2>
-      {error && <div style={{ color: "red" }}>{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Mật khẩu cũ:</label>
-          <input
-            type="password"
-            name="oldPassword"
-            value={passwords.oldPassword}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Mật khẩu mới:</label>
-          <input
-            type="password"
-            name="newPassword"
-            value={passwords.newPassword}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Nhập lại mật khẩu mới:</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={passwords.confirmPassword}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Thay đổi mật khẩu</button>
-      </form>
-    </div>
+    <>
+      <Container className="my-5 pb-5">
+        <form onSubmit={handleSubmit}>
+          <Row className="d-flex flex-column">
+            <Col className="col-lg-5 col-12 mx-auto">
+              {error && <div style={{ color: "red" }}>{error}</div>}
+              <Form.Group className="mb-3 mt-2" controlId="formBasicEmail">
+                <Form.Label className="font-family fw-bold">
+                  Mật khẩu cũ:
+                </Form.Label>
+                <Form.Control
+                  required
+                  type="password"
+                  name="oldPassword"
+                  value={passwords.oldPassword}
+                  onChange={handleChange}
+                  placeholder="Mật khẩu cũ"
+                  className="py-3"
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-5 col-12  mx-auto">
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family fw-bold">
+                  Mật khẩu mới:
+                </Form.Label>
+                <Form.Control
+                  required
+                  type="password"
+                  name="newPassword"
+                  value={passwords.newPassword}
+                  onChange={handleChange}
+                  placeholder="Mật khẩu mới"
+                  className="py-3"
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-5 col-12  mx-auto">
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family fw-bold">
+                  Nhập lại mật khẩu mới:
+                </Form.Label>
+                <Form.Control
+                  required
+                  type="password"
+                  name="confirmPassword"
+                  value={passwords.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Nhập lại mật khẩu mới"
+                  className="py-3"
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-5 col-12  mx-auto">
+              <Button
+                variant="warning"
+                type="submit"
+                className="col-12 py-3 mt-3"
+              >
+               <TbPasswordUser/> Thay đổi mật khẩu
+              </Button>
+            </Col>
+          </Row>
+        </form>
+      </Container>
+    </>
   );
 };
 

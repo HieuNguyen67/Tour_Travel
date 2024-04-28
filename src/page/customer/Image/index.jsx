@@ -18,26 +18,20 @@ const Image = () => {
         animate={{ opacity: 1, y: 1 }}
         transition={{ type: "spring", duration: 0.6 }}
       >
-        <Container className="mb-5 pb-lg-5 pb-3 mt-5 pt-5">
-          <div className=" pt-lg-5 mb-lg-5 my-4">
-            <Row className="d-flex">
-              <Col />
-              <Col className="col-10 col-lg-8">
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <h1
-                    className="text-center fonttt "
-                    style={{ textShadow: "5px 5px 4px lightgrey" }}
-                  >
-                    HÌNH ẢNH
-                  </h1>
-                </motion.div>
+        <Container className="mt-5 mx-auto pt-lg-5 pt-3 ">
+          <div className="mt-5">
+            <Row>
+              <Col></Col>
+              <Col className="col-10 ">
+                <h1 className="text-center text-break fw-bold font-family mb-lg-5 ">
+                  HÌNH ẢNH
+                </h1>
               </Col>
-              <Col />
+              <Col></Col>
             </Row>
           </div>
+       
+        <br />
 
           <AlbumPicture />
         </Container>

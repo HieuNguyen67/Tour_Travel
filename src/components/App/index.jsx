@@ -10,6 +10,7 @@ import Introduce from "../../page/customer/Introduce";
 import Image from "../../page/customer/Image";
 import Contact from "../../page/customer/Contact";
 import Information from "../../page/information";
+import NotFound from "../../page/not-found";
 
 const Apps=()=>{
     const role=2;
@@ -20,27 +21,24 @@ const Apps=()=>{
             <>
               {" "}
               <Route path="/customer/*" element={<CustomerRoutes />} />
-              <Route path="*" element={<Navigate to="/customer/" />} />
             </>
           )}
           {role === 2 && (
             <>
               <Route path="/admin/*" element={<AdminRoutes />} />
-              <Route path="*" element={<Navigate to="/admin/" />} />
             </>
           )}
           {role === 3 && (
             <>
               <Route path="/business/*" element={<BusinessRoutes />} />
-              <Route path="*" element={<Navigate to="/business/" />} />
             </>
           )}
           {role === 4 && (
             <>
               <Route path="/guide/*" element={<GuideRoutes />} />
-              <Route path="*" element={<Navigate to="/guide/" />} />
             </>
           )}
+          <Route path="*" element={<NotFound/>} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />

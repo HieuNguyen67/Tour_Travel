@@ -1,4 +1,5 @@
 import { Route, Routes, Navigate } from "react-router-dom";
+import NotFound from "../page/not-found";
 
 const AdminRoutes = () => {
   return (
@@ -7,7 +8,7 @@ const AdminRoutes = () => {
         <Route path="" element />
         <Route
           path="*"
-          element={<Navigate to="/admin/" />}
+          element={<NotFound/>}
         />
       </Routes>
     </>

@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
-import { motion } from "framer-motion";
+import { format } from "date-fns";  
 import { useAuth } from "../../../context";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import {  Backdrop, CircularProgress} from "@mui/material";
+import { FaSave } from "react-icons/fa";
 
 const Profile = () => {
   const { accountId, isLoggedIn } = useAuth();
+    const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
+  useEffect(() => {
+    if (isLoggedIn === false) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
   const [formData, setFormData] = useState({
     username: "",
     name: "",
@@ -16,22 +26,20 @@ const Profile = () => {
     address: "",
     email: "",
   });
-  useEffect(() => {
-    if (isLoggedIn === false) {
-      navigate("/");
-    }
-  }, [isLoggedIn, navigate]);
+
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
         const response = await axios.get(
           `http://localhost:5020/v1/api/admin/account/${accountId}`
-        ); 
+        );
         const accountData = response.data;
-        const formattedDate = new Date(accountData.birth_of_date)
-          .toISOString()
-          .split("T")[0];
-        setFormData({ ...accountData, birth_of_date: formattedDate });
+        setFormData({
+          ...accountData,
+          birth_of_date: formatDate(accountData.birth_of_date),
+        });
+              setLoading(false);
+
       } catch (error) {
         console.error("Failed to fetch account data:", error);
       }
@@ -47,72 +55,141 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const formattedDate = formatDate(formData.birth_of_date);
       await axios.put(
         `http://localhost:5020/v1/api/admin/account/${accountId}`,
-        formData
+        {
+          ...formData,
+          birth_of_date: formattedDate,
+        }
       );
-      alert("Thông tin tài khoản đã được cập nhật!");
+
+            toast.success("Thông tin tài khoản đã được cập nhật!");
+
     } catch (error) {
       console.error("Failed to update account data:", error);
-      alert(
-        "Cập nhật thông tin tài khoản không thành công. Vui lòng thử lại sau."
-      );
+        toast.error(
+          "Cập nhật thông tin tài khoản không thành công. Vui lòng thử lại sau."
+        );
+     
     }
+  };
+
+  const formatDate = (dateString) => {
+    return format(new Date(dateString), "yyyy-MM-dd");
   };
 
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0, y: 98 }}
-        animate={{ opacity: 1, y: 1 }}
-        transition={{ type: "spring", duration: 0.6 }}
-      >
-       
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Container className="my-5 pb-5">
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="Tên đăng nhập"
-          />
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Họ và tên"
-          />
-          <input
-            type="date"
-            name="birth_of_date"
-            value={formData.birth_of_date}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="phone_number"
-            value={formData.phone_number}
-            onChange={handleChange}
-            placeholder="Số điện thoại"
-          />
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            placeholder="Địa chỉ"
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email"
-          />
-          <button type="submit">Cập nhật</button>
+          <Row>
+            <Col className="col-lg-6 col-12">
+              {" "}
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family fw-bold">
+                  Username:
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  placeholder="Tên đăng nhập"
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-6 col-12">
+              {" "}
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family  fw-bold">
+                  Họ và Tên:
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Họ và tên"
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-6 col-12">
+              {" "}
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family  fw-bold">
+                  Ngày sinh:
+                </Form.Label>
+                <Form.Control
+                  required
+                  type="date"
+                  name="birth_of_date"
+                  value={formData.birth_of_date}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-6 col-12">
+              {" "}
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family  fw-bold">
+                  Số điện thoại:
+                </Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  name="phone_number"
+                  value={formData.phone_number}
+                  onChange={handleChange}
+                  placeholder="Số điện thoại"
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-6 col-12">
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family  fw-bold">
+                  Địa chỉ:
+                </Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  placeholder="Địa chỉ"
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-6 col-12">
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family  fw-bold">Email:</Form.Label>
+                <Form.Control
+                  required
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                />
+              </Form.Group>
+            </Col>
+            <Col className="col-12 col-lg-3">
+              <Button
+                variant="warning"
+                type="submit"
+                className="py-3  col-12 mt-2"
+              >
+                <FaSave /> Cập nhật
+              </Button>
+            </Col>
+          </Row>
         </form>
-      </motion.div>
+      </Container>
     </>
   );
 };

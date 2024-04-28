@@ -14,7 +14,7 @@ const Introduce = () => {
       >
         <Container className="mt-5 pt-5">
   
-          <h3 style={{ textShadow: "5px 5px 4px lightgrey" }} className="mt-5">VỀ CHÚNG TÔI</h3>
+          <h3  className="mt-5">VỀ CHÚNG TÔI</h3>
           <div className="container col-11  my-5 ">
             <p>
               <h3 className="text-center fw-bold ">

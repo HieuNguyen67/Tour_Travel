@@ -71,13 +71,13 @@ const Footer = () => {
                   </span>
                 </Link>
                 <br />
-                <Link className="text-decoration-none black" to="/GioiThieu">
+                <Link className="text-decoration-none black" to="/introduce">
                   <span style={{ fontSize: "15px" }} className="hover">
                     {">"} Về chúng tôi
                   </span>
                 </Link>
                 <br />
-                <Link className="text-decoration-none black" to="/TourTongHop">
+                {/* <Link className="text-decoration-none black" to="/TourTongHop">
                   <span style={{ fontSize: "15px" }} className="hover">
                     {">"} Tour
                   </span>
@@ -88,14 +88,14 @@ const Footer = () => {
                     {">"} Bảng giá
                   </span>
                 </Link>
-                <br />{" "}
-                <Link className="text-decoration-none black" to="/HinhAnh">
+                <br />{" "} */}
+                <Link className="text-decoration-none black" to="/image">
                   <span style={{ fontSize: "15px" }} className="hover">
                     {">"} Hình ảnh
                   </span>{" "}
                 </Link>
                 <br />
-                <Link className="text-decoration-none black" to="/LienHe">
+                <Link className="text-decoration-none black" to="/contact">
                   <span style={{ fontSize: "15px" }} className="hover">
                     {">"} Liên hệ
                   </span>

@@ -14,7 +14,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useAuth } from "../../../context";
 import { HEADER } from "../../../constants/common";
 const Header = (props) => {
-  const { isLoggedIn, logout, username } = useAuth();
+  const { isLoggedIn, logout, username, role } = useAuth();
 
   const [colorChange, setColorchange] = useState(false);
   const changeNavbarColor = () => {
@@ -62,7 +62,7 @@ const Header = (props) => {
                       : "black  fs-3 fw-bold font-family"
                   }
                 >
-                  Travel Tour
+                  {role == 2 ? <>Business</> : <>Travel Tour</>}
                 </span>
               </Navbar.Brand>
             </NavLink>
@@ -76,36 +76,43 @@ const Header = (props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body className="d-flex justify-content-center  align-items-center sidebar">
                   <Nav className="d-flex   align-items-center align-items-center  mx-auto  ">
-                    {HEADER.map((item) => (
-                      <motion.div
-                        whileHover={{ scale: 1.2 }}
-                        whileTap={{ scale: 0.8 }}
-                        key={item.id}
-                      >
-                        <NavLink
-                          className="nav-link "
-                          to={item.link}
-                          style={({ isActive }) => {
-                            return {
-                              fontWeight: isActive ? "bold" : "",
-                              borderBottom: isActive ? "3px solid #f3c324" : "",
-                            };
-                          }}
-                        >
-                          {" "}
-                          <span
-                            className={
-                              isHomePage
-                                ? "white font-family"
-                                : "black font-family"
-                            }
+                    {role == 2 ? (
+                      <>{""}</>
+                    ) : (
+                      <>
+                        {HEADER.map((item) => (
+                          <motion.div
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.8 }}
+                            key={item.id}
                           >
-                            {item.name}
-                          </span>
-                        </NavLink>
-                      </motion.div>
-                    ))}
-
+                            <NavLink
+                              className="nav-link "
+                              to={item.link}
+                              style={({ isActive }) => {
+                                return {
+                                  fontWeight: isActive ? "bold" : "",
+                                  borderBottom: isActive
+                                    ? "3px solid #f3c324"
+                                    : "",
+                                };
+                              }}
+                            >
+                              {" "}
+                              <span
+                                className={
+                                  isHomePage
+                                    ? "white font-family"
+                                    : "black font-family"
+                                }
+                              >
+                                {item.name}
+                              </span>
+                            </NavLink>
+                          </motion.div>
+                        ))}
+                      </>
+                    )}
                   </Nav>
                   <div className=" mt-5 mt-md-0 pt-5 pt-md-0">
                     <div className="d-flex flex-grow mx-1 mt-5 mt-md-0 pt-5 pt-md-0">
@@ -117,20 +124,19 @@ const Header = (props) => {
                           >
                             {" "}
                             <NavLink
-                             to="/information/profile"
+                              to="/information/profile"
                               style={{ cursor: "pointer" }}
                               className="text-decoration-none"
                             >
-                            <h5
-                           
-                              className={
-                                isHomePage
-                                  ? "white font-family  me-3 mt-1"
-                                  : "black font-family  me-3 mt-1"
-                              }
-                            >
-                              Hi, {username}
-                            </h5>{" "}
+                              <h5
+                                className={
+                                  isHomePage
+                                    ? "white font-family  me-3 mt-1"
+                                    : "black font-family  me-3 mt-1"
+                                }
+                              >
+                                Hi, {username}
+                              </h5>{" "}
                             </NavLink>
                           </motion.div>
                           <Button
