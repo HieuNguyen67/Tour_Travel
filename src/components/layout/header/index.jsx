@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useAuth } from "../../../context";
 import { HEADER } from "../../../constants/common";
+
 const Header = (props) => {
   const { isLoggedIn, logout, username, role } = useAuth();
 
@@ -55,11 +56,26 @@ const Header = (props) => {
                 />{" "}
                 <span>
                   {role == 2 ? (
-                    <>Admin</>
+                    <Link
+                      to="/admin/list-customer"
+                      className="text-decoration-none text-dark fw-bold fs-3"
+                    >
+                      ADMIN
+                    </Link>
                   ) : role == 3 ? (
-                    <>Business</>
+                    <Link
+                      to="/business/list-tour"
+                      className="text-decoration-none  text-dark fw-bold fs-3"
+                    >
+                      DOANH NGHIỆP
+                    </Link>
                   ) : role == 4 ? (
-                    <>HƯỚNG DẪN VIÊN</>
+                    <Link
+                      to="guide/tour-assigned"
+                      className="text-decoration-none text-dark fw-bold fs-3"
+                    >
+                      HƯỚNG DẪN VIÊN
+                    </Link>
                   ) : (
                     <>
                       <Link

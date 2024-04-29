@@ -29,7 +29,10 @@ const Login = () => {
       console.log(username);
       login(token, role, username, account_id);
       toast.success("Đăng nhập thành công !");
-      navigate("/");
+      if (response.data.role === 1) navigate("/");
+      else if (response.data.role === 2) navigate("/admin/list-customer");
+      else if (response.data.role===3) navigate("/business/home");
+      else navigate("/guide/home");
     } catch (error) {
             toast.error("Đăng nhập thất bại !");
 

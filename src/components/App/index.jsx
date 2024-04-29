@@ -11,34 +11,41 @@ import Image from "../../page/customer/Image";
 import Contact from "../../page/customer/Contact";
 import Information from "../../page/information";
 import NotFound from "../../page/not-found";
+import { useAuth } from "../../context";
 
 const Apps=()=>{
-    const role=2;
+  const{role}=useAuth();
     return (
       <>
         <Routes>
-          {role === 1 && (
+          {role == 1 && (
             <>
               {" "}
               <Route path="/customer/*" element={<CustomerRoutes />} />
             </>
           )}
-          {role === 2 && (
+          {role == 2 && (
             <>
               <Route path="/admin/*" element={<AdminRoutes />} />
+              <Route
+                path="*"
+                element={<Navigate to="/admin/list-customer" />}
+              />
             </>
           )}
-          {role === 3 && (
+          {role == 3 && (
             <>
               <Route path="/business/*" element={<BusinessRoutes />} />
+              <Route path="*" element={<Navigate to="/business/list-tour" />} />
             </>
           )}
-          {role === 4 && (
+          {role == 4 && (
             <>
               <Route path="/guide/*" element={<GuideRoutes />} />
+              <Route path="*" element={<Navigate to="/guide/tour-assigned" />} />
             </>
           )}
-          <Route path="*" element={<NotFound/>} />
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />

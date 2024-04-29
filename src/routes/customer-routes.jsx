@@ -6,7 +6,7 @@ const CustomerRoutes=()=>{
       <>
         <Routes>
           <Route path="" element />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </>
     );

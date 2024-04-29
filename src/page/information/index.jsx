@@ -1,8 +1,10 @@
 import { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context";
+import NotFound from "../not-found";
 import ChangePassword from "./change-password";
 import InformationLayout from "./layout";
+import ListOrder from "./order";
 import Profile from "./profile";
 
 const Information=()=>{
@@ -19,6 +21,8 @@ const Information=()=>{
           <Routes>
             <Route path="/profile" element={<Profile />} />
             <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/list-order" element={<ListOrder />} />
+            <Route path="*" element={<Navigate to="/information/profile" />} />
           </Routes>
         </InformationLayout>
       </>

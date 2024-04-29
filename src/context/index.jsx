@@ -1,8 +1,11 @@
 import React, { createContext, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+      const navigate = useNavigate();
+
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [username, setUsername] = useState(localStorage.getItem("username"));
@@ -31,6 +34,8 @@ export const AuthProvider = ({ children }) => {
     setRole(null);
     setUsername(null);
     setAccountId(null);
+     navigate("/login");
+    
   };
 
   return (

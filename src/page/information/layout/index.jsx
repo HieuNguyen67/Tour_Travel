@@ -10,7 +10,7 @@ const InformationLayout = ({ children }) => {
   return (
     <>
       <Container>
-        <Container className="mt-5 mx-auto pt-lg-5 pt-3 ">
+        <Container className="mt-5 mx-auto pt-lg-3 pt-3 ">
           <div className="mt-5">
             <Row>
               <Col></Col>

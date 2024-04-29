@@ -1,16 +1,18 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import NotFound from "../page/not-found";
+import SidebarLayout from "../components/side-bar";
+import ListBusiness from "../page/admin/list-business";
+import ListCustomer from "../page/admin/list-customer";
 
 const AdminRoutes = () => {
   return (
     <>
-      <Routes>
-        <Route path="" element />
-        <Route
-          path="*"
-          element={<NotFound/>}
-        />
-      </Routes>
+      <SidebarLayout>
+        <Routes>
+          <Route path="/list-customer" element={<ListCustomer />} />
+          <Route path="/list-business" element={<ListBusiness />} />
+          <Route path="*" element={<Navigate to="/list-customer" />} />
+        </Routes>
+      </SidebarLayout>
     </>
   );
 };
