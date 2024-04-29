@@ -37,6 +37,7 @@
   .zindex {
     position: absolute;
     top: 0;
+    overflow-x: hidden;
   }
   .boxhome {
     background-color: white;

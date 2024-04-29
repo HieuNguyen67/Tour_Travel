@@ -7,7 +7,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Button from "react-bootstrap/Button";
 import Logo from "../../../assets/image/tải_xuống-removebg-preview.png";
 
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import ScrollIndicator from "../../ScrollIndicator";
 import { motion } from "framer-motion";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -27,11 +27,9 @@ const Header = (props) => {
   window.addEventListener("scroll", changeNavbarColor);
   const navigate = useNavigate();
 
-  
- const location = useLocation();
- const isHomePage =
-   location.pathname === "/";
-   
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
   return (
     <>
       {" "}
@@ -46,8 +44,8 @@ const Header = (props) => {
           {" "}
           {/* #f8f9fa */}
           <Container className="my-2">
-            <NavLink to="/" className=" decorate">
-              <Navbar.Brand to="/">
+            <NavLink className=" decorate">
+              <Navbar.Brand>
                 <img
                   alt=""
                   src={Logo}
@@ -55,14 +53,27 @@ const Header = (props) => {
                   height="60"
                   className="d-inline-block justify-content-center  align-items-center mb-2"
                 />{" "}
-                <span
-                  className={
-                    isHomePage
-                      ? "white  fs-3 fw-bold font-family"
-                      : "black  fs-3 fw-bold font-family"
-                  }
-                >
-                  {role == 2 ? <>Business</> : <>Travel Tour</>}
+                <span>
+                  {role == 2 ? (
+                    <>Admin</>
+                  ) : role == 3 ? (
+                    <>Business</>
+                  ) : role == 4 ? (
+                    <>HƯỚNG DẪN VIÊN</>
+                  ) : (
+                    <>
+                      <Link
+                        to="/"
+                        className={
+                          isHomePage
+                            ? "text-light  fs-3 fw-bold font-family text-decoration-none"
+                            : "text-dark  fs-3 fw-bold font-family text-decoration-none"
+                        }
+                      >
+                        Travel
+                      </Link>
+                    </>
+                  )}
                 </span>
               </Navbar.Brand>
             </NavLink>
@@ -76,7 +87,7 @@ const Header = (props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body className="d-flex justify-content-center  align-items-center sidebar">
                   <Nav className="d-flex   align-items-center align-items-center  mx-auto  ">
-                    {role == 2 ? (
+                    {role == 2 || role == 3 || role == 4 ? (
                       <>{""}</>
                     ) : (
                       <>

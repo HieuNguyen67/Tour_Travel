@@ -18,7 +18,7 @@ const Image = () => {
         animate={{ opacity: 1, y: 1 }}
         transition={{ type: "spring", duration: 0.6 }}
       >
-        <Container className="mt-5 mx-auto pt-lg-5 pt-3 ">
+        <Container className="my-5 mx-auto pt-lg-5 pt-3 ">
           <div className="mt-5">
             <Row>
               <Col></Col>

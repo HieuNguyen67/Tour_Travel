@@ -16,7 +16,6 @@ const Home = () => {
     <>
       {isLoading && (
         <Backdrop open={isLoading} style={{ zIndex: 999, color: "#fff" }}>
-          <CircularProgress color="inherit" />
         </Backdrop>
       )}
 

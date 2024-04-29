@@ -2,7 +2,7 @@
   .messenger {
     position: fixed;
     bottom: 70px;
-    right: 23px;
+    right: 15px;
     z-index: 1;
   }
   .img1 {
@@ -12,7 +12,7 @@
   .zalo {
     position: fixed;
     bottom: 130px;
-    right: 23px;
+    right: 15px;
     z-index: 1;
   }
 }

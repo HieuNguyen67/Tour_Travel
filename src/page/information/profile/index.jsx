@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import {  Backdrop, CircularProgress} from "@mui/material";
 import { FaSave } from "react-icons/fa";
+import UpdateImage from "../../../components/up-images";
 
 const Profile = () => {
   const { accountId, isLoggedIn } = useAuth();
@@ -84,111 +85,122 @@ const Profile = () => {
       <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Container className="my-5 pb-5">
-        <form onSubmit={handleSubmit}>
-          <Row>
-            <Col className="col-lg-6 col-12">
-              {" "}
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family fw-bold">
-                  Username:
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  placeholder="Tên đăng nhập"
-                />
-              </Form.Group>
-            </Col>
-            <Col className="col-lg-6 col-12">
-              {" "}
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family  fw-bold">
-                  Họ và Tên:
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Họ và tên"
-                />
-              </Form.Group>
-            </Col>
-            <Col className="col-lg-6 col-12">
-              {" "}
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family  fw-bold">
-                  Ngày sinh:
-                </Form.Label>
-                <Form.Control
-                  required
-                  type="date"
-                  name="birth_of_date"
-                  value={formData.birth_of_date}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Col>
-            <Col className="col-lg-6 col-12">
-              {" "}
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family  fw-bold">
-                  Số điện thoại:
-                </Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  name="phone_number"
-                  value={formData.phone_number}
-                  onChange={handleChange}
-                  placeholder="Số điện thoại"
-                />
-              </Form.Group>
-            </Col>
-            <Col className="col-lg-6 col-12">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family  fw-bold">
-                  Địa chỉ:
-                </Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  placeholder="Địa chỉ"
-                />
-              </Form.Group>
-            </Col>
-            <Col className="col-lg-6 col-12">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family  fw-bold">Email:</Form.Label>
-                <Form.Control
-                  required
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                />
-              </Form.Group>
-            </Col>
-            <Col className="col-12 col-lg-3">
-              <Button
-                variant="warning"
-                type="submit"
-                className="py-3  col-12 mt-2"
-              >
-                <FaSave /> Cập nhật
-              </Button>
-            </Col>
-          </Row>
-        </form>
+      <Container className="my-lg-5 my-2   pb-5">
+        <Row>
+          <Col className="col-lg-3 col-12">
+            {" "}
+            <UpdateImage />
+          </Col>
+          <Col className="col-lg-9 col-12 ">
+            {" "}
+            <form onSubmit={handleSubmit}>
+              <Row>
+                <Col className="col-lg-6 col-12">
+                  {" "}
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className="font-family fw-bold">
+                      Username:
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      required
+                      name="username"
+                      value={formData.username}
+                      onChange={handleChange}
+                      placeholder="Tên đăng nhập"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-6 col-12">
+                  {" "}
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      Họ và Tên:
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      required
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Họ và tên"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-6 col-12">
+                  {" "}
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      Ngày sinh:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="date"
+                      name="birth_of_date"
+                      value={formData.birth_of_date}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-6 col-12">
+                  {" "}
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      Số điện thoại:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="text"
+                      name="phone_number"
+                      value={formData.phone_number}
+                      onChange={handleChange}
+                      placeholder="Số điện thoại"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-6 col-12">
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      Địa chỉ:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="text"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                      placeholder="Địa chỉ"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-6 col-12">
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      Email:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Email"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-12 col-lg-3">
+                  <Button
+                    variant="warning"
+                    type="submit"
+                    className="py-3  col-12 mt-2"
+                  >
+                    <FaSave /> Cập nhật
+                  </Button>
+                </Col>
+              </Row>
+            </form>
+          </Col>
+        </Row>
       </Container>
     </>
   );

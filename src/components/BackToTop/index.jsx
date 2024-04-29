@@ -12,9 +12,10 @@ import "./BackToTop.scss";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaHandPointUp } from "react-icons/fa6";
+import { useAuth } from "../../context";
 
 function ScrollTop(props) {
-  const { children, window } = props;
+   const { children, window } = props;
   const trigger = useScrollTrigger({
     target: window ? window() : undefined,
     disableHysteresis: true,
@@ -51,6 +52,8 @@ ScrollTop.propTypes = {
   window: PropTypes.func,
 };
 export default function BackToTop(props) {
+   const { role } = useAuth();
+
   return (
     <React.Fragment>
       <div id="back-to-top-anchor" />
@@ -66,36 +69,42 @@ export default function BackToTop(props) {
           </Button>
         </motion.div>
       </ScrollTop>
-      <OverlayTrigger
-        placement="left"
-        overlay={<Tooltip>Nhấn để được tư vấn.</Tooltip>}
-      >
-        <div className="messenger">
-          <Link>
-            <motion.div
-              animate={{ scale: 0.8 }}
-              transition={{ repeat: Infinity, duration: 1 }}
-            >
-              <img src={messenger} />
-            </motion.div>
-          </Link>
-        </div>
-      </OverlayTrigger>
-      <OverlayTrigger
-        placement="left"
-        overlay={<Tooltip>Nhấn để được tư vấn.</Tooltip>}
-      >
-        <div className="zalo ">
-          <Link>
-            <motion.div
-              animate={{ scale: 0.8 }}
-              transition={{ repeat: Infinity, duration: 1 }}
-            >
-              <img src={zalo} className="rounded-circle shadow-sm" />
-            </motion.div>
-          </Link>
-        </div>
-      </OverlayTrigger>
+      {role == 2 || role == 3 || role == 4 ? (
+        <> </>
+      ) : (
+        <>
+          <OverlayTrigger
+            placement="left"
+            overlay={<Tooltip>Nhấn để được tư vấn.</Tooltip>}
+          >
+            <div className="messenger">
+              <Link>
+                <motion.div
+                  animate={{ scale: 0.8 }}
+                  transition={{ repeat: Infinity, duration: 1 }}
+                >
+                  <img src={messenger} />
+                </motion.div>
+              </Link>
+            </div>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="left"
+            overlay={<Tooltip>Nhấn để được tư vấn.</Tooltip>}
+          >
+            <div className="zalo ">
+              <Link>
+                <motion.div
+                  animate={{ scale: 0.8 }}
+                  transition={{ repeat: Infinity, duration: 1 }}
+                >
+                  <img src={zalo} className="rounded-circle shadow-sm" />
+                </motion.div>
+              </Link>
+            </div>
+          </OverlayTrigger>
+        </>
+      )}
     </React.Fragment>
   );
 }
