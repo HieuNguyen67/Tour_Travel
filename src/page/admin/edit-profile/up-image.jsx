@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useAuth } from "../../context";
 import DisplayImage from "./load-image";
 import { Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
-const UpdateImage = () => {
-  const { accountId, isLoggedIn } = useAuth();
-
+const UpdateImageProfile = () => {
+    const {account_id}=useParams();
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
 
@@ -29,7 +28,7 @@ const UpdateImage = () => {
       formData.append("image", image);
 
       await axios.put(
-        `http://localhost:5020/v1/api/admin/account/update-image/${accountId}`,
+        `http://localhost:5020/v1/api/admin/account/update-image/${account_id}`,
         formData,
         {
           headers: {
@@ -48,7 +47,6 @@ const UpdateImage = () => {
 
   return (
     <div>
-      <DisplayImage />
       <p className="fw-bold">Chọn ảnh đại diện:</p>
       {error && <div style={{ color: "red" }}>{error}</div>}
       <form onSubmit={handleSubmit}>
@@ -62,4 +60,4 @@ const UpdateImage = () => {
   );
 };
 
-export default UpdateImage;
+export default UpdateImageProfile;

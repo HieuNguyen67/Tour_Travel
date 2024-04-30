@@ -5,9 +5,13 @@ const HEADER = [
   { id: 4, name: "LIÊN HỆ", link: "/contact" },
 ];
 const ADMIN = [
-  { id: 1, name: "KHÁCH HÀNG", link: "/admin/list-customer" },
+  {
+    id: 1,
+    name: "KHÁCH HÀNG",
+    link: ("/admin/list-customer" ||"/admin/edit-profile/1")
+
+  },
   { id: 2, name: "DOANH NGHIỆP", link: "/admin/list-business" },
- 
 ];
 const BUSINESS = [
   { id: 1, name: "TOUR", link: "/business/list-tour" },
