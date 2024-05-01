@@ -9,6 +9,7 @@ import { motion, useAnimation } from "framer-motion";
 import { IoLogInSharp } from "react-icons/io5";
 import { IoChevronBackSharp } from "react-icons/io5";
 import "./Login.scss";
+import Header from "../../components/layout/header";
 const Login = () => {
     const navigate = useNavigate();
   const { login } = useAuth();
@@ -50,7 +51,7 @@ const Login = () => {
 
   return (
     <>
-      
+      <Header/>
       <motion.div
         initial={{ opacity: 0, y: 98 }}
         animate={{ opacity: 1, y: 1 }}

@@ -4,13 +4,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-
+import { IoIosSend } from "react-icons/io";
+import Header from "../../../components/layout/header";
 
 const Contact = () => {
  
   return (
     <>
-    
+      <Header />
 
       <motion.div
         initial={{ opacity: 0, y: 98 }}
@@ -36,7 +37,7 @@ const Contact = () => {
                 <h3>LIÊN HỆ CHÚNG TÔI</h3>
                 <hr className="hr" />
               </p>
-              <Form >
+              <Form>
                 <Row className="d-flex flex-row py-2">
                   <Col className="col-6 pe-2 ">
                     <Form.Group controlId="validationCustom01">
@@ -95,6 +96,7 @@ const Contact = () => {
                 </Row>
 
                 <Button type="submit" variant="warning" className="shadow-sm">
+                  <IoIosSend />
                   GỬI THÔNG TIN LIÊN HỆ
                 </Button>
               </Form>

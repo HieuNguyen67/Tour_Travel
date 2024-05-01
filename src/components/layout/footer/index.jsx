@@ -77,6 +77,12 @@ const Footer = () => {
                   </span>
                 </Link>
                 <br />
+                <Link className="text-decoration-none black" to="/business-link">
+                  <span style={{ fontSize: "15px" }} className="hover">
+                    {">"} Đối tác doanh nghiệp
+                  </span>
+                </Link>
+                <br />
                 {/* <Link className="text-decoration-none black" to="/TourTongHop">
                   <span style={{ fontSize: "15px" }} className="hover">
                     {">"} Tour

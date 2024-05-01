@@ -7,12 +7,14 @@ import Col from "react-bootstrap/Col";
 import "yet-another-react-lightbox/styles.css";
 import React from "react";
 import AlbumPicture from "../../../components/AlbumPicture";
+import Header from "../../../components/layout/header";
 
 
 const Image = () => {
   return (
     <>
-   
+      <Header />
+
       <motion.div
         initial={{ opacity: 0, y: 98 }}
         animate={{ opacity: 1, y: 1 }}
@@ -30,8 +32,8 @@ const Image = () => {
               <Col></Col>
             </Row>
           </div>
-       
-        <br />
+
+          <br />
 
           <AlbumPicture />
         </Container>

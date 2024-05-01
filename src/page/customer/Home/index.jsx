@@ -5,6 +5,7 @@ import video from "../../../assets/video/video.mp4"
 import Footer from "../../../components/layout/footer";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import Header from "../../../components/layout/header";
 const Home = () => {
    const [isLoading, setIsLoading] = useState(true);
 
@@ -18,6 +19,7 @@ const Home = () => {
         <Backdrop open={isLoading} style={{ zIndex: 999, color: "#fff" }}>
         </Backdrop>
       )}
+      <Header/>
 
       <motion.div
         initial={{ opacity: 0, y: 98 }}

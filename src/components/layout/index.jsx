@@ -7,11 +7,22 @@ import {useLocation } from "react-router-dom";
 const MainLayout = ({ children }) => {
    const location = useLocation();
    const isHomePage = location.pathname === "/";
+      const isHomePage1 =
+        location.pathname === "/" ||
+        location.pathname === "/introduce" ||
+        location.pathname === "/business-link" ||
+        location.pathname === "/image" ||
+        location.pathname === "/contact" ||
+        location.pathname === "/login" ||
+        location.pathname === "/signup";
+
   return (
     <>
-      <Col className="col-12">
-        <Header />
-      </Col>
+      {isHomePage1 ? null : (
+        <Col className="col-12">
+          <Header />
+        </Col>
+      )}
       <Col className="col-12">
         <BackToTop />
 

@@ -7,6 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { IoLogInSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../context";
+import Header from "../../../components/layout/header";
 
 const SignUp = () => {
       const navigate = useNavigate();
@@ -54,6 +55,7 @@ const SignUp = () => {
 
   return (
     <>
+      <Header />
       <motion.div
         initial={{ opacity: 0, y: 98 }}
         animate={{ opacity: 1, y: 1 }}

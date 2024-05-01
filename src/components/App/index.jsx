@@ -12,6 +12,7 @@ import Contact from "../../page/customer/Contact";
 import Information from "../../page/information";
 import NotFound from "../../page/not-found";
 import { useAuth } from "../../context";
+import BusinessLink from "../../page/customer/business-link";
 
 const Apps=()=>{
   const{role}=useAuth();
@@ -42,7 +43,10 @@ const Apps=()=>{
           {role == 4 && (
             <>
               <Route path="/guide/*" element={<GuideRoutes />} />
-              <Route path="*" element={<Navigate to="/guide/tour-assigned" />} />
+              <Route
+                path="*"
+                element={<Navigate to="/guide/tour-assigned" />}
+              />
             </>
           )}
           <Route path="*" element={<NotFound />} />
@@ -50,6 +54,7 @@ const Apps=()=>{
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/introduce" element={<Introduce />} />
+          <Route path="/business-link" element={<BusinessLink />} />
           <Route path="/image" element={<Image />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/information/*" element={<Information />} />
