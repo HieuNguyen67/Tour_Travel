@@ -92,7 +92,7 @@ const ListCustomer = () => {
       <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <div style={{ height: 400, width: "100%" }} className="mt-lg-5 mt-2">
+      <div style={{ height: 400, width: "100%" }} className="mt-lg-0 mt-2">
         <DataGrid
           rows={users}
           columns={columns}

@@ -90,14 +90,14 @@ const ListBusiness = () => {
 
   return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff",  }}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <div style={{ height: 400, width: "100%" }} className="mt-lg-5 mt-2">
+      <div style={{ height: 400, width: "100%" }} className="">
         <p className="text-end">
           <Link to="/admin/register-business">
             {" "}
-            <Button >
+            <Button variant="dark" >
               <MdAddBusiness className="fs-3" />
             </Button>
           </Link>

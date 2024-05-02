@@ -12,6 +12,7 @@ const SidebarLayout = ({ children }) => {
   const isHomePage =
     location.pathname === "/admin/list-customer" ||
     location.pathname === "/admin/list-business" ||
+    location.pathname === "/admin/news" ||
     location.pathname === "/business/list-tour" ||
     location.pathname === "/business/order-tour";
 
@@ -40,8 +41,8 @@ const SidebarLayout = ({ children }) => {
         {isHomePage ? (
           <>
             {" "}
-            <Col className=" col-12">
-              <Nav fill className="flex-lg-column sidebarrr">
+            <Col className=" col-lg-12 col-12">
+              <Nav fill className=" sidebarrr">
                 {role == 2 && renderNavItems(ADMIN)}
                 {role == 3 && renderNavItems(BUSINESS)}
                 {role == 4 && renderNavItems(GUIDE)}
@@ -51,8 +52,7 @@ const SidebarLayout = ({ children }) => {
         ) : (
           <></>
         )}
-
-        <Col className=" col-12">
+        <Col className="col-lg-12 col-12 mt-3">
           <div className="col-12">{children}</div>
         </Col>
       </Row>

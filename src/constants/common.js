@@ -9,10 +9,10 @@ const ADMIN = [
   {
     id: 1,
     name: "KHÁCH HÀNG",
-    link: ("/admin/list-customer" ||"/admin/edit-profile/1")
-
+    link: "/admin/list-customer" || "/admin/edit-profile/1",
   },
   { id: 2, name: "DOANH NGHIỆP", link: "/admin/list-business" },
+  { id: 3, name: "TIN TỨC", link: "/admin/news" },
 ];
 const BUSINESS = [
   { id: 1, name: "TOUR", link: "/business/list-tour" },

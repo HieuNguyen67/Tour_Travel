@@ -3,8 +3,10 @@ import BackToTop from "../BackToTop";
 import Footer from "./footer";
 import Header from "./header";
 import {useLocation } from "react-router-dom";
+import { useAuth } from "../../context";
 
 const MainLayout = ({ children }) => {
+  const {role}=useAuth();
    const location = useLocation();
    const isHomePage = location.pathname === "/";
       const isHomePage1 =
@@ -28,7 +30,8 @@ const MainLayout = ({ children }) => {
 
         {children}
       </Col>
-      {isHomePage ? null : (
+      {isHomePage ? null : 
+      role==2||role==3||role==4?null:(
         <Col className="col-12">
           <Footer />
         </Col>

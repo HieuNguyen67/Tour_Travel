@@ -193,19 +193,6 @@ const RegisterBusiness = () => {
               </Button>
             </Row>
           </form>
-          {/* <form
-            className="col-lg-4 mt-3 col-12 mx-auto"
-            onSubmit={handleSubmit}
-          >
-            
-           
-
-           
-           
-          
-          
-           
-          </form> */}
         </Container>
       </motion.div>
     </>
