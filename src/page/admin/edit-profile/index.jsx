@@ -13,7 +13,6 @@ import UpdateImageProfile from "./up-image";
 
 const EditProfile = () => {
     const {account_id,role_id}=useParams();
-    console.log(role_id);
   const {  isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(true);
 

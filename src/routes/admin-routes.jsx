@@ -5,6 +5,7 @@ import ListBusiness from "../page/admin/list-business";
 import ListCustomer from "../page/admin/list-customer";
 import News from "../page/admin/news";
 import AddNews from "../page/admin/news/add-news";
+import NewsDetail from "../page/admin/news/news-details";
 import RegisterBusiness from "../page/admin/register-business";
 
 const AdminRoutes = () => {
@@ -21,6 +22,8 @@ const AdminRoutes = () => {
             path="/edit-profile/:account_id/:role_id"
             element={<EditProfile />}
           />
+          <Route path="/news-detail/:news_id" element={<NewsDetail />} />
+
           <Route path="/news" element={<News />} />
 
           <Route path="*" element={<Navigate to="/list-customer" />} />

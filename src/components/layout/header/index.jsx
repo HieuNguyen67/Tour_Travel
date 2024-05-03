@@ -50,9 +50,7 @@ const Header = (props) => {
                 <img
                   alt=""
                   src={Logo}
-                  width="60"
-                  height="60"
-                  className="d-inline-block justify-content-center  align-items-center mb-2"
+                  className="d-inline-block justify-content-center  align-items-center logoo mb-2"
                 />{" "}
                 <span>
                   {role == 2 ? (

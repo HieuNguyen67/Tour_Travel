@@ -118,6 +118,7 @@ const navigate=useNavigate();
                     Chọn danh mục:
                   </Form.Label>
                   <Form.Select
+                  required
                     aria-label="Default select example"
                     name="newscategory_id"
                     value={formData.newscategory_id}
@@ -201,6 +202,11 @@ AddNews.modules = {
     ["link", "image", "video"],
     ["clean"],
     ["code-block"],
+    [{ background: [] }],
+    [{ color: [] }], 
+    [{ script: "sub" }, { script: "super" }], 
+    [{ align: [] }], 
+    [{ direction: "rtl" }], 
   ],
 };
 
@@ -219,6 +225,11 @@ AddNews.formats = [
   "image",
   "video",
   "code-block",
+  "background", 
+  "color", 
+  "script", 
+  "align", 
+  "direction",
 ];
 
 export default AddNews;
