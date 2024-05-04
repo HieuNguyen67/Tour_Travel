@@ -4,22 +4,25 @@ import "./Home.scss";
 import video from "../../../assets/video/video.mp4"
 import Footer from "../../../components/layout/footer";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "../../../components/layout/header";
 const Home = () => {
-   const [isLoading, setIsLoading] = useState(true);
+  const videoRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-   const handleVideoLoad = () => {
-     setIsLoading(false);
-   };
+  const handleVideoLoad = () => {
+    setIsLoading(false);
+  };
 
   return (
     <>
       {isLoading && (
-        <Backdrop open={isLoading} style={{ zIndex: 999, color: "#fff" }}>
-        </Backdrop>
+        <Backdrop
+          open={isLoading}
+          style={{ zIndex: 999, color: "#fff" }}
+        ></Backdrop>
       )}
-      <Header/>
+      <Header />
 
       <motion.div
         initial={{ opacity: 0, y: 98 }}
@@ -27,6 +30,7 @@ const Home = () => {
         transition={{ type: "spring", duration: 0.6 }}
       >
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
@@ -36,7 +40,6 @@ const Home = () => {
         >
           <source src={video} type="video/mp4" />
         </video>
-
         <div>
           <Container className="">
             <div className="pt-lg-5 zindex">
