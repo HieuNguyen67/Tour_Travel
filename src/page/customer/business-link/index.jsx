@@ -5,8 +5,10 @@ import head from "../../../assets/image/heading-border.png"
 import { Link } from "react-router-dom";
 import { IoIosSend } from "react-icons/io";
 import Header from "../../../components/layout/header";
+import "./business-link.scss";
 
 const BusinessLink=()=>{
+  
     return (
       <>
         <Header />

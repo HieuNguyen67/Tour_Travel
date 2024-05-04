@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { Backdrop, CircularProgress } from "@mui/material";
-
+import Placeholder from "react-bootstrap/Placeholder";
 import "./business-link.scss";
+
 const BusinessList = () => {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,11 +32,10 @@ const BusinessList = () => {
     return accounts.map((account) => {
       return (
         <>
-         
           <Col className="col-lg-4  col-12 mb-lg-0 mb-3">
             <div
               key={account.account_id}
-              className="boxborderr rounded-5 p-3 shadow-sm"
+              className="boxborderr rounded-5 p-3 shadow-sm px-lg-4 p-3 "
             >
               <AccountImage accountId={account.account_id} />
               <h5 className="fw-bold text-center mt-3">{account.name}</h5>
@@ -48,7 +48,18 @@ const BusinessList = () => {
 
   if (loading) return (
     <>
-      <div className="fw-bold fs-5"> LOADING...</div>
+      <Row className="d-flex flex-column">
+        <Col>
+          <p>Loading...</p>
+        </Col>
+        <Col className="col-12">
+          {" "}
+          <Placeholder as="p" animation="glow">
+            <Placeholder xs={12} />
+          </Placeholder>
+        </Col>
+      </Row>
+
     </>
   );
   if (error) return <div>Error: {error}</div>;
@@ -80,7 +91,13 @@ const AccountImage = ({ accountId }) => {
     return () => URL.revokeObjectURL(imageUrl);
   }, [accountId]);
 
-  return imageUrl ? <img src={imageUrl} alt="" className="rounded-5 col-12 my-3" /> : null;
+  return imageUrl ? (
+    <img
+      src={imageUrl}
+      alt=""
+      className="rounded-5 col-12 mb-4 sizei shadow"
+    />
+  ) : null;
 };
 
 export default BusinessList;

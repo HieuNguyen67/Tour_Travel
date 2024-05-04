@@ -2,3 +2,23 @@
     border: 3px solid #ebecef;
 
 }
+
+@media (max-width: 992px) {
+
+.sizei {
+        height: 13rem;
+                        object-fit: cover;
+    }
+}
+
+
+
+
+@media (min-width: 992px) {
+    .sizei {
+            height: 13rem;
+                        object-fit: cover;
+        }
+    
+       
+}

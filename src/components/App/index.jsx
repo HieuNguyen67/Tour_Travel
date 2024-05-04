@@ -13,6 +13,7 @@ import Information from "../../page/information";
 import NotFound from "../../page/not-found";
 import { useAuth } from "../../context";
 import BusinessLink from "../../page/customer/business-link";
+import NewsMain from "../../page/customer/news";
 
 const Apps=()=>{
   const{role}=useAuth();
@@ -58,6 +59,7 @@ const Apps=()=>{
           <Route path="/image" element={<Image />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/information/*" element={<Information />} />
+          <Route path="/news/*" element={<NewsMain />} />
         </Routes>
       </>
     );

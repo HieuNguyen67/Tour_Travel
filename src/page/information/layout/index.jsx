@@ -1,7 +1,8 @@
 import { Col, Container, Row } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../../context";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const InformationLayout = ({ children }) => {
     const { role } = useAuth();
@@ -12,6 +13,37 @@ const InformationLayout = ({ children }) => {
       <Container>
         <Container className="mt-5 mx-auto pt-lg-3 pt-3 ">
           <div className="mt-5">
+            {role == 1 ? (
+              <>
+                {" "}
+                <Link to="/">
+                  <IoArrowBackOutline className="fs-3 mb-3" />
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
+            {role == 2 ? (
+              <>
+                {" "}
+                <Link to="/admin/list-customer">
+                  <IoArrowBackOutline className="fs-3 mb-3" />
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
+            {role == 3 ? (
+              <>
+                {" "}
+                <Link to="/business/list-tour">
+                  <IoArrowBackOutline className="fs-3 mb-3" />
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
+
             <Row>
               <Col></Col>
               <Col className="col-10 ">

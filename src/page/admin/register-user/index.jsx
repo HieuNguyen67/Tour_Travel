@@ -3,13 +3,14 @@ import axios from "axios";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { motion, useAnimation } from "framer-motion";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { IoLogInSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../context";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-const RegisterBusiness = () => {
+const RegisterUser = () => {
+  const {role_id}=useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -32,9 +33,22 @@ const RegisterBusiness = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5020/v1/api/admin/register-business", formData);
-      toast.success("Đăng ký thành công !");
-      navigate("/admin/list-business");
+      if (role_id==3){ await axios.post(
+        "http://localhost:5020/v1/api/admin/register-business",
+        formData
+      );
+     toast.success("Đăng ký thành công !");
+     navigate("/admin/list-business");
+    }else{
+        await axios.post(
+          "http://localhost:5020/v1/api/admin/register",
+          formData
+        );
+         toast.success("Đăng ký thành công !");
+         navigate("/admin/list-customer");
+      }
+       
+     
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast.error("Tên đăng nhập hoặc email đã tồn tại.");
@@ -56,15 +70,38 @@ const RegisterBusiness = () => {
       >
         <Container className=" mx-auto">
           <div className="mt-2">
-            <Link to="/admin/list-business">
-              <IoArrowBackOutline className="fs-3 mb-3" />
-            </Link>
+            {role_id == 3 ? (
+              <>
+                {" "}
+                <Link to="/admin/list-business">
+                  <IoArrowBackOutline className="fs-3 mb-3" />
+                </Link>
+              </>
+            ) : (
+              <>
+                {" "}
+                <Link to="/admin/list-customer">
+                  <IoArrowBackOutline className="fs-3 mb-3" />
+                </Link>
+              </>
+            )}
+
             <Row>
               <Col></Col>
               <Col className="col-10 ">
-                <h1 className="text-center text-break fw-bold font-family">
-                  ĐĂNG KÝ ĐỐI TÁC
-                </h1>
+                {role_id == 3 ? (
+                  <>
+                    <h1 className="text-center text-break fw-bold font-family">
+                      ĐĂNG KÝ DOANH NGHIỆP
+                    </h1>
+                  </>
+                ) : (
+                  <>
+                    <h1 className="text-center text-break fw-bold font-family">
+                      ĐĂNG KÝ KHÁCH HÀNG
+                    </h1>
+                  </>
+                )}
               </Col>
               <Col></Col>
             </Row>
@@ -186,7 +223,11 @@ const RegisterBusiness = () => {
                 </Form.Group>
               </Col>
               {error && <p style={{ color: "red" }}>{error}</p>}
-              <Button variant="warning" className="col-12 col-lg-3 py-3 mt-4" type="submit">
+              <Button
+                variant="warning"
+                className="col-12 col-lg-3 py-3 mt-4"
+                type="submit"
+              >
                 <span className="font-family">
                   Đăng Ký <IoLogInSharp />
                 </span>
@@ -199,4 +240,4 @@ const RegisterBusiness = () => {
   );
 };
 
-export default RegisterBusiness;
+export default RegisterUser;

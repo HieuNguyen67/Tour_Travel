@@ -36,6 +36,7 @@ const LoadImage = () => {
             src={imageSrc}
             alt="Hình ảnh của tài khoản"
             className="col-lg-9 col-12 sizeimgg rounded"
+            style={{objectFit:'cover'}}
           />
         )}
       </Col>

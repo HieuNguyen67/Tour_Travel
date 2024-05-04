@@ -1,28 +1,29 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import SidebarLayout from "../components/side-bar";
 import EditProfile from "../page/admin/edit-profile";
-import ListBusiness from "../page/admin/list-business";
-import ListCustomer from "../page/admin/list-customer";
+import ListUser from "../page/admin/list-user";
 import News from "../page/admin/news";
 import AddNews from "../page/admin/news/add-news";
+import UpdateNews from "../page/admin/news/edit-news";
 import NewsDetail from "../page/admin/news/news-details";
-import RegisterBusiness from "../page/admin/register-business";
-
+import RegisterUser from "../page/admin/register-user";
 const AdminRoutes = () => {
   return (
     <>
       <SidebarLayout>
         <Routes>
-          <Route path="/list-customer" element={<ListCustomer />} />
-          <Route path="/list-business" element={<ListBusiness />} />
-          <Route path="/register-business" element={<RegisterBusiness />} />
+          <Route path="/list-customer" element={<ListUser />} />
+          <Route path="/register-user/:role_id" element={<RegisterUser />} />
           <Route path="/add-news" element={<AddNews />} />
+          <Route path="/list-business" element={<ListUser />} />
 
           <Route
             path="/edit-profile/:account_id/:role_id"
             element={<EditProfile />}
           />
           <Route path="/news-detail/:news_id" element={<NewsDetail />} />
+
+          <Route path="/edit-news/:news_id" element={<UpdateNews />} />
 
           <Route path="/news" element={<News />} />
 

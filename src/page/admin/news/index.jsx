@@ -9,6 +9,8 @@ import { format } from "date-fns";
 import { MdDeleteForever } from "react-icons/md";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
+import { FaEdit } from "react-icons/fa";
+import { BLUE_COLOR, COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../../constants/color";
 
 const News = () => {
  const [news, setNews] = useState([]);
@@ -39,6 +41,9 @@ const News = () => {
   const handleRowClick = (params) => {
     navigate(`/admin/news-detail/${params.row.news_id}`);
   };
+   const handleRowClick1 = (params) => {
+     navigate(`/admin/edit-news/${params.row.news_id}`);
+   };
    const handleCheckboxChange = (event, row) => {
      if (event.target.checked) {
        setSelectedRows([...selectedRows, row]);
@@ -93,7 +98,7 @@ const News = () => {
           onClick={() => handleRowClick(params)}
           src={`data:image/jpeg;base64,${params.value}`}
           alt="News Image"
-          style={{ width: "100%", height: "auto", cursor: "pointer" }}
+          style={{ width: "100%", height: "5rem", cursor: "pointer",objectFit:'cover' }}
           className="rounded"
         />
       ),
@@ -104,21 +109,36 @@ const News = () => {
       width: 135,
       renderCell: (params) => {
         let buttonColor;
+        let buttonColor1;
         switch (params.value) {
           case "Pending":
-            buttonColor = "warning";
+            buttonColor = YELLOW_COLOR;
+            buttonColor1 = "black";
+
             break;
           case "Confirm":
-            buttonColor = "success";
+            buttonColor = GREEN_COLOR;
+            buttonColor1 = "black";
+
             break;
           case "Reject":
-            buttonColor = "danger";
+            buttonColor = RED_COLOR;
+            buttonColor1 = "white";
+
             break;
           default:
             buttonColor = "gray";
         }
         return (
-          <Button variant={buttonColor} onClick={() => handleRowClick(params)}>
+          <Button
+          className="col-12 py-2"
+            style={{
+              background: buttonColor,
+              border: "0px",
+              color: buttonColor1,
+            }}
+            onClick={() => handleRowClick(params)}
+          >
             {params.value}
           </Button>
         );
@@ -176,6 +196,20 @@ const News = () => {
       ),
     },
     { field: "note", headerName: "Ghi chú", width: 150 },
+    {
+      field: "delete",
+      headerName: "Sửa",
+      width: 100,
+      renderCell: (params) => (
+        <Button
+          style={{ background: RED_COLOR, border: "0px" }}
+          onClick={() => handleRowClick1(params)}
+          className="fs-5"
+        >
+          <FaEdit />
+        </Button>
+      ),
+    },
   ];
 
   if (error) return <div>Error: {error}</div>;
@@ -194,7 +228,7 @@ const News = () => {
           <MdDeleteForever className="fs-4" />
         </Button>
         <Link to="/admin/add-news">
-          <Button variant="dark">
+          <Button style={{ background: BLUE_COLOR, border: "0px" }}>
             <MdAddBox className="fs-4" /> Thêm mới
           </Button>
         </Link>

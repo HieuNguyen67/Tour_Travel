@@ -2,12 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { format } from "date-fns";  
 import { useAuth } from "../../../context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import {  Backdrop, CircularProgress} from "@mui/material";
 import { FaSave } from "react-icons/fa";
 import UpdateImage from "../../../components/up-images";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const Profile = () => {
   const { accountId, isLoggedIn } = useAuth();
@@ -43,6 +44,8 @@ const Profile = () => {
 
       } catch (error) {
         console.error("Failed to fetch account data:", error);
+                      setLoading(false);
+
       }
     };
 
@@ -86,6 +89,8 @@ const Profile = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Container className="my-lg-5 my-2   pb-5">
+       
+          
         <Row>
           <Col className="col-lg-3 col-12">
             {" "}

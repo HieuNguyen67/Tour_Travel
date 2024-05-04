@@ -43,7 +43,6 @@ const Header = (props) => {
           fixed="top"
         >
           {" "}
-          {/* #f8f9fa */}
           <Container className="my-2">
             <NavLink className=" decorate">
               <Navbar.Brand>
