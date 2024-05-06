@@ -10,9 +10,12 @@ import { FiEdit } from "react-icons/fi";
 import { LuClock8 } from "react-icons/lu";
 import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
+import { RiHome6Line } from "react-icons/ri";
+import { FaAngleRight } from "react-icons/fa";
 
 const NewsDetailCustomer = () => {
   const [news, setNews] = useState(null);
+  const [cate, setCate] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { news_id } = useParams();
@@ -23,6 +26,8 @@ const NewsDetailCustomer = () => {
           `http://localhost:5020/v1/api/admin/news-detail/${news_id}`
         );
         setNews(response.data);
+          setCate(response.data[0]);
+
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch news:", error);
@@ -33,7 +38,6 @@ const NewsDetailCustomer = () => {
 
     fetchNews();
   }, [news_id]);
-
   
   if (loading)
     return (
@@ -45,15 +49,45 @@ const NewsDetailCustomer = () => {
     );
   if (error) return <div>Error: {error}</div>;
   if (!news) return null;
+   if (!cate) return null;
 
   return (
     <>
       <Container>
         {error && <div>Error: {error}</div>}
+        <div className="mt-3 mt-lg-0">
+          <Link to="/" className="text-decoration-none text-dark ">
+            <RiHome6Line className="fs-4 hover" />
+          </Link>{" "}
+          &nbsp;&nbsp;
+          <FaAngleRight /> &nbsp;&nbsp;
+          {cate.newscategory_name === "Tin tức du lịch" ? (
+            <>
+              <Link
+                to="/news/1/Tin tức du lịch"
+                className="text-decoration-none text-dark"
+              >
+                <span className="hover">{cate.newscategory_name}</span>
+              </Link>
+            </>
+          ) : (
+            <>
+              {" "}
+              <Link
+                to="/news/2/Cẩm nang du lịch"
+                className="text-decoration-none text-dark"
+              >
+                <span className="hover">{cate.newscategory_name}</span>
+              </Link>
+            </>
+          )}{" "}
+          &nbsp;&nbsp;
+          <FaAngleRight /> &nbsp;&nbsp;{" "}
+          <span className="hover">{cate.title}</span>
+        </div>
+        <hr />
         {news.map((item, index) => (
           <div className="imgg" key={item.index}>
-            <p>Danh mục: {item.newscategory_name}</p>
-
             <h1 className="fw-bold">{item.title}</h1>
             <Row>
               <Col className="col-lg-2 col-6 my-3 ">
@@ -65,11 +99,11 @@ const NewsDetailCustomer = () => {
                   <LuClock8 /> {format(new Date(item.created_at), "dd/MM/yyyy")}
                 </p>
               </Col>
-              <Col className="col-lg-2 col-6 my-3 ">
+              <Col className=" col-6 my-3 ">
                 {" "}
                 <p
-                  style={{ background: "#f2f4f7", fontSize: "16px" }}
-                  className="text-center rounded-3 fw-bold"
+                  style={{  fontSize: "16px" }}
+                  className="text-start rounded-3 fw-bold"
                 >
                   <FiEdit /> {item.profile_name}
                 </p>

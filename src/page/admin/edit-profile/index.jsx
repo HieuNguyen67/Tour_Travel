@@ -29,6 +29,7 @@ const EditProfile = () => {
     phone_number: "",
     address: "",
     email: "",
+    status:"",
   });
 
   useEffect(() => {
@@ -114,12 +115,27 @@ const EditProfile = () => {
           <Col className="col-lg-3 col-12">
             {" "}
             <LoadImage />
-            <UpdateImageProfile/>
+            <UpdateImageProfile />
           </Col>
           <Col className="col-lg-9 col-12 ">
             {" "}
             <form onSubmit={handleSubmit}>
               <Row>
+                <Col className="col-12">
+                  <Form.Group className="mb-3">
+                    <Form.Label>Trạng thái:</Form.Label>
+                    <Form.Control
+                      as="select"
+                      required
+                      name="status"
+                      value={formData.status}
+                      onChange={handleChange}
+                    >
+                      <option value="Inactive">Inactive</option>
+                      <option value="Active">Active</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -162,6 +178,7 @@ const EditProfile = () => {
                       required
                       type="date"
                       name="birth_of_date"
+                      max="2008-12-31"
                       value={formData.birth_of_date}
                       onChange={handleChange}
                     />
@@ -208,8 +225,8 @@ const EditProfile = () => {
                       type="email"
                       name="email"
                       value={formData.email}
-                      onChange={handleChange}
                       placeholder="Email"
+                      readOnly
                     />
                   </Form.Group>
                 </Col>

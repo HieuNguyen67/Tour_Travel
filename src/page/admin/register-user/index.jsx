@@ -32,6 +32,7 @@ const RegisterUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
       if (role_id==3){ await axios.post(
         "http://localhost:5020/v1/api/admin/register-business",
@@ -114,11 +115,21 @@ const RegisterUser = () => {
               <Col className="col-lg-6 col-12">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="font-family">
-                    Họ và tên <span className="text-danger">*</span>
+                    {role_id == 3 ? (
+                      <>
+                        Tên doanh nghiệp: <span className="text-danger">*</span>
+                      </>
+                    ) : (
+                      <>
+                        Họ và tên: <span className="text-danger">*</span>
+                      </>
+                    )}
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Họ tên"
+                    placeholder={
+                      role_id == 3 ? "Tên doanh nghiệp" : "Họ và tên"
+                    }
                     required
                     name="name"
                     value={formData.name}
@@ -187,6 +198,7 @@ const RegisterUser = () => {
                     name="birth_of_date"
                     value={formData.birth_of_date}
                     onChange={handleChange}
+                    max="2008-12-31"
                   />
                 </Form.Group>
               </Col>

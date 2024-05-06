@@ -14,6 +14,7 @@ import NotFound from "../../page/not-found";
 import { useAuth } from "../../context";
 import BusinessLink from "../../page/customer/business-link";
 import NewsMain from "../../page/customer/news";
+import ConfirmationForm from "../../page/customer/SignUp/confirmation_code";
 
 const Apps=()=>{
   const{role}=useAuth();
@@ -60,6 +61,9 @@ const Apps=()=>{
           <Route path="/contact" element={<Contact />} />
           <Route path="/information/*" element={<Information />} />
           <Route path="/news/*" element={<NewsMain />} />
+          <Route path="/confirm" element={<ConfirmationForm />}>
+         
+          </Route>
         </Routes>
       </>
     );

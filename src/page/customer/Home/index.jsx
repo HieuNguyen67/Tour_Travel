@@ -4,8 +4,10 @@ import "./Home.scss";
 import video from "../../../assets/video/video.mp4"
 import Footer from "../../../components/layout/footer";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Header from "../../../components/layout/header";
+import Spinner from "react-bootstrap/Spinner";
+
 const Home = () => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -13,14 +15,29 @@ const Home = () => {
   const handleVideoLoad = () => {
     setIsLoading(false);
   };
-
+const optimizedVideoElement = useMemo(
+  () => (
+    <video
+      ref={videoRef}
+      autoPlay
+      muted
+      loop
+      className="myVideo"
+      onLoadStart={() => setIsLoading(true)}
+      onLoadedData={handleVideoLoad}
+    >
+      <source src={video} type="video/mp4" />
+    </video>
+  ),
+  [video]
+);
   return (
     <>
       {isLoading && (
-        <Backdrop
-          open={isLoading}
-          style={{ zIndex: 999, color: "#fff" }}
-        ></Backdrop>
+        <Backdrop open={isLoading} style={{ zIndex: 999, color: "#fff" }}>
+          {" "}
+          <Spinner animation="border" variant="light" />
+        </Backdrop>
       )}
       <Header />
 
@@ -29,17 +46,7 @@ const Home = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", duration: 0.6 }}
       >
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          className="myVideo"
-          onLoadStart={() => setIsLoading(true)}
-          onLoadedData={handleVideoLoad}
-        >
-          <source src={video} type="video/mp4" />
-        </video>
+        {optimizedVideoElement}
         <div>
           <Container className="">
             <div className="pt-lg-5 zindex">

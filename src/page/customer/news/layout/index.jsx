@@ -12,7 +12,7 @@ const isHomePage =
     <>
     
       <Container className="mt-5 mx-auto pt-lg-5 pt-3 ">
-        <div className="mt-3">
+        <div className="mt-lg-3 mt-4">
           <Row>
             {isHomePage ? (
               <>

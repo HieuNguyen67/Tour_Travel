@@ -234,11 +234,12 @@ const News = () => {
         </Link>
       </p>
 
-      <div style={{ height: 500, width: "100%" }}>
+      <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           rows={news}
           columns={columns}
-          pageSize={10}
+          pagination
+          autoPageSize
           getRowId={(row) => row.news_id}
           getRowHeight={(params) => 100}
         />

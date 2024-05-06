@@ -89,8 +89,6 @@ const Profile = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Container className="my-lg-5 my-2   pb-5">
-       
-          
         <Row>
           <Col className="col-lg-3 col-12">
             {" "}
@@ -142,6 +140,7 @@ const Profile = () => {
                       required
                       type="date"
                       name="birth_of_date"
+                      max="2008-12-31"
                       value={formData.birth_of_date}
                       onChange={handleChange}
                     />
@@ -187,8 +186,8 @@ const Profile = () => {
                       required
                       type="email"
                       name="email"
+                      readOnly
                       value={formData.email}
-                      onChange={handleChange}
                       placeholder="Email"
                     />
                   </Form.Group>

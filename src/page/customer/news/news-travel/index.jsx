@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
-import { Col, Row } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import HTMLContent from "../../../../components/HTMLContent";
 import "../news.scss";
 import { format } from "date-fns";
-import { FiEdit } from "react-icons/fi";
 import { LuClock8 } from "react-icons/lu";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 const truncateString = (str, maxLength) => {
   if (str.length <= maxLength) {
@@ -18,46 +19,73 @@ const truncateString = (str, maxLength) => {
 };
 
 const NewsTravel = () => {
+  const location = useLocation();
+  const isHomePage =
+    location.pathname === "/news/1/Tin%20t%E1%BB%A9c%20du%20l%E1%BB%8Bch";
+
   const [news, setNews] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const {news_travel}=useParams();
-     const { travel_guide } = useParams();
-     const location = useLocation();
-     const isHomePage =
-       location.pathname === "/news/1/Tin%20t%E1%BB%A9c%20du%20l%E1%BB%8Bch";
-    
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState();
+
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        if (isHomePage) {
-          var response = await axios.get(
-            `http://localhost:5020/v1/api/admin/list-news-travel/${news_travel}`
-          );
-          setNews(response.data);
-          setLoading(false);
-        } else {
-          const response = await axios.get(
-            `http://localhost:5020/v1/api/admin/list-news-travel/${travel_guide}`
-          );
-          setNews(response.data);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching news:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchNews();
+    let indexx = 0;
+    if (!isHomePage) {
+      indexx = 0;
+    }
+    setCurrentPage(indexx);
   }, [isHomePage]);
-  const navigate=useNavigate();
-  const HandleClick=(props)=>{
-    navigate(`/news/news-detail/${props}`);
+  const [itemsPerPage] = useState(6);
+  const { news_travel } = useParams();
+  const { travel_guide } = useParams();
 
-  }
+  const fetchNews = useCallback(async () => {
+    try {
+      let response;
+      if (isHomePage) {
+        response = await axios.get(
+          `http://localhost:5020/v1/api/admin/list-news-travel/${news_travel}`
+        );
+      } else {
+        response = await axios.get(
+          `http://localhost:5020/v1/api/admin/list-news-travel/${travel_guide}`
+        );
+      }
+      setNews(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+      setLoading(false);
+    }
+  }, [isHomePage, news_travel, travel_guide]);
+
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
+
+  const navigate = useNavigate();
+  const handleClick = (newsId) => {
+    navigate(`/news/news-detail/${newsId}`);
+  };
+
+const handlePageClick = useCallback(
+  (data) => {
+    const { selected } = data;
+    setCurrentPage(selected);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", 
+    });
+  },
+  [setCurrentPage]
+);
+  const currentNews = useMemo(() => {
+    const start = currentPage * itemsPerPage;
+    const end = start + itemsPerPage;
+    return news.slice(start, end);
+  }, [currentPage, itemsPerPage, news]);
+
   return (
     <>
-      {" "}
       <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -65,66 +93,78 @@ const NewsTravel = () => {
         {isHomePage ? <> TIN TỨC DU LỊCH</> : <>CẨM NANG DU LỊCH</>}
       </h1>
       <Row className="row-cols-3 my-4">
-        {news.map((item) => (
-          <Col
-            className="col-lg-4 col-12 mb-3 mb-lg-0"
-            onClick={() => HandleClick(item.news_id)}
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.8 }}
-              key={item.id}
+        {currentNews
+          .sort((a, b) => b.news_id - a.news_id) 
+          .map((item) => (
+            <Col
+              key={item.news_id}
+              className="col-lg-4 col-12 mb-3 mb-lg-3"
+              onClick={() => handleClick(item.news_id)}
             >
-              <div
-                key={item.news_id}
-                style={{ border: "3px solid #ebecef", cursor: "pointer" }}
-                className="rounded-5 px-lg-4 p-3  shadow-sm"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.8 }}
               >
-                {item.image && (
-                  <img
-                    src={`data:image/png;base64,${item.image}`}
-                    alt="News Image"
-                    className="rounded-5 col-12 sizei shadow mb-4"
-                  />
-                )}
-                <p
-                  className="fw-bold sizep"
-                  style={{ color: "#475467", fontSize: "18px" }}
+                <div
+                  style={{ border: "3px solid #ebecef", cursor: "pointer" }}
+                  className="rounded-5 px-lg-4 p-3  shadow-sm"
                 >
-                  {item.title}
-                </p>
+                  {item.image && (
+                    <img
+                      src={`data:image/png;base64,${item.image}`}
+                      alt="News Image"
+                      className="rounded-5 col-12 sizei shadow mb-4"
+                    />
+                  )}
+                  <p
+                    className="fw-bold sizep"
+                    style={{ color: "#475467", fontSize: "18px" }}
+                  >
+                    {item.title}
+                  </p>
 
-                <HTMLContent
-                  htmlContent={truncateString(item.content, 80)}
-                  style={{ fontSize: "14px" }}
-                  className="sizep1"
-                />
+                  <HTMLContent
+                    htmlContent={truncateString(item.content, 80)}
+                    style={{ fontSize: "14px" }}
+                    className="sizep1"
+                  />
 
-                <Row>
-                  <Col>
-                    {" "}
-                    <p
-                      style={{ background: "#f2f4f7", fontSize: "16px" }}
-                      className="text-center rounded-3 fw-bold"
-                    >
-                      <FiEdit /> {item.profile_name}
-                    </p>
-                  </Col>
-                  <Col>
-                    <p
-                      style={{ background: "#f2f4f7", fontSize: "16px" }}
-                      className="text-center rounded-3 fw-bold"
-                    >
-                      <LuClock8 />{" "}
-                      {format(new Date(item.created_at), "dd/MM/yyyy")}
-                    </p>
-                  </Col>
-                </Row>
-              </div>
-            </motion.div>
-          </Col>
-        ))}
+                  <Row>
+                    <Col className="col-6">
+                      <p
+                        style={{ background: "#f2f4f7", fontSize: "16px" }}
+                        className="text-center rounded-3 fw-bold"
+                      >
+                        <LuClock8 />{" "}
+                        {format(new Date(item.created_at), "dd/MM/yyyy")}
+                      </p>
+                    </Col>
+                  </Row>
+                </div>
+              </motion.div>
+            </Col>
+          ))}
       </Row>
+      <Container>
+        <ReactPaginate
+          previousLabel={
+            <Button variant="dark" className="mx-2">
+              <FaAngleLeft />
+            </Button>
+          }
+          nextLabel={
+            <Button variant="dark" className="mx-2">
+              <FaAngleRight />
+            </Button>
+          }
+          breakLabel={"..."}
+          pageCount={Math.ceil(news.length / itemsPerPage)}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          activeClassName={"activee"}
+          pageLinkClassName={"page-item"}
+        />
+      </Container>
     </>
   );
 };

@@ -34,7 +34,7 @@ const SignUp = () => {
     try {
       await axios.post("http://localhost:5020/v1/api/admin/register", formData);
       toast.success("Đăng ký thành công !");
-      navigate("/Login");
+      navigate("/confirm");
     } catch (error) {
       if (error.response && error.response.status === 400) {
          toast.error("Tên đăng nhập hoặc email đã tồn tại.");
@@ -142,6 +142,7 @@ const SignUp = () => {
                 placeholder="Ngày sinh"
                 required
                 name="birth_of_date"
+                max="2008-12-31"
                 value={formData.birth_of_date}
                 onChange={handleChange}
               />

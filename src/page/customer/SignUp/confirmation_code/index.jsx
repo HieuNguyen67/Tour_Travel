@@ -1,0 +1,74 @@
+import React, { useState } from "react";
+import axios from "axios";
+import { Button, Col, Container, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { BLUE_COLOR } from "../../../../constants/color";
+import { Link, useNavigate } from "react-router-dom";
+
+const ConfirmationForm = () => {
+  const [confirmationCode, setConfirmationCode] = useState("");
+
+  const handleChange = (e) => {
+    setConfirmationCode(e.target.value);
+  };
+  const navigate=useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.get(
+        `http://localhost:5020/v1/api/admin/confirm/${confirmationCode}`
+      );
+      console.log(res.data);
+            toast.success("Tài khoản đã được kích hoạt thành công!");
+            navigate("/login");
+
+    } catch (error) {
+      console.error("Xác nhận không thành công:", error);
+      toast.error("Nhập sai mã kích hoạt. Vui lòng nhập lại !");
+    }
+  };
+
+  return (
+    <>
+      <Container className="my-5 pt-5">
+        <Col className="col-lg-6 border mx-auto mt-5 shadow rounded-3">
+          {" "}
+          <p className="text-center p-4">
+            <h3 className="fw-bold mt-3 mb-5">Nhập mã kích hoạt tài khoản</h3>
+            <form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className="font-family fw-bold text-start mb-3">
+                  Bạn vui lòng kiểm tra email đăng ký và nhập mã vào ô dưới đây
+                </Form.Label>
+                <Form.Control
+                  className="mb-4"
+                  required
+                  type="text"
+                  value={confirmationCode}
+                  onChange={handleChange}
+                  placeholder="Nhập mã kích hoạt tài khoản"
+                />
+              </Form.Group>
+              <Button
+                type="submit"
+                className="col-12 py-2 mb-2"
+                style={{ background: BLUE_COLOR, border: "0px" }}
+              >
+                Xác nhận
+              </Button>
+              <Link
+                to="/login"
+                className="text-decoration-none text-primary mb-5"
+              >
+                Quay lại đăng nhập
+              </Link>
+            </form>
+          </p>
+        </Col>
+      </Container>
+    </>
+  );
+};
+
+export default ConfirmationForm;

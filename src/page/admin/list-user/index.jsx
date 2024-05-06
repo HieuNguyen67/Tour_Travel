@@ -10,7 +10,7 @@ import { LiaEditSolid } from "react-icons/lia";
 import { MdAddBusiness } from "react-icons/md";
 import { toast } from "react-toastify";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { BLUE_COLOR } from "../../../constants/color";
+import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -114,7 +114,7 @@ const ListUser = () => {
     {
       field: "username",
       headerName: "Username",
-      width: 150,
+      width: 120,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -126,7 +126,7 @@ const ListUser = () => {
     {
       field: "name",
       headerName: "Tên",
-      width: 240,
+      width: 200,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -135,6 +135,7 @@ const ListUser = () => {
         />
       ),
     },
+
     {
       field: "birth_of_date",
       headerName: "Ngày sinh",
@@ -185,6 +186,42 @@ const ListUser = () => {
         />
       ),
     },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 135,
+      renderCell: (params) => {
+        let buttonColor;
+        let buttonColor1;
+        switch (params.value) {
+          case "Active":
+            buttonColor = GREEN_COLOR;
+            buttonColor1 = "black";
+
+            break;
+          case "Inactive":
+            buttonColor = RED_COLOR;
+            buttonColor1 = "white";
+
+            break;
+          default:
+            buttonColor = "gray";
+        }
+        return (
+          <Button
+            className="col-12 py-2"
+            style={{
+              background: buttonColor,
+              border: "0px",
+              color: buttonColor1,
+            }}
+            onClick={() => handleRowClick(params)}
+          >
+            {params.value}
+          </Button>
+        );
+      },
+    },
   ];
 
   if (error) return <div>Error: {error}</div>;
@@ -229,14 +266,15 @@ const ListUser = () => {
             </>
           )}
         </p>
-
-        <DataGrid
-          rows={users}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5, 10, 20]}
-          getRowId={(row) => row.profile_id}
-        />
+        <div style={{ height: 520, width: "100%" }}>
+          <DataGrid
+            rows={users}
+            columns={columns}
+            pagination
+            autoPageSize
+            getRowId={(row) => row.profile_id}
+          />
+        </div>
       </div>
     </>
   );
