@@ -1,0 +1,115 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../../../../constants/common";
+import { toast } from "react-toastify";
+import { Backdrop, CircularProgress } from "@mui/material";
+import { Button, Form } from "react-bootstrap";
+import { FaSave } from "react-icons/fa";
+import { format } from "date-fns";
+import { IoArrowBackOutline } from "react-icons/io5";
+
+const ContactDetail = () => {
+    const{contact_id}=useParams();
+  const [contact, setContact] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+   const [status, setStatus] = useState("");
+
+
+  useEffect(() => {
+    const fetchContact = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/contacts-detail/${contact_id}`);
+        setContact(response.data);
+        setStatus(response.data.status);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch contact:", error);
+        setError("Failed to fetch contact");
+        setLoading(false);
+      }
+    };
+
+    fetchContact();
+  }, [contact_id]);
+  const navigate = useNavigate();
+  const handleUpdate = async () => {
+    try {
+      await axios.put(
+        `http://localhost:5020/v1/api/admin/update-status-contact/${contact_id}`,
+        {
+          status,
+        }
+      );
+      console.log("News status and note updated successfully");
+      toast.success("Cập nhật thành công!");
+      navigate("/admin/contact");
+    } catch (error) {
+      console.error("Failed to update news status and note:", error);
+      setError("Failed to update news status and note");
+    }
+  };
+
+
+  if (loading) return (
+    <div>
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  );
+  if (error) return <div>Error: {error}</div>;
+  if (!contact) return <div>Contact not found</div>;
+
+  return (
+    <div>
+      <Link to="/admin/contact">
+        <IoArrowBackOutline className="fs-3" />
+      </Link>
+      <h2 className="fw-bold text-center mb-4">LIÊN HỆ</h2>
+      <form>
+        <Form.Group className="mb-3">
+          <Form.Label>Trạng thái:</Form.Label>
+          <Form.Control
+            as="select"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="Pending">Pending</option>
+            <option value="Confirm">Confirm</option>
+          </Form.Control>
+        </Form.Group>
+        <Button
+          onClick={handleUpdate}
+          disabled={loading}
+          variant="warning"
+          className="mb-3"
+        >
+          <FaSave /> Cập nhật
+        </Button>
+      </form>
+      <p>
+        <strong>Từ:</strong> {contact.fullname}
+      </p>
+      <p>
+        <strong>Email:</strong> {contact.email}
+      </p>
+      <p>
+        <strong>SĐT:</strong> {contact.phonenumber}
+      </p>
+      <p>
+        <strong>Nội dung:</strong> {contact.message}
+      </p>
+      <p>
+        <strong>Ngày gửi:</strong>{" "}
+        {format(new Date(contact.senttime), "dd/MM/yyyy")}
+      </p>
+      <p>
+        <strong>Địa chỉ:</strong> {contact.address}
+      </p>
+    </div>
+  );
+};
+
+export default ContactDetail;

@@ -13,6 +13,7 @@ const SidebarLayout = ({ children }) => {
     location.pathname === "/admin/list-customer" ||
     location.pathname === "/admin/list-business" ||
     location.pathname === "/admin/news" ||
+    location.pathname === "/admin/contact" ||
     location.pathname === "/business/list-tour" ||
     location.pathname === "/business/order-tour";
 

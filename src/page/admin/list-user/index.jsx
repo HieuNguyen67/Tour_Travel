@@ -101,8 +101,8 @@ const ListUser = () => {
     },
     {
       field: "profile_id",
-      headerName: "Profile ID",
-      width: 130,
+      headerName: "ID",
+      width: 70,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -126,7 +126,7 @@ const ListUser = () => {
     {
       field: "name",
       headerName: "Tên",
-      width: 200,
+      width: 220,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -165,7 +165,7 @@ const ListUser = () => {
     {
       field: "address",
       headerName: "Địa chỉ",
-      width: 200,
+      width: 250,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}

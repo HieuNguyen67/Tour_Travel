@@ -49,11 +49,11 @@ const Footer = () => {
                 </span>
                 <br />{" "}
                 <span style={{ fontSize: "15px" }}>
-                  <strong>Điện thoại : </strong>(028) 38 505 520
+                  <strong>Điện thoại : </strong>(+84) 123 456 789
                 </span>
                 <br />{" "}
                 <span style={{ fontSize: "15px" }}>
-                  <strong>Email : </strong>contact@stu.edu.vn
+                  <strong>Email : </strong>info@tourdulich.com
                 </span>
                 <br />{" "}
                 <span style={{ fontSize: "15px" }}>
@@ -77,7 +77,10 @@ const Footer = () => {
                   </span>
                 </Link>
                 <br />
-                <Link className="text-decoration-none black" to="/business-link">
+                <Link
+                  className="text-decoration-none black"
+                  to="/business-link"
+                >
                   <span style={{ fontSize: "15px" }} className="hover">
                     {">"} Đối tác doanh nghiệp
                   </span>

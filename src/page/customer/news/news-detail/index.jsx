@@ -53,7 +53,7 @@ const NewsDetailCustomer = () => {
 
   return (
     <>
-      <Container>
+      <Container className="px-lg-3">
         {error && <div>Error: {error}</div>}
         <div className="mt-3 mt-lg-0">
           <Link to="/" className="text-decoration-none text-dark ">

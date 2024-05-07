@@ -6,9 +6,49 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { IoIosSend } from "react-icons/io";
 import Header from "../../../components/layout/header";
+import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Contact = () => {
- 
+ const [formData, setFormData] = useState({
+   fullname: "",
+   email: "",
+   phonenumber: "",
+   message: "",
+   address: "",
+ });
+ const [error, setError] = useState("");
+ const [successMessage, setSuccessMessage] = useState("");
+
+ const handleChange = (e) => {
+   setFormData({ ...formData, [e.target.name]: e.target.value });
+ };
+
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+
+   try {
+     await axios.post(
+       "http://localhost:5020/v1/api/admin/send-contact",
+       formData
+     );
+     setSuccessMessage("Contact sent successfully");
+     setFormData({
+       fullname: "",
+       email: "",
+       phonenumber: "",
+       message: "",
+       address: "",
+     });
+              toast.success("Gửi thông tin liên hệ thành công !");
+
+   } catch (error) {
+     console.error("Failed to send contact:", error);
+     toast.success("Gửi thông tin liên hệ thất bại !");
+     setError("Failed to send contact");
+   }
+ };
   return (
     <>
       <Header />
@@ -26,9 +66,13 @@ const Contact = () => {
                 <hr className="hr" />
 
                 <p>
-                  <strong>Điện thoại : </strong>(028) 38 505 520
+                  Chúng tôi luôn sẵn lòng lắng nghe và hỗ trợ bạn trong mọi vấn
+                  đề liên quan đến bạn. Xin vui lòng liên hệ với
+                  chúng tôi qua một trong những cách sau:
+                  <br /> <br />
+                  <strong>Điện thoại : </strong>(+84) 123 456 789
                   <br />
-                  <strong>Email : </strong>contact@stu.edu.vn
+                  <strong>Email : </strong>info@tourdulich.com
                 </p>
               </p>
             </Col>
@@ -37,23 +81,30 @@ const Contact = () => {
                 <h3>LIÊN HỆ CHÚNG TÔI</h3>
                 <hr className="hr" />
               </p>
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Row className="d-flex flex-row py-2">
                   <Col className="col-6 pe-2 ">
-                    <Form.Group controlId="validationCustom01">
+                    <Form.Group>
                       <Form.Control
-                        required
                         type="text"
-                        placeholder="Họ tên"
+                        id="fullname"
+                        name="fullname"
+                        value={formData.fullname}
+                        onChange={handleChange}
+                        required
+                        placeholder="Tên"
                         className="shadow-sm"
                       />
                     </Form.Group>
                   </Col>
                   <Col className="col-6 ps-2 ">
-                    <Form.Group controlId="validationCustom01">
+                    <Form.Group>
                       <Form.Control
-                        required
                         type="text"
+                        id="address"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
                         placeholder="Địa chỉ"
                         className="shadow-sm"
                       />
@@ -62,20 +113,27 @@ const Contact = () => {
                 </Row>
                 <Row className="d-flex flex-row py-2 ">
                   <Col className="col-6 pe-2 ">
-                    <Form.Group controlId="validationCustom01">
+                    <Form.Group>
                       <Form.Control
-                        required
                         type="text"
-                        placeholder="Điện thoại"
+                        id="phonenumber"
+                        name="phonenumber"
+                        value={formData.phonenumber}
+                        onChange={handleChange}
+                        placeholder="SĐT"
                         className="shadow-sm"
                       />
                     </Form.Group>
                   </Col>
                   <Col className="col-6 ps-2">
-                    <Form.Group controlId="validationCustom01">
+                    <Form.Group>
                       <Form.Control
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         required
-                        type="text"
                         placeholder="Email"
                         className="shadow-sm"
                       />
@@ -84,12 +142,17 @@ const Contact = () => {
                 </Row>
                 <Row className="d-flex flex-row py-2 mb-4 ">
                   <Col className="col-12 ">
-                    <Form.Group controlId="validationCustom01">
+                    <Form.Group>
                       <Form.Control
-                        required
-                        type="text"
+                        as="textarea"
                         placeholder="Nội dung"
-                        className="py-5 shadow-sm "
+                        className="shadow-sm "
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        style={{ height: "10rem" }}
                       />
                     </Form.Group>
                   </Col>
@@ -100,6 +163,14 @@ const Contact = () => {
                   GỬI THÔNG TIN LIÊN HỆ
                 </Button>
               </Form>
+              {error && (
+                <div className="error text-danger fw-bold mt-3">{error}</div>
+              )}
+              {successMessage && (
+                <div className="success text-danger fw-bold mt-3">
+                  {successMessage}
+                </div>
+              )}
             </Col>
           </Row>
         </Container>
