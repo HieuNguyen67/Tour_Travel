@@ -165,8 +165,8 @@ const Header = (props) => {
                       </>
                     )}
                   </Nav>
-                  <div className=" mt-5 mt-md-0 pt-5 pt-md-0">
-                    <div className="d-flex flex-grow mx-1 mt-5 mt-md-0 pt-5 pt-md-0">
+                  <div className=" mt-5 mt-lg-0 pt-5 pt-lg-0">
+                    <div className="d-flex flex-grow mx-1 mt-5 mt-lg-0 pt-5 pt-lg-0">
                       {isLoggedIn ? (
                         <>
                           <motion.div
@@ -179,12 +179,12 @@ const Header = (props) => {
                               style={{ cursor: "pointer" }}
                               className="text-decoration-none"
                             >
-                              <div className="d-flex">
+                              <div>
                                 {" "}
                                 <img
                                   src={imageSrc || defaultImage} 
                                   alt="Hình ảnh của tài khoản"
-                                  className="sizeimggg rounded-circle me-2 shadow"
+                                  className="sizeimggg rounded-circle shadow me-2"
                                 />{" "}
                                
                               </div>

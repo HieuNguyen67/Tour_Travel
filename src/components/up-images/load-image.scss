@@ -5,18 +5,17 @@
 
 .sizeimgg {
         height: 8rem;
-        background-size: cover;
-            background-position: center;
-    }
+        width: 8rem;
+       
 }
-
+}
 
 
 
 @media (min-width: 992px) {
     .sizeimgg{
         height: 14rem;
-        background-size: cover;
-        background-position: center;
+        width: 14rem;
+      
     }
 }

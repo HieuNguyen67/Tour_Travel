@@ -34,11 +34,11 @@ const DisplayImage = () => {
 
   return (
     <div>
-      <Col className="col-lg-12 col-5 mx-lg-0 mx-auto my-4 mt-lg-2">
+      <Col className="col-lg-12 col-5 col-md-3 mx-lg-0 mx-auto my-4 mt-lg-2">
         <img
           src={imageSrc || defaultImage} 
           alt="Hình ảnh của tài khoản"
-          className="col-lg-9 col-12 sizeimgg  rounded-4 shadow"
+          className="col-lg-9 col-12 sizeimgg  rounded-circle shadow"
           style={{ objectFit: "cover" }}
         />
       </Col>
