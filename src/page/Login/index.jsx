@@ -10,6 +10,7 @@ import { IoLogInSharp } from "react-icons/io5";
 import { IoChevronBackSharp } from "react-icons/io5";
 import "./Login.scss";
 import Header from "../../components/layout/header";
+import { BASE_URL } from "../../constants/common";
 const Login = () => {
     const navigate = useNavigate();
   const { login } = useAuth();
@@ -23,7 +24,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5020/v1/api/admin/login",
+        `${BASE_URL}/login`,
         { usernameOrEmail, password }
       );
       const { token, role, account_id ,username} = response.data;

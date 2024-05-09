@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context";
 import { Col } from "react-bootstrap";
-import "./load-image.scss"
+import defaultImage from "../../assets/image/6945124.png"; 
+import "./load-image.scss";
+import { BASE_URL } from "../../constants/common";
+
 const DisplayImage = () => {
-      const { accountId } = useAuth();
+  const { accountId } = useAuth();
 
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
@@ -13,7 +16,7 @@ const DisplayImage = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5020/v1/api/admin/account/image/${accountId}`,
+          `${BASE_URL}/account/image/${accountId}`,
           {
             responseType: "blob",
           }
@@ -22,7 +25,7 @@ const DisplayImage = () => {
         setImageSrc(imageURL);
       } catch (error) {
         console.error("Lỗi khi lấy hình ảnh:", error);
-        setError("Vui lòng upload hình ảnh !");
+        setImageSrc(defaultImage);
       }
     };
 
@@ -31,15 +34,13 @@ const DisplayImage = () => {
 
   return (
     <div>
-   
       <Col className="col-lg-12 col-5 mx-lg-0 mx-auto my-4 mt-lg-2">
-        {imageSrc && (
-          <img
-            src={imageSrc}
-            alt="Hình ảnh của tài khoản"
-            className="col-lg-9 col-12 sizeimgg rounded"
-          />
-        )}
+        <img
+          src={imageSrc || defaultImage} 
+          alt="Hình ảnh của tài khoản"
+          className="col-lg-9 col-12 sizeimgg  rounded-4 shadow"
+          style={{ objectFit: "cover" }}
+        />
       </Col>
       {error && <div style={{ color: "red" }}>{error}</div>}
     </div>

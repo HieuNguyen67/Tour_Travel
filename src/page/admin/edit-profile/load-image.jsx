@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import defaultImage from "../../../assets/image/6945124.png";
+
 const LoadImage = () => {
  const{account_id}=useParams();
 
@@ -21,7 +23,7 @@ const LoadImage = () => {
         setImageSrc(imageURL);
       } catch (error) {
         console.error("Lỗi khi lấy hình ảnh:", error);
-        setError("Vui lòng upload hình ảnh !");
+        setImageSrc(defaultImage);
       }
     };
 
@@ -33,10 +35,10 @@ const LoadImage = () => {
       <Col className="col-lg-12 col-5 mx-lg-0 mx-auto my-4 mt-lg-2">
         {imageSrc && (
           <img
-            src={imageSrc}
+            src={imageSrc || defaultImage}
             alt="Hình ảnh của tài khoản"
-            className="col-lg-9 col-12 sizeimgg rounded"
-            style={{objectFit:'cover'}}
+            className="col-lg-9 col-12 sizeimgg  rounded-4 shadow"
+            style={{ objectFit: "cover" }}
           />
         )}
       </Col>

@@ -6,13 +6,17 @@ import React, { useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Button from "react-bootstrap/Button";
 import Logo from "../../../assets/image/tải_xuống-removebg-preview.png";
-
+import defaultImage from "../../../assets/image/6945124.png"; 
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import ScrollIndicator from "../../ScrollIndicator";
 import { motion } from "framer-motion";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useAuth } from "../../../context";
-import { HEADER } from "../../../constants/common";
+import { BASE_URL, HEADER } from "../../../constants/common";
+import DisplayImage from "../../up-images/load-image";
+import { Col, Row } from "react-bootstrap";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Header = (props) => {
   const { isLoggedIn, logout, username, role } = useAuth();
@@ -30,7 +34,30 @@ const Header = (props) => {
 
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+ const { accountId } = useAuth();
 
+ const [imageSrc, setImageSrc] = useState("");
+ const [error, setError] = useState("");
+
+ useEffect(() => {
+   const fetchImage = async () => {
+     try {
+       const response = await axios.get(
+         `${BASE_URL}/account/image/${accountId}`,
+         {
+           responseType: "blob",
+         }
+       );
+       const imageURL = URL.createObjectURL(response.data);
+       setImageSrc(imageURL);
+     } catch (error) {
+       console.error("Lỗi khi lấy hình ảnh:", error);
+       setImageSrc(defaultImage);
+     }
+   };
+
+   fetchImage();
+ }, [accountId]);
   return (
     <>
       {" "}
@@ -152,15 +179,15 @@ const Header = (props) => {
                               style={{ cursor: "pointer" }}
                               className="text-decoration-none"
                             >
-                              <h5
-                                className={
-                                  isHomePage
-                                    ? "white font-family  me-3 mt-1"
-                                    : "black font-family  me-3 mt-1"
-                                }
-                              >
-                                Hi, {username}
-                              </h5>{" "}
+                              <div className="d-flex">
+                                {" "}
+                                <img
+                                  src={imageSrc || defaultImage} 
+                                  alt="Hình ảnh của tài khoản"
+                                  className="sizeimggg rounded-circle me-2 shadow"
+                                />{" "}
+                               
+                              </div>
                             </NavLink>
                           </motion.div>
                           <Button

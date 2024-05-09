@@ -1,7 +1,6 @@
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import anh from "../../../assets/image/ttxvn_2303dulichtphcm1.jpg";
 import head from "../../../assets/image/heading-border.png"
 import { Button } from "react-bootstrap";
 import { IoIosSend } from "react-icons/io";

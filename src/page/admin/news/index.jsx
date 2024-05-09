@@ -64,6 +64,8 @@ const News = () => {
            );
            setNews(news.filter((item) => item.news_id !== row.news_id));
                       toast.success("Xoá thành công!");
+                                   window.location.reload();
+
 
          })
        );
