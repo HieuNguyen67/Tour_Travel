@@ -10,6 +10,8 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import LinearProgress from "@mui/material/LinearProgress";
+import LoadingBackdrop from "../../../../components/backdrop";
 
 const truncateString = (str, maxLength) => {
   if (str.length <= maxLength) {
@@ -86,15 +88,13 @@ const handlePageClick = useCallback(
 
   return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
       <h1 className="text-center my-lg-5 my-3 fw-bold">
         {isHomePage ? <> TIN TỨC DU LỊCH</> : <>CẨM NANG DU LỊCH</>}
       </h1>
       <Row className="row-cols-3 my-4">
         {currentNews
-          .sort((a, b) => b.news_id - a.news_id) 
+          .sort((a, b) => b.news_id - a.news_id)
           .map((item) => (
             <Col
               key={item.news_id}

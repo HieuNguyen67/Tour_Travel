@@ -3,11 +3,12 @@ import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../../../../constants/common";
 import { toast } from "react-toastify";
-import { Backdrop, CircularProgress } from "@mui/material";
-import { Button, Form } from "react-bootstrap";
+import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
+import { Button, Container, Form } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
 import { format } from "date-fns";
 import { IoArrowBackOutline } from "react-icons/io5";
+import LoadingBackdrop from "../../../../components/backdrop";
 
 const ContactDetail = () => {
     const{contact_id}=useParams();
@@ -54,9 +55,7 @@ const ContactDetail = () => {
 
   if (loading) return (
     <div>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
     </div>
   );
   if (error) return <div>Error: {error}</div>;

@@ -8,6 +8,7 @@ import { Button, Col,Form } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
+import LoadingBackdrop from "../../../../components/backdrop";
 
 const UpdateNews = () => {
   const [title, setTitle] = useState("");
@@ -65,9 +66,7 @@ const navigate = useNavigate();
 
   return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
       <div className="mt-2">
         <Link to="/admin/news">
           <IoArrowBackOutline className="fs-3 mb-3" />

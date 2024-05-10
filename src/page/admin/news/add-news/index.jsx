@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 
 
 const AddNews = () => {
-  const { accountId } = useAuth();
+  const { accountId ,token} = useAuth();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -26,7 +26,12 @@ const navigate=useNavigate();
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5020/v1/api/admin/news-categories"
+          `http://localhost:5020/v1/api/admin/news-categories`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setCategories(response.data);
       } catch (error) {

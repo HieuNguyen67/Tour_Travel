@@ -8,9 +8,10 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { MdDeleteForever } from "react-icons/md";
 import { BLUE_COLOR } from "../../../constants/color";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdEmojiTransportation } from "react-icons/md";
+import LoadingBackdrop from "../../../components/backdrop";
 
 const ListVehicle = () => {
   const { accountId } = useAuth();
@@ -68,7 +69,10 @@ const ListVehicle = () => {
       setError("Failed to delete selected news");
     }
   };
-
+  const navigate=useNavigate();
+const handleRowClick = (params) => {
+  navigate(`/business/edit-vehicle/${params.row.vehicle_id}`);
+};
   const columns = [
     {
       field: "checkbox",
@@ -82,16 +86,47 @@ const ListVehicle = () => {
         />
       ),
     },
-    { field: "vehicle_id", headerName: "ID", width: 50 },
-    { field: "type", headerName: "Loại", width: 300 },
-    { field: "description", headerName: "Mô tả", width: 300 },
+    {
+      field: "vehicle_id",
+      headerName: "ID",
+      width: 50,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
+    {
+      field: "type",
+      headerName: "Loại",
+      width: 300,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
+    {
+      field: "description",
+      headerName: "Mô tả",
+      width: 300,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
   ];
 
   return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
       <p className="text-end">
         <Button
           variant="danger"

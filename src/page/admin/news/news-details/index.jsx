@@ -12,6 +12,7 @@ import { FiEdit } from "react-icons/fi";
 import { LuClock8 } from "react-icons/lu";
 import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
+import LoadingBackdrop from '../../../../components/backdrop';
 
 const NewsDetail = () => {
   const [news, setNews] = useState(null);
@@ -86,9 +87,7 @@ const handleUpdate = async () => {
 
   if (loading) return (
     <div>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
     </div>
   );
   if (error) return <div>Error: {error}</div>;

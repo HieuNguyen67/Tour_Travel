@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { BASE_URL } from "../../../constants/common";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
 import { GREEN_COLOR, YELLOW_COLOR } from "../../../constants/color";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import LoadingBackdrop from "../../../components/backdrop";
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
@@ -152,9 +153,7 @@ const handleRowClick = (params) => {
 
   if (loading) return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
     </>
   );
   if (error) return <div>Error: {error}</div>;

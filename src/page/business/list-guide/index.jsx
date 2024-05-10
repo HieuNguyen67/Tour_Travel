@@ -12,32 +12,26 @@ import { toast } from "react-toastify";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
 import LoadingBackdrop from "../../../components/backdrop";
+import { BASE_URL } from "../../../constants/common";
+import { useAuth } from "../../../context";
 
-const ListUser = () => {
+const ListGuide = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
- const location = useLocation();
-
- const isHomePage =
-   location.pathname === "/admin/list-customer";
-    
+  const location = useLocation();
+const {accountId}=useAuth();
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        if (isHomePage) {
-          var response = await axios.get(
-            "http://localhost:5020/v1/api/admin/get-users?role_id=1"
-          );
-        } else {
-          var response = await axios.get(
-            "http://localhost:5020/v1/api/admin/get-users?role_id=3"
-          );
-        }
+        const response = await axios.get(
+          `${BASE_URL}/get-guides-by-business?account_business_id=${accountId}`
+        );
 
         setUsers(response.data);
+        console.log(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Lỗi khi lấy danh sách người dùng:", error);
@@ -47,7 +41,7 @@ const ListUser = () => {
     };
 
     fetchUsers();
-  }, [isHomePage]);
+  }, [accountId]);
 
   const handleCheckboxChange = (event, row) => {
     if (event.target.checked) {
@@ -84,7 +78,7 @@ const ListUser = () => {
 
   const handleRowClick = (params) => {
     navigate(
-      `/admin/edit-profile/${params.row.account_id}/${params.row.role_id}`
+      `/business/edit-profile/${params.row.account_id}/${params.row.role_id}`
     );
   };
   const columns = [
@@ -239,31 +233,13 @@ const ListUser = () => {
           >
             <MdDeleteForever className="fs-4" />
           </Button>
-          {isHomePage ? (
-            <>
-              <Link
-                to="/admin/register-user/1"
-                className="text-decoration-none"
-              >
-                {" "}
-                <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                  <AiOutlineUserAdd className="fs-3" />
-                </Button>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/admin/register-user/3"
-                className="text-decoration-none"
-              >
-                {" "}
-                <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                  <MdAddBusiness className="fs-3" />
-                </Button>
-              </Link>
-            </>
-          )}
+
+          <Link to="/business/add-guide" className="text-decoration-none">
+            {" "}
+            <Button style={{ background: BLUE_COLOR, border: "0px" }}>
+              <AiOutlineUserAdd className="fs-3" />
+            </Button>
+          </Link>
         </p>
         <div style={{ height: 520, width: "100%" }}>
           <DataGrid
@@ -271,7 +247,7 @@ const ListUser = () => {
             columns={columns}
             pagination
             autoPageSize
-            getRowId={(row) => row.profile_id}
+            getRowId={(row) => row.guide_id}
           />
         </div>
       </div>
@@ -279,4 +255,4 @@ const ListUser = () => {
   );
 };
 
-export default ListUser;
+export default ListGuide;

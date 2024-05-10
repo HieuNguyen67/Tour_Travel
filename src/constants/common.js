@@ -20,6 +20,7 @@ const BUSINESS = [
   { id: 2, name: "ORDER", link: "/business/order-tour" },
   { id: 3, name: "KHÁCH SẠN", link: "/business/hotel" },
   { id: 4, name: "PHƯƠNG TIỆN", link: "/business/vehicle" },
+  { id: 5, name: "HƯỚNG DẪN VIÊN", link: "/business/list-guide" },
 ];
 const GUIDE = [
   { id: 1, name: "TOUR PHÂN CÔNG", link: "/guide/tour-assigned" },

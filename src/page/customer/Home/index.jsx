@@ -7,10 +7,13 @@ import { Backdrop, Button, CircularProgress } from "@mui/material";
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Header from "../../../components/layout/header";
 import Spinner from "react-bootstrap/Spinner";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
+
 
 const Home = () => {
   const videoRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleVideoLoad = () => {
     setIsLoading(false);
@@ -34,18 +37,30 @@ const optimizedVideoElement = useMemo(
   return (
     <>
       {isLoading && (
-        <Backdrop open={isLoading} style={{ zIndex: 999, color: "#fff" }}>
+        <Backdrop
+          open={isLoading}
+          style={{
+            zIndex: 999,
+            color: "#fff",
+            background:
+              "radial-gradient( circle 815px at 23.4% -21.8%,  rgba(9,29,85,1) 0.2%, rgba(0,0,0,1) 100.2% )",
+          }}
+        >
           {" "}
-          <Spinner animation="border" variant="light" />
+          <Container>
+            <Container>
+              {" "}
+              <h5 className="text-center text-light mb-3">LOADING...</h5>
+              
+                <LinearProgress />
+              
+            </Container>
+          </Container>
         </Backdrop>
       )}
       <Header />
 
-      <motion.div
-        initial={{ opacity: 0, y: 98 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", duration: 0.6 }}
-      >
+    
         {optimizedVideoElement}
         <div>
           <Container className="">
@@ -83,7 +98,6 @@ const optimizedVideoElement = useMemo(
             <Footer />
           </Col>
         </div>
-      </motion.div>
     </>
   );
 };

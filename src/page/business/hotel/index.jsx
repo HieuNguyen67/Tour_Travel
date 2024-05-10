@@ -8,9 +8,10 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { MdDeleteForever } from "react-icons/md";
 import { BLUE_COLOR } from "../../../constants/color";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RiHotelLine } from "react-icons/ri";
 import { toast } from "react-toastify";
+import LoadingBackdrop from "../../../components/backdrop";
 
 
 
@@ -81,6 +82,12 @@ const ListHotel = () => {
          setError("Failed to delete selected news");
        }
      };
+     
+     const navigate = useNavigate();
+
+     const handleRowClick = (params) => {
+       navigate(`/business/edit-hotel/${params.row.hotel_id}`);
+     };
 
   const columns = [
     {
@@ -95,29 +102,71 @@ const ListHotel = () => {
         />
       ),
     },
-    { field: "hotel_id", headerName: "ID", width: 50 },
-    { field: "name", headerName: "Tên", width: 300 },
+    {
+      field: "hotel_id",
+      headerName: "ID",
+      width: 50,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
+    {
+      field: "name",
+      headerName: "Tên",
+      width: 300,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
     {
       field: "star",
       headerName: "Star",
       width: 100,
-      renderCell: renderStarIcon,
+      renderCell: renderStarIcon
     },
-    { field: "address", headerName: "Địa chỉ", width: 450 },
-    { field: "contact_info", headerName: "Liên hệ", width: 400 },
+    {
+      field: "address",
+      headerName: "Địa chỉ",
+      width: 450,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
+    {
+      field: "contact_info",
+      headerName: "Liên hệ",
+      width: 400,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
   ];
 
  
 
   return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
       <p className="text-end">
         <Button
           variant="danger"
-            onClick={handleDeleteSelected}
+          onClick={handleDeleteSelected}
           className="me-2"
         >
           <MdDeleteForever className="fs-4" />

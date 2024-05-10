@@ -11,6 +11,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import { FaEdit } from "react-icons/fa";
 import { BLUE_COLOR, COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../../constants/color";
+import LoadingBackdrop from "../../../components/backdrop";
 
 const News = () => {
  const [news, setNews] = useState([]);
@@ -218,9 +219,7 @@ const News = () => {
 
   return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
       <p className="text-end">
         <Button
           variant="danger"

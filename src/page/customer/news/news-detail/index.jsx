@@ -12,6 +12,7 @@ import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { RiHome6Line } from "react-icons/ri";
 import { FaAngleRight } from "react-icons/fa";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const NewsDetailCustomer = () => {
   const [news, setNews] = useState(null);
@@ -42,8 +43,22 @@ const NewsDetailCustomer = () => {
   if (loading)
     return (
       <div>
-        <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-          <CircularProgress color="inherit" />
+        <Backdrop
+          open={loading}
+          style={{
+            zIndex: 999,
+            color: "#fff",
+            background: "white",
+          }}
+        >
+          {" "}
+          <Container>
+            <Container>
+              {" "}
+              <h5 className="text-center text-dark mb-3">LOADING...</h5>
+              <LinearProgress color="secondary" />
+            </Container>
+          </Container>
         </Backdrop>
       </div>
     );

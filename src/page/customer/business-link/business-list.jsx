@@ -4,10 +4,11 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Backdrop, CircularProgress } from "@mui/material";
 import Placeholder from "react-bootstrap/Placeholder";
 import "./business-link.scss";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 
-const BusinessList = () => {
+const BusinessList = ({ loading, setLoading }) => {
   const [accounts, setAccounts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -46,22 +47,7 @@ const BusinessList = () => {
     });
   };
 
-  if (loading) return (
-    <>
-      <Row className="d-flex flex-column">
-        <Col>
-          <p>Loading...</p>
-        </Col>
-        <Col className="col-12">
-          {" "}
-          <Placeholder as="p" animation="glow">
-            <Placeholder xs={12} />
-          </Placeholder>
-        </Col>
-      </Row>
 
-    </>
-  );
   if (error) return <div>Error: {error}</div>;
 
   return <>{renderAccounts()}</>;

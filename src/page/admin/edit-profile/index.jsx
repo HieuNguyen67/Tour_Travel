@@ -5,11 +5,12 @@ import { useAuth } from "../../../context";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
 import { FaSave } from "react-icons/fa";
 import LoadImage from "./load-image";
 import { IoArrowBackOutline } from "react-icons/io5";
 import UpdateImageProfile from "./up-image";
+import LoadingBackdrop from "../../../components/backdrop";
 
 const EditProfile = () => {
     const {account_id,role_id}=useParams();
@@ -71,7 +72,9 @@ const EditProfile = () => {
       toast.success("Thông tin tài khoản đã được cập nhật!");
       {role_id == 3
         ? navigate("/admin/list-business")
-        : navigate("/admin/list-customer")};
+        : role_id == 4
+        ? navigate("/business/list-guide")
+        : navigate("/admin/list-customer");};
             
 
     } catch (error) {
@@ -88,12 +91,14 @@ const EditProfile = () => {
 
   return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
       <Container className="my-lg-3 my-2   pb-5">
         {role_id == 3 ? (
           <Link to="/admin/list-business">
+            <IoArrowBackOutline className="fs-3 mb-3" />
+          </Link>
+        ) : role_id == 4 ? (
+          <Link to="/business/list-guide">
             <IoArrowBackOutline className="fs-3 mb-3" />
           </Link>
         ) : (
@@ -105,6 +110,10 @@ const EditProfile = () => {
         {role_id == 3 ? (
           <>
             <h4 className="mb-lg-5 fw-bold">THÔNG TIN DOANH NGHIỆP:</h4>
+          </>
+        ) : role_id == 4 ? (
+          <>
+            <h4 className="mb-lg-5 fw-bold">THÔNG TIN HƯỚNG DẪN VIÊN:</h4>
           </>
         ) : (
           <>

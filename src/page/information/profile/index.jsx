@@ -9,6 +9,7 @@ import {  Backdrop, CircularProgress} from "@mui/material";
 import { FaSave } from "react-icons/fa";
 import UpdateImage from "../../../components/up-images";
 import { IoArrowBackOutline } from "react-icons/io5";
+import LoadingBackdrop from "../../../components/backdrop";
 
 const Profile = () => {
   const { accountId, isLoggedIn } = useAuth();
@@ -85,9 +86,7 @@ const Profile = () => {
 
   return (
     <>
-      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop open={loading} />
       <Container className="my-lg-5 my-2   pb-5">
         <Row>
           <Col className="col-lg-3 col-12">
