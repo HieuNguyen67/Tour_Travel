@@ -7,7 +7,7 @@ import "./load-image.scss";
 import { BASE_URL } from "../../constants/common";
 
 const DisplayImage = () => {
-  const { accountId } = useAuth();
+  const { accountId,token } = useAuth();
 
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
@@ -19,6 +19,11 @@ const DisplayImage = () => {
           `${BASE_URL}/account/image/${accountId}`,
           {
             responseType: "blob",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         const imageURL = URL.createObjectURL(response.data);

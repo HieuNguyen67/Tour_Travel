@@ -3,12 +3,13 @@ import axios from "axios";
 import DisplayImage from "./load-image";
 import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../../../context";
 
 const UpdateImageProfile = () => {
     const {account_id}=useParams();
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
-
+const{token}=useAuth();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -32,9 +33,11 @@ const UpdateImageProfile = () => {
         formData,
         {
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
+        
       );
 
       alert("Hình ảnh đã được cập nhật.");

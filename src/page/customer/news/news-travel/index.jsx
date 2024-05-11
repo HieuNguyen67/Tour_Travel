@@ -28,6 +28,8 @@ const NewsTravel = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState();
+    const [sortedNews, setSortedNews] = useState([]);
+
 
   useEffect(() => {
     let indexx = 0;
@@ -80,11 +82,19 @@ const handlePageClick = useCallback(
   },
   [setCurrentPage]
 );
-  const currentNews = useMemo(() => {
-    const start = currentPage * itemsPerPage;
-    const end = start + itemsPerPage;
-    return news.slice(start, end);
-  }, [currentPage, itemsPerPage, news]);
+ useEffect(() => {
+   // Sort news by created_at in descending order (newest first)
+   const sorted = [...news].sort(
+     (a, b) => new Date(b.created_at) - new Date(a.created_at)
+   );
+   setSortedNews(sorted);
+ }, [news]);
+
+ const currentNews = useMemo(() => {
+   const start = currentPage * itemsPerPage;
+   const end = start + itemsPerPage;
+   return sortedNews.slice(start, end);
+ }, [currentPage, itemsPerPage, sortedNews]);
 
   return (
     <>
@@ -94,7 +104,6 @@ const handlePageClick = useCallback(
       </h1>
       <Row className="row-cols-3 my-4">
         {currentNews
-          .sort((a, b) => b.news_id - a.news_id)
           .map((item) => (
             <Col
               key={item.news_id}

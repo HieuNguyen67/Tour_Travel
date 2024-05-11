@@ -8,16 +8,22 @@ import { Button, Container } from "react-bootstrap";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import LoadingBackdrop from "../../../components/backdrop";
+import { useAuth } from "../../../context";
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+const{token}=useAuth();
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/get-contacts`);
+        const response = await axios.get(`${BASE_URL}/get-contacts`, {
+        
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setContacts(response.data);
         setLoading(false);
       } catch (error) {

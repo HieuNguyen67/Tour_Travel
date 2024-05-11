@@ -14,7 +14,7 @@ import LoadingBackdrop from "../../../components/backdrop";
 
 const EditProfile = () => {
     const {account_id,role_id}=useParams();
-  const {  isLoggedIn } = useAuth();
+  const {  isLoggedIn,token } = useAuth();
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -37,7 +37,12 @@ const EditProfile = () => {
     const fetchAccountData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5020/v1/api/admin/account/${account_id}`
+          `http://localhost:5020/v1/api/admin/account/${account_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const accountData = response.data;
         setFormData({
@@ -66,6 +71,11 @@ const EditProfile = () => {
         {
           ...formData,
           birth_of_date: formattedDate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

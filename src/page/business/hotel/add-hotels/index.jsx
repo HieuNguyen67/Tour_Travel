@@ -11,7 +11,7 @@ import { BLUE_COLOR } from "../../../../constants/color";
 import { MdAddToPhotos } from "react-icons/md";
 
 const AddHotelForm = () => {
-  const { accountId } = useAuth();
+  const { accountId ,token} = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     star: "",
@@ -26,7 +26,15 @@ const AddHotelForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${BASE_URL}/add-hotels/${accountId}`, formData);
+      const res = await axios.post(
+        `${BASE_URL}/add-hotels/${accountId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setFormData({
         name: "",
         star: "",

@@ -22,7 +22,7 @@ const RegisterUser = () => {
     address: "",
     email: "",
   });
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, token } = useAuth();
 
   const [error, setError] = useState("");
 
@@ -35,14 +35,19 @@ const RegisterUser = () => {
     
     try {
       if (role_id==3){ await axios.post(
-        "http://localhost:5020/v1/api/admin/register-business",
-        formData
+        `http://localhost:5020/v1/api/admin/register-business`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
      toast.success("Đăng ký thành công !");
      navigate("/admin/list-business");
     }else{
         await axios.post(
-          "http://localhost:5020/v1/api/admin/register",
+          `http://localhost:5020/v1/api/admin/register`,
           formData
         );
          toast.success("Đăng ký thành công !");

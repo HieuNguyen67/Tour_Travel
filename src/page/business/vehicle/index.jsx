@@ -14,7 +14,7 @@ import { MdEmojiTransportation } from "react-icons/md";
 import LoadingBackdrop from "../../../components/backdrop";
 
 const ListVehicle = () => {
-  const { accountId } = useAuth();
+  const { accountId ,token} = useAuth();
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -24,7 +24,12 @@ const ListVehicle = () => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/list-vehicles/${accountId}`
+          `${BASE_URL}/list-vehicles/${accountId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setVehicles(response.data);
         setLoading(false);
@@ -53,7 +58,11 @@ const ListVehicle = () => {
     try {
       await Promise.all(
         selectedRows.map(async (row) => {
-          await axios.delete(`${BASE_URL}/delete-vehicle/${row.vehicle_id}`);
+          await axios.delete(`${BASE_URL}/delete-vehicle/${row.vehicle_id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           setVehicles(
             vehicles.filter((item) => item.vehicle_id !== row.vehicle_id)
           );

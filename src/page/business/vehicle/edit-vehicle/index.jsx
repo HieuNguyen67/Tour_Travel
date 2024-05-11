@@ -12,7 +12,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 
 
 const UpdateVehicle = () => {
-    const{vehicle_id}=useParams();
+    const{vehicle_id,token}=useParams();
   const [formData, setFormData] = useState({
     type: "",
     description: "",
@@ -23,7 +23,14 @@ const UpdateVehicle = () => {
   useEffect(() => {
     const fetchVehicleDetails = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/select-vehicle/${vehicle_id}`);
+        const response = await axios.get(
+          `${BASE_URL}/select-vehicle/${vehicle_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const vehicleDetails = response.data;
         setFormData({
           type: vehicleDetails.type,
@@ -55,7 +62,11 @@ const UpdateVehicle = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${BASE_URL}/update-vehicle/${vehicle_id}`, formData);
+      await axios.put(`${BASE_URL}/update-vehicle/${vehicle_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("Vehicle updated successfully");
         toast.success("Cập nhật thành công !");
         navigate("/business/vehicle");

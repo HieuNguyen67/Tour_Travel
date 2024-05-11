@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
 import LoadingBackdrop from "../../../components/backdrop";
+import { useAuth } from "../../../context";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -19,6 +20,7 @@ const ListUser = () => {
   const [error, setError] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
  const location = useLocation();
+ const{token}=useAuth();
 
  const isHomePage =
    location.pathname === "/admin/list-customer";
@@ -29,11 +31,21 @@ const ListUser = () => {
       try {
         if (isHomePage) {
           var response = await axios.get(
-            "http://localhost:5020/v1/api/admin/get-users?role_id=1"
+            `http://localhost:5020/v1/api/admin/get-users?role_id=1`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
         } else {
           var response = await axios.get(
-            "http://localhost:5020/v1/api/admin/get-users?role_id=3"
+            `http://localhost:5020/v1/api/admin/get-users?role_id=3`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
         }
 
@@ -65,7 +77,12 @@ const ListUser = () => {
       await Promise.all(
         selectedRows.map(async (row) => {
           await axios.delete(
-            `http://localhost:5020/v1/api/admin/delete-users/${row.profile_id}`
+            `http://localhost:5020/v1/api/admin/delete-users/${row.profile_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           setUsers(users.filter((item) => item.profile_id !== row.profile_id));
           toast.success("Xoá thành công!");

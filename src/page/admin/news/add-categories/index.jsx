@@ -3,12 +3,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { IoMdAddCircle } from "react-icons/io";
+import { useAuth } from "../../../../context";
 
 const AddCategories = () => {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [showForm, setShowForm] = useState(false); 
+  const{token}=useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +19,10 @@ const AddCategories = () => {
         "http://localhost:5020/v1/api/admin/add-newscategories",
         {
           name,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`          },
         }
       );
       toast.success("Thêm danh mục thành công!");

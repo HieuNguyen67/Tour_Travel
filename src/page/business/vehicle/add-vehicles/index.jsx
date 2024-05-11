@@ -11,7 +11,7 @@ import { BLUE_COLOR } from "../../../../constants/color";
 import { MdAddToPhotos } from "react-icons/md";
 
 const AddVehicleForm = () => {
-  const { accountId } = useAuth();
+  const { accountId ,token} = useAuth();
   const [formData, setFormData] = useState({
     type: "",
     description: ""
@@ -25,7 +25,15 @@ const AddVehicleForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${BASE_URL}/add-vehicles/${accountId}`, formData);
+      const res = await axios.post(
+        `${BASE_URL}/add-vehicles/${accountId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setFormData({
         name: "",
         description: ""

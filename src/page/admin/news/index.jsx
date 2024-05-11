@@ -9,23 +9,46 @@ import { format } from "date-fns";
 import { MdDeleteForever } from "react-icons/md";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
+import { BiEdit } from "react-icons/bi";
 import { BLUE_COLOR, COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../../constants/color";
 import LoadingBackdrop from "../../../components/backdrop";
+import { useAuth } from "../../../context";
 
 const News = () => {
  const [news, setNews] = useState([]);
  const [loading, setLoading] = useState(true);
  const [error, setError] = useState("");
  const [selectedRows, setSelectedRows] = useState([]);
-
+const { token, role, accountId } = useAuth();
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5020/v1/api/admin/list-news"
+        if(role==2){
+          var response = await axios.get(
+            `http://localhost:5020/v1/api/admin/list-news`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+        }else{
+           var response = await axios.get(
+             `http://localhost:5020/v1/api/admin/list-news/${accountId}`,
+             {
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+             }
+           );
+        }
+        
+        const sortedNews = response.data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
-        setNews(response.data);
+
+        setNews(sortedNews);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch news:", error);
@@ -40,10 +63,16 @@ const News = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    navigate(`/admin/news-detail/${params.row.news_id}`);
+    {role == 2
+      ? navigate(`/admin/news-detail/${params.row.news_id}`)
+      : navigate(`/business/news-detail/${params.row.news_id}`);}
+    
   };
    const handleRowClick1 = (params) => {
-     navigate(`/admin/edit-news/${params.row.news_id}`);
+    {role == 2
+      ? navigate(`/admin/edit-news/${params.row.news_id}`)
+      : navigate(`/business/edit-news/${params.row.news_id}`);}
+    
    };
    const handleCheckboxChange = (event, row) => {
      if (event.target.checked) {
@@ -61,7 +90,11 @@ const News = () => {
        await Promise.all(
          selectedRows.map(async (row) => {
            await axios.delete(
-             `http://localhost:5020/v1/api/admin/delete-news/${row.news_id}`
+             `http://localhost:5020/v1/api/admin/delete-news/${row.news_id}`,
+             {
+               headers: {
+                 Authorization: `Bearer ${token}`               },
+             }
            );
            setNews(news.filter((item) => item.news_id !== row.news_id));
                       toast.success("Xoá thành công!");
@@ -101,7 +134,12 @@ const News = () => {
           onClick={() => handleRowClick(params)}
           src={`data:image/jpeg;base64,${params.value}`}
           alt="News Image"
-          style={{ width: "100%", height: "5rem", cursor: "pointer",objectFit:'cover' }}
+          style={{
+            width: "100%",
+            height: "5rem",
+            cursor: "pointer",
+            objectFit: "cover",
+          }}
           className="rounded"
         />
       ),
@@ -134,7 +172,7 @@ const News = () => {
         }
         return (
           <Button
-          className="col-12 py-2"
+            className="col-12 py-2"
             style={{
               background: buttonColor,
               border: "0px",
@@ -146,6 +184,34 @@ const News = () => {
           </Button>
         );
       },
+    },
+    {
+      field: "delete",
+      headerName: "Sửa",
+      width: 80,
+      renderCell: (params) => (
+        <Button
+          style={{ background: RED_COLOR, border: "0px" }}
+          onClick={() => handleRowClick1(params)}
+          className="py-2"
+        >
+          <BiEdit className="fs-5" />
+        </Button>
+      ),
+    },
+    {
+      field: "created_at",
+      headerName: "Ngày tạo",
+      width: 110,
+      renderCell: (params) => (
+        <span
+          className="fw-bold text-primary"
+          style={{ cursor: "pointer" }}
+          onClick={() => handleRowClick(params)}
+        >
+          {format(new Date(params.value), "dd/MM/yyyy")}
+        </span>
+      ),
     },
     {
       field: "title",
@@ -171,11 +237,12 @@ const News = () => {
         />
       ),
     },
+
     { field: "category_name", headerName: "Danh mục", width: 150 },
     {
       field: "profile_name",
       headerName: "Người đăng",
-      width: 150,
+      width: 170,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -184,35 +251,8 @@ const News = () => {
         />
       ),
     },
-    {
-      field: "created_at",
-      headerName: "Ngày tạo",
-      width: 110,
-      renderCell: (params) => (
-        <span
-          className="fw-bold text-primary"
-          style={{ cursor: "pointer" }}
-          onClick={() => handleRowClick(params)}
-        >
-          {format(new Date(params.value), "dd/MM/yyyy")}
-        </span>
-      ),
-    },
+
     { field: "note", headerName: "Ghi chú", width: 150 },
-    {
-      field: "delete",
-      headerName: "Sửa",
-      width: 100,
-      renderCell: (params) => (
-        <Button
-          style={{ background: RED_COLOR, border: "0px" }}
-          onClick={() => handleRowClick1(params)}
-          className="fs-5"
-        >
-          <FaEdit />
-        </Button>
-      ),
-    },
   ];
 
   if (error) return <div>Error: {error}</div>;
@@ -228,7 +268,7 @@ const News = () => {
         >
           <MdDeleteForever className="fs-4" />
         </Button>
-        <Link to="/admin/add-news">
+        <Link to={role == 2 ? "/admin/add-news" : "/business/add-news"}>
           <Button style={{ background: BLUE_COLOR, border: "0px" }}>
             <MdAddBox className="fs-4" /> Thêm mới
           </Button>

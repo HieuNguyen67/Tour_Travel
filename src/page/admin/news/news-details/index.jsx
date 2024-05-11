@@ -13,6 +13,7 @@ import { LuClock8 } from "react-icons/lu";
 import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
 import LoadingBackdrop from '../../../../components/backdrop';
+import { useAuth } from '../../../../context';
 
 const NewsDetail = () => {
   const [news, setNews] = useState(null);
@@ -22,11 +23,17 @@ const NewsDetail = () => {
   const [details, setDetails] = useState({});
  const [status, setStatus] = useState("");
  const [note, setNote] = useState("");
+ const{token,role}=useAuth();
   useEffect(() => {
     const fetchNews = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5020/v1/api/admin/news-detail/${news_id}`
+          `http://localhost:5020/v1/api/admin/news-detail/${news_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setNews(response.data);
         setLoading(false);
@@ -44,7 +51,11 @@ useEffect(() => {
   const fetchNewsDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5020/v1/api/admin/select-status-note/${news_id}`
+        `http://localhost:5020/v1/api/admin/select-status-note/${news_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`          },
+        }
       );
       const { status: initialStatus, note: initialNote } = response.data;
       setStatus(initialStatus);
@@ -71,6 +82,11 @@ const handleUpdate = async () => {
       {
         status,
         note,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     console.log("News status and note updated successfully");
@@ -95,43 +111,49 @@ const handleUpdate = async () => {
 
   return (
     <>
-      
-      <Link to="/admin/news">
+      <Link to={role == 2 ? "/admin/news" : "/business/list-news"}>
         <IoArrowBackOutline className="fs-3 mb-3" />
       </Link>
-      <div className="border shadow-sm py-3 px-3 rounded-4 mb-4">
-        <h2 className="fw-bold">DUYỆT BÀI</h2>
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>Trạng thái:</Form.Label>
-            <Form.Control
-              as="select"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option value="Pending">Pending</option>
-              <option value="Confirm">Confirm</option>
-              <option value="Reject">Reject</option>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Ghi chú:</Form.Label>
-            <Form.Control
-              as="textarea"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-            />
-          </Form.Group>
-          <Button
-            onClick={handleUpdate}
-            disabled={loading}
-            variant="warning"
-            className="mb-3"
-          >
-            <FaSave /> Cập nhật
-          </Button>
-        </Form>
-      </div>
+      {role == 2 ? (
+        <>
+          <div className="border shadow-sm py-3 px-3 rounded-4 mb-4">
+            <h2 className="fw-bold">DUYỆT BÀI</h2>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Trạng thái:</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Confirm">Confirm</option>
+                  <option value="Reject">Reject</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Ghi chú:</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                />
+              </Form.Group>
+              <Button
+                onClick={handleUpdate}
+                disabled={loading}
+                variant="warning"
+                className="mb-3"
+              >
+                <FaSave /> Cập nhật
+              </Button>
+            </Form>
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
+
       {error && <div>Error: {error}</div>}
       {news.map((item, index) => (
         <div className="imgg" key={item.index}>
@@ -148,11 +170,11 @@ const handleUpdate = async () => {
                 <LuClock8 /> {format(new Date(item.created_at), "dd/MM/yyyy")}
               </p>
             </Col>
-            <Col className="col-lg-2 col-6 my-3 ">
+            <Col className=" col-6 my-3 ">
               {" "}
               <p
-                style={{ background: "#f2f4f7", fontSize: "16px" }}
-                className="text-center rounded-3 fw-bold"
+                style={{ fontSize: "16px" }}
+                className="text-start rounded-3 fw-bold"
               >
                 <FiEdit /> {item.profile_name}
               </p>

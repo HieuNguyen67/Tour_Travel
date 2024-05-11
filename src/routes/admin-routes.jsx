@@ -16,20 +16,21 @@ const AdminRoutes = () => {
         <Routes>
           <Route path="/list-customer" element={<ListUser />} />
           <Route path="/register-user/:role_id" element={<RegisterUser />} />
-          <Route path="/add-news" element={<AddNews />} />
           <Route path="/list-business" element={<ListUser />} />
 
           <Route
             path="/edit-profile/:account_id/:role_id"
             element={<EditProfile />}
           />
+          <Route path="/add-news" element={<AddNews />} />
           <Route path="/news-detail/:news_id" element={<NewsDetail />} />
-
           <Route path="/edit-news/:news_id" element={<UpdateNews />} />
-
           <Route path="/news" element={<News />} />
           <Route path="/contact" element={<ContactList />} />
-          <Route path="/contact-detail/:contact_id" element={<ContactDetail />} />
+          <Route
+            path="/contact-detail/:contact_id"
+            element={<ContactDetail />}
+          />
 
           <Route path="*" element={<Navigate to="/list-customer" />} />
         </Routes>

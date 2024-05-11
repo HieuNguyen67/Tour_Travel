@@ -21,6 +21,8 @@ const BUSINESS = [
   { id: 3, name: "KHÁCH SẠN", link: "/business/hotel" },
   { id: 4, name: "PHƯƠNG TIỆN", link: "/business/vehicle" },
   { id: 5, name: "HƯỚNG DẪN VIÊN", link: "/business/list-guide" },
+  { id: 6, name: "TIN TỨC", link: "/business/list-news" },
+
 ];
 const GUIDE = [
   { id: 1, name: "TOUR PHÂN CÔNG", link: "/guide/tour-assigned" },

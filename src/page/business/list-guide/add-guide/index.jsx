@@ -11,7 +11,7 @@ import { BASE_URL } from "../../../../constants/common";
 
 const AddGuide = () => {
   const navigate = useNavigate();
-  const {accountId}=useAuth();
+  const {accountId,token}=useAuth();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -34,7 +34,11 @@ const AddGuide = () => {
 
     try {
       
-        await axios.post(`${BASE_URL}/register-guides/${accountId}`, formData);
+        await axios.post(`${BASE_URL}/register-guides/${accountId}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         toast.success("Đăng ký thành công !");
         navigate("/business/list-guide");
       

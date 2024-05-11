@@ -9,6 +9,7 @@ import { FaSave } from "react-icons/fa";
 import { format } from "date-fns";
 import { IoArrowBackOutline } from "react-icons/io5";
 import LoadingBackdrop from "../../../../components/backdrop";
+import { useAuth } from "../../../../context";
 
 const ContactDetail = () => {
     const{contact_id}=useParams();
@@ -16,12 +17,19 @@ const ContactDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
    const [status, setStatus] = useState("");
-
+const{token}=useAuth();
 
   useEffect(() => {
     const fetchContact = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/contacts-detail/${contact_id}`);
+        const response = await axios.get(
+          `${BASE_URL}/contacts-detail/${contact_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setContact(response.data);
         setStatus(response.data.status);
         setLoading(false);
@@ -41,6 +49,11 @@ const ContactDetail = () => {
         `http://localhost:5020/v1/api/admin/update-status-contact/${contact_id}`,
         {
           status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       console.log("News status and note updated successfully");

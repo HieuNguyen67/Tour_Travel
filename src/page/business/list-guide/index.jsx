@@ -21,13 +21,18 @@ const ListGuide = () => {
   const [error, setError] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
   const location = useLocation();
-const {accountId}=useAuth();
+const {accountId,token}=useAuth();
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/get-guides-by-business?account_business_id=${accountId}`
+          `${BASE_URL}/get-guides-by-business?account_business_id=${accountId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
         setUsers(response.data);
@@ -59,7 +64,12 @@ const {accountId}=useAuth();
       await Promise.all(
         selectedRows.map(async (row) => {
           await axios.delete(
-            `http://localhost:5020/v1/api/admin/delete-users/${row.profile_id}`
+            `http://localhost:5020/v1/api/admin/delete-users/${row.profile_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           setUsers(users.filter((item) => item.profile_id !== row.profile_id));
           toast.success("Xoá thành công!");

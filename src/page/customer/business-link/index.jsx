@@ -35,7 +35,6 @@ const BusinessLink=()=>{
 
           <br />
           <Row className="row-cols-3">
-            {/* Truyền prop loading và hàm callback vào BusinessList */}
             <BusinessList loading={loading} setLoading={setLoadingState} />
           </Row>
           <br />

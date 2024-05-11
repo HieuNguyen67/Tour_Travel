@@ -3,12 +3,14 @@ import axios from "axios";
 import { Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import defaultImage from "../../../assets/image/6945124.png";
+import { useAuth } from "../../../context";
 
 const LoadImage = () => {
  const{account_id}=useParams();
 
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
+  const{token}=useAuth();
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -17,6 +19,11 @@ const LoadImage = () => {
           `http://localhost:5020/v1/api/admin/account/image/${account_id}`,
           {
             responseType: "blob",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         const imageURL = URL.createObjectURL(response.data);

@@ -9,6 +9,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
 import LoadingBackdrop from "../../../../components/backdrop";
+import { useAuth } from "../../../../context";
 
 const UpdateNews = () => {
   const [title, setTitle] = useState("");
@@ -16,13 +17,19 @@ const UpdateNews = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { news_id } = useParams();
+  const{token,role}=useAuth();
 
 
 useEffect(() => {
   const fetchNewsDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5020/v1/api/admin/select-status-note/${news_id}`
+        `http://localhost:5020/v1/api/admin/select-status-note/${news_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const { title: initialTitle, content: initialContent } = response.data;
       setTitle(initialTitle);
@@ -49,11 +56,18 @@ const navigate = useNavigate();
         {
           title,
           content,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       console.log("News updated successfully");
                 toast.success("Cập nhật thành công!");
-                          navigate("/admin/news");
+                           role == 2
+                             ? navigate("/admin/news")
+                             : navigate("/business/list-news");
 
 
     } catch (error) {
@@ -68,7 +82,7 @@ const navigate = useNavigate();
     <>
       <LoadingBackdrop open={loading} />
       <div className="mt-2">
-        <Link to="/admin/news">
+        <Link to={role == 2 ? "/admin/news" : "/business/list-news"}>
           <IoArrowBackOutline className="fs-3 mb-3" />
         </Link>
       </div>

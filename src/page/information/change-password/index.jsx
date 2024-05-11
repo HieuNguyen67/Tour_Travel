@@ -7,7 +7,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { TbPasswordUser } from "react-icons/tb";
 
 const ChangePassword = () => {
-      const { accountId, isLoggedIn } = useAuth();
+      const { accountId, isLoggedIn,token } = useAuth();
         const navigate = useNavigate();
 
  useEffect(() => {
@@ -33,7 +33,12 @@ const ChangePassword = () => {
     try {
       await axios.put(
         `http://localhost:5020/v1/api/admin/account/change-password/${accountId}`,
-        passwords
+        passwords,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
                   toast.success("Mật khẩu đã được thay đổi.");
           setPasswords({

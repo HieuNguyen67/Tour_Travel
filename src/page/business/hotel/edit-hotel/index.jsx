@@ -12,7 +12,7 @@ import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
 
 const UpdateHotel = () => {
-    const{hotel_id}=useParams();
+    const{hotel_id,token}=useParams();
   const [formData, setFormData] = useState({
     name: "",
     star: "",
@@ -26,7 +26,12 @@ const UpdateHotel = () => {
     const fetchHotelDetails = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/select-hotel/${hotel_id}`
+          `${BASE_URL}/select-hotel/${hotel_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const hotelDetails = response.data;
         setFormData({
@@ -60,7 +65,11 @@ const UpdateHotel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${BASE_URL}/update-hotel/${hotel_id}`, formData);
+      await axios.put(`${BASE_URL}/update-hotel/${hotel_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("Hotel updated successfully");
         toast.success("Cập nhật thành công !");
         navigate("/business/hotel");

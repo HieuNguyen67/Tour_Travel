@@ -10,10 +10,11 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import AddCategories from "../add-categories";
 import { MdAddToPhotos } from "react-icons/md";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../../../constants/common";
 
 
 const AddNews = () => {
-  const { accountId ,token} = useAuth();
+  const { accountId ,token,role} = useAuth();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -26,7 +27,7 @@ const navigate=useNavigate();
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5020/v1/api/admin/news-categories`,
+          `${BASE_URL}/news-categories`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -71,13 +72,15 @@ const navigate=useNavigate();
         formDataToSend,
         {
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }
       );
       console.log("News posted:", response.data);
             toast.success("Thêm tin tức thành công!");
-            navigate("/admin/news")
+            role == 2 ? navigate("/admin/news") : navigate("/business/list-news");
+            
     } catch (error) {
       console.error("Failed to post news:", error);
                   toast.error("Thêm tin tức thất bại. Vui lòng điền đầy đủ thông tin !");
@@ -94,7 +97,7 @@ const navigate=useNavigate();
       >
         <Container className=" mx-auto">
           <div className="mt-2">
-            <Link to="/admin/news">
+            <Link to={role == 2 ? "/admin/news" : "/business/list-news"}>
               <IoArrowBackOutline className="fs-3 mb-3" />
             </Link>
             <Row>
@@ -110,7 +113,14 @@ const navigate=useNavigate();
         </Container>
         <br />
         <Container className="mb-5 pb-md-5">
-          <AddCategories />
+          {role == 2 ? (
+            <>
+              {" "}
+              <AddCategories />
+            </>
+          ) : (
+            <></>
+          )}
 
           <form onSubmit={handleSubmit}>
             <Row>
@@ -123,7 +133,7 @@ const navigate=useNavigate();
                     Chọn danh mục:
                   </Form.Label>
                   <Form.Select
-                  required
+                    required
                     aria-label="Default select example"
                     name="newscategory_id"
                     value={formData.newscategory_id}
@@ -187,7 +197,11 @@ const navigate=useNavigate();
               />
             </div>
             <div className="mt-lg-0 mt-3">
-              <Button variant="warning" type="submit" className="mt-5 py-3 col-lg-2 col-12 fw-bold">
+              <Button
+                variant="warning"
+                type="submit"
+                className="mt-5 py-3 col-lg-2 col-12 fw-bold"
+              >
                 <MdAddToPhotos className="fs-5" /> ĐĂNG BÀI
               </Button>{" "}
             </div>

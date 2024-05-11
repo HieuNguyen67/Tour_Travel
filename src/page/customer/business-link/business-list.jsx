@@ -15,7 +15,7 @@ const BusinessList = ({ loading, setLoading }) => {
     const fetchAccounts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5020/v1/api/admin/get-users?role_id=3"
+          `http://localhost:5020/v1/api/admin/get-users?role_id=3`
         );
         setAccounts(response.data);
         setLoading(false);
@@ -67,6 +67,7 @@ const AccountImage = ({ accountId }) => {
         );
         const imageURL = URL.createObjectURL(response.data);
         setImageUrl(imageURL);
+        
       } catch (error) {
         console.error("Lỗi khi lấy hình ảnh:", error);
       }

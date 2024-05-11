@@ -16,7 +16,7 @@ import LoadingBackdrop from "../../../components/backdrop";
 
 
 const ListHotel = () => {
-    const{accountId}=useAuth();
+    const{accountId,token}=useAuth();
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
  const [selectedRows, setSelectedRows] = useState([]);
@@ -26,7 +26,12 @@ const ListHotel = () => {
     const fetchHotels = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/list-hotels/${accountId}`
+          `${BASE_URL}/list-hotels/${accountId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setHotels(response.data);
                 setLoading(false);
@@ -66,9 +71,11 @@ const ListHotel = () => {
        try {
          await Promise.all(
            selectedRows.map(async (row) => {
-             await axios.delete(
-               `${BASE_URL}/delete-hotel/${row.hotel_id}`
-             );
+             await axios.delete(`${BASE_URL}/delete-hotel/${row.hotel_id}`, {
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+             });
              setHotels(hotels.filter((item) => item.hotel_id !== row.hotel_id));
              toast.success("Xoá thành công!");
              window.location.reload();
