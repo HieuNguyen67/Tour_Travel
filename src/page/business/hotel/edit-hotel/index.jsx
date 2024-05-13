@@ -10,9 +10,11 @@ import { BLUE_COLOR } from "../../../../constants/color";
 import { useParams } from "react-router-dom";
 import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
+import { useAuth } from "../../../../context";
 
 const UpdateHotel = () => {
-    const{hotel_id,token}=useParams();
+    const{hotel_id}=useParams();
+    const{token}=useAuth();
   const [formData, setFormData] = useState({
     name: "",
     star: "",
@@ -27,11 +29,7 @@ const UpdateHotel = () => {
       try {
         const response = await axios.get(
           `${BASE_URL}/select-hotel/${hotel_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        
         );
         const hotelDetails = response.data;
         setFormData({

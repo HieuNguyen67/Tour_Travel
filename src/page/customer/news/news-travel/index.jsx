@@ -44,7 +44,7 @@ const NewsTravel = () => {
 
   const fetchNews = useCallback(async () => {
     try {
-      let response;
+      var response;
       if (isHomePage) {
         response = await axios.get(
           `http://localhost:5020/v1/api/admin/list-news-travel/${news_travel}`
@@ -60,7 +60,7 @@ const NewsTravel = () => {
       console.error("Error fetching news:", error);
       setLoading(false);
     }
-  }, [isHomePage, news_travel, travel_guide]);
+  }, [isHomePage, setNews, setLoading]);
 
   useEffect(() => {
     fetchNews();
@@ -83,7 +83,6 @@ const handlePageClick = useCallback(
   [setCurrentPage]
 );
  useEffect(() => {
-   // Sort news by created_at in descending order (newest first)
    const sorted = [...news].sort(
      (a, b) => new Date(b.created_at) - new Date(a.created_at)
    );

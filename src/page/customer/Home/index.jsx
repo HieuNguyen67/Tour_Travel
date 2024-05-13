@@ -42,8 +42,7 @@ const optimizedVideoElement = useMemo(
           style={{
             zIndex: 999,
             color: "#fff",
-            background:
-              "radial-gradient( circle 815px at 23.4% -21.8%,  rgba(9,29,85,1) 0.2%, rgba(0,0,0,1) 100.2% )",
+            background: "black",
           }}
         >
           {" "}
@@ -51,53 +50,49 @@ const optimizedVideoElement = useMemo(
             <Container>
               {" "}
               <h5 className="text-center text-light mb-3">LOADING...</h5>
-              
-                <LinearProgress />
-              
+              <LinearProgress color="inherit" />
             </Container>
           </Container>
         </Backdrop>
       )}
       <Header />
 
-    
-        {optimizedVideoElement}
-        <div>
-          <Container className="">
-            <div className="pt-lg-5 zindex">
-              <div className="pt-5 me-lg-5">
-                <Row className="d-flex flex-column mt-5">
-                  <Col className="pt-lg-5 pt-4 pt-md-5 mt-lg-5">
-                    <h2 className="white fontwelcome text-warning textshadow font-family">
-                      Welcome to Travel Tour
-                    </h2>
-                  </Col>
-                  <Col className="">
-                    <h1 className="white fonttttt fonttts textshadow font-family">
-                      {" "}
-                      Khám phá địa điểm du lịch yêu thích của bạn với chúng tôi
-                    </h1>
-                  </Col>
-                  <Col>
-                    <p className="white fontttts textshadow font-family">
-                      Du lịch đến bất cứ nơi nào bạn chỉ cần liên hệ với chúng
-                      tôi
-                    </p>
-                  </Col>
-                </Row>
-              </div>
+      {optimizedVideoElement}
+      <div>
+        <Container className="">
+          <div className="pt-lg-5 zindex">
+            <div className="pt-5 me-lg-5">
+              <Row className="d-flex flex-column mt-5">
+                <Col className="pt-lg-5 pt-4 pt-md-5 mt-lg-5">
+                  <h2 className="white fontwelcome text-warning textshadow font-family">
+                    Welcome to Travel Tour
+                  </h2>
+                </Col>
+                <Col className="">
+                  <h1 className="white fonttttt fonttts textshadow font-family">
+                    {" "}
+                    Khám phá địa điểm du lịch yêu thích của bạn với chúng tôi
+                  </h1>
+                </Col>
+                <Col>
+                  <p className="white fontttts textshadow font-family">
+                    Du lịch đến bất cứ nơi nào bạn chỉ cần liên hệ với chúng tôi
+                  </p>
+                </Col>
+              </Row>
             </div>
-          </Container>{" "}
-        </div>
+          </div>
+        </Container>{" "}
+      </div>
 
-        <div className="boxhome col-12">
-          <Container>
-            <h1>WELCOME</h1> <h1>WELCOME</h1> <h1>WELCOME</h1> <h1>WELCOME</h1>
-          </Container>
-          <Col className="col-12 ">
-            <Footer />
-          </Col>
-        </div>
+      <div className="boxhome col-12">
+        <Container>
+          <h1>WELCOME</h1> <h1>WELCOME</h1> <h1>WELCOME</h1> <h1>WELCOME</h1>
+        </Container>
+        <Col className="col-12 ">
+          <Footer />
+        </Col>
+      </div>
     </>
   );
 };

@@ -142,7 +142,7 @@ const ListHotel = () => {
     {
       field: "address",
       headerName: "Địa chỉ",
-      width: 450,
+      width: 550,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -154,7 +154,7 @@ const ListHotel = () => {
     {
       field: "contact_info",
       headerName: "Liên hệ",
-      width: 400,
+      width: 350,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}

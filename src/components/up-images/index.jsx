@@ -4,6 +4,8 @@ import { useAuth } from "../../context";
 import DisplayImage from "./load-image";
 import { Button } from "react-bootstrap";
 import { BASE_URL } from "../../constants/common";
+import { BsImageFill } from "react-icons/bs";
+import { FaSave } from "react-icons/fa";
 
 const UpdateImage = () => {
   const { accountId, isLoggedIn } = useAuth();
@@ -50,13 +52,16 @@ const UpdateImage = () => {
   return (
     <div>
       <DisplayImage />
-      <p className="fw-bold">Chọn ảnh đại diện:</p>
+      <p className="fw-bold">
+        <BsImageFill />&nbsp;
+        Chọn ảnh đại diện:
+      </p>
       {error && <div style={{ color: "red" }}>{error}</div>}
       <form onSubmit={handleSubmit}>
         <input type="file" accept="image/*" onChange={handleImageChange} />
         <br />
         <Button variant="dark" type="submit" className="my-2">
-          Cập nhật hình ảnh
+         <FaSave/> Cập nhật hình ảnh
         </Button>
       </form>
     </div>

@@ -5,6 +5,7 @@ import News from "../page/admin/news";
 import AddNews from "../page/admin/news/add-news";
 import UpdateNews from "../page/admin/news/edit-news";
 import NewsDetail from "../page/admin/news/news-details";
+import AddTourForm from "../page/business/add-tour";
 import ListHotel from "../page/business/hotel";
 import AddHotelForm from "../page/business/hotel/add-hotels";
 import UpdateHotel from "../page/business/hotel/edit-hotel";
@@ -31,6 +32,7 @@ const BusinessRoutes = () => {
           <Route path="/add-vehicle" element={<AddVehicleForm />} />
           <Route path="/list-guide" element={<ListGuide />} />
           <Route path="/add-guide" element={<AddGuide />} />
+          <Route path="/add-tour" element={<AddTourForm />} />
           <Route
             path="/edit-profile/:account_id/:role_id"
             element={<EditProfile />}

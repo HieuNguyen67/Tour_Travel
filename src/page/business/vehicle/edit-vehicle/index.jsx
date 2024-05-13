@@ -9,10 +9,12 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { BLUE_COLOR } from "../../../../constants/color";
 import { Backdrop, CircularProgress } from "@mui/material";
+import { useAuth } from "../../../../context";
 
 
 const UpdateVehicle = () => {
-    const{vehicle_id,token}=useParams();
+    const{vehicle_id}=useParams();
+    const{token}=useAuth();
   const [formData, setFormData] = useState({
     type: "",
     description: "",
@@ -25,11 +27,7 @@ const UpdateVehicle = () => {
       try {
         const response = await axios.get(
           `${BASE_URL}/select-vehicle/${vehicle_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+         
         );
         const vehicleDetails = response.data;
         setFormData({

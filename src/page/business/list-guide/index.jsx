@@ -3,11 +3,8 @@ import axios from "axios";
 import { format } from "date-fns";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
 import { Button, Container } from "react-bootstrap";
 import { MdDeleteForever } from "react-icons/md";
-import { LiaEditSolid } from "react-icons/lia";
-import { MdAddBusiness } from "react-icons/md";
 import { toast } from "react-toastify";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
@@ -234,7 +231,6 @@ const {accountId,token}=useAuth();
   return (
     <>
       <LoadingBackdrop open={loading} />
-      <div style={{ height: 400, width: "100%" }} className="">
         <p className="text-end">
           <Button
             variant="danger"
@@ -260,7 +256,6 @@ const {accountId,token}=useAuth();
             getRowId={(row) => row.guide_id}
           />
         </div>
-      </div>
     </>
   );
 };
