@@ -137,7 +137,7 @@ const ListHotel = () => {
       field: "star",
       headerName: "Star",
       width: 100,
-      renderCell: renderStarIcon
+      renderCell: renderStarIcon,
     },
     {
       field: "address",
@@ -154,6 +154,18 @@ const ListHotel = () => {
     {
       field: "contact_info",
       headerName: "Liên hệ",
+      width: 120,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
+    {
+      field: "tour_name",
+      headerName: "Tour",
       width: 350,
       renderCell: (params) => (
         <div

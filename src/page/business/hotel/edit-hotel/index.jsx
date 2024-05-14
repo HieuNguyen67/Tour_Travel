@@ -14,16 +14,31 @@ import { useAuth } from "../../../../context";
 
 const UpdateHotel = () => {
     const{hotel_id}=useParams();
-    const{token}=useAuth();
+    const { token, accountId } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     star: "",
     address: "",
     contact_info: "",
+    tour_id:"",
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+    const [tours, setTours] = useState([]);
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/select-option-tours/${accountId}`
+        );
+        setTours(response.data);
+      } catch (error) {
+        console.error("Error fetching tours:", error);
+      }
+    };
 
+    fetchTours();
+  }, [accountId]);
   useEffect(() => {
     const fetchHotelDetails = async () => {
       try {
@@ -37,6 +52,8 @@ const UpdateHotel = () => {
           star: hotelDetails.star,
           address: hotelDetails.address,
           contact_info: hotelDetails.contact_info,
+          tour_id: hotelDetails.tour_id,
+          tour_name: hotelDetails.tour_name,
         });
         setIsLoading(false);
       } catch (error) {
@@ -131,7 +148,7 @@ const UpdateHotel = () => {
                 />
               </Form.Group>
             </Col>
-            <Col className="col-12">
+            <Col className="col-12 col-lg-6">
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label className="font-family fw-bold">
                   Địa chỉ:
@@ -146,22 +163,40 @@ const UpdateHotel = () => {
                 />
               </Form.Group>
             </Col>
-            <Col className="col-12">
+            <Col className="col-12 col-lg-6">
               {" "}
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label className="font-family fw-bold">
-                  Thông tin liên hệ:
+                  Số điện thoại:
                 </Form.Label>
                 <Form.Control
-                  as="textarea"
+                  type="number"
                   name="contact_info"
-                  placeholder="Thông tin liên hệ"
+                  placeholder="SĐT"
                   value={formData.contact_info}
                   onChange={handleChange}
                   required
-                  style={{ height: "10rem" }}
                 />
               </Form.Group>
+            </Col>
+            <Col className="col-12">
+              <Form.Label className="font-family fw-bold">
+                Tour:
+              </Form.Label>
+              <Form.Select
+                className="mb-3"
+                name="tour_id"
+                value={formData.tour_id}
+                onChange={handleChange}
+                
+              >
+                <option value="">Select a tour</option>
+                {tours.map((tour) => (
+                  <option key={tour.tour_id} value={tour.tour_id}>
+                    {tour.name}
+                  </option>
+                ))}
+              </Form.Select>
             </Col>
           </Row>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../../context";
 import { BASE_URL } from "../../../../constants/common";
@@ -17,7 +17,24 @@ const AddHotelForm = () => {
     star: "",
     address: "",
     contact_info: "",
+    tour_id:"",
   });
+    const [tours, setTours] = useState([]);
+
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/select-option-tours/${accountId}`);
+        setTours(response.data);
+
+      } catch (error) {
+        console.error("Error fetching tours:", error);
+      }
+    };
+
+    fetchTours();
+  }, [accountId]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,6 +57,7 @@ const AddHotelForm = () => {
         star: "",
         address: "",
         contact_info: "",
+        tour_id: "",
       });
       toast.success("Thêm thành công !");
       navigate("/business/hotel");
@@ -110,18 +128,34 @@ const AddHotelForm = () => {
               {" "}
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label className="font-family fw-bold">
-                  Thông tin liên hệ:
+                  Số điện thoại:
                 </Form.Label>
                 <Form.Control
-                  as="textarea"
+                  type="number"
                   name="contact_info"
-                  placeholder="Thông tin liên hệ"
+                  placeholder="SĐT"
                   value={formData.contact_info}
                   onChange={handleChange}
                   required
-                  style={{ height: "10rem" }}
                 />
               </Form.Group>
+            </Col>
+            <Col className="col-12">
+              <Form.Label className="font-family fw-bold">Tour:</Form.Label>
+              <Form.Select
+                className="mb-3"
+                name="tour_id"
+                value={formData.tour_id}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select a tour</option>
+                {tours.map((tour) => (
+                  <option key={tour.tour_id} value={tour.tour_id}>
+                    {tour.name}
+                  </option>
+                ))}
+              </Form.Select>
             </Col>
           </Row>
 
