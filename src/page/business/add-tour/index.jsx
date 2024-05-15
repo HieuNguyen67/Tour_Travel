@@ -9,6 +9,7 @@ import { MdAddLocationAlt } from "react-icons/md";
 import { MdDeleteForever } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { LuImagePlus } from "react-icons/lu";
+import { RiHotelFill } from "react-icons/ri";
 import { MdOutlineTravelExplore } from "react-icons/md";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { RiAccountBoxLine } from "react-icons/ri";
@@ -18,19 +19,18 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import ReactQuill from "react-quill";
 import { FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { MdOutlineStar } from "react-icons/md";
+import { MdTour } from "react-icons/md";
+import { GiConfirmed } from "react-icons/gi";
 
 import {
   BLUE_COLOR,
-  COLOR,
-  GREEN_COLOR,
   RED_COLOR,
-  YELLOW_COLOR,
 } from "../../../constants/color";
 
 const AddTourForm = () => {
   const { accountId, token } = useAuth();
   const [error, setError] = useState(null);
-  const [vehicles, setVehicles] = useState([]);
   const [tourCategories, setTourCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
@@ -42,7 +42,8 @@ const AddTourForm = () => {
     start_date: "",
     end_date: "",
     quantity: "",
-    vehicle_id: "",
+    vehicle: "",
+    hotel:"",
     tourcategory_id: "",
     departure_location_name: "",
     destination_locations: [],
@@ -53,28 +54,6 @@ const AddTourForm = () => {
       const [images, setImages] = useState([]);
 
 
-
-  useEffect(() => {
-    const fetchVehicles = async () => {
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/list-vehicles/${accountId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setVehicles(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching vehicles:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchVehicles();
-  }, [accountId, token]);
 
   useEffect(() => {
     const fetchTourCategories = async () => {
@@ -200,7 +179,7 @@ const AddTourForm = () => {
 
     } catch (error) {
       console.error("Error adding tour: ", error.response.data.error);
-      toast.success("Thêm Tour thất bại. Vui lòng thử lại !");
+      toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
     }
   };
 
@@ -210,7 +189,7 @@ const AddTourForm = () => {
         <Link to="/business/list-tour">
           <IoArrowBackOutline className="fs-3 mb-3" />
         </Link>
-        <h1 className="text-center fw-bold mb-lg-5 mt-3">THÊM TOUR</h1>
+        <h1 className="text-center fw-bold mb-lg-5 mt-3"><MdTour className="fs-1"/> THÊM TOUR</h1>
         <br />
 
         <form onSubmit={handleSubmit} className="">
@@ -272,6 +251,50 @@ const AddTourForm = () => {
                 />
               </Form.Group>
             </Col>
+            <Col className="col-lg-6 col-12">
+              <Form.Group className="mb-4">
+                <Form.Label className="font-family fw-bold">
+                  <MdEmojiTransportation className="fs-4" /> Chọn phương tiện{" "}
+                  <span className="text-danger">(*) </span>:
+                </Form.Label>
+                <Form.Select
+                  aria-label="Default select example"
+                  value={formData.vehicle}
+                  onChange={handleChange}
+                  name="vehicle"
+                  required
+                >
+                  <option value="null">Chọn phương tiện</option>
+                  <option value="Máy bay">Máy bay</option>
+                  <option value="Xe du lịch">Xe du lịch</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-6 col-12">
+              <Form.Group className="mb-4">
+                <Form.Label className="font-family fw-bold">
+                  <RiHotelFill className="fs-5" /> Chọn khách sạn{" "}
+                  <MdOutlineStar className="text-warning fs-4" />
+                  <span className="text-danger">(*) </span>:
+                </Form.Label>
+                <Form.Select
+                  aria-label="Default select example"
+                  value={formData.hotel}
+                  onChange={handleChange}
+                  name="hotel"
+                  type="number"
+                  required
+                >
+                  <option value="">Chọn sao khách sạn</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="0">Đi trong ngày</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
             <Col className="col-lg-4 col-12">
               <Form.Group className="mb-4">
                 <Form.Label className="font-family fw-bold">
@@ -285,6 +308,7 @@ const AddTourForm = () => {
                   value={formData.adult_price}
                   onChange={handleChange}
                   required
+                  min={0}
                 />
               </Form.Group>
             </Col>
@@ -302,6 +326,7 @@ const AddTourForm = () => {
                   value={formData.child_price}
                   onChange={handleChange}
                   required
+                  min={0}
                 />
               </Form.Group>
             </Col>
@@ -319,6 +344,7 @@ const AddTourForm = () => {
                   value={formData.infant_price}
                   onChange={handleChange}
                   required
+                  min={0}
                 />
               </Form.Group>
             </Col>
@@ -373,29 +399,8 @@ const AddTourForm = () => {
                 />
               </Form.Group>
             </Col>
-            <Col className="col-lg-4 col-12">
-              <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
-                  <MdEmojiTransportation className="fs-4" /> Chọn phương tiện{" "}
-                  <span className="text-danger">(*) </span>:
-                </Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  value={formData.vehicle_id}
-                  onChange={handleChange}
-                  name="vehicle_id"
-                  required
-                >
-                  <option value="">Chọn phương tiện</option>
-                  {vehicles.map((vehicle) => (
-                    <option key={vehicle.vehicle_id} value={vehicle.vehicle_id}>
-                      {vehicle.type}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col className="col-lg-4 col-12">
+
+            <Col className="col-lg-6 col-12">
               {" "}
               <Form.Group className="mb-4">
                 <Form.Label className="font-family fw-bold">
@@ -418,7 +423,7 @@ const AddTourForm = () => {
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col className="col-lg-4 col-12">
+            <Col className="col-lg-6 col-12">
               <Form.Group className="mb-4">
                 <Form.Label className="font-family fw-bold">
                   <FaMapLocationDot className="fs-4" /> Chọn điểm đến{" "}
@@ -494,7 +499,7 @@ const AddTourForm = () => {
               type="submit"
               className="mt-5 mt-lg-3 mb-4 py-3 col-lg-2 col-12 fw-bold"
             >
-              Xác Nhận
+             <GiConfirmed className="fs-4"/> Xác Nhận
             </Button>{" "}
           </div>
         </form>

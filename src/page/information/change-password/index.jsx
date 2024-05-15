@@ -5,6 +5,7 @@ import { useAuth } from "../../../context";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { TbPasswordUser } from "react-icons/tb";
+import { MdOutlinePassword } from "react-icons/md";
 
 const ChangePassword = () => {
       const { accountId, isLoggedIn,token } = useAuth();
@@ -66,7 +67,7 @@ const ChangePassword = () => {
               {error && <div style={{ color: "red" }}>{error}</div>}
               <Form.Group className="mb-3 mt-2" controlId="formBasicEmail">
                 <Form.Label className="font-family fw-bold">
-                  Mật khẩu cũ:
+                  <MdOutlinePassword className="fs-4" /> Mật khẩu cũ:
                 </Form.Label>
                 <Form.Control
                   required
@@ -82,7 +83,7 @@ const ChangePassword = () => {
             <Col className="col-lg-5 col-12  mx-auto">
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label className="font-family fw-bold">
-                  Mật khẩu mới:
+                  <MdOutlinePassword className="fs-4" /> Mật khẩu mới:
                 </Form.Label>
                 <Form.Control
                   required
@@ -98,7 +99,7 @@ const ChangePassword = () => {
             <Col className="col-lg-5 col-12  mx-auto">
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label className="font-family fw-bold">
-                  Nhập lại mật khẩu mới:
+                  <MdOutlinePassword className="fs-4" /> Nhập lại mật khẩu mới:
                 </Form.Label>
                 <Form.Control
                   required
@@ -117,7 +118,7 @@ const ChangePassword = () => {
                 type="submit"
                 className="col-12 py-3 mt-3"
               >
-               <TbPasswordUser/> Thay đổi mật khẩu
+                <TbPasswordUser className="fs-4"/> Thay đổi mật khẩu
               </Button>
             </Col>
           </Row>

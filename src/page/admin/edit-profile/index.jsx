@@ -5,12 +5,18 @@ import { useAuth } from "../../../context";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
 import { FaSave } from "react-icons/fa";
 import LoadImage from "./load-image";
 import { IoArrowBackOutline } from "react-icons/io5";
-import UpdateImageProfile from "./up-image";
 import LoadingBackdrop from "../../../components/backdrop";
+import { BLUE_COLOR } from "../../../constants/color";
+import { MdAccountBox } from "react-icons/md";
+import { ImProfile } from "react-icons/im";
+import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { FaPhoneSquareAlt } from "react-icons/fa";
+import { TiLocation } from "react-icons/ti";
+import { HiOutlineMail } from "react-icons/hi";
+import { RxUpdate } from "react-icons/rx";
 
 const EditProfile = () => {
     const {account_id,role_id}=useParams();
@@ -119,30 +125,33 @@ const EditProfile = () => {
 
         {role_id == 3 ? (
           <>
-            <h4 className="mb-lg-5 fw-bold">THÔNG TIN DOANH NGHIỆP:</h4>
-          </>
-        ) : role_id == 4 ? (
-          <>
-            <h4 className="mb-lg-5 fw-bold">THÔNG TIN HƯỚNG DẪN VIÊN:</h4>
+            <h4 className="mb-lg-5 fw-bold">
+              {" "}
+              <ImProfile className="fs-3" /> THÔNG TIN DOANH NGHIỆP:
+            </h4>
           </>
         ) : (
           <>
-            <h4 className="mb-lg-5 fw-bold">THÔNG TIN KHÁCH HÀNG:</h4>
+            <h4 className="mb-lg-5 fw-bold">
+              {" "}
+              <ImProfile className="fs-3" /> THÔNG TIN KHÁCH HÀNG:
+            </h4>
           </>
         )}
         <Row>
           <Col className="col-lg-3 col-12">
             {" "}
             <LoadImage />
-            <UpdateImageProfile />
           </Col>
           <Col className="col-lg-9 col-12 ">
             {" "}
             <form onSubmit={handleSubmit}>
               <Row>
                 <Col className="col-12">
-                  <Form.Group className="mb-3">
-                    <Form.Label>Trạng thái:</Form.Label>
+                  <Form.Group className="mb-4 ">
+                    <Form.Label className="fw-bold">
+                      <RxUpdate className="fs-5" /> Trạng thái:
+                    </Form.Label>
                     <Form.Control
                       as="select"
                       required
@@ -157,92 +166,86 @@ const EditProfile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family fw-bold">
-                      Username:
+                      <MdAccountBox className="fs-4" /> Username:
                     </Form.Label>
                     <Form.Control
                       type="text"
                       required
-                      name="username"
                       value={formData.username}
-                      onChange={handleChange}
                       placeholder="Tên đăng nhập"
+                      readOnly
                     />
                   </Form.Group>
                 </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Họ và Tên:
+                      <ImProfile className="fs-4" /> Họ và Tên:
                     </Form.Label>
                     <Form.Control
                       type="text"
                       required
-                      name="name"
                       value={formData.name}
-                      onChange={handleChange}
                       placeholder="Họ và tên"
+                      readOnly
                     />
                   </Form.Group>
                 </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Ngày sinh:
+                      <LiaBirthdayCakeSolid className="fs-4" /> Ngày sinh:
                     </Form.Label>
                     <Form.Control
                       required
                       type="date"
-                      name="birth_of_date"
                       max="2008-12-31"
                       value={formData.birth_of_date}
-                      onChange={handleChange}
+                      readOnly
                     />
                   </Form.Group>
                 </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Số điện thoại:
+                      <FaPhoneSquareAlt className="fs-4" /> Số điện thoại:
                     </Form.Label>
                     <Form.Control
                       required
                       type="text"
-                      name="phone_number"
                       value={formData.phone_number}
-                      onChange={handleChange}
                       placeholder="Số điện thoại"
+                      readOnly
                     />
                   </Form.Group>
                 </Col>
                 <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Địa chỉ:
+                      <TiLocation className="fs-4" /> Địa chỉ:
                     </Form.Label>
                     <Form.Control
                       required
                       type="text"
-                      name="address"
                       value={formData.address}
-                      onChange={handleChange}
                       placeholder="Địa chỉ"
+                      readOnly
                     />
                   </Form.Group>
                 </Col>
                 <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Email:
+                      <HiOutlineMail className="fs-4" /> Email:
                     </Form.Label>
                     <Form.Control
                       required
                       type="email"
-                      name="email"
                       value={formData.email}
                       placeholder="Email"
                       readOnly
@@ -251,11 +254,11 @@ const EditProfile = () => {
                 </Col>
                 <Col className="col-12 col-lg-3">
                   <Button
-                    variant="warning"
+                    style={{ background: BLUE_COLOR }}
                     type="submit"
                     className="py-3  col-12 mt-2"
                   >
-                    <FaSave /> Cập nhật
+                    <FaSave /> Cập nhật trạng thái
                   </Button>
                 </Col>
               </Row>

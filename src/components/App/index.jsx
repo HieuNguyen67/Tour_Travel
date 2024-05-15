@@ -1,7 +1,6 @@
 import AdminRoutes from "../../routes/admin-routes";
 import BusinessRoutes from "../../routes/business-routes";
 import CustomerRoutes from "../../routes/customer-routes";
-import GuideRoutes from "../../routes/guide-routes";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "../../page/customer/Home";
 import Login from "../../page/Login";
@@ -42,15 +41,7 @@ const Apps=()=>{
               <Route path="*" element={<Navigate to="/business/list-tour" />} />
             </>
           )}
-          {role == 4 && (
-            <>
-              <Route path="/guide/*" element={<GuideRoutes />} />
-              <Route
-                path="*"
-                element={<Navigate to="/guide/tour-assigned" />}
-              />
-            </>
-          )}
+         
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

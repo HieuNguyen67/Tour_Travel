@@ -15,9 +15,6 @@ const SidebarLayout = ({ children }) => {
     location.pathname === "/admin/news" ||
     location.pathname === "/admin/contact" ||
     location.pathname === "/business/list-tour" ||
-    location.pathname === "/business/vehicle" ||
-    location.pathname === "/business/hotel" ||
-    location.pathname === "/business/list-guide" ||
     location.pathname === "/business/list-news" ||
     location.pathname === "/business/order-tour";
 
@@ -50,7 +47,6 @@ const SidebarLayout = ({ children }) => {
               <Nav fill className=" sidebarrr">
                 {role == 2 && renderNavItems(ADMIN)}
                 {role == 3 && renderNavItems(BUSINESS)}
-                {role == 4 && renderNavItems(GUIDE)}
               </Nav>
             </Col>
           </>

@@ -34,7 +34,7 @@ const RegisterUser = () => {
     e.preventDefault();
     
     try {
-      if (role_id==3){ await axios.post(
+       await axios.post(
         `http://localhost:5020/v1/api/admin/register-business`,
         formData,
         {
@@ -45,14 +45,7 @@ const RegisterUser = () => {
       );
      toast.success("Đăng ký thành công !");
      navigate("/admin/list-business");
-    }else{
-        await axios.post(
-          `http://localhost:5020/v1/api/admin/register`,
-          formData
-        );
-         toast.success("Đăng ký thành công !");
-         navigate("/admin/list-customer");
-      }
+    
        
      
     } catch (error) {
@@ -76,38 +69,21 @@ const RegisterUser = () => {
       >
         <Container className=" mx-auto">
           <div className="mt-2">
-            {role_id == 3 ? (
-              <>
+            
                 {" "}
                 <Link to="/admin/list-business">
                   <IoArrowBackOutline className="fs-3 mb-3" />
                 </Link>
-              </>
-            ) : (
-              <>
-                {" "}
-                <Link to="/admin/list-customer">
-                  <IoArrowBackOutline className="fs-3 mb-3" />
-                </Link>
-              </>
-            )}
+             
 
             <Row>
               <Col></Col>
               <Col className="col-10 ">
-                {role_id == 3 ? (
-                  <>
+                
                     <h1 className="text-center text-break fw-bold font-family">
-                      ĐĂNG KÝ DOANH NGHIỆP
+                      ĐĂNG KÝ TÀI KHOẢN DOANH NGHIỆP
                     </h1>
-                  </>
-                ) : (
-                  <>
-                    <h1 className="text-center text-break fw-bold font-family">
-                      ĐĂNG KÝ KHÁCH HÀNG
-                    </h1>
-                  </>
-                )}
+                  
               </Col>
               <Col></Col>
             </Row>
@@ -120,15 +96,9 @@ const RegisterUser = () => {
               <Col className="col-lg-6 col-12">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="font-family">
-                    {role_id == 3 ? (
-                      <>
+                 
                         Tên doanh nghiệp: <span className="text-danger">*</span>
-                      </>
-                    ) : (
-                      <>
-                        Họ và tên: <span className="text-danger">*</span>
-                      </>
-                    )}
+                    
                   </Form.Label>
                   <Form.Control
                     type="text"

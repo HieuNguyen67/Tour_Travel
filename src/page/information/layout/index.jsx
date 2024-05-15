@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../../context";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { ImProfile } from "react-icons/im";
 
 const InformationLayout = ({ children }) => {
     const { role } = useAuth();
@@ -48,7 +49,7 @@ const InformationLayout = ({ children }) => {
               <Col></Col>
               <Col className="col-10 ">
                 <h1 className="text-center text-break fw-bold font-family">
-                  HỒ SƠ
+                 <ImProfile className="fs-1"/> HỒ SƠ
                 </h1>
               </Col>
               <Col></Col>

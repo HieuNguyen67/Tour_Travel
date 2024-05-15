@@ -1,6 +1,6 @@
 import { Button, Container, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { MdAddBox } from "react-icons/md";
+import { IoMdAdd } from "react-icons/io";
 import "../news/news.scss";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -13,6 +13,7 @@ import { BiEdit } from "react-icons/bi";
 import { BLUE_COLOR, COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../../constants/color";
 import LoadingBackdrop from "../../../components/backdrop";
 import { useAuth } from "../../../context";
+import { ImNewspaper } from "react-icons/im";
 
 const News = () => {
  const [news, setNews] = useState([]);
@@ -270,7 +271,7 @@ const { token, role, accountId } = useAuth();
         </Button>
         <Link to={role == 2 ? "/admin/add-news" : "/business/add-news"}>
           <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-            <MdAddBox className="fs-4" /> Thêm mới
+            <IoMdAdd  /> <ImNewspaper className="fs-3" />
           </Button>
         </Link>
       </p>

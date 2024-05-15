@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const ConfirmationForm = () => {
   const [confirmationCode, setConfirmationCode] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setConfirmationCode(e.target.value);
@@ -16,16 +17,18 @@ const ConfirmationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get(
+      const response = await axios.get(
         `http://localhost:5020/v1/api/admin/confirm/${confirmationCode}`
       );
-      console.log(res.data);
+            setMessage(response.data.message);
             toast.success("Tài khoản đã được kích hoạt thành công!");
             navigate("/login");
 
     } catch (error) {
       console.error("Xác nhận không thành công:", error);
-      toast.error("Nhập sai mã kích hoạt. Vui lòng nhập lại !");
+              setMessage(error.response.data.message);
+
+      toast.error(error.response.data.message);
     }
   };
 
@@ -64,6 +67,7 @@ const ConfirmationForm = () => {
                 Quay lại đăng nhập
               </Link>
             </form>
+            {message && <p className="mt-3 fw-bold fs-5 text-danger">{message}</p>}
           </p>
         </Col>
       </Container>

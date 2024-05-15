@@ -10,6 +10,12 @@ import { FaSave } from "react-icons/fa";
 import UpdateImage from "../../../components/up-images";
 import { IoArrowBackOutline } from "react-icons/io5";
 import LoadingBackdrop from "../../../components/backdrop";
+import { MdAccountBox } from "react-icons/md";
+import { ImProfile } from "react-icons/im";
+import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { FaPhoneSquareAlt } from "react-icons/fa";
+import { TiLocation } from "react-icons/ti";
+import { HiOutlineMail } from "react-icons/hi";
 
 const Profile = () => {
   const { accountId, isLoggedIn ,token} = useAuth();
@@ -109,9 +115,9 @@ const Profile = () => {
               <Row>
                 <Col className="col-lg-6 col-12">
                   {" "}
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family fw-bold">
-                      Username:
+                      <MdAccountBox className="fs-4" /> Username:
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -125,9 +131,9 @@ const Profile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Họ và Tên:
+                      <ImProfile className="fs-4" /> Họ và Tên:
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -141,9 +147,9 @@ const Profile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Ngày sinh:
+                      <LiaBirthdayCakeSolid className="fs-4" /> Ngày sinh:
                     </Form.Label>
                     <Form.Control
                       required
@@ -157,9 +163,9 @@ const Profile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Số điện thoại:
+                      <FaPhoneSquareAlt className="fs-4" /> Số điện thoại:
                     </Form.Label>
                     <Form.Control
                       required
@@ -172,9 +178,9 @@ const Profile = () => {
                   </Form.Group>
                 </Col>
                 <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Địa chỉ:
+                      <TiLocation className="fs-4" /> Địa chỉ:
                     </Form.Label>
                     <Form.Control
                       required
@@ -187,9 +193,9 @@ const Profile = () => {
                   </Form.Group>
                 </Col>
                 <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
                     <Form.Label className="font-family  fw-bold">
-                      Email:
+                      <HiOutlineMail className="fs-4" /> Email:
                     </Form.Label>
                     <Form.Control
                       required

@@ -258,15 +258,7 @@ const ListUser = () => {
           </Button>
           {isHomePage ? (
             <>
-              <Link
-                to="/admin/register-user/1"
-                className="text-decoration-none"
-              >
-                {" "}
-                <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                  <AiOutlineUserAdd className="fs-3" />
-                </Button>
-              </Link>
+              
             </>
           ) : (
             <>

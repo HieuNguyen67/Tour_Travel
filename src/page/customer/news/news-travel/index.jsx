@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import LinearProgress from "@mui/material/LinearProgress";
 import LoadingBackdrop from "../../../../components/backdrop";
+import { ImNewspaper } from "react-icons/im";
 
 const truncateString = (str, maxLength) => {
   if (str.length <= maxLength) {
@@ -99,59 +100,56 @@ const handlePageClick = useCallback(
     <>
       <LoadingBackdrop open={loading} />
       <h1 className="text-center my-lg-5 my-3 fw-bold">
-        {isHomePage ? <> TIN TỨC DU LỊCH</> : <>CẨM NANG DU LỊCH</>}
+        <ImNewspaper className="fs-1" />
+        {isHomePage ? <> TIN TỨC DU LỊCH</> : <> CẨM NANG DU LỊCH</>}
       </h1>
       <Row className="row-cols-3 my-4">
-        {currentNews
-          .map((item) => (
-            <Col
-              key={item.news_id}
-              className="col-lg-4 col-12 mb-3 mb-lg-3"
-              onClick={() => handleClick(item.news_id)}
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.8 }}
+        {currentNews.map((item) => (
+          <Col
+            key={item.news_id}
+            className="col-lg-4 col-12 mb-3 mb-lg-3"
+            onClick={() => handleClick(item.news_id)}
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
+              <div
+                style={{ border: "3px solid #ebecef", cursor: "pointer" }}
+                className="rounded-5 px-lg-4 p-3  shadow-sm"
               >
-                <div
-                  style={{ border: "3px solid #ebecef", cursor: "pointer" }}
-                  className="rounded-5 px-lg-4 p-3  shadow-sm"
-                >
-                  {item.image && (
-                    <img
-                      src={`data:image/png;base64,${item.image}`}
-                      alt="News Image"
-                      className="rounded-5 col-12 sizei shadow mb-4"
-                    />
-                  )}
-                  <p
-                    className="fw-bold sizep"
-                    style={{ color: "#475467", fontSize: "18px" }}
-                  >
-                    {item.title}
-                  </p>
-
-                  <HTMLContent
-                    htmlContent={truncateString(item.content, 80)}
-                    style={{ fontSize: "14px" }}
-                    className="sizep1"
+                {item.image && (
+                  <img
+                    src={`data:image/png;base64,${item.image}`}
+                    alt="News Image"
+                    className="rounded-5 col-12 sizei shadow mb-4"
                   />
+                )}
+                <p
+                  className="fw-bold sizep"
+                  style={{ color: "#475467", fontSize: "18px" }}
+                >
+                  {item.title}
+                </p>
 
-                  <Row>
-                    <Col className="col-6">
-                      <p
-                        style={{ background: "#f2f4f7", fontSize: "16px" }}
-                        className="text-center rounded-3 fw-bold"
-                      >
-                        <LuClock8 />{" "}
-                        {format(new Date(item.created_at), "dd/MM/yyyy")}
-                      </p>
-                    </Col>
-                  </Row>
-                </div>
-              </motion.div>
-            </Col>
-          ))}
+                <HTMLContent
+                  htmlContent={truncateString(item.content, 80)}
+                  style={{ fontSize: "14px" }}
+                  className="sizep1"
+                />
+
+                <Row>
+                  <Col className="col-6">
+                    <p
+                      style={{ background: "#f2f4f7", fontSize: "16px" }}
+                      className="text-center rounded-3 fw-bold"
+                    >
+                      <LuClock8 />{" "}
+                      {format(new Date(item.created_at), "dd/MM/yyyy")}
+                    </p>
+                  </Col>
+                </Row>
+              </div>
+            </motion.div>
+          </Col>
+        ))}
       </Row>
       <Container>
         <ReactPaginate

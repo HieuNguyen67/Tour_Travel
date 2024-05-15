@@ -10,11 +10,10 @@ import defaultImage from "../../../assets/image/6945124.png";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import ScrollIndicator from "../../ScrollIndicator";
 import { motion } from "framer-motion";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { useAuth } from "../../../context";
 import { BASE_URL, HEADER } from "../../../constants/common";
-import DisplayImage from "../../up-images/load-image";
-import { Col, Row } from "react-bootstrap";
+import { FcBusinessman } from "react-icons/fc";
+import { FcManager } from "react-icons/fc";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -73,32 +72,34 @@ const Header = (props) => {
           <Container className="my-2">
             <NavLink className=" decorate">
               <Navbar.Brand>
-                <img
-                  alt=""
-                  src={Logo}
-                  className="d-inline-block justify-content-center  align-items-center logoo mb-2"
-                />{" "}
+                {role == 2 ? (
+                  <></>
+                ) : role == 3 ? (
+                  <></>
+                ) : (
+                  <>
+                    <img
+                      alt=""
+                      src={Logo}
+                      className="d-inline-block justify-content-center  align-items-center logoo mb-2"
+                    />
+                  </>
+                )}
+
                 <span>
                   {role == 2 ? (
                     <Link
                       to="/admin/list-customer"
                       className="text-decoration-none text-dark fw-bold fs-3"
                     >
-                      ADMIN
+                      <FcManager className="fs-1" /> ADMIN
                     </Link>
                   ) : role == 3 ? (
                     <Link
                       to="/business/list-tour"
                       className="text-decoration-none  text-dark fw-bold fs-3"
                     >
-                      DOANH NGHIỆP
-                    </Link>
-                  ) : role == 4 ? (
-                    <Link
-                      to="guide/tour-assigned"
-                      className="text-decoration-none text-dark fw-bold fs-3"
-                    >
-                      HƯỚNG DẪN VIÊN
+                      <FcBusinessman className="fs-1" /> DOANH NGHIỆP
                     </Link>
                   ) : (
                     <>
@@ -127,7 +128,7 @@ const Header = (props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body className="d-flex justify-content-center  align-items-center sidebar">
                   <Nav className="d-flex   align-items-center align-items-center  mx-auto  ">
-                    {role == 2 || role == 3 || role == 4 ? (
+                    {role == 2 || role == 3 ? (
                       <>{""}</>
                     ) : (
                       <>
@@ -182,11 +183,10 @@ const Header = (props) => {
                               <div>
                                 {" "}
                                 <img
-                                  src={imageSrc || defaultImage} 
+                                  src={imageSrc || defaultImage}
                                   alt="Hình ảnh của tài khoản"
                                   className="sizeimggg rounded-circle shadow me-2"
                                 />{" "}
-                               
                               </div>
                             </NavLink>
                           </motion.div>

@@ -8,7 +8,7 @@ import { BsImageFill } from "react-icons/bs";
 import { FaSave } from "react-icons/fa";
 
 const UpdateImage = () => {
-  const { accountId, isLoggedIn } = useAuth();
+  const { accountId, isLoggedIn,token } = useAuth();
 
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
@@ -36,6 +36,7 @@ const UpdateImage = () => {
         formData,
         {
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }

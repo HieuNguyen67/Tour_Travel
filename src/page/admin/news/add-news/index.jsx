@@ -11,6 +11,9 @@ import AddCategories from "../add-categories";
 import { MdAddToPhotos } from "react-icons/md";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../../../constants/common";
+import { ImNewspaper } from "react-icons/im";
+import { GiConfirmed } from "react-icons/gi";
+import { BLUE_COLOR } from "../../../../constants/color";
 
 
 const AddNews = () => {
@@ -104,7 +107,7 @@ const navigate=useNavigate();
               <Col></Col>
               <Col className="col-10 ">
                 <h1 className="text-center text-break fw-bold font-family">
-                  THÊM TIN TỨC
+                  <ImNewspaper className="fs-1" /> THÊM TIN TỨC
                 </h1>
               </Col>
               <Col></Col>
@@ -198,11 +201,11 @@ const navigate=useNavigate();
             </div>
             <div className="mt-lg-0 mt-3">
               <Button
-                variant="warning"
+                style={{background:BLUE_COLOR,border:"0px"}}
                 type="submit"
                 className="mt-5 py-3 col-lg-2 col-12 fw-bold"
               >
-                <MdAddToPhotos className="fs-5" /> ĐĂNG BÀI
+                <GiConfirmed className="fs-4" /> ĐĂNG BÀI
               </Button>{" "}
             </div>
           </form>
