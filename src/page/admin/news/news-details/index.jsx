@@ -14,6 +14,9 @@ import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
 import LoadingBackdrop from '../../../../components/backdrop';
 import { useAuth } from '../../../../context';
+import { RxUpdate } from "react-icons/rx";
+import { PiNotePencilFill } from "react-icons/pi";
+import { BLUE_COLOR } from '../../../../constants/color';
 
 const NewsDetail = () => {
   const [news, setNews] = useState(null);
@@ -119,8 +122,11 @@ const handleUpdate = async () => {
           <div className="border shadow-sm py-3 px-3 rounded-4 mb-4">
             <h2 className="fw-bold">DUYỆT BÀI</h2>
             <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Trạng thái:</Form.Label>
+              <Form.Group className="my-4">
+                <Form.Label className="fw-bold">
+                  {" "}
+                  <RxUpdate className="fs-5" /> Trạng thái:
+                </Form.Label>
                 <Form.Control
                   as="select"
                   value={status}
@@ -131,8 +137,10 @@ const handleUpdate = async () => {
                   <option value="Reject">Reject</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Ghi chú:</Form.Label>
+              <Form.Group className="mb-4">
+                <Form.Label className="fw-bold">
+                  <PiNotePencilFill className="fs-4" /> Ghi chú:
+                </Form.Label>
                 <Form.Control
                   as="textarea"
                   value={note}
@@ -142,7 +150,7 @@ const handleUpdate = async () => {
               <Button
                 onClick={handleUpdate}
                 disabled={loading}
-                variant="warning"
+                style={{background:BLUE_COLOR}}
                 className="mb-3"
               >
                 <FaSave /> Cập nhật

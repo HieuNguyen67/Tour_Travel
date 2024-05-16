@@ -9,6 +9,7 @@ import AddNews from "../page/admin/news/add-news";
 import UpdateNews from "../page/admin/news/edit-news";
 import NewsDetail from "../page/admin/news/news-details";
 import RegisterUser from "../page/admin/register-user";
+import Report from "../page/admin/report";
 const AdminRoutes = () => {
   return (
     <>
@@ -31,6 +32,7 @@ const AdminRoutes = () => {
             path="/contact-detail/:contact_id"
             element={<ContactDetail />}
           />
+          <Route path="/report" element={<Report />} />
 
           <Route path="*" element={<Navigate to="/list-customer" />} />
         </Routes>

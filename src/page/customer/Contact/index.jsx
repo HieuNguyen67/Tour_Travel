@@ -9,6 +9,8 @@ import Header from "../../../components/layout/header";
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FcInfo } from "react-icons/fc";
+import { MdOutlineContactMail } from "react-icons/md";
 
 const Contact = () => {
  const [formData, setFormData] = useState({
@@ -62,13 +64,15 @@ const Contact = () => {
           <Row className="mt-5">
             <Col className="col-md-5 col-12">
               <p>
-                <h3>THÔNG TIN LIÊN HỆ</h3>
+                <h3 className="fw-bold">
+                  <FcInfo className="fs-2 mb-lg-2 mb-1" /> THÔNG TIN LIÊN HỆ
+                </h3>
                 <hr className="hr" />
 
                 <p>
                   Chúng tôi luôn sẵn lòng lắng nghe và hỗ trợ bạn trong mọi vấn
-                  đề liên quan đến bạn. Xin vui lòng liên hệ với
-                  chúng tôi qua một trong những cách sau:
+                  đề liên quan đến bạn. Xin vui lòng liên hệ với chúng tôi qua
+                  một trong những cách sau:
                   <br /> <br />
                   <strong>Điện thoại : </strong>(+84) 123 456 789
                   <br />
@@ -78,7 +82,11 @@ const Contact = () => {
             </Col>
             <Col className="mt-md-0 mt-4 ">
               <p>
-                <h3>LIÊN HỆ CHÚNG TÔI</h3>
+                <h3 className="fw-bold">
+                  {" "}
+                  <MdOutlineContactMail className="fs-2 mb-lg-2 mb-1" /> LIÊN HỆ
+                  CHÚNG TÔI
+                </h3>
                 <hr className="hr" />
               </p>
               <Form onSubmit={handleSubmit}>
@@ -159,7 +167,7 @@ const Contact = () => {
                 </Row>
 
                 <Button type="submit" variant="warning" className="shadow-sm">
-                  <IoIosSend />
+                  <IoIosSend className="fs-4"/>
                   GỬI THÔNG TIN LIÊN HỆ
                 </Button>
               </Form>

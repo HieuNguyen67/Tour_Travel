@@ -12,6 +12,8 @@ import "./Login.scss";
 import Header from "../../components/layout/header";
 import { BASE_URL } from "../../constants/common";
 import { MdAccountBox } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { MdOutlinePassword } from "react-icons/md";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -66,7 +68,7 @@ const Login = () => {
               <Col></Col>
               <Col className="col-10 ">
                 <h1 className="text-center text-break fw-bold font-family">
-                  <MdAccountBox className="fs-1" /> ĐĂNG NHẬP
+                  <MdAccountBox className="fs-1 mb-lg-2 mb-1" /> ĐĂNG NHẬP
                 </h1>
               </Col>
               <Col></Col>
@@ -75,11 +77,12 @@ const Login = () => {
         </Container>
         <br />
         <Container className="mb-5 pb-md-5 ">
-          <div className="col-md-4 mt-3 col-12 mx-auto " noValidate>
+          <div className="col-md-4 mt-3 col-12 mx-auto px-2 px-lg-0" noValidate>
             <form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-4" controlId="formBasicEmail">
                 <Form.Label className="font-family">
-                  Username or Email<span className="text-danger">*</span>
+                  <CgProfile className="fs-4" /> Username or Email
+                  <span className="text-danger">*</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -90,9 +93,10 @@ const Login = () => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Group className="mb-4" controlId="formBasicPassword">
                 <Form.Label className="font-family">
-                  Password <span className="text-danger">*</span>
+                  <MdOutlinePassword className="fs-4" /> Password{" "}
+                  <span className="text-danger">*</span>
                 </Form.Label>
                 <Form.Control
                   type="password"
@@ -110,7 +114,7 @@ const Login = () => {
                 className="col-12 mt-4 font-family"
               >
                 <span className="font-family">
-                  Đăng Nhập <IoLogInSharp />
+                  Đăng Nhập <IoLogInSharp className="fs-4" />
                 </span>
               </Button>
             </form>

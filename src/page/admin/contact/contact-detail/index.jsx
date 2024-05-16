@@ -10,6 +10,8 @@ import { format } from "date-fns";
 import { IoArrowBackOutline } from "react-icons/io5";
 import LoadingBackdrop from "../../../../components/backdrop";
 import { useAuth } from "../../../../context";
+import { MdOutlineContactMail } from "react-icons/md";
+import { RxUpdate } from "react-icons/rx";
 
 const ContactDetail = () => {
     const{contact_id}=useParams();
@@ -75,14 +77,18 @@ const{token}=useAuth();
   if (!contact) return <div>Contact not found</div>;
 
   return (
-    <div>
+    <div className="px-2">
       <Link to="/admin/contact">
         <IoArrowBackOutline className="fs-3" />
       </Link>
-      <h2 className="fw-bold text-center mb-4">LIÊN HỆ</h2>
+      <h1 className="fw-bold text-center mb-4">
+        <MdOutlineContactMail className="fs-1 mb-lg-2 mb-1" /> LIÊN HỆ
+      </h1>
       <form>
         <Form.Group className="mb-3">
-          <Form.Label>Trạng thái:</Form.Label>
+          <Form.Label className="fw-bold">
+            <RxUpdate className="fs-5" /> Trạng thái:
+          </Form.Label>
           <Form.Control
             as="select"
             value={status}

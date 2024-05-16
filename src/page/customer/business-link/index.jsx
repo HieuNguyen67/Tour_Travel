@@ -8,6 +8,7 @@ import Header from "../../../components/layout/header";
 import "./business-link.scss";
 import { useState } from "react";
 import LoadingBackdrop from "../../../components/backdrop";
+import { IoBusinessSharp } from "react-icons/io5";
 
 const BusinessLink=()=>{
    const [loading, setLoading] = useState(true);
@@ -26,7 +27,7 @@ const BusinessLink=()=>{
               <Col></Col>
               <Col className="col-10 ">
                 <h1 className="text-center text-break fw-bold font-family mb-lg-5 ">
-                  ĐỐI TÁC DOANH NGHIỆP
+                 <IoBusinessSharp className="fs-1 mb-lg-2 mb-1"/> ĐỐI TÁC DOANH NGHIỆP
                 </h1>
               </Col>
               <Col></Col>

@@ -8,6 +8,14 @@ import { IoLogInSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../context";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { IoBusinessSharp } from "react-icons/io5";
+import { MdAccountBox } from "react-icons/md";
+import { ImProfile } from "react-icons/im";
+import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { FaPhoneSquareAlt } from "react-icons/fa";
+import { TiLocation } from "react-icons/ti";
+import { HiOutlineMail } from "react-icons/hi";
+import { MdOutlinePassword } from "react-icons/md";
 
 const RegisterUser = () => {
   const {role_id}=useParams();
@@ -69,21 +77,17 @@ const RegisterUser = () => {
       >
         <Container className=" mx-auto">
           <div className="mt-2">
-            
-                {" "}
-                <Link to="/admin/list-business">
-                  <IoArrowBackOutline className="fs-3 mb-3" />
-                </Link>
-             
-
+            {" "}
+            <Link to="/admin/list-business">
+              <IoArrowBackOutline className="fs-3 mb-3" />
+            </Link>
             <Row>
               <Col></Col>
               <Col className="col-10 ">
-                
-                    <h1 className="text-center text-break fw-bold font-family">
-                      ĐĂNG KÝ TÀI KHOẢN DOANH NGHIỆP
-                    </h1>
-                  
+                <h1 className="text-center text-break fw-bold font-family">
+                  <IoBusinessSharp className="fs-1 mb-lg-2 mb-1" /> ĐĂNG KÝ
+                  DOANH NGHIỆP
+                </h1>
               </Col>
               <Col></Col>
             </Row>
@@ -96,9 +100,8 @@ const RegisterUser = () => {
               <Col className="col-lg-6 col-12">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="font-family">
-                 
-                        Tên doanh nghiệp: <span className="text-danger">*</span>
-                    
+                    <ImProfile className="fs-4" /> Tên doanh nghiệp:{" "}
+                    <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -116,7 +119,8 @@ const RegisterUser = () => {
                 {" "}
                 <Form.Group className="mb-3">
                   <Form.Label className="font-family">
-                    UserName <span className="text-danger">*</span>
+                    <MdAccountBox className="fs-4" /> UserName{" "}
+                    <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -132,7 +136,8 @@ const RegisterUser = () => {
                 {" "}
                 <Form.Group className="mb-3">
                   <Form.Label className="font-family">
-                    Password <span className="text-danger">*</span>
+                    <MdOutlinePassword className="fs-4" /> Password{" "}
+                    <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Control
                     type="password"
@@ -148,7 +153,8 @@ const RegisterUser = () => {
                 {" "}
                 <Form.Group className="mb-3">
                   <Form.Label className="font-family">
-                    Email <span className="text-danger">*</span>
+                    <HiOutlineMail className="fs-4" /> Email{" "}
+                    <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Control
                     type="email"
@@ -164,7 +170,8 @@ const RegisterUser = () => {
                 {" "}
                 <Form.Group className="mb-3">
                   <Form.Label className="font-family">
-                    Ngày sinh <span className="text-danger">*</span>
+                    <LiaBirthdayCakeSolid className="fs-4" /> Ngày sinh{" "}
+                    <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Control
                     type="date"
@@ -181,7 +188,8 @@ const RegisterUser = () => {
                 {" "}
                 <Form.Group className="mb-3">
                   <Form.Label className="font-family">
-                    Số điện thoại (Nhập đủ 10 số)
+                    <FaPhoneSquareAlt className="fs-4" /> Số điện thoại (Nhập đủ
+                    10 số)
                     <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Control
@@ -197,7 +205,8 @@ const RegisterUser = () => {
               <Col className="col-12">
                 <Form.Group className="mb-3">
                   <Form.Label className="font-family">
-                    Địa chỉ <span className="text-danger">*</span>
+                    <TiLocation className="fs-4" /> Địa chỉ{" "}
+                    <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -216,7 +225,7 @@ const RegisterUser = () => {
                 type="submit"
               >
                 <span className="font-family">
-                  Đăng Ký <IoLogInSharp />
+                  Đăng Ký <IoLogInSharp className="fs-4"/>
                 </span>
               </Button>
             </Row>

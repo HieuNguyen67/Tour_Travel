@@ -185,7 +185,7 @@ const AddTourForm = () => {
 
   return (
     <>
-      <div className="shadow py-4 px-3 rounded-5 border">
+      <div className="  px-3 ">
         <Link to="/business/list-tour">
           <IoArrowBackOutline className="fs-3 mb-3" />
         </Link>

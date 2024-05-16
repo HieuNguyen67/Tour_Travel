@@ -14,6 +14,10 @@ import { BASE_URL } from "../../../../constants/common";
 import { ImNewspaper } from "react-icons/im";
 import { GiConfirmed } from "react-icons/gi";
 import { BLUE_COLOR } from "../../../../constants/color";
+import { BiCategory } from "react-icons/bi";
+import { LuImagePlus } from "react-icons/lu";
+import { MdOutlineTitle } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 
 
 const AddNews = () => {
@@ -116,24 +120,25 @@ const navigate=useNavigate();
         </Container>
         <br />
         <Container className="mb-5 pb-md-5">
-          {role == 2 ? (
+          {/* {role == 2 ? (
             <>
               {" "}
               <AddCategories />
             </>
           ) : (
             <></>
-          )}
+          )} */}
 
           <form onSubmit={handleSubmit}>
             <Row>
               <Col className="col-12">
                 <Form.Group
-                  className="my-3 col-lg-6 col-12"
+                  className="my-4 col-lg-6 col-12"
                   controlId="formBasicEmail"
                 >
                   <Form.Label className="font-family fw-bold">
-                    Chọn danh mục:
+                    <BiCategory className="fs-4" /> Chọn danh mục{" "}
+                    <span className="text-danger">(*) </span>:
                   </Form.Label>
                   <Form.Select
                     required
@@ -155,9 +160,10 @@ const navigate=useNavigate();
                 </Form.Group>
               </Col>
               <Col className="col-lg-6 col-12">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-4" controlId="formBasicEmail">
                   <Form.Label className="font-family fw-bold">
-                    Tiêu đề:
+                    <MdOutlineTitle className="fs-4" /> Tiêu đề{" "}
+                    <span className="text-danger">(*) </span>:
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -171,9 +177,10 @@ const navigate=useNavigate();
               </Col>
               <Col className="col-lg-6 col-12">
                 {" "}
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-4" controlId="formBasicEmail">
                   <Form.Label className="font-family fw-bold">
-                    Ảnh tiêu đề:
+                    <LuImagePlus className="fs-4" /> Ảnh tiêu đề{" "}
+                    <span className="text-danger">(*) </span>:
                   </Form.Label>
                   <Form.Control
                     type="file"
@@ -185,6 +192,10 @@ const navigate=useNavigate();
                 </Form.Group>
               </Col>
             </Row>{" "}
+            <Form.Label className="font-family fw-bold">
+              <FaEdit className="fs-4" /> Nội dung{" "}
+              <span className="text-danger">(*) </span>:
+            </Form.Label>
             <div
               className=""
               style={{ width: "100%", height: "33rem", background: "white" }}
@@ -201,7 +212,7 @@ const navigate=useNavigate();
             </div>
             <div className="mt-lg-0 mt-3">
               <Button
-                style={{background:BLUE_COLOR,border:"0px"}}
+                style={{ background: BLUE_COLOR, border: "0px" }}
                 type="submit"
                 className="mt-5 py-3 col-lg-2 col-12 fw-bold"
               >

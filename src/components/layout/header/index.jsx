@@ -41,14 +41,16 @@ const Header = (props) => {
  useEffect(() => {
    const fetchImage = async () => {
      try {
-       const response = await axios.get(
-         `${BASE_URL}/account/image/${accountId}`,
-         {
-           responseType: "blob",
-         }
-       );
-       const imageURL = URL.createObjectURL(response.data);
-       setImageSrc(imageURL);
+      if(isLoggedIn){ 
+        const response = await axios.get(
+        `${BASE_URL}/account/image/${accountId}`,
+        {
+          responseType: "blob",
+        }
+      );
+      const imageURL = URL.createObjectURL(response.data);
+      setImageSrc(imageURL);}
+      
      } catch (error) {
        console.error("Lỗi khi lấy hình ảnh:", error);
        setImageSrc(defaultImage);

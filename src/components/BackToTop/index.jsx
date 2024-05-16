@@ -1,18 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import messenger from "../../assets/image/messenger.png";
-import zalo from "../../assets/image/logo-white-2048x1943.png";
 import "./BackToTop.scss";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { FaHandPointUp } from "react-icons/fa6";
+import { SiUpptime } from "react-icons/si";
 import { useAuth } from "../../context";
+import Chatbox from "../chatbox";
+import { Container } from "react-bootstrap";
+
 
 function ScrollTop(props) {
    const { children, window } = props;
@@ -65,7 +63,7 @@ export default function BackToTop(props) {
             variant="warning"
             className="rounded py-2 shadow-sm fs-5 "
           >
-            <FaHandPointUp />
+            <SiUpptime />
           </Button>
         </motion.div>
       </ScrollTop>
@@ -73,36 +71,9 @@ export default function BackToTop(props) {
         <> </>
       ) : (
         <>
-          <OverlayTrigger
-            placement="left"
-            overlay={<Tooltip>Nhấn để được tư vấn.</Tooltip>}
-          >
-            <div className="messenger">
-              <Link>
-                <motion.div
-                  animate={{ scale: 0.8 }}
-                  transition={{ repeat: Infinity, duration: 1 }}
-                >
-                  <img src={messenger} />
-                </motion.div>
-              </Link>
-            </div>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="left"
-            overlay={<Tooltip>Nhấn để được tư vấn.</Tooltip>}
-          >
-            <div className="zalo ">
-              <Link>
-                <motion.div
-                  animate={{ scale: 0.8 }}
-                  transition={{ repeat: Infinity, duration: 1 }}
-                >
-                  <img src={zalo} className="rounded-circle shadow-sm" />
-                </motion.div>
-              </Link>
-            </div>
-          </OverlayTrigger>
+          <Container>
+            <Chatbox />
+          </Container>
         </>
       )}
     </React.Fragment>

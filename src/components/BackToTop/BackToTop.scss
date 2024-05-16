@@ -17,20 +17,37 @@
         right: 15px;
         z-index: 1;
     }
+        .chatbox {
+            position: fixed;
+            bottom: 10rem;
+            z-index: 1;
+            align-items: center;
+            justify-content: center;
+        }
+}
+@media (min-width: 600px) and  (max-width: 992px) {
+    .chatbox {
+            position: fixed;
+            bottom: 160px;
+            left: 11rem;
+            z-index: 1;
+        }
 }
 
 @media (min-width: 992px) {
     .messenger {
             position: fixed;
+            
             bottom: 76px;
             right: 16px;
             z-index: 1;
         }
     
-        .zalo {
+        .chatbox {
             position: fixed;
+            height: auto;
             bottom: 156px;
-            right: 16px;
+            left:  36rem;
             z-index: 1;
         }
 }

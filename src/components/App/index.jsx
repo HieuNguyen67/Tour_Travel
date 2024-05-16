@@ -14,6 +14,7 @@ import { useAuth } from "../../context";
 import BusinessLink from "../../page/customer/business-link";
 import NewsMain from "../../page/customer/news";
 import ConfirmationForm from "../../page/customer/SignUp/confirmation_code";
+import Chatbox from "../chatbox";
 
 const Apps=()=>{
   const{role}=useAuth();
@@ -41,7 +42,7 @@ const Apps=()=>{
               <Route path="*" element={<Navigate to="/business/list-tour" />} />
             </>
           )}
-         
+
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -52,9 +53,8 @@ const Apps=()=>{
           <Route path="/contact" element={<Contact />} />
           <Route path="/information/*" element={<Information />} />
           <Route path="/news/*" element={<NewsMain />} />
-          <Route path="/confirm" element={<ConfirmationForm />}>
-         
-          </Route>
+          <Route path="/confirm" element={<ConfirmationForm />} />
+          <Route path="/chatbox" element={<Chatbox />} />
         </Routes>
       </>
     );
