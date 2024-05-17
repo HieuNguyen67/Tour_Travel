@@ -4,7 +4,7 @@ import { useAuth } from "../../../context";
 import { BASE_URL } from "../../../constants/common";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdAddLocationAlt } from "react-icons/md";
 import { MdDeleteForever } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
@@ -22,14 +22,13 @@ import { toast } from "react-toastify";
 import { MdOutlineStar } from "react-icons/md";
 import { MdTour } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
-
-import {
-  BLUE_COLOR,
-  RED_COLOR,
-} from "../../../constants/color";
+import { format } from "date-fns";
+import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
+import "./add-tour.scss";
 
 const AddTourForm = () => {
   const { accountId, token } = useAuth();
+  const { tour_id } = useParams();
   const [error, setError] = useState(null);
   const [tourCategories, setTourCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,17 +42,17 @@ const AddTourForm = () => {
     end_date: "",
     quantity: "",
     vehicle: "",
-    hotel:"",
+    hotel: "",
     tourcategory_id: "",
     departure_location_name: "",
     destination_locations: [],
-
   });
   const [provinces, setProvinces] = useState([]);
-    const [regions, setRegions] = useState([]);
-      const [images, setImages] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const [images, setImages] = useState([]);
 
-
+  const location = useLocation();
+  const isHomePage = location.pathname === "/business/add-tour";
 
   useEffect(() => {
     const fetchTourCategories = async () => {
@@ -104,6 +103,26 @@ const AddTourForm = () => {
     fetchRegions();
   }, []);
 
+  useEffect(() => {
+    const fetchTourData = async () => {
+      try {
+        if (!isHomePage) {
+          const response = await axios.get(`${BASE_URL}/get-tour/${tour_id}`);
+          const tour = response.data;
+          setFormData({
+            ...tour,
+            start_date: formatDate(tour.start_date),
+            end_date: formatDate(tour.end_date),
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching tour:", error);
+      }
+    };
+
+    fetchTourData();
+  }, []);
+
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -115,8 +134,7 @@ const AddTourForm = () => {
   };
 
   const handleFileChange = (e) => {
-       setImages(e.target.files);
-
+    setImages(e.target.files);
   };
 
   const handleAddDestination = () => {
@@ -143,45 +161,96 @@ const AddTourForm = () => {
       destination_locations: destinations,
     }));
   };
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+ if(isHomePage){ var handleSubmit = async (e) => {
+   e.preventDefault();
+   if (images.length < 4) {
+     alert("Vui lòng chọn từ 4 hình ảnh trở lên");
+     return;
+   }
+
+   const formData1 = new FormData();
+   for (const key in formData) {
+     if (Array.isArray(formData[key])) {
+       formData[key].forEach((item, index) => {
+         formData1.append(`${key}[${index}]`, item);
+       });
+     } else {
+       formData1.append(key, formData[key]);
+     }
+   }
+   for (let i = 0; i < images.length; i++) {
+     formData1.append("images", images[i]);
+   }
+
+   try {
+     await axios.post(`${BASE_URL}/add-tours/${accountId}`, formData1, {
+       headers: {
+         Authorization: `Bearer ${token}`,
+         "Content-Type": "multipart/form-data",
+       },
+     });
+     toast.success("Thêm Tour thành công!");
+     navigate("/business/list-tour");
+   } catch (error) {
+     console.error("Error adding tour: ", error.response.data.error);
+     toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
+   }
+ };}else{
+  var handleSubmit = async (e) => {
     e.preventDefault();
-    if (images.length < 4) {
-      alert("Vui lòng chọn từ 4 hình ảnh trở lên");
-      return;
-    }
-
-    const formData1 = new FormData();
-    for (const key in formData) {
-      if (Array.isArray(formData[key])) {
-        formData[key].forEach((item, index) => {
-          formData1.append(`${key}[${index}]`, item);
-        });
-      } else {
-        formData1.append(key, formData[key]);
-      }
-    }
-    for (let i = 0; i < images.length; i++) {
-      formData1.append("images", images[i]);
-    }
-
     try {
-      await axios.post(`${BASE_URL}/add-tours/${accountId}`, formData1, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-                      toast.success("Thêm Tour thành công!");
-                            navigate("/business/list-tour");
-
-
+      const response = await axios.put(
+        `${BASE_URL}/update-tour/${formData.tour_id}`,
+        formData
+      );
+      toast.success("Chỉnh sửa Tour thành công!");
+      navigate("/business/list-tour");
     } catch (error) {
-      console.error("Error adding tour: ", error.response.data.error);
-      toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
+      console.error("Error updating tour:", error);
+      toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
     }
+
+     const data = new FormData();
+     for (let i = 0; i < images.length; i++) {
+       data.append("images", images[i]);
+     }
+
+     try {
+       const response = await axios.put(`${BASE_URL}/update-tour-images/${tour_id}`, data, {
+         headers: {
+           "Content-Type": "multipart/form-data",
+         },
+       });
+
+       console.log("Tour images updated successfully:", response.data);
+     } catch (error) {
+       console.error("Error updating tour images:", error);
+     }
   };
+ }
+   const formatDate = (dateString) => {
+    return format(new Date(dateString), "yyyy-MM-dd");
+  };
+  const [image, setImage] = useState([]);
+
+  useEffect(() => {
+    const fetchTourImages = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/get-all-tour-images/${tour_id}`);
+        setImage(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching tour images:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchTourImages();
+  }, [tour_id]);
+ 
+   
 
   return (
     <>
@@ -189,8 +258,28 @@ const AddTourForm = () => {
         <Link to="/business/list-tour">
           <IoArrowBackOutline className="fs-3 mb-3" />
         </Link>
-        <h1 className="text-center fw-bold mb-lg-5 mt-3"><MdTour className="fs-1"/> THÊM TOUR</h1>
+        <h1 className="text-center fw-bold mb-lg-5 mt-3">
+          <MdTour className="fs-1" />{" "}
+          {isHomePage ? <>THÊM TOUR</> : <>CHỈNH SỬA TOUR</>}
+        </h1>
         <br />
+        <div>
+          {loading ? (
+            <p>Loading images...</p>
+          ) : (
+            <Row className="mb-4">
+              {image.map((image, index) => (
+                <Col key={index} className="col-lg-3 col-12">
+                  <img
+                    src={`data:image/jpeg;base64,${image.image}`}
+                    alt={`Tour ${tour_id} Image ${index + 1}`}
+                    className="rounded-3 sizeimgg col-12 mb-3 mb-lg-0"
+                  />
+                </Col>
+              ))}
+            </Row>
+          )}
+        </div>
 
         <form onSubmit={handleSubmit} className="">
           <Row>
@@ -221,19 +310,39 @@ const AddTourForm = () => {
               </Form.Group>
             </Col>
             <Col className="col-lg-6 col-12">
-              <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
-                  <LuImagePlus className="fs-4" /> Chọn hình ảnh tour ({">"}= 4
-                  ảnh) <span className="text-danger">(*) </span>:
-                </Form.Label>
-                <Form.Control
-                  type="file"
-                  name="images"
-                  multiple
-                  onChange={handleFileChange}
-                  required
-                />
-              </Form.Group>
+              {isHomePage ? (
+                <>
+                  {" "}
+                  <Form.Group className="mb-4">
+                    <Form.Label className="font-family fw-bold">
+                      <LuImagePlus className="fs-4" /> Chọn hình ảnh tour ({">"}
+                      = 4 ảnh) <span className="text-danger">(*) </span>:
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="images"
+                      multiple
+                      onChange={handleFileChange}
+                      required
+                    />
+                  </Form.Group>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <Form.Group className="mb-4">
+                    <Form.Label className="font-family fw-bold">
+                      <LuImagePlus className="fs-4" /> Thay đổi ảnh tour :
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="images"
+                      multiple
+                      onChange={handleFileChange}
+                    />
+                  </Form.Group>
+                </>
+              )}
             </Col>
             <Col className="col-12">
               <Form.Group className="mb-4">
@@ -478,7 +587,7 @@ const AddTourForm = () => {
             </Form.Label>
             <div
               className=""
-              style={{ width: "100%", height: "33rem", background: "white" }}
+              style={{ width: "100%", height: "43rem", background: "white" }}
             >
               <ReactQuill
                 name="description"
@@ -488,7 +597,7 @@ const AddTourForm = () => {
                 placeholder="Content"
                 modules={AddTourForm.modules}
                 formats={AddTourForm.formats}
-                style={{ background: "white", height: "30rem" }}
+                style={{ background: "white", height: "40rem" }}
               />
             </div>
           </Row>
@@ -499,7 +608,7 @@ const AddTourForm = () => {
               type="submit"
               className="mt-5 mt-lg-3 mb-4 py-3 col-lg-2 col-12 fw-bold"
             >
-             <GiConfirmed className="fs-4"/> Xác Nhận
+              <GiConfirmed className="fs-4" /> Xác Nhận
             </Button>{" "}
           </div>
         </form>

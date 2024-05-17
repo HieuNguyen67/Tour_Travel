@@ -217,27 +217,17 @@ const { token, role, accountId } = useAuth();
     {
       field: "title",
       headerName: "Tiêu đề",
-      width: 250,
+      width: 300,
       renderCell: (params) => (
         <div
+        className="fw-bold"
           style={{ cursor: "pointer" }}
           dangerouslySetInnerHTML={{ __html: params.value }}
           onClick={() => handleRowClick(params)}
         />
       ),
     },
-    {
-      field: "content",
-      headerName: "Nội dung",
-      width: 200,
-      renderCell: (params) => (
-        <div
-          style={{ cursor: "pointer" }}
-          dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
-        />
-      ),
-    },
+   
 
     { field: "category_name", headerName: "Danh mục", width: 150 },
     {
