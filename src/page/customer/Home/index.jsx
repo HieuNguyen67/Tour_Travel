@@ -9,6 +9,7 @@ import Header from "../../../components/layout/header";
 import Spinner from "react-bootstrap/Spinner";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
@@ -17,6 +18,19 @@ const Home = () => {
 
   const handleVideoLoad = () => {
     setIsLoading(false);
+  };
+  const [destinationLocation, setDestinationLocation] = useState('');
+    const [tourName, setTourName] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    navigate(
+      `/list-tour-vietnam?destinationLocation=${destinationLocation}`
+    );
+  };
+  const handleSearch1 = () => {
+    navigate(`/list-tour-vietnam?tourName=${tourName}`);
   };
 const optimizedVideoElement = useMemo(
   () => (
@@ -87,6 +101,34 @@ const optimizedVideoElement = useMemo(
 
       <div className="boxhome col-12">
         <Container>
+          <div>
+            <h1>Search Tours</h1>
+            <div>
+              <label>
+                Destination Location:
+                <input
+                  type="text"
+                  value={destinationLocation}
+                  onChange={(e) => setDestinationLocation(e.target.value)}
+                />
+              </label>
+            </div>
+            <button onClick={handleSearch}>Search</button>
+          </div>
+          <div>
+            <h1>Search Tours</h1>
+            <div>
+              <label>
+                Tìm theo tu khoa:
+                <input
+                  type="text"
+                  value={tourName}
+                  onChange={(e) => setTourName(e.target.value)}
+                />
+              </label>
+            </div>
+            <button onClick={handleSearch1}>Search</button>
+          </div>
           <h1>WELCOME</h1> <h1>WELCOME</h1> <h1>WELCOME</h1> <h1>WELCOME</h1>
         </Container>
         <Col className="col-12 ">

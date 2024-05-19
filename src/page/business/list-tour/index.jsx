@@ -71,7 +71,18 @@ const handleRowClick = (params) => {
 };
 
   const columns = [
-    { field: "tour_id", headerName: "ID", width: 90 },
+    {
+      field: "tour_id",
+      headerName: "ID",
+      width: 90,
+      renderCell: (params) => (
+        <div
+          style={{ cursor: "pointer" }}
+          dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
+        />
+      ),
+    },
     {
       field: "image",
       headerName: "Hình ảnh",
@@ -88,6 +99,7 @@ const handleRowClick = (params) => {
               objectFit: "cover",
             }}
             className="rounded"
+            onClick={() => handleRowClick(params)}
           />
         ) : null,
     },
@@ -136,7 +148,7 @@ const handleRowClick = (params) => {
           className="fw-bold"
           style={{ cursor: "pointer" }}
           dangerouslySetInnerHTML={{ __html: params.value }}
-          // onClick={() => handleRowClick(params)}
+          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -149,6 +161,7 @@ const handleRowClick = (params) => {
         <div
           className="ms-2 fw-bold text-danger"
           dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -160,6 +173,7 @@ const handleRowClick = (params) => {
         <div
           className="fw-bold text-danger"
           dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -171,6 +185,7 @@ const handleRowClick = (params) => {
         <div
           className="fw-bold text-danger"
           dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -182,7 +197,7 @@ const handleRowClick = (params) => {
         <span
           className="fw-bold text-primary"
           style={{ cursor: "pointer" }}
-          // onClick={() => handleRowClick(params)}
+          onClick={() => handleRowClick(params)}
         >
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
@@ -196,7 +211,7 @@ const handleRowClick = (params) => {
         <span
           className="fw-bold text-primary"
           style={{ cursor: "pointer" }}
-          // onClick={() => handleRowClick(params)}
+          onClick={() => handleRowClick(params)}
         >
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
@@ -231,7 +246,7 @@ const handleRowClick = (params) => {
         <span
           className="fw-bold text-primary"
           style={{ cursor: "pointer" }}
-          // onClick={() => handleRowClick(params)}
+          onClick={() => handleRowClick(params)}
         >
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>

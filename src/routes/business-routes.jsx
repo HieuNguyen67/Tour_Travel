@@ -8,8 +8,6 @@ import NewsDetail from "../page/admin/news/news-details";
 import AddTourForm from "../page/business/add-tour";
 import ListTour from "../page/business/list-tour";
 import OrderTour from "../page/business/order-tour";
-import UpdateTourForm from "../page/business/update-tour";
-
 
 const BusinessRoutes = () => {
   return (

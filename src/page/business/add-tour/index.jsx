@@ -25,6 +25,7 @@ import { GiConfirmed } from "react-icons/gi";
 import { format } from "date-fns";
 import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
 import "./add-tour.scss";
+import LoadingBackdrop from "../../../components/backdrop";
 
 const AddTourForm = () => {
   const { accountId, token } = useAuth();
@@ -74,8 +75,10 @@ const AddTourForm = () => {
           "https://esgoo.net/api-tinhthanh/1/0.htm"
         );
         setProvinces(response.data.data);
+        setLoading(false);
       } catch (error) {
         setError("Error fetching provinces: " + error.message);
+        setLoading(false);
       }
     };
 
@@ -95,8 +98,10 @@ const AddTourForm = () => {
           }
         );
         setRegions(response.data.data);
+        setLoading(false);
       } catch (error) {
         setError("Error fetching provinces: " + error.message);
+        setLoading(false);
       }
     };
 
@@ -114,9 +119,11 @@ const AddTourForm = () => {
             start_date: formatDate(tour.start_date),
             end_date: formatDate(tour.end_date),
           });
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching tour:", error);
+        setLoading(false);
       }
     };
 
@@ -193,6 +200,7 @@ const AddTourForm = () => {
      });
      toast.success("Thêm Tour thành công!");
      navigate("/business/list-tour");
+     setLoading(false);
    } catch (error) {
      console.error("Error adding tour: ", error.response.data.error);
      toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
@@ -200,17 +208,27 @@ const AddTourForm = () => {
  };}else{
   var handleSubmit = async (e) => {
     e.preventDefault();
+   
     try {
       const response = await axios.put(
         `${BASE_URL}/update-tour/${formData.tour_id}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       toast.success("Chỉnh sửa Tour thành công!");
       navigate("/business/list-tour");
+           setLoading(false);
+
     } catch (error) {
       console.error("Error updating tour:", error);
       toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
+
     }
+    
 
      const data = new FormData();
      for (let i = 0; i < images.length; i++) {
@@ -218,13 +236,20 @@ const AddTourForm = () => {
      }
 
      try {
-       const response = await axios.put(`${BASE_URL}/update-tour-images/${tour_id}`, data, {
-         headers: {
-           "Content-Type": "multipart/form-data",
-         },
-       });
+       const response = await axios.put(
+         `${BASE_URL}/update-tour-images/${tour_id}`,
+         data,
+         {
+           headers: {
+             Authorization: `Bearer ${token}`,
+             "Content-Type": "multipart/form-data",
+           },
+         }
+       );
 
        console.log("Tour images updated successfully:", response.data);
+            setLoading(false);
+
      } catch (error) {
        console.error("Error updating tour images:", error);
      }
@@ -238,9 +263,13 @@ const AddTourForm = () => {
   useEffect(() => {
     const fetchTourImages = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/get-all-tour-images/${tour_id}`);
-        setImage(response.data);
-        setLoading(false);
+        if (!isHomePage) {
+          const response = await axios.get(
+            `${BASE_URL}/get-all-tour-images/${tour_id}`
+          );
+          setImage(response.data);
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Error fetching tour images:", error);
         setLoading(false);
@@ -248,12 +277,14 @@ const AddTourForm = () => {
     };
 
     fetchTourImages();
-  }, [tour_id]);
+  }, [isHomePage, tour_id]);
  
    
 
   return (
     <>
+      {" "}
+      <LoadingBackdrop open={loading} />
       <div className="  px-3 ">
         <Link to="/business/list-tour">
           <IoArrowBackOutline className="fs-3 mb-3" />
@@ -264,9 +295,6 @@ const AddTourForm = () => {
         </h1>
         <br />
         <div>
-          {loading ? (
-            <p>Loading images...</p>
-          ) : (
             <Row className="mb-4">
               {image.map((image, index) => (
                 <Col key={index} className="col-lg-3 col-12">
@@ -278,7 +306,6 @@ const AddTourForm = () => {
                 </Col>
               ))}
             </Row>
-          )}
         </div>
 
         <form onSubmit={handleSubmit} className="">
@@ -332,7 +359,8 @@ const AddTourForm = () => {
                   {" "}
                   <Form.Group className="mb-4">
                     <Form.Label className="font-family fw-bold">
-                      <LuImagePlus className="fs-4" /> Thay đổi ảnh tour :
+                      <LuImagePlus className="fs-4" /> Thay đổi ảnh tour ({">"}=
+                      4 ảnh) :
                     </Form.Label>
                     <Form.Control
                       type="file"
