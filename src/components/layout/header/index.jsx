@@ -156,7 +156,7 @@ const Header = (props) => {
                               <span
                                 className={
                                   isHomePage
-                                    ? "white font-family"
+                                    ? "whiteee font-family"
                                     : "black font-family"
                                 }
                               >

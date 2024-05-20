@@ -10,7 +10,9 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { motion } from "framer-motion";
 import Modal from "react-bootstrap/Modal";
-
+import { RiRobot2Fill } from "react-icons/ri";
+import bot from "../../assets/image/bot-3.png";
+import "./chatbox.scss";
 const Chatbox = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
@@ -85,24 +87,18 @@ const Chatbox = () => {
         placement="left"
         overlay={<Tooltip>Nhấn để được tư vấn.</Tooltip>}
       >
-        <div className="messenger me-1 me-lg-0">
+        <div className=" me-1 me-lg-0 messenger">
           <motion.div
             animate={{ scale: 0.8 }}
             transition={{ repeat: Infinity, duration: 1 }}
           >
-            <Button
-              size="small"
-              style={{ background: BLUE_COLOR, border: "0px" }}
-              className="rounded-circle py-3 px-3 shadow-sm ms-1"
-              onClick={handleShow}
-            >
-              <MdChat className="fs-2" />{" "}
-            </Button>
+
+            <img src={bot} className="bot" onClick={handleShow} />
           </motion.div>
         </div>
       </OverlayTrigger>
 
-      <Modal show={show} onHide={handleClose} centered >
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           {" "}
@@ -169,7 +165,6 @@ const Chatbox = () => {
           </div>
         </Modal.Body>
       </Modal>
-     
     </>
   );
 };

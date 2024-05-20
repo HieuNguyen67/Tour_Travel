@@ -54,7 +54,8 @@ const Apps=()=>{
           <Route path="/information/*" element={<Information />} />
           <Route path="/news/*" element={<NewsMain />} />
           <Route path="/confirm" element={<ConfirmationForm />} />
-          <Route path="/list-tour-vietnam" element={<TourSearch />} />
+          <Route path="/list-tour-vietnam/:location" element={<TourSearch />} />
+          <Route path="/list-tour-foreign/:location" element={<TourSearch />} />
         </Routes>
       </>
     );
