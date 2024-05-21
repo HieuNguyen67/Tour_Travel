@@ -1,12 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { BASE_URL } from "../../../constants/common";
 import { Range } from "react-range";
 import LoadingBackdrop from "../../../components/backdrop";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import { LuFilter } from "react-icons/lu";
+import { FaFilter } from "react-icons/fa6";
+import {
+  BLUE_COLOR,
+  RED_COLOR,
+  TEXT_MAIN_COLOR,
+} from "../../../constants/color";
+import "../news/news.scss";
+import { format } from "date-fns";
+import { RiHotelFill } from "react-icons/ri";
+import { IoAirplaneSharp } from "react-icons/io5";
+import { FaCar } from "react-icons/fa6";
+import { motion } from "framer-motion";
+import ReactPaginate from "react-paginate";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -34,6 +48,9 @@ const TourSearch = () => {
   const [regions, setRegions] = useState([]);
   const [provinces, setProvinces] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 12;
+
   const { location } = useParams();
 
   useEffect(() => {
@@ -49,8 +66,12 @@ const TourSearch = () => {
           );
         }
 
-        setTours(response.data);
-        filterTours(response.data, initialDestinationLocation, initialTourName);
+       const sortedTours = response.data.sort(
+         (a, b) => new Date(a.start_date) - new Date(b.start_date)
+       );
+
+       setTours(sortedTours);
+       filterTours(sortedTours, initialDestinationLocation, initialTourName);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching tours", err);
@@ -61,6 +82,7 @@ const TourSearch = () => {
 
     fetchTours();
   }, [initialDestinationLocation, initialTourName]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -145,7 +167,21 @@ const TourSearch = () => {
       );
     });
     setFilteredTours(filtered);
+    setCurrentPage(0); 
   };
+
+ const handlePageClick = useCallback(
+   (data) => {
+     const { selected } = data;
+     setCurrentPage(selected);
+     window.scrollTo({
+       top: 0,
+       behavior: "smooth",
+     });
+   },
+   [setCurrentPage]
+ );
+
   const formatPrice = (price) => {
     if (typeof price !== "number") {
       return price;
@@ -156,13 +192,23 @@ const TourSearch = () => {
     }).format(price);
   };
 
+  const truncateString = (str, maxLength) => {
+    if (str.length <= maxLength) {
+      return str;
+    }
+    return str.substring(0, maxLength) + "...";
+  };
+
+  const pageCount = Math.ceil(filteredTours.length / itemsPerPage);
+  const offset = currentPage * itemsPerPage;
+  const currentItems = filteredTours.slice(offset, offset + itemsPerPage);
+
   return (
     <>
-      {" "}
       <LoadingBackdrop open={loading} />
       <Container className="mt-5 pt-5">
-        <Row>
-          <Col className="col-lg-3 col-12">
+        <Row className="mt-lg-3">
+          <Col className="col-lg-3 col-12 mb-lg-5 mb-2">
             <div
               style={{ border: "1px solid #ebecef", background: "#f9f9f9" }}
               className="p-3"
@@ -170,12 +216,15 @@ const TourSearch = () => {
               <h5 className="fw-bold">
                 <LuFilter className="fs-5" /> Bộ lọc tìm kiếm
               </h5>
-              <h5>
-                Tìm kiếm tour: {tourName} {destinationLocation}
+              <h5
+                style={{ background: "#ffc107" }}
+                className="text-center p-2 mt-3 "
+              >
+                {tourName} {destinationLocation}
               </h5>
-              <div>
-                <label>
-                  Departure Location:
+              <form>
+                <div>
+                  <label className="fw-bold">ĐIỂM ĐI: </label>
                   <Form.Select
                     aria-label="Default select example"
                     className="shadow-sm"
@@ -191,14 +240,11 @@ const TourSearch = () => {
                       </option>
                     ))}
                   </Form.Select>
-                </label>
-              </div>
-              <div>
-                <label>
-                  Destination Location:
+                </div>
+                <div>
+                  <label className="fw-bold mt-3">ĐIỂM ĐẾN: </label>
                   {location == 1 ? (
                     <>
-                      {" "}
                       <Form.Select
                         aria-label="Default select example"
                         className="shadow-sm"
@@ -217,7 +263,6 @@ const TourSearch = () => {
                     </>
                   ) : (
                     <>
-                      {" "}
                       <Form.Select
                         aria-label="Default select example"
                         className="shadow-sm"
@@ -235,11 +280,73 @@ const TourSearch = () => {
                       </Form.Select>
                     </>
                   )}
-                </label>
-              </div>
-              <div>
-                <label>
-                  Phương tiện:
+                </div>
+                <div>
+                  <label className="fw-bold mt-3">NGÀY ĐI: </label>
+                  <Form.Control
+                    type="date"
+                    style={{ border: "3px solid #ffc107" }}
+                    value={createdAt}
+                    onChange={(e) => setCreatedAt(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="price-min" className="fw-bold mt-3">
+                    GIÁ TOUR:
+                  </label>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      margin: "20px",
+                    }}
+                  >
+                    <Range
+                      step={1000}
+                      min={0}
+                      max={100000000}
+                      values={values}
+                      onChange={(newValues) => {
+                        setValues(newValues);
+                        setMinAdultPrice(newValues[0]);
+                        setMaxAdultPrice(newValues[1]);
+                      }}
+                      renderTrack={({ props, children }) => (
+                        <div
+                          {...props}
+                          style={{
+                            ...props.style,
+                            height: "6px",
+                            width: "100%",
+                            backgroundColor: "#212121a8",
+                          }}
+                        >
+                          {children}
+                        </div>
+                      )}
+                      renderThumb={({ props }) => (
+                        <div
+                          {...props}
+                          style={{
+                            ...props.style,
+                            color: "red",
+                            height: "20px",
+                            width: "20px",
+                            backgroundColor: "#5856d6",
+                            borderRadius: "50%",
+                            outline: "none",
+                          }}
+                        />
+                      )}
+                    />
+                  </div>
+                  <div className="text-danger fw-bold text-center">
+                    {formatPrice(minAdultPrice)}&nbsp;&nbsp; - &nbsp;&nbsp;
+                    {formatPrice(maxAdultPrice)}
+                  </div>
+                </div>
+                <div>
+                  <label className="fw-bold mt-3">PHƯƠNG TIỆN: </label>
                   <Form.Select
                     className="shadow-sm"
                     style={{ border: "3px solid #ffc107" }}
@@ -248,129 +355,189 @@ const TourSearch = () => {
                     required
                   >
                     <option value="">----Tất cả----</option>
-                    <option value="Xe du lịch">Xe du lịch</option>
+                    {location == 1 ? (
+                      <>
+                        <option value="Xe du lịch">Xe du lịch</option>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                     <option value="Máy bay">Máy bay</option>
                   </Form.Select>
-                </label>
-              </div>
+                </div>
 
-              <label for="price-min">Price:</label>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "20px",
-                }}
-                className="col-5"
-              >
-                <Range
-                  step={1000}
-                  min={0}
-                  max={100000000}
-                  values={values}
-                  onChange={(newValues) => {
-                    setValues(newValues);
-                    setMinAdultPrice(newValues[0]);
-                    setMaxAdultPrice(newValues[1]);
-                  }}
-                  renderTrack={({ props, children }) => (
-                    <div
-                      {...props}
-                      style={{
-                        ...props.style,
-                        height: "6px",
-                        width: "100%",
-                        backgroundColor: "#212121a8",
-                      }}
-                    >
-                      {children}
-                    </div>
-                  )}
-                  renderThumb={({ props }) => (
-                    <div
-                      {...props}
-                      style={{
-                        ...props.style,
-                        color: "red",
-                        height: "20px",
-                        width: "20px",
-                        backgroundColor: "#5856d6",
+                <div>
+                  <label className="mt-3 fw-bold">
+                    KHÁCH SẠN <FaStar className=" text-warning" />:{" "}
+                  </label>
+                  <Form.Select
+                    className="shadow-sm"
+                    style={{ border: "3px solid #ffc107" }}
+                    value={hotel}
+                    onChange={(e) => setHotel(e.target.value)}
+                    required
+                  >
+                    <option value="">----Tất cả----</option>
+                    <option value="1">1 sao</option>
+                    <option value="2">2 sao</option>
+                    <option value="3">3 sao</option>
+                    <option value="4">4 sao</option>
+                    <option value="5">5 sao</option>
+                  </Form.Select>
+                </div>
 
-                        borderRadius: "50%",
-                        outline: "none",
-                      }}
-                    />
-                  )}
-                />
-              </div>
-              <div>
-                {formatPrice(minAdultPrice)} - {formatPrice(maxAdultPrice)}
-              </div>
-              <div className="col-2">
-                <label>
-                  Khách sạn <FaStar className=" text-warning" />:{" "}
-                </label>
-                <Form.Select
-                  className="shadow-sm"
-                  style={{ border: "3px solid #ffc107" }}
-                  value={hotel}
-                  onChange={(e) => setHotel(e.target.value)}
-                  required
+                <Button
+                  className=" col-12 mt-4 py-2"
+                  style={{ background: BLUE_COLOR, border: "0px" }}
+                  onClick={handleSearch}
                 >
-                  <option value="">----Tất cả----</option>
-                  <option value="1">1 sao</option>
-                  <option value="2">2 sao</option>
-                  <option value="3">3 sao</option>
-                  <option value="4">4 sao</option>
-                  <option value="5">5 sao</option>
-                </Form.Select>
-              </div>
-              <div>
-                <label>
-                  Created At:
-                  <input
-                    type="date"
-                    value={createdAt}
-                    onChange={(e) => setCreatedAt(e.target.value)}
-                  />
-                </label>
-              </div>
-              <button onClick={handleSearch}>Search</button>
+                  <FaFilter /> Lọc
+                </Button>
+              </form>
             </div>
           </Col>
-          <Col className="col-9"></Col>
+          <Col className="col-lg-9 col-12 mt-3 mt-lg-0">
+            <div className="">
+              {currentItems.length > 0 ? (
+                <>
+                  <Row className="row-cols-3">
+                    {currentItems.map((tour) => (
+                      <Col
+                        key={tour.tour_id}
+                        className="col-lg-4 col-12 mb-3 mb-lg-3"
+                      >
+                        <Link
+                          to={`/tour-details/${tour.tour_id}`}
+                          className="text-decoration-none"
+                        >
+                          <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.8 }}
+                          >
+                            <div
+                              style={{
+                                border: "3px solid #ebecef",
+                                cursor: "pointer",
+                              }}
+                              className="rounded-4  shadow-sm p-3"
+                            >
+                              {tour.image && (
+                                <img
+                                  src={`data:image/jpeg;base64,${tour.image}`}
+                                  alt="Tour"
+                                  className="rounded-4 col-12  sizei shadow mb-4"
+                                />
+                              )}
+                              <div
+                                style={{ fontSize: "14px", color: "#2d4271" }}
+                                className="mb-2"
+                              >
+                                {format(
+                                  new Date(tour.start_date),
+                                  "dd/MM/yyyy"
+                                )}{" "}
+                                -{" "}
+                                {format(new Date(tour.end_date), "dd/MM/yyyy")}
+                              </div>
+
+                              <div
+                                className="fw-bold mb-3 sizepp"
+                                style={{ color: "#475467", fontSize: "18px" }}
+                              >
+                                {truncateString(tour.tour_name, 55)}
+                              </div>
+
+                              <div className="mb-2">
+                                <RiHotelFill className="fs-4 text-dark" />:{" "}
+                                {[...Array(tour.hotel)].map((_, index) => (
+                                  <FaStar
+                                    key={index}
+                                    className="text-warning"
+                                  />
+                                ))}
+                                <span className="ms-4">
+                                  {tour.vehicle == "Máy bay" ? (
+                                    <>
+                                      <IoAirplaneSharp className="text-dark" />
+                                    </>
+                                  ) : (
+                                    <>
+                                      <FaCar className="text-dark" />
+                                    </>
+                                  )}
+                                </span>
+                              </div>
+                              <div
+                                style={{ color: TEXT_MAIN_COLOR }}
+                                className="mb-2"
+                              >
+                                Nơi khởi hành:{" "}
+                                <span className="fw-bold">
+                                  {tour.departure_location_name}
+                                </span>
+                              </div>
+                              <div
+                                className="fs-5 fw-bold mb-2"
+                                style={{ color: "#e01600" }}
+                              >
+                                {formatPrice(tour.adult_price)}
+                              </div>
+
+                              <div className="text-end fw-bold">
+                                <span
+                                  style={{
+                                    fontSize: "13px",
+                                    color: TEXT_MAIN_COLOR,
+                                  }}
+                                  className="fw-bold text-decoration-underline"
+                                >
+                                  Số chỗ còn nhận:{" "}
+                                </span>
+                                <span
+                                  style={{ color: "#e01600", ontSize: "19px" }}
+                                >
+                                  {tour.quantity}
+                                </span>
+                              </div>
+                            </div>
+                          </motion.div>
+                        </Link>
+                      </Col>
+                    ))}
+                  </Row>
+                  <ReactPaginate
+                    previousLabel={
+                      <Button variant="dark" className="mx-2">
+                        <FaAngleLeft />
+                      </Button>
+                    }
+                    nextLabel={
+                      <Button variant="dark" className="mx-2">
+                        <FaAngleRight />
+                      </Button>
+                    }
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination mt-5"}
+                    activeClassName={"activee"}
+                    pageLinkClassName={"page-item"}
+                  />
+                </>
+              ) : (
+                <p
+                  style={{ background: "#f2dede" }}
+                  className="text-center text-danger py-5 fw-bold shadow-sm"
+                >
+                  Không tìm thấy tour bạn yêu cầu. Thử tour khác !
+                </p>
+              )}
+            </div>
+          </Col>
         </Row>
       </Container>
-      <div className="mt-5 pt-5">
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <div>
-          {filteredTours.length > 0 ? (
-            <ul>
-              {filteredTours.map((tour) => (
-                <li key={tour.tour_id}>
-                  <h2>{tour.tour_name}</h2>
-                  <p>Adult Price: {tour.adult_price}</p>
-                  <p>Start Date: {tour.start_date}</p>
-                  <p>End Date: {tour.end_date}</p>
-                  <p>Quantity: {tour.quantity}</p>
-                  <p>Phương tiện: {tour.vehicle}</p>
-                  <p>Hotel: {tour.hotel}</p>
-                  <p>Created At: {tour.created_at}</p>
-                  {tour.image && (
-                    <img
-                      src={`data:image/jpeg;base64,${tour.image}`}
-                      alt="Tour"
-                    />
-                  )}
-                  <p>Destinations: {tour.destination_locations.join(", ")}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No tours found</p>
-          )}
-        </div>
-      </div>
     </>
   );
 };

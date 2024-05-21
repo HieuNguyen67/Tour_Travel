@@ -6,11 +6,9 @@ import HTMLContent from "../../../../components/HTMLContent";
 import "../news.scss";
 import { format } from "date-fns";
 import { LuClock8 } from "react-icons/lu";
-import { Backdrop, CircularProgress } from "@mui/material";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import {  useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
-import LinearProgress from "@mui/material/LinearProgress";
 import LoadingBackdrop from "../../../../components/backdrop";
 import { ImNewspaper } from "react-icons/im";
 

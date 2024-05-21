@@ -9,6 +9,7 @@ import styled, { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   body {
       font-family: "Lora", serif;
+      color: var(--gray-600, #475467);
 
   }
 `;

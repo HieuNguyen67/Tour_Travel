@@ -5,5 +5,9 @@ export const GREY_COLOR = "linear-gradient(to right, #434343 0%, black 100%)";
 export const COLOR = "linear-gradient(90deg, #FAD961 0%, #F76B1C 100%)";
 export const RED_COLOR = "linear-gradient(147deg, #FFE53B 0%, #FF2525 74%)";
 export const BLUE1_COLOR = "linear-gradient( 111.4deg,  rgba(7,7,9,1) 6.5%, rgba(27,24,113,1) 93.2% )";
+export const RED1_COLOR =
+  "radial-gradient( circle 986.6px at 10% 20%,  rgba(251,6,6,0.94) 0%, rgba(3,31,213,1) 82.8%, rgba(248,101,248,1) 87.9% )";
+export const TEXT_MAIN_COLOR = "var(--gray-600, #475467)";
+export const TEXT_RED_COLOR = "#e01600";
 export const YELLOW_COLOR =
   "radial-gradient( circle 331px at 1.4% 52.9%,  rgba(255,236,2,1) 0%, rgba(255,223,2,1) 33.6%, rgba(255,187,29,1) 61%, rgba(255,175,7,1) 100.7% )";

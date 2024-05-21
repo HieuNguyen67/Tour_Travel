@@ -15,6 +15,7 @@ import BusinessLink from "../../page/customer/business-link";
 import NewsMain from "../../page/customer/news";
 import ConfirmationForm from "../../page/customer/SignUp/confirmation_code";
 import TourSearch from "../../page/customer/list-tour-filter";
+import TourDetail from "../../page/customer/tour-detail";
 
 const Apps=()=>{
   const{role}=useAuth();
@@ -56,6 +57,7 @@ const Apps=()=>{
           <Route path="/confirm" element={<ConfirmationForm />} />
           <Route path="/list-tour-vietnam/:location" element={<TourSearch />} />
           <Route path="/list-tour-foreign/:location" element={<TourSearch />} />
+          <Route path="/tour-details/:tour_id" element={<TourDetail />} />
         </Routes>
       </>
     );

@@ -120,15 +120,6 @@ const navigate=useNavigate();
         </Container>
         <br />
         <Container className="mb-5 pb-md-5">
-          {/* {role == 2 ? (
-            <>
-              {" "}
-              <AddCategories />
-            </>
-          ) : (
-            <></>
-          )} */}
-
           <form onSubmit={handleSubmit}>
             <Row>
               <Col className="col-12">

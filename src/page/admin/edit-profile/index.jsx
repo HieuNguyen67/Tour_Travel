@@ -9,7 +9,7 @@ import { FaSave } from "react-icons/fa";
 import LoadImage from "./load-image";
 import { IoArrowBackOutline } from "react-icons/io5";
 import LoadingBackdrop from "../../../components/backdrop";
-import { BLUE_COLOR } from "../../../constants/color";
+import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
 import { MdAccountBox } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -17,6 +17,8 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { RxUpdate } from "react-icons/rx";
+import { RiBankCardFill } from "react-icons/ri";
+import { FaAddressCard } from "react-icons/fa6";
 
 const EditProfile = () => {
     const {account_id,role_id}=useParams();
@@ -36,7 +38,10 @@ const EditProfile = () => {
     phone_number: "",
     address: "",
     email: "",
-    status:"",
+    status: "",
+    id_card: "",
+    bank_account_name: "",
+    bank_account_number: "",
   });
 
   useEffect(() => {
@@ -147,12 +152,10 @@ const EditProfile = () => {
             {" "}
             <form onSubmit={handleSubmit}>
               <Row>
-                <Col className="col-12">
-                  <Form.Group className="mb-4 ">
-                    <Form.Label className="fw-bold">
-                      <RxUpdate className="fs-5" /> Trạng thái:
-                    </Form.Label>
-                    <Form.Control
+                <Col className="col-lg-6 col-12">
+                  <Form.Group className="mb-lg-4 ">
+                    
+                    <Form.Select
                       as="select"
                       required
                       name="status"
@@ -161,8 +164,17 @@ const EditProfile = () => {
                     >
                       <option value="Inactive">Inactive</option>
                       <option value="Active">Active</option>
-                    </Form.Control>
+                    </Form.Select>
                   </Form.Group>
+                </Col>
+                <Col className="col-12 col-lg-3">
+                  <Button
+                    style={{ background: RED_COLOR, border:'0px' }}
+                    type="submit"
+                    className="  col-12 "
+                  >
+                    <FaSave /> Cập nhật trạng thái
+                  </Button>
                 </Col>
                 <Col className="col-lg-6 col-12">
                   {" "}
@@ -252,14 +264,51 @@ const EditProfile = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col className="col-12 col-lg-3">
-                  <Button
-                    style={{ background: BLUE_COLOR }}
-                    type="submit"
-                    className="py-3  col-12 mt-2"
-                  >
-                    <FaSave /> Cập nhật trạng thái
-                  </Button>
+                <Col className="col-lg-6 col-12">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      <RiBankCardFill className="fs-4" /> Tên tài khoản ngân
+                      hàng:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="text"
+                      name="bank_account_name"
+                      value={formData.bank_account_name}
+                      placeholder="chưa cập nhật"
+                      readOnly
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-6 col-12">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      <RiBankCardFill className="fs-4" /> STK ngân hàng:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      name="bank_account_number"
+                      value={formData.bank_account_number}
+                      placeholder="chưa cập nhật"
+                      readOnly
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-12 col-12">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      <FaAddressCard className="fs-4" /> CCCD/ CMND:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      name="id_card"
+                      value={formData.id_card}
+                      placeholder="chưa cập nhật"
+                      readOnly
+                    />
+                  </Form.Group>
                 </Col>
               </Row>
             </form>

@@ -16,6 +16,8 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
+import { FaAddressCard } from "react-icons/fa6";
+import {  RED_COLOR } from "../../../constants/color";
 
 const RegisterUser = () => {
   const {role_id}=useParams();
@@ -29,6 +31,7 @@ const RegisterUser = () => {
     phone_number: "",
     address: "",
     email: "",
+    id_card: "",
   });
   const { isLoggedIn, token } = useAuth();
 
@@ -202,7 +205,7 @@ const RegisterUser = () => {
                   />
                 </Form.Group>
               </Col>
-              <Col className="col-12">
+              <Col className="col-6">
                 <Form.Group className="mb-3">
                   <Form.Label className="font-family">
                     <TiLocation className="fs-4" /> Địa chỉ{" "}
@@ -218,14 +221,30 @@ const RegisterUser = () => {
                   />
                 </Form.Group>
               </Col>
+              <Col className="col-6">
+                <Form.Group className="mb-4">
+                  <Form.Label className="font-family">
+                    <FaAddressCard className="fs-4" /> CCCD/ CMND{" "}
+                    <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="CCCD/ CMND"
+                    required
+                    name="id_card"
+                    value={formData.id_card}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
               {error && <p style={{ color: "red" }}>{error}</p>}
               <Button
-                variant="warning"
+               style={{background:RED_COLOR,  border:'0px'}}
                 className="col-12 col-lg-3 py-3 mt-4"
                 type="submit"
               >
                 <span className="font-family">
-                  Đăng Ký <IoLogInSharp className="fs-4"/>
+                  Đăng Ký <IoLogInSharp className="fs-4" />
                 </span>
               </Button>
             </Row>

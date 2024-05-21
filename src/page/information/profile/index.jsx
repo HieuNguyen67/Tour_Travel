@@ -5,7 +5,6 @@ import { useAuth } from "../../../context";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import {  Backdrop, CircularProgress} from "@mui/material";
 import { FaSave } from "react-icons/fa";
 import UpdateImage from "../../../components/up-images";
 import { IoArrowBackOutline } from "react-icons/io5";
@@ -16,6 +15,8 @@ import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
+import { RiBankCardFill } from "react-icons/ri";
+import { FaAddressCard } from "react-icons/fa6";
 
 const Profile = () => {
   const { accountId, isLoggedIn ,token} = useAuth();
@@ -34,6 +35,9 @@ const Profile = () => {
     phone_number: "",
     address: "",
     email: "",
+    id_card:"",
+    bank_account_name:"",
+    bank_account_number:""
   });
 
   useEffect(() => {
@@ -204,6 +208,53 @@ const Profile = () => {
                       readOnly
                       value={formData.email}
                       placeholder="Email"
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col className="col-lg-6 col-12">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      <RiBankCardFill className="fs-4" /> Tên tài khoản ngân
+                      hàng:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="text"
+                      name="bank_account_name"
+                      value={formData.bank_account_name}
+                      placeholder="chưa cập nhật"
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-6 col-12">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      <RiBankCardFill className="fs-4" /> STK ngân hàng:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      name="bank_account_number"
+                      value={formData.bank_account_number}
+                      placeholder="chưa cập nhật"
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="col-lg-12 col-12">
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
+                    <Form.Label className="font-family  fw-bold">
+                      <FaAddressCard className="fs-4" /> CCCD/ CMND:
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      name="id_card"
+                      value={formData.id_card}
+                      placeholder="chưa cập nhật"
+                      onChange={handleChange}
                     />
                   </Form.Group>
                 </Col>

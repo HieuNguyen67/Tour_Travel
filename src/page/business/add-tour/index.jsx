@@ -279,7 +279,8 @@ const AddTourForm = () => {
     fetchTourImages();
   }, [isHomePage, tour_id]);
  
-   
+     const today = new Date().toISOString().split("T")[0];
+
 
   return (
     <>
@@ -295,17 +296,17 @@ const AddTourForm = () => {
         </h1>
         <br />
         <div>
-            <Row className="mb-4">
-              {image.map((image, index) => (
-                <Col key={index} className="col-lg-3 col-12">
-                  <img
-                    src={`data:image/jpeg;base64,${image.image}`}
-                    alt={`Tour ${tour_id} Image ${index + 1}`}
-                    className="rounded-3 sizeimgg col-12 mb-3 mb-lg-0"
-                  />
-                </Col>
-              ))}
-            </Row>
+          <Row className="mb-4">
+            {image.map((image, index) => (
+              <Col key={index} className="col-lg-3 col-12">
+                <img
+                  src={`data:image/jpeg;base64,${image.image}`}
+                  alt={`Tour ${tour_id} Image ${index + 1}`}
+                  className="rounded-3 sizeimgg col-12 mb-3 mb-lg-0"
+                />
+              </Col>
+            ))}
+          </Row>
         </div>
 
         <form onSubmit={handleSubmit} className="">
@@ -517,6 +518,7 @@ const AddTourForm = () => {
                   value={formData.start_date}
                   onChange={handleChange}
                   required
+                  min={today}
                 />
               </Form.Group>
             </Col>
@@ -533,6 +535,7 @@ const AddTourForm = () => {
                   value={formData.end_date}
                   onChange={handleChange}
                   required
+                  min={formData.start_date || today}
                 />
               </Form.Group>
             </Col>

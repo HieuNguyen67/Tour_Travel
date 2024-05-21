@@ -77,8 +77,7 @@ const TabSearch=()=>{
         <div
           className="my-4 rounded-5 shadow"
           style={{
-            border: "5px solid #ffc107",
-            background: "white",
+            border: "5px solid rgb(235, 236, 239)",
           }}
         >
           <Container className="my-4">

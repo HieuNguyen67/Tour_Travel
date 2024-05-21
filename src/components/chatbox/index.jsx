@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { IoSendSharp } from "react-icons/io5";
 import "../BackToTop/BackToTop.scss";
-import { BLUE_COLOR, RED_COLOR } from "../../constants/color";
 import { IoIosCloseCircle } from "react-icons/io";
-import { MdChat } from "react-icons/md";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { motion } from "framer-motion";
 import Modal from "react-bootstrap/Modal";
-import { RiRobot2Fill } from "react-icons/ri";
 import bot from "../../assets/image/bot-3.png";
 import "./chatbox.scss";
+
 const Chatbox = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
@@ -31,16 +29,18 @@ const Chatbox = () => {
       text: input,
     };
 
+    const modifiedInput = `${input}, trả lời bằng tiếng việt`;
+
     setMessages([...messages, userMessage]);
     setInput("");
-    setLoading(true); 
+    setLoading(true);
 
     const options = {
       method: "POST",
       url: "https://models3.p.rapidapi.com/",
       params: {
         model_id: "5",
-        prompt: input,
+        prompt: modifiedInput,
       },
       headers: {
         "content-type": "application/json",
@@ -68,18 +68,14 @@ const Chatbox = () => {
       };
       setMessages([...messages, userMessage, errorMessage]);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
-     const [showChatbox, setShowChatbox] = useState(false);
 
-     const toggleChatbox = () => {
-       setShowChatbox(!showChatbox);
-     };
-       const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
 
-       const handleClose = () => setShow(false);
-       const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -87,12 +83,11 @@ const Chatbox = () => {
         placement="left"
         overlay={<Tooltip>Nhấn để được tư vấn.</Tooltip>}
       >
-        <div className=" me-1 me-lg-0 messenger">
+        <div className="me-1 me-lg-0 messenger">
           <motion.div
             animate={{ scale: 0.8 }}
             transition={{ repeat: Infinity, duration: 1 }}
           >
-
             <img src={bot} className="bot" onClick={handleShow} />
           </motion.div>
         </div>
@@ -101,12 +96,11 @@ const Chatbox = () => {
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
-          {" "}
-          <div style={styles.chatbox} className=" col-12">
+          <div style={styles.chatbox} className="col-12">
             <div style={styles.messagesContainer}>
               <div style={styles.botMessage}>
                 👋 Chào quý khách đã đến với Tour Travel. Tôi là trợ lý ảo của
-                bạn. Cần tôi giúp gì?{" "}
+                bạn. Cần tôi giúp gì?
               </div>
               {messages.map((message, index) => (
                 <div
@@ -136,7 +130,6 @@ const Chatbox = () => {
             <form onSubmit={handleSendMessage}>
               <Row className="px-2 pt-2">
                 <Col className="col-lg-10 col-9">
-                  {" "}
                   <Form.Control
                     type="text"
                     value={input}
@@ -171,11 +164,10 @@ const Chatbox = () => {
 
 const styles = {
   chatbox: {
-    
     display: "flex",
     flexDirection: "column",
     maxWidth: "600px",
-    minHeight:"500px",
+    minHeight: "500px",
     margin: "0 auto",
     border: "1px solid #ccc",
     borderRadius: "10px",
@@ -193,7 +185,7 @@ const styles = {
     textAlign: "right",
     background: "linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)",
     padding: "10px",
-    color:'white',
+    color: "white",
     borderRadius: "10px",
     marginBottom: "10px",
   },
@@ -213,7 +205,6 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
   },
-
 };
 
 export default Chatbox;
