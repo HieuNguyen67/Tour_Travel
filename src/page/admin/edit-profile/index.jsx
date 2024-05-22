@@ -32,16 +32,7 @@ const EditProfile = () => {
     }
   }, [isLoggedIn, navigate]);
   const [formData, setFormData] = useState({
-    username: "",
-    name: "",
-    birth_of_date: "",
-    phone_number: "",
-    address: "",
-    email: "",
     status: "",
-    id_card: "",
-    bank_account_name: "",
-    bank_account_number: "",
   });
 
   useEffect(() => {
@@ -76,12 +67,10 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const formattedDate = formatDate(formData.birth_of_date);
       await axios.put(
         `http://localhost:5020/v1/api/admin/account/${account_id}`,
         {
           ...formData,
-          birth_of_date: formattedDate,
         },
         {
           headers: {
@@ -116,10 +105,6 @@ const EditProfile = () => {
       <Container className="my-lg-3 my-2   pb-5">
         {role_id == 3 ? (
           <Link to="/admin/list-business">
-            <IoArrowBackOutline className="fs-3 mb-3" />
-          </Link>
-        ) : role_id == 4 ? (
-          <Link to="/business/list-guide">
             <IoArrowBackOutline className="fs-3 mb-3" />
           </Link>
         ) : (
@@ -167,7 +152,7 @@ const EditProfile = () => {
                     </Form.Select>
                   </Form.Group>
                 </Col>
-                <Col className="col-12 col-lg-3">
+                <Col className="col-12 col-lg-3 my-3 my-lg-0">
                   <Button
                     style={{ background: RED_COLOR, border:'0px' }}
                     type="submit"

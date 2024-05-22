@@ -69,6 +69,7 @@ const TourSearch = () => {
        const sortedTours = response.data.sort(
          (a, b) => new Date(a.start_date) - new Date(b.start_date)
        );
+       console.log(response.data);
 
        setTours(sortedTours);
        filterTours(sortedTours, initialDestinationLocation, initialTourName);

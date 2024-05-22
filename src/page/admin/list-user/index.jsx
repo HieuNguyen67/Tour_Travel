@@ -13,6 +13,7 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
 import LoadingBackdrop from "../../../components/backdrop";
 import { useAuth } from "../../../context";
+import { BASE_URL } from "../../../constants/common";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -30,17 +31,14 @@ const ListUser = () => {
     const fetchUsers = async () => {
       try {
         if (isHomePage) {
-          var response = await axios.get(
-            `http://localhost:5020/v1/api/admin/get-users?role_id=1`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          var response = await axios.get(`${BASE_URL}/get-users?role_id=1`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
         } else {
           var response = await axios.get(
-            `http://localhost:5020/v1/api/admin/get-users?role_id=3`,
+            `${BASE_URL}/get-users?role_id=3`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -67,7 +65,7 @@ const ListUser = () => {
     } else {
       setSelectedRows(
         selectedRows.filter(
-          (selectedRow) => selectedRow.profile_id !== row.profile_id
+          (selectedRow) => selectedRow.account_id !== row.account_id
         )
       );
     }
@@ -77,14 +75,14 @@ const ListUser = () => {
       await Promise.all(
         selectedRows.map(async (row) => {
           await axios.delete(
-            `http://localhost:5020/v1/api/admin/delete-users/${row.profile_id}`,
+            `http://localhost:5020/v1/api/admin/delete-users/${row.account_id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             }
           );
-          setUsers(users.filter((item) => item.profile_id !== row.profile_id));
+          setUsers(users.filter((item) => item.account_id !== row.account_id));
           toast.success("Xoá thành công!");
           window.location.reload();
         })
@@ -118,7 +116,7 @@ const ListUser = () => {
       ),
     },
     {
-      field: "profile_id",
+      field: "account_id",
       headerName: "ID",
       width: 70,
       renderCell: (params) => (
@@ -249,13 +247,7 @@ const ListUser = () => {
       <LoadingBackdrop open={loading} />
       <div style={{ height: 400, width: "100%" }} className="">
         <p className="text-end">
-          <Button
-            variant="danger"
-            onClick={handleDeleteSelected}
-            className="me-2"
-          >
-            <MdDeleteForever className="fs-4" />
-          </Button>
+         
           {isHomePage ? (
             <>
               
@@ -280,7 +272,7 @@ const ListUser = () => {
             columns={columns}
             pagination
             autoPageSize
-            getRowId={(row) => row.profile_id}
+            getRowId={(row) => row.account_id}
           />
         </div>
       </div>

@@ -1,7 +1,4 @@
-.boxborderr{
-    border: 3px solid #ebecef;
 
-}
 
 @media (max-width: 992px) {
 
@@ -19,6 +16,11 @@
             height: 13rem;
                         object-fit: cover;
         }
+                .boxborderr {
+                    border: 3px solid #ebecef;
+                    height: 20rem;
+        
+                }
     
        
 }

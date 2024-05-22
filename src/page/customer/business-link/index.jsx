@@ -9,7 +9,7 @@ import LoadingBackdrop from "../../../components/backdrop";
 import { IoBusinessSharp } from "react-icons/io5";
 import axios from "axios";
 import { BASE_URL } from "../../../constants/common";
-
+import imgdefault from "../../../assets/image/6945124.png"
 const BusinessLink = () => {
   const [loading, setLoading] = useState(true);
 
@@ -18,7 +18,7 @@ const BusinessLink = () => {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/accounts-with-role-3`);
+        const response = await axios.get(`${BASE_URL}/get-users?role_id=3`);
         setAccounts(response.data);
         setLoading(false);
       } catch (error) {
@@ -64,7 +64,11 @@ const BusinessLink = () => {
                     className="rounded-5 col-12 mb-4 sizei shadow"
                   />
                 ) : (
-                  <p>No image available</p>
+                  <img
+                    src={imgdefault}
+                    alt={account.name}
+                    className="rounded-5 col-12 mb-4 sizei shadow"
+                  />
                 )}
                 <h5 className="fw-bold text-center mt-3">{account.name}</h5>
               </div>

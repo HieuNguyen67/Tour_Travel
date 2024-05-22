@@ -189,7 +189,7 @@ const navigate=useNavigate();
             </Form.Label>
             <div
               className=""
-              style={{ width: "100%", height: "33rem", background: "white" }}
+              style={{ width: "100%", height: "43rem", background: "white" }}
             >
               <ReactQuill
                 value={formData.content}
@@ -198,7 +198,7 @@ const navigate=useNavigate();
                 required
                 modules={AddNews.modules}
                 formats={AddNews.formats}
-                style={{ background: "white", height: "30rem" }}
+                style={{ background: "white", height: "40rem" }}
               />
             </div>
             <div className="mt-lg-0 mt-3">

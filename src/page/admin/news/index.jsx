@@ -14,6 +14,7 @@ import { BLUE_COLOR, COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../.
 import LoadingBackdrop from "../../../components/backdrop";
 import { useAuth } from "../../../context";
 import { ImNewspaper } from "react-icons/im";
+import { BASE_URL } from "../../../constants/common";
 
 const News = () => {
  const [news, setNews] = useState([]);
@@ -26,7 +27,7 @@ const { token, role, accountId } = useAuth();
       try {
         if(role==2){
           var response = await axios.get(
-            `http://localhost:5020/v1/api/admin/list-news`,
+            `${BASE_URL}/list-news`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -36,7 +37,7 @@ const { token, role, accountId } = useAuth();
 
         }else{
            var response = await axios.get(
-             `http://localhost:5020/v1/api/admin/list-news/${accountId}`,
+             `${BASE_URL}/list-news/${accountId}`,
              {
                headers: {
                  Authorization: `Bearer ${token}`,
@@ -48,6 +49,7 @@ const { token, role, accountId } = useAuth();
         const sortedNews = response.data.sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
+        console.log(response.data);
 
         setNews(sortedNews);
         setLoading(false);

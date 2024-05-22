@@ -28,6 +28,7 @@ const DisplayImage = () => {
         );
         const imageURL = URL.createObjectURL(response.data);
         setImageSrc(imageURL);
+        console.log(response.data);
       } catch (error) {
         console.error("Lỗi khi lấy hình ảnh:", error);
         setImageSrc(defaultImage);
