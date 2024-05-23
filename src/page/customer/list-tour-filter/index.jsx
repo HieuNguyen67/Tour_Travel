@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { BASE_URL } from "../../../constants/common";
-import { Range } from "react-range";
 import LoadingBackdrop from "../../../components/backdrop";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
@@ -19,8 +18,8 @@ import { RiHotelFill } from "react-icons/ri";
 import { IoAirplaneSharp } from "react-icons/io5";
 import { FaCar } from "react-icons/fa6";
 import { motion } from "framer-motion";
-import ReactPaginate from "react-paginate";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import Pagination from "@mui/material/Pagination"; 
+import Slider from "@mui/material/Slider";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -48,8 +47,8 @@ const TourSearch = () => {
   const [regions, setRegions] = useState([]);
   const [provinces, setProvinces] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 12;
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
   const { location } = useParams();
 
@@ -66,13 +65,11 @@ const TourSearch = () => {
           );
         }
 
-       const sortedTours = response.data.sort(
-         (a, b) => new Date(a.start_date) - new Date(b.start_date)
-       );
-       console.log(response.data);
-
-       setTours(sortedTours);
-       filterTours(sortedTours, initialDestinationLocation, initialTourName);
+        const sortedTours = response.data.sort(
+          (a, b) => new Date(a.start_date) - new Date(b.start_date)
+        );
+        setTours(sortedTours);
+        filterTours(sortedTours, initialDestinationLocation, initialTourName);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching tours", err);
@@ -168,20 +165,16 @@ const TourSearch = () => {
       );
     });
     setFilteredTours(filtered);
-    setCurrentPage(0); 
+    setCurrentPage(1);
   };
 
- const handlePageClick = useCallback(
-   (data) => {
-     const { selected } = data;
-     setCurrentPage(selected);
-     window.scrollTo({
-       top: 0,
-       behavior: "smooth",
-     });
-   },
-   [setCurrentPage]
- );
+  const handlePageClick = (event, value) => {
+    setCurrentPage(value);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const formatPrice = (price) => {
     if (typeof price !== "number") {
@@ -201,8 +194,9 @@ const TourSearch = () => {
   };
 
   const pageCount = Math.ceil(filteredTours.length / itemsPerPage);
-  const offset = currentPage * itemsPerPage;
+  const offset = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredTours.slice(offset, offset + itemsPerPage);
+     const today = new Date().toISOString().split("T")[0];
 
   return (
     <>
@@ -289,6 +283,7 @@ const TourSearch = () => {
                     style={{ border: "3px solid #ffc107" }}
                     value={createdAt}
                     onChange={(e) => setCreatedAt(e.target.value)}
+                    min={today}
                   />
                 </div>
                 <div>
@@ -302,43 +297,17 @@ const TourSearch = () => {
                       margin: "20px",
                     }}
                   >
-                    <Range
-                      step={1000}
+                    <Slider
+                      value={values}
+                      onChange={(event, newValue) => {
+                        setValues(newValue);
+                        setMinAdultPrice(newValue[0]);
+                        setMaxAdultPrice(newValue[1]);
+                      }}
+                      valueLabelDisplay="auto"
                       min={0}
                       max={100000000}
-                      values={values}
-                      onChange={(newValues) => {
-                        setValues(newValues);
-                        setMinAdultPrice(newValues[0]);
-                        setMaxAdultPrice(newValues[1]);
-                      }}
-                      renderTrack={({ props, children }) => (
-                        <div
-                          {...props}
-                          style={{
-                            ...props.style,
-                            height: "6px",
-                            width: "100%",
-                            backgroundColor: "#212121a8",
-                          }}
-                        >
-                          {children}
-                        </div>
-                      )}
-                      renderThumb={({ props }) => (
-                        <div
-                          {...props}
-                          style={{
-                            ...props.style,
-                            color: "red",
-                            height: "20px",
-                            width: "20px",
-                            backgroundColor: "#5856d6",
-                            borderRadius: "50%",
-                            outline: "none",
-                          }}
-                        />
-                      )}
+                      step={1000}
                     />
                   </div>
                   <div className="text-danger fw-bold text-center">
@@ -506,25 +475,14 @@ const TourSearch = () => {
                       </Col>
                     ))}
                   </Row>
-                  <ReactPaginate
-                    previousLabel={
-                      <Button variant="dark" className="mx-2">
-                        <FaAngleLeft />
-                      </Button>
-                    }
-                    nextLabel={
-                      <Button variant="dark" className="mx-2">
-                        <FaAngleRight />
-                      </Button>
-                    }
-                    breakLabel={"..."}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={3}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination mt-5"}
-                    activeClassName={"activee"}
-                    pageLinkClassName={"page-item"}
+                  <Pagination
+                    count={pageCount}
+                    page={currentPage}
+                    onChange={handlePageClick}
+                    shape="rounded"
+                    variant="outlined"
+                    color="primary"
+                    className="mt-4 d-flex justify-content-center"
                   />
                 </>
               ) : (

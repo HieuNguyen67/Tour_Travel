@@ -17,6 +17,7 @@ const SidebarLayout = ({ children }) => {
     location.pathname === "/admin/report" ||
     location.pathname === "/business/list-tour" ||
     location.pathname === "/business/list-news" ||
+    location.pathname === "/business/list-policies" ||
     location.pathname === "/business/order-tour";
 
   const renderNavItems = (items) => {

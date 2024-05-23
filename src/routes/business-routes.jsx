@@ -8,6 +8,8 @@ import NewsDetail from "../page/admin/news/news-details";
 import AddTourForm from "../page/business/add-tour";
 import ListTour from "../page/business/list-tour";
 import OrderTour from "../page/business/order-tour";
+import PoliciesList from "../page/business/list-policies";
+import AddPolicyForm from "../page/business/list-policies/add-policies";
 
 const BusinessRoutes = () => {
   return (
@@ -26,6 +28,9 @@ const BusinessRoutes = () => {
           <Route path="/add-news" element={<AddNews />} />
           <Route path="/news-detail/:news_id" element={<NewsDetail />} />
           <Route path="/edit-news/:news_id" element={<UpdateNews />} />
+          <Route path="/list-policies" element={<PoliciesList />} />
+          <Route path="/add-policies" element={<AddPolicyForm />} />
+          <Route path="/edit-policy/:policy_id" element={<AddPolicyForm />} />
 
           <Route path="*" element={<Navigate to="/list-tour" />} />
         </Routes>

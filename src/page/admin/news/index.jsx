@@ -7,7 +7,6 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { format } from "date-fns";
 import { MdDeleteForever } from "react-icons/md";
-import { Backdrop, CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import { BiEdit } from "react-icons/bi";
 import { BLUE_COLOR, COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../../constants/color";
@@ -93,7 +92,7 @@ const { token, role, accountId } = useAuth();
        await Promise.all(
          selectedRows.map(async (row) => {
            await axios.delete(
-             `http://localhost:5020/v1/api/admin/delete-news/${row.news_id}`,
+             `${BASE_URL}/delete-news/${row.news_id}`,
              {
                headers: {
                  Authorization: `Bearer ${token}`               },

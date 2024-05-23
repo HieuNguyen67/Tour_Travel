@@ -19,8 +19,8 @@ const ADMIN = [
 const BUSINESS = [
   { id: 1, name: "TOUR", link: "/business/list-tour" },
   { id: 2, name: "ORDER", link: "/business/order-tour" },
-  { id: 3, name: "TIN TỨC", link: "/business/list-news" },
-
+  { id: 3, name: "CHÍNH SÁCH", link: "/business/list-policies" },
+  { id: 4, name: "TIN TỨC", link: "/business/list-news" },
 ];
 const GUIDE = [
   { id: 1, name: "TOUR PHÂN CÔNG", link: "/guide/tour-assigned" },

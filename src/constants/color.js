@@ -11,3 +11,4 @@ export const TEXT_MAIN_COLOR = "var(--gray-600, #475467)";
 export const TEXT_RED_COLOR = "#e01600";
 export const YELLOW_COLOR =
   "radial-gradient( circle 331px at 1.4% 52.9%,  rgba(255,236,2,1) 0%, rgba(255,223,2,1) 33.6%, rgba(255,187,29,1) 61%, rgba(255,175,7,1) 100.7% )";
+export const BORDER = "3px solid rgb(235, 236, 239)";

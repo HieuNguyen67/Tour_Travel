@@ -2,12 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../../../constants/common";
 import { Link, useParams } from "react-router-dom";
-import HTMLContent from "../../../components/HTMLContent";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Placeholder } from "react-bootstrap";
 import LoadingBackdrop from "../../../components/backdrop";
 import { FaAngleRight } from "react-icons/fa";
 import { RiHome6Line } from "react-icons/ri";
 import {
+  BORDER,
   GREY_COLOR,
   RED1_COLOR,
   RED_COLOR,
@@ -21,11 +21,22 @@ import { RiHotelFill } from "react-icons/ri";
 import { FaStar } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
+import { GiPriceTag } from "react-icons/gi";
+import { IoManSharp } from "react-icons/io5";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import TourImagesCarousel from "../../../components/image-tour-multi-carousel";
+import { FaImage } from "react-icons/fa";
+import HTMLContent from "../../../components/HTMLContent";
+import { RiCalendarScheduleLine } from "react-icons/ri";
+import { PiShieldCheckBold } from "react-icons/pi";
+import PolicesTour from "../../../components/policies-tour";
 
 const TourDetail = () => {
   const { tour_id } = useParams();
-  const [tour, setTour] = useState([]);
+  const [tour, setTour] = useState({});
   const [loading, setLoading] = useState(true);
+    const [loading1, setLoading1] = useState(true);
+
   const [image, setImage] = useState([]);
   const [destination, setDestination] = useState("");
 
@@ -52,21 +63,21 @@ const TourDetail = () => {
           `${BASE_URL}/get-all-tour-images/${tour_id}`
         );
         setImage(response.data);
-        setLoading(false);
+        setLoading1(false);
       } catch (error) {
         console.error("Error fetching tour images:", error);
-        setLoading(false);
+        setLoading1(false);
       }
     };
 
     fetchTourImages();
   }, [tour_id]);
 
-  const  formatDate=(dateString)=> {
-   const date = new Date(dateString);
-   const options = { year: "numeric", month: "long", day: "numeric" };
-   return date.toLocaleDateString("vi-VN", options);
-  }
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("vi-VN", options);
+  };
 
   const formatPrice = (price) => {
     if (typeof price !== "number") {
@@ -80,14 +91,12 @@ const TourDetail = () => {
 
   return (
     <>
-      {" "}
       <LoadingBackdrop open={loading} />
       <Container className="mt-5 pt-5 ">
         <div className="mt-lg-3">
-          {" "}
           <Link to="/" className="text-decoration-none text-dark ">
             <RiHome6Line className="fs-4 hover" />
-          </Link>{" "}
+          </Link>
           &nbsp;&nbsp;
           <FaAngleRight /> &nbsp;&nbsp;
           {tour.tourcategory_id === 1 ? (
@@ -101,7 +110,6 @@ const TourDetail = () => {
             </>
           ) : (
             <>
-              {" "}
               <Link
                 to="/list-tour-foreign/2"
                 className="text-decoration-none text-dark"
@@ -109,7 +117,7 @@ const TourDetail = () => {
                 <span className="hover">Du lịch nước ngoài</span>
               </Link>
             </>
-          )}{" "}
+          )}
           &nbsp;&nbsp;
           <FaAngleRight /> &nbsp;&nbsp;{" "}
           <span className="hover">{tour.name}</span>
@@ -119,7 +127,21 @@ const TourDetail = () => {
           <Row>
             <Col className="col-12">
               <h2 className="fw-bold">{tour.name}</h2>
-              <p className="mt-3">
+              <Row>
+                <Col>
+                  {" "}
+                  <p>
+                    Đánh giá:&nbsp;
+                    <FaStar />
+                    <FaStar />
+                    <FaStar />
+                  </p>
+                </Col>
+                <Col>
+                  <p className="text-end">Tố cáo</p>
+                </Col>
+              </Row>
+              <p className="">
                 <span
                   style={{ color: TEXT_RED_COLOR }}
                   className="fs-3 fw-bold"
@@ -147,12 +169,18 @@ const TourDetail = () => {
           <div>
             <Row className="my-4">
               <Col className="col-lg-6 col-12">
-                {image[0] && (
-                  <img
-                    src={`data:image/jpeg;base64,${image[0].image}`}
-                    alt={`Tour ${tour_id} Image 1`}
-                    className="rounded-3 shadow sizeimg1 col-12 mb-3 mb-lg-0"
-                  />
+                {loading1 ? (
+                  <Placeholder as="div" animation="wave">
+                    <Placeholder className="rounded-3 sizeimg1 col-12 mb-3 mb-lg-0" />
+                  </Placeholder>
+                ) : (
+                  image[0] && (
+                    <img
+                      src={`data:image/jpeg;base64,${image[0].image}`}
+                      alt={`Tour ${tour_id} Image 1`}
+                      className="rounded-3 shadow sizeimg1 col-12 mb-3 mb-lg-0"
+                    />
+                  )
                 )}
               </Col>
               <Col className="col-lg-6 col-12">
@@ -160,43 +188,59 @@ const TourDetail = () => {
                   <Col className="mb-lg-3">
                     <Row>
                       <Col className="col-lg-6 col-12">
-                        {" "}
-                        {image[1] && (
-                          <img
-                            src={`data:image/jpeg;base64,${image[1].image}`}
-                            alt={`Tour ${tour_id} Image 1`}
-                            className="rounded-3 shadow sizeimg2 col-12 mb-3 mb-lg-0"
-                          />
+                        {loading1 ? (
+                          <Placeholder as="div" animation="wave">
+                            <Placeholder className="rounded-3 sizeimg2 col-12 mb-3 mb-lg-0" />
+                          </Placeholder>
+                        ) : (
+                          image[1] && (
+                            <img
+                              src={`data:image/jpeg;base64,${image[1].image}`}
+                              alt={`Tour ${tour_id} Image 1`}
+                              className="rounded-3 shadow sizeimg2 col-12 mb-3 mb-lg-0"
+                            />
+                          )
                         )}
                       </Col>
                       <Col className="col-lg-6 col-12">
-                        {image[2] && (
-                          <img
-                            src={`data:image/jpeg;base64,${image[2].image}`}
-                            alt={`Tour ${tour_id} Image 1`}
-                            className="rounded-2 shadow sizeimg2 col-12 mb-3 mb-lg-0"
-                          />
+                        {loading1 ? (
+                          <Placeholder as="div" animation="wave">
+                            <Placeholder className="rounded-3 sizeimg2 col-12 mb-3 mb-lg-0" />
+                          </Placeholder>
+                        ) : (
+                          image[2] && (
+                            <img
+                              src={`data:image/jpeg;base64,${image[2].image}`}
+                              alt={`Tour ${tour_id} Image 1`}
+                              className="rounded-2 shadow sizeimg2 col-12 mb-3 mb-lg-0"
+                            />
+                          )
                         )}
                       </Col>
                     </Row>
                   </Col>
                   <Col>
-                    {" "}
-                    {image[3] && (
-                      <img
-                        src={`data:image/jpeg;base64,${image[3].image}`}
-                        alt={`Tour ${tour_id} Image 1`}
-                        className="rounded-3 shadow sizeimg3 col-12 mb-3 mb-lg-0"
-                      />
+                    {loading1 ? (
+                      <Placeholder as="div" animation="wave">
+                        <Placeholder className="rounded-3 sizeimg3 col-12 mb-3 mb-lg-0" />
+                      </Placeholder>
+                    ) : (
+                      image[3] && (
+                        <img
+                          src={`data:image/jpeg;base64,${image[3].image}`}
+                          alt={`Tour ${tour_id} Image 1`}
+                          className="rounded-3 shadow sizeimg3 col-12 mb-3 mb-lg-0"
+                        />
+                      )
                     )}
                   </Col>
                 </Row>
               </Col>
             </Row>
           </div>
-          <div>
+          <div className="pt-lg-3">
             <Row>
-              <Col className="col-lg-5 col-12 ">
+              <Col className="col-lg-5 col-12">
                 <div
                   style={{ border: "3px solid #ebecef", background: "white" }}
                   className="p-4 rounded-4"
@@ -226,30 +270,83 @@ const TourDetail = () => {
                   </p>
                   <p>
                     <MdLocationOn className="fs-4 text-danger" /> Nơi khởi hành:{" "}
-                    {tour.departure_location_name}
+                    <span className="fw-bold">
+                      {tour.departure_location_name}
+                    </span>
                   </p>
-                  <p>
+                  <p className="mb-lg-4">
                     <FaMapLocationDot className="fs-4 " /> Nơi đến:{" "}
-                    {destination}
+                    <span className="fw-bold">{destination}</span>
                   </p>
                 </div>
               </Col>
-              <Col className="col-lg-7 col-12"></Col>
+              <Col className="col-lg-7 col-12 mt-3 mt-lg-0">
+                <div
+                  style={{ border: "3px solid #ebecef", background: "#f9f9f9" }}
+                  className="p-4 rounded-4"
+                >
+                  <h5 className="fw-bold">
+                    <GiPriceTag className="fs-4 text-dark" /> Bảng giá tour:{" "}
+                  </h5>
+                  <Row className="mt-4">
+                    <Col className="col-lg-4 col-7">
+                      <p className="fw-bold">
+                        <IoManSharp className="fs-4 text-dark" /> Loại khách
+                      </p>
+                      <p className="mt-3">Người lớn ( {">"} 12 tuổi )</p>
+                      <p className="mt-3">Trẻ em ( 5 - 11 tuổi )</p>
+                      <p className="mt-3">Trẻ nhỏ ( {"<"} 5 tuổi )</p>
+                      <p className="fw-bold mt-3 text-decoration-underline">
+                        Số lượng còn nhận
+                      </p>
+                    </Col>
+                    <Col className="col-lg-8 col-5">
+                      <p className="fw-bold">
+                        <FaRegMoneyBillAlt className="fs-4 text-dark" /> Giá
+                        tour
+                      </p>
+                      <p className="mt-3 fw-bold text-danger">
+                        {formatPrice(tour.adult_price)}
+                      </p>
+                      <p className="mt-3 fw-bold text-danger">
+                        {formatPrice(tour.child_price)}
+                      </p>
+                      <p className="mt-3 fw-bold text-danger">
+                        {formatPrice(tour.infant_price)}
+                      </p>
+                      <p className="mt-3 fw-bold text-dark fs-5">
+                        {" "}
+                        {tour.quantity} chỗ
+                      </p>
+                    </Col>
+                  </Row>
+                </div>
+              </Col>
             </Row>
           </div>
-
-          {/* <HTMLContent htmlContent={tour.description} /> */}
-          <p>Adult Price: {tour.adult_price}</p>
-          <p>Child Price: {tour.child_price}</p>
-          <p>Infant Price: {tour.infant_price}</p>
-          <p>Quantity: {tour.quantity}</p>
-          <p>Vehicle: {tour.vehicle}</p>
-          <p>Hotel: {tour.hotel}</p>
-          <p>Departure Location: {tour.departure_location_name}</p>
-          <p>Destination Locations: {destination}</p>
+          <h2 className="text-center fw-bold mt-5">
+            <FaImage className="fs-2" /> HÌNH ẢNH TOUR
+          </h2>
+          <div className=" my-4">
+            <TourImagesCarousel tourId={tour_id} />
+          </div>
+          <h2 className="text-center fw-bold mt-5">
+            <RiCalendarScheduleLine className="fs-2" /> LỊCH TRÌNH
+          </h2>
+          <div
+            style={{ border: BORDER }}
+            className="rounded-3 p-lg-5 p-4 shadow my-5"
+          >
+            <HTMLContent htmlContent={tour.description} />
+          </div>
+          <h2 className="text-center fw-bold my-5">
+            <PiShieldCheckBold className="fs-2 mb-2" /> CHÍNH SÁCH TOUR
+          </h2>
+          <PolicesTour accountId={tour.account_id} />
         </div>
       </Container>
     </>
   );
 };
+
 export default TourDetail;

@@ -7,8 +7,6 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { motion, useAnimation } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
-import AddCategories from "../add-categories";
-import { MdAddToPhotos } from "react-icons/md";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../../../constants/common";
 import { ImNewspaper } from "react-icons/im";
