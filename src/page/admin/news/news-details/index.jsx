@@ -17,6 +17,7 @@ import { useAuth } from '../../../../context';
 import { RxUpdate } from "react-icons/rx";
 import { PiNotePencilFill } from "react-icons/pi";
 import { BLUE_COLOR } from '../../../../constants/color';
+import { BASE_URL } from '../../../../constants/common';
 
 const NewsDetail = () => {
   const [news, setNews] = useState(null);
@@ -30,14 +31,11 @@ const NewsDetail = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5020/v1/api/admin/news-detail/${news_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${BASE_URL}/news-detail/${news_id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setNews(response.data);
         setLoading(false);
       } catch (error) {
@@ -54,10 +52,11 @@ useEffect(() => {
   const fetchNewsDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5020/v1/api/admin/select-status-note/${news_id}`,
+        `${BASE_URL}/select-status-note/${news_id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`          },
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const { status: initialStatus, note: initialNote } = response.data;
@@ -81,7 +80,7 @@ const handleUpdate = async () => {
 
   try {
     await axios.put(
-      `http://localhost:5020/v1/api/admin/update-status/${news_id}`,
+      `${BASE_URL}/update-status/${news_id}`,
       {
         status,
         note,

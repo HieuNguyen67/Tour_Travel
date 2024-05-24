@@ -3,13 +3,9 @@ import axios from "axios";
 import { format } from "date-fns";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
 import { Button, Container } from "react-bootstrap";
-import { MdDeleteForever } from "react-icons/md";
-import { LiaEditSolid } from "react-icons/lia";
 import { MdAddBusiness } from "react-icons/md";
 import { toast } from "react-toastify";
-import { AiOutlineUserAdd } from "react-icons/ai";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
 import LoadingBackdrop from "../../../components/backdrop";
 import { useAuth } from "../../../context";
@@ -74,14 +70,11 @@ const ListUser = () => {
     try {
       await Promise.all(
         selectedRows.map(async (row) => {
-          await axios.delete(
-            `http://localhost:5020/v1/api/admin/delete-users/${row.account_id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          await axios.delete(`${BASE_URL}/delete-users/${row.account_id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           setUsers(users.filter((item) => item.account_id !== row.account_id));
           toast.success("Xoá thành công!");
           window.location.reload();

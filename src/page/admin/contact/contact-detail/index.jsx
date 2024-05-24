@@ -48,7 +48,7 @@ const{token}=useAuth();
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `http://localhost:5020/v1/api/admin/update-status-contact/${contact_id}`,
+        `${BASE_URL}/update-status-contact/${contact_id}`,
         {
           status,
         },

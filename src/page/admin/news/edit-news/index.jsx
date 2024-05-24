@@ -10,6 +10,7 @@ import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
 import LoadingBackdrop from "../../../../components/backdrop";
 import { useAuth } from "../../../../context";
+import { BASE_URL } from "../../../../constants/common";
 
 const UpdateNews = () => {
   const [title, setTitle] = useState("");
@@ -24,7 +25,7 @@ useEffect(() => {
   const fetchNewsDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5020/v1/api/admin/select-status-note/${news_id}`,
+        `${BASE_URL}/select-status-note/${news_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +53,7 @@ const navigate = useNavigate();
 
     try {
       await axios.put(
-        `http://localhost:5020/v1/api/admin/update-news/${news_id}`,
+        `${BASE_URL}/update-news/${news_id}`,
         {
           title,
           content,

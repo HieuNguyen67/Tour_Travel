@@ -482,7 +482,7 @@ const TourSearch = () => {
                     shape="rounded"
                     variant="outlined"
                     color="primary"
-                    className="mt-4 d-flex justify-content-center"
+                    className="my-4 d-flex justify-content-center"
                   />
                 </>
               ) : (

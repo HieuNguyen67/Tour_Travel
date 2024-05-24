@@ -17,6 +17,7 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
 import { FaAddressCard } from "react-icons/fa6";
+import { BASE_URL } from "../../../constants/common";
 
 const SignUp = () => {
       const navigate = useNavigate();
@@ -42,7 +43,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5020/v1/api/admin/register", formData);
+      await axios.post(`${BASE_URL}/register`, formData);
       toast.success("Đăng ký thành công !");
       navigate("/confirm");
     } catch (error) {

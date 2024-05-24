@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import LoadingBackdrop from "../../../../components/backdrop";
 import { ImNewspaper } from "react-icons/im";
+import { BASE_URL } from "../../../../constants/common";
 
 const truncateString = (str, maxLength) => {
   if (str.length <= maxLength) {
@@ -46,11 +47,11 @@ const NewsTravel = () => {
       var response;
       if (isHomePage) {
         response = await axios.get(
-          `http://localhost:5020/v1/api/admin/list-news-travel/${news_travel}`
+          `${BASE_URL}/list-news-travel/${news_travel}`
         );
       } else {
         response = await axios.get(
-          `http://localhost:5020/v1/api/admin/list-news-travel/${travel_guide}`
+          `${BASE_URL}/list-news-travel/${travel_guide}`
         );
       }
       setNews(response.data);

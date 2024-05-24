@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import {  toast } from "react-toastify";
@@ -14,6 +14,7 @@ import { BASE_URL } from "../../constants/common";
 import { MdAccountBox } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlinePassword } from "react-icons/md";
+import { MdReportProblem } from "react-icons/md";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -22,7 +23,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
  const { isLoggedIn } = useAuth();
- 
+const [show, setShow] = useState(false);
+
+const handleClose = () => setShow(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,8 +34,14 @@ const Login = () => {
         `${BASE_URL}/login`,
         { usernameOrEmail, password }
       );
-      const { token, role, account_id ,username} = response.data;
-      console.log(username);
+      const {
+        token,
+        role,
+        account_id,
+        username,
+        note: accountNote,
+      } = response.data;
+    
       login(token, role, username, account_id);
       toast.success("Đăng nhập thành công !");
       if (response.data.role === 1) navigate("/");
@@ -44,6 +53,7 @@ const Login = () => {
 
       console.error("Đăng nhập không thành công:", error.response.data.message);
       setError(error.response.data.message);
+      setShow(true);
     }
   };
   useEffect(() => {
@@ -92,7 +102,6 @@ const Login = () => {
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
                 />
               </Form.Group>
-
               <Form.Group className="mb-4" controlId="formBasicPassword">
                 <Form.Label className="font-family">
                   <MdOutlinePassword className="fs-4" /> Password{" "}
@@ -107,7 +116,6 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              {error && <p style={{ color: "red" }}>{error}</p>}
               <Button
                 variant="warning"
                 type="submit"
@@ -159,6 +167,23 @@ const Login = () => {
               <Col></Col>
             </Row>
           </div>
+          <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                {" "}
+                <MdReportProblem className="fs-1 text-danger" /><span>&nbsp;Thông báo</span>
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {error && <p className="fs-5">{error}</p>}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="dark" onClick={handleClose}>
+                Đóng
+              </Button>
+              
+            </Modal.Footer>
+          </Modal>
         </Container>
       </motion.div>
     </>

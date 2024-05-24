@@ -30,16 +30,25 @@ import HTMLContent from "../../../components/HTMLContent";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { PiShieldCheckBold } from "react-icons/pi";
 import PolicesTour from "../../../components/policies-tour";
+import { BiLike } from "react-icons/bi";
+import TourReviews from "../../../components/rating-tour";
+import { Box, Rating } from "@mui/material";
+import { MdOutlineBusinessCenter } from "react-icons/md";
+import TourListBusiness from "../../../components/list-tour-by-business";
+import { MdOutlineTour } from "react-icons/md";
+import ReportTour from "../../../components/report-tour";
+import { useAuth } from "../../../context";
 
 const TourDetail = () => {
   const { tour_id } = useParams();
+  const {accountId} = useAuth();
   const [tour, setTour] = useState({});
   const [loading, setLoading] = useState(true);
     const [loading1, setLoading1] = useState(true);
-
   const [image, setImage] = useState([]);
   const [destination, setDestination] = useState("");
-
+const [averageRating, setAverageRating] = useState(0);
+const [totalRatings, setTotalRatings] = useState(0);
   useEffect(() => {
     const fetchTourData = async () => {
       try {
@@ -71,6 +80,25 @@ const TourDetail = () => {
     };
 
     fetchTourImages();
+  }, [tour_id]);
+
+  
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/get-ratings-tour/${tour_id}`
+        );
+        setAverageRating(response.data.averageRating);
+        setTotalRatings(response.data.totalRatings);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
   }, [tour_id]);
 
   const formatDate = (dateString) => {
@@ -128,17 +156,29 @@ const TourDetail = () => {
             <Col className="col-12">
               <h2 className="fw-bold">{tour.name}</h2>
               <Row>
-                <Col>
+                <Col className="col-10">
                   {" "}
-                  <p>
-                    Đánh giá:&nbsp;
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </p>
+                  <Box display="flex" alignItems="center">
+                    {totalRatings !== 0 ? (
+                      <>
+                        <span className="fs-5 fw-bold text-decoration-underline">
+                          {averageRating}&nbsp;
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                    <Rating
+                      value={parseFloat(averageRating)}
+                      precision={0.1}
+                      readOnly
+                      className="text-warning"
+                    />
+                    <span>&nbsp;({totalRatings} lượt đánh giá)</span>
+                  </Box>
                 </Col>
                 <Col>
-                  <p className="text-end">Tố cáo</p>
+                  <ReportTour accountId={accountId} tourId={tour_id} />
                 </Col>
               </Row>
               <p className="">
@@ -242,8 +282,12 @@ const TourDetail = () => {
             <Row>
               <Col className="col-lg-5 col-12">
                 <div
-                  style={{ border: "3px solid #ebecef", background: "white" }}
-                  className="p-4 rounded-4"
+                  style={{
+                    border: "3px solid #ebecef",
+                    background:
+                      "linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%)",
+                  }}
+                  className="p-4 rounded-4 shadow"
                 >
                   <p>
                     <LuCalendarDays className="fs-4 text-dark" /> Ngày khởi
@@ -278,43 +322,64 @@ const TourDetail = () => {
                     <FaMapLocationDot className="fs-4 " /> Nơi đến:{" "}
                     <span className="fw-bold">{destination}</span>
                   </p>
+                  <p className="pb-lg-2">
+                    <MdOutlineBusinessCenter className="fs-4 " /> Điều hành:{" "}
+                    <span className="fw-bold">{tour.account_name}</span>
+                  </p>
                 </div>
               </Col>
               <Col className="col-lg-7 col-12 mt-3 mt-lg-0">
                 <div
-                  style={{ border: "3px solid #ebecef", background: "#f9f9f9" }}
-                  className="p-4 rounded-4"
+                  style={{
+                    border: "3px solid #ebecef",
+                  }}
+                  className="p-4 rounded-4 shadow"
                 >
                   <h5 className="fw-bold">
                     <GiPriceTag className="fs-4 text-dark" /> Bảng giá tour:{" "}
                   </h5>
                   <Row className="mt-4">
-                    <Col className="col-lg-4 col-7">
+                    <Col className="col-lg-5 col-7">
                       <p className="fw-bold">
                         <IoManSharp className="fs-4 text-dark" /> Loại khách
                       </p>
-                      <p className="mt-3">Người lớn ( {">"} 12 tuổi )</p>
-                      <p className="mt-3">Trẻ em ( 5 - 11 tuổi )</p>
-                      <p className="mt-3">Trẻ nhỏ ( {"<"} 5 tuổi )</p>
-                      <p className="fw-bold mt-3 text-decoration-underline">
+                      <p className="mt-4 fw-bold fontp">
+                        Người lớn ( {">"} 12 tuổi ) :
+                      </p>
+                      <p className="mt-4   fw-bold fontp">
+                        Trẻ em ( 5 - 11 tuổi ) :
+                      </p>
+                      <p className="mt-4   fw-bold fontp">
+                        Trẻ nhỏ ( {"<"} 5 tuổi ) :
+                      </p>
+                      <p className="fw-bold mt-4 text-decoration-underline">
                         Số lượng còn nhận
                       </p>
                     </Col>
-                    <Col className="col-lg-8 col-5">
+                    <Col className="col-lg-7 col-5">
                       <p className="fw-bold">
                         <FaRegMoneyBillAlt className="fs-4 text-dark" /> Giá
                         tour
                       </p>
-                      <p className="mt-3 fw-bold text-danger">
+                      <p
+                        className="mt-4 fw-bold fontp"
+                        style={{ color: TEXT_RED_COLOR }}
+                      >
                         {formatPrice(tour.adult_price)}
                       </p>
-                      <p className="mt-3 fw-bold text-danger">
+                      <p
+                        className="mt-4 fw-bold fontp"
+                        style={{ color: TEXT_RED_COLOR }}
+                      >
                         {formatPrice(tour.child_price)}
                       </p>
-                      <p className="mt-3 fw-bold text-danger">
+                      <p
+                        className="mt-4 fw-bold fontp "
+                        style={{ color: TEXT_RED_COLOR }}
+                      >
                         {formatPrice(tour.infant_price)}
                       </p>
-                      <p className="mt-3 fw-bold text-dark fs-5">
+                      <p className="mt-4 fw-bold text-dark fs-5 ">
                         {" "}
                         {tour.quantity} chỗ
                       </p>
@@ -334,7 +399,7 @@ const TourDetail = () => {
             <RiCalendarScheduleLine className="fs-2" /> LỊCH TRÌNH
           </h2>
           <div
-            style={{ border: BORDER }}
+            style={{ border: BORDER, background: "white" }}
             className="rounded-3 p-lg-5 p-4 shadow my-5"
           >
             <HTMLContent htmlContent={tour.description} />
@@ -343,6 +408,18 @@ const TourDetail = () => {
             <PiShieldCheckBold className="fs-2 mb-2" /> CHÍNH SÁCH TOUR
           </h2>
           <PolicesTour accountId={tour.account_id} />
+          <h4 className=" fw-bold mt-5 ">
+            <BiLike className="fs-2 mb-2" /> ĐÁNH GIÁ TỪ KHÁCH HÀNG
+          </h4>
+          <div>
+            <TourReviews tour_id={tour_id} />
+          </div>
+          <h4 className=" fw-bold mt-5  ">
+            <MdOutlineTour className="fs-2" /> CÁC TOUR KHÁC CỦA DOANH NGHIỆP
+          </h4>
+          <div className="mb-5">
+            <TourListBusiness accountId={tour.account_id} />
+          </div>
         </div>
       </Container>
     </>

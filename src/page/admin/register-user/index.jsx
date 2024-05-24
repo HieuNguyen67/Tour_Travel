@@ -18,6 +18,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
 import { FaAddressCard } from "react-icons/fa6";
 import {  RED_COLOR } from "../../../constants/color";
+import { BASE_URL } from "../../../constants/common";
 
 const RegisterUser = () => {
   const {role_id}=useParams();
@@ -45,15 +46,11 @@ const RegisterUser = () => {
     e.preventDefault();
     
     try {
-       await axios.post(
-        `http://localhost:5020/v1/api/admin/register-business`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+       await axios.post(`${BASE_URL}/register-business`, formData, {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       });
      toast.success("Đăng ký thành công !");
      navigate("/admin/list-business");
     

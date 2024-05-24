@@ -73,7 +73,7 @@ const navigate=useNavigate();
 
     try {
       const response = await axios.post(
-        "http://localhost:5020/v1/api/admin/add-news",
+        `${BASE_URL}/add-news`,
         formDataToSend,
         {
           headers: {

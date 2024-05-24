@@ -17,6 +17,7 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiBankCardFill } from "react-icons/ri";
 import { FaAddressCard } from "react-icons/fa6";
+import { BASE_URL } from "../../../constants/common";
 
 const Profile = () => {
   const { accountId, isLoggedIn ,token} = useAuth();
@@ -43,14 +44,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5020/v1/api/admin/account/${accountId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${BASE_URL}/account/${accountId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const accountData = response.data;
         setFormData({
           ...accountData,
@@ -77,7 +75,7 @@ const Profile = () => {
     try {
       const formattedDate = formatDate(formData.birth_of_date);
       await axios.put(
-        `http://localhost:5020/v1/api/admin/account/${accountId}`,
+        `${BASE_URL}/account/${accountId}`,
         {
           ...formData,
           birth_of_date: formattedDate,

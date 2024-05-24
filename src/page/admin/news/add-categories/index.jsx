@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { IoMdAddCircle } from "react-icons/io";
 import { useAuth } from "../../../../context";
+import { BASE_URL } from "../../../../constants/common";
 
 const AddCategories = () => {
   const [name, setName] = useState("");
@@ -16,13 +17,14 @@ const AddCategories = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5020/v1/api/admin/add-newscategories",
+        `${BASE_URL}/add-newscategories`,
         {
           name,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`          },
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       toast.success("Thêm danh mục thành công!");

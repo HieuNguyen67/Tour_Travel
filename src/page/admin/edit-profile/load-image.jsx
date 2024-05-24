@@ -4,6 +4,7 @@ import { Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import defaultImage from "../../../assets/image/6945124.png";
 import { useAuth } from "../../../context";
+import { BASE_URL } from "../../../constants/common";
 
 const LoadImage = () => {
  const{account_id}=useParams();
@@ -16,7 +17,7 @@ const LoadImage = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5020/v1/api/admin/account/image/${account_id}`,
+          `${BASE_URL}/account/image/${account_id}`,
           {
             responseType: "blob",
           },

@@ -12,10 +12,12 @@ const TourImagesCarousel = ({ tourId }) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/get-all-tour-images/${tourId}`
-        );
-        setImages(response.data);
+        if (tourId) {
+          const response = await axios.get(
+            `${BASE_URL}/get-all-tour-images/${tourId}`
+          );
+          setImages(response.data);
+        }
       } catch (error) {
         setError(error.message);
       } finally {
@@ -33,14 +35,15 @@ const TourImagesCarousel = ({ tourId }) => {
     <Carousel
       additionalTransfrom={0}
       arrows
-      autoPlaySpeed={3000}
+      infinite={true}
+      autoPlaySpeed={2000}
+      autoPlay={true}
       centerMode={false}
       className=""
       containerClass="container-with-dots"
       dotListClass=""
       draggable
       focusOnSelect={false}
-      infinite
       itemClass=""
       keyBoardControl
       minimumTouchDrag={80}
@@ -74,7 +77,6 @@ const TourImagesCarousel = ({ tourId }) => {
           <img
             src={`data:image/jpeg;base64,${img.image}`}
             alt={`Tour Image ${index + 1}`}
-            
           />
         </div>
       ))}

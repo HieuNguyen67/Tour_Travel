@@ -19,6 +19,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RxUpdate } from "react-icons/rx";
 import { RiBankCardFill } from "react-icons/ri";
 import { FaAddressCard } from "react-icons/fa6";
+import { BASE_URL } from "../../../constants/common";
 
 const EditProfile = () => {
     const {account_id,role_id}=useParams();
@@ -33,13 +34,14 @@ const EditProfile = () => {
   }, [isLoggedIn, navigate]);
   const [formData, setFormData] = useState({
     status: "",
+    note:""
   });
 
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5020/v1/api/admin/account/${account_id}`,
+          `${BASE_URL}/account/${account_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -68,7 +70,7 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5020/v1/api/admin/account/${account_id}`,
+        `${BASE_URL}/account/${account_id}`,
         {
           ...formData,
         },
@@ -139,7 +141,6 @@ const EditProfile = () => {
               <Row>
                 <Col className="col-lg-6 col-12">
                   <Form.Group className="mb-lg-4 ">
-                    
                     <Form.Select
                       as="select"
                       required
@@ -151,10 +152,22 @@ const EditProfile = () => {
                       <option value="Active">Active</option>
                     </Form.Select>
                   </Form.Group>
+                  <Form.Group className="mb-lg-4 ">
+                    <Form.Control
+                      as="textarea"
+                      
+                      style={{height:'10rem'}}
+                      name="note"
+                      placeholder="Ghi chú"
+                      value={formData.note}
+                      onChange={handleChange}
+                    />
+                      
+                  </Form.Group>
                 </Col>
                 <Col className="col-12 col-lg-3 my-3 my-lg-0">
                   <Button
-                    style={{ background: RED_COLOR, border:'0px' }}
+                    style={{ background: RED_COLOR, border: "0px" }}
                     type="submit"
                     className="  col-12 "
                   >

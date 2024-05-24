@@ -11,6 +11,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FcInfo } from "react-icons/fc";
 import { MdOutlineContactMail } from "react-icons/md";
+import { BASE_URL } from "../../../constants/common";
 
 const Contact = () => {
  const [formData, setFormData] = useState({
@@ -31,10 +32,7 @@ const Contact = () => {
    e.preventDefault();
 
    try {
-     await axios.post(
-       "http://localhost:5020/v1/api/admin/send-contact",
-       formData
-     );
+     await axios.post(`${BASE_URL}/admin/send-contact`, formData);
      setSuccessMessage("Contact sent successfully");
      setFormData({
        fullname: "",
