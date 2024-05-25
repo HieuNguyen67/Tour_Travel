@@ -1,0 +1,16 @@
+@media (max-width: 992px) {
+  .sizeimgg {
+    height: 8rem;
+    width: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}
+@media (min-width: 992px) {
+  .sizeimgg {
+    height: 12rem;
+    width: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+}

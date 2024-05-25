@@ -10,6 +10,7 @@ import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
 import LoadingBackdrop from "../../../components/backdrop";
 import { useAuth } from "../../../context";
 import { BASE_URL } from "../../../constants/common";
+import { MdAccountCircle } from "react-icons/md";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -66,28 +67,7 @@ const ListUser = () => {
       );
     }
   };
-  const handleDeleteSelected = async () => {
-    try {
-      await Promise.all(
-        selectedRows.map(async (row) => {
-          await axios.delete(`${BASE_URL}/delete-users/${row.account_id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setUsers(users.filter((item) => item.account_id !== row.account_id));
-          toast.success("Xoá thành công!");
-          window.location.reload();
-        })
-      );
-      setSelectedRows([]);
-    } catch (error) {
-      toast.error("Xoá thất bại. Vui lòng thử lại !");
-
-      console.error("Failed to delete selected news:", error);
-      setError("Failed to delete selected news");
-    }
-  };
+ 
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
@@ -238,7 +218,6 @@ const ListUser = () => {
   return (
     <>
       <LoadingBackdrop open={loading} />
-      <div style={{ height: 400, width: "100%" }} className="">
         <p className="text-end">
          
           {isHomePage ? (
@@ -268,7 +247,6 @@ const ListUser = () => {
             getRowId={(row) => row.account_id}
           />
         </div>
-      </div>
     </>
   );
 };

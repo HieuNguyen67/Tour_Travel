@@ -12,6 +12,7 @@ import "../../page/customer/tour-detail/tour-detail.scss";
 
 const PolicesTour = ({ accountId }) => {
   const [policies, setPolicies] = useState([]);
+  const [policy_cancellation, setPolicyCancellation] = useState([]);
 
   useEffect(() => {
     const fetchPolicies = async () => {
@@ -30,9 +31,47 @@ const PolicesTour = ({ accountId }) => {
     fetchPolicies();
   }, [accountId]);
 
+    useEffect(() => {
+      const fetchPolicies = async () => {
+        try {
+         
+            const response = await axios.get(
+              `${BASE_URL}/list-policies`
+            );
+            setPolicyCancellation(response.data[0]);
+
+        } catch (error) {
+          console.error("Error fetching policies:", error);
+        }
+      };
+
+      fetchPolicies();
+    }, []);
+
   return (
     <>
       <Row>
+        <Col className="col-lg-6 col-12">
+          <div className="mb-3">
+            <Accordion sx={{ background: "#f9f9f9" }} className="p-lg-3">
+              <AccordionSummary
+                expandIcon={<FaCaretSquareDown className="fs-4" />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <span
+                  className="fw-bold sizetext"
+                  style={{ color: TEXT_MAIN_COLOR }}
+                >
+                  {policy_cancellation.policytype}
+                </span>
+              </AccordionSummary>
+              <AccordionDetails style={{ color: TEXT_MAIN_COLOR }}>
+                <HTMLContent htmlContent={policy_cancellation.description} />
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        </Col>
         {policies.map((item) => (
           <Col className="col-lg-6 col-12" key={item.policy_id}>
             <div className="mb-3">

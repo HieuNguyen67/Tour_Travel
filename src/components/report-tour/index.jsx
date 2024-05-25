@@ -26,7 +26,8 @@ setShow(true);
   } };
 
   const navigate=useNavigate();
-  const handleReportTour = async () => {
+  const handleReportTour = async (e) => {
+    e.preventDefault();
     try {
         if (accountId) {
           const response = await axios.post(
@@ -52,79 +53,96 @@ setShow(true);
 
   return (
     <>
-      <p onClick={handleShow} style={{cursor:'pointer'}} className="text-decoration-underline text-end">
+      <p
+        onClick={handleShow}
+        style={{ cursor: "pointer" }}
+        className="text-decoration-underline text-end"
+      >
         Tố cáo
       </p>
       {accountId ? (
         <>
           {" "}
           <Modal show={show} onHide={handleClose} centered>
-            <Modal.Header closeButton>
-              <MdReportProblem className="fs-1 text-danger" />
-            </Modal.Header>
-            <Modal.Body>
-              <div>
-                <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label className="font-family">
-                    <CiBoxList className="fs-4" /> Chọn lý do:
-                  </Form.Label>
-                  <Form.Select
-                    required
-                    value={typeReport}
-                    onChange={(e) => setTypeReport(e.target.value)}
-                  >
-                    <option>Chọn lý do</option>
-                    <option value="Không đúng thông tin">
-                      Không đúng thông tin
-                    </option>
-                    <option value="Dịch vụ kém chất lượng">
-                      Dịch vụ kém chất lượng
-                    </option>
-                    <option value="Vấn đề về an toàn">Vấn đề về an toàn</option>
-                    <option value="Hành vi không đạo đức hoặc không đúng quy định">
-                      Hành vi không đạo đức hoặc không đúng quy định
-                    </option>
-                    <option value="Không hài lòng về dịch vụ hoặc chất lượng">
-                      Không hài lòng về dịch vụ hoặc chất lượng
-                    </option>
-                    <option value="Phát ngôn gian lận hoặc gây gổ">
-                      Phát ngôn gian lận hoặc gây gổ
-                    </option>
-                    <option value="Không tuân thủ các quy định về môi trường và bảo vệ tự nhiên">
-                      Không tuân thủ các quy định về môi trường và bảo vệ tự
-                      nhiên
-                    </option>
-                    <option value="Vấn đề về đạo đức và văn hóa">
-                      Vấn đề về đạo đức và văn hóa
-                    </option>
-                    <option value="Khác">Khác</option>
-                  </Form.Select>
-                </Form.Group>
-              </div>
-              <div>
-                <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label className="font-family">
-                    <FaEdit className="fs-4" /> Mô tả tố cáo:
-                  </Form.Label>
-                  <Form.Control
-                    style={{ height: "10rem" }}
-                    as="textarea"
-                    placeholder="Mô tả tố cáo"
-                    required
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </Form.Group>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button style={{background: RED1_COLOR, border:'0px'}} onClick={handleReportTour}>Gửi tố cáo</Button>
-            </Modal.Footer>
+            <form onSubmit={handleReportTour}>
+              <Modal.Header closeButton>
+                <MdReportProblem className="fs-1 text-danger" />
+              </Modal.Header>
+              <Modal.Body>
+                <div>
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
+                    <Form.Label className="font-family">
+                      <CiBoxList className="fs-4" /> Chọn lý do:
+                    </Form.Label>
+                    <Form.Select
+                      required
+                      value={typeReport}
+                      onChange={(e) => setTypeReport(e.target.value)}
+                    >
+                      <option value="">Chọn lý do</option>
+                      <option value="Tour có dấu hiệu lừa đảo">
+                        Tour có dấu hiệu lừa đảo
+                      </option>
+                      <option
+                        value="Tour có hình ảnh, nội dung phản cảm hoặc có thể gây
+                      phản cảm"
+                      >
+                        Tour có hình ảnh, nội dung phản cảm hoặc có thể gây phản
+                        cảm
+                      </option>
+                      <option value="Giá cả không minh bạch">
+                        Giá cả không minh bạch
+                      </option>
+                      <option value="Nội dung sai lệch hoặc gây hiểu lầm">
+                        Nội dung sai lệch hoặc gây hiểu lầm
+                      </option>
+                      <option value="Vi phạm bản quyền">
+                        Vi phạm bản quyền
+                      </option>
+                      <option value="Gian lận trong đánh giá và xếp hạng">
+                        Gian lận trong đánh giá và xếp hạng
+                      </option>
+                      <option value="Lạm dụng quảng cáo">
+                        Lạm dụng quảng cáo
+                      </option>
+                      <option value="Vi phạm quyền riêng tư">
+                        Vi phạm quyền riêng tư
+                      </option>
+                      <option value="Phản hồi và hỗ trợ khách hàng kém">
+                        Phản hồi và hỗ trợ khách hàng kém
+                      </option>
+                      <option value="Khác">Khác</option>
+                    </Form.Select>
+                  </Form.Group>
+                </div>
+                <div>
+                  <Form.Group className="mb-4" controlId="formBasicEmail">
+                    <Form.Label className="font-family">
+                      <FaEdit className="fs-4" /> Mô tả tố cáo:
+                    </Form.Label>
+                    <Form.Control
+                      style={{ height: "10rem" }}
+                      as="textarea"
+                      placeholder="Mô tả tố cáo"
+                      required
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </Form.Group>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                type="submit"
+                  style={{ background: RED1_COLOR, border: "0px" }}                >
+                  Gửi tố cáo
+                </Button>
+              </Modal.Footer>
+            </form>
           </Modal>
         </>
       ) : (
-        <>
-        </>
+        <></>
       )}
     </>
   );

@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import Modal from "react-bootstrap/Modal";
 import bot from "../../assets/image/bot-3.png";
 import "./chatbox.scss";
+import { AiFillRobot } from "react-icons/ai";
 
 const Chatbox = () => {
   const [input, setInput] = useState("");
@@ -94,7 +95,10 @@ const Chatbox = () => {
       </OverlayTrigger>
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton>
+          <AiFillRobot className="fs-1" />
+          <span className="fw-bold fs-5 ms-3">TRỢ LÝ ẢO CỦA BẠN</span>
+        </Modal.Header>
         <Modal.Body>
           <div style={styles.chatbox} className="col-12">
             <div style={styles.messagesContainer}>

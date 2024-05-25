@@ -23,7 +23,11 @@ const AddPolicyForm = () => {
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
     const location = useLocation();
-    const isHomePage = location.pathname === "/business/add-policies";
+    const isHomePage =
+      location.pathname === "/business/add-policies" ||
+      location.pathname === "/admin/add-policies";
+      const isHomePage1 =
+      location.pathname === "/business/add-policies" || location.pathname === "/business/edit-policy" ;
 
   const navigate = useNavigate();
 
@@ -78,12 +82,17 @@ const AddPolicyForm = () => {
             policytype,
             description,
           });
-          toast.success("Sửa thành công!");
+          toast.success("Cập nhật thành công!");
+          if(isHomePage1){
+            navigate("/business/list-policies");
+          }else{
+            navigate("/admin/list-policies");
+          }
 
-          navigate("/business/list-policies");
+          
         } catch (error) {
           console.error("Error updating policy:", error);
-          toast.error("Sửa thất bại!");
+          toast.error("Cập nhật thất bại!");
         }
     }
 
@@ -93,7 +102,9 @@ const AddPolicyForm = () => {
 
   return (
     <div className="px-3">
-      <Link to="/business/list-policies">
+      <Link
+        to={isHomePage1 ? "/business/list-policies" : "/admin/list-policies"}
+      >
         <IoArrowBackOutline className="fs-3 mb-3" />
       </Link>
       <h1 className="fw-bold text-center mb-5 mt-3">

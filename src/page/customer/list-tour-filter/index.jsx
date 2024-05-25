@@ -44,6 +44,8 @@ const TourSearch = () => {
   const [filteredTours, setFilteredTours] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+    const [loading1, setLoading1] = useState(true);
+
   const [regions, setRegions] = useState([]);
   const [provinces, setProvinces] = useState([]);
 
@@ -64,17 +66,19 @@ const TourSearch = () => {
             `${BASE_URL}/list-tours-filter?tourcategory_name=Du lịch nước ngoài`
           );
         }
+        setLoading1(false);
 
         const sortedTours = response.data.sort(
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
         setTours(sortedTours);
         filterTours(sortedTours, initialDestinationLocation, initialTourName);
-        setLoading(false);
+        
       } catch (err) {
+         setLoading1(false);
         console.error("Error fetching tours", err);
         setError("Error fetching tours. Please try again.");
-        setLoading(false);
+       
       }
     };
 
@@ -197,7 +201,9 @@ const TourSearch = () => {
   const offset = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredTours.slice(offset, offset + itemsPerPage);
      const today = new Date().toISOString().split("T")[0];
-
+if (loading1) {
+  return <LoadingBackdrop open={loading1} />;
+}
   return (
     <>
       <LoadingBackdrop open={loading} />

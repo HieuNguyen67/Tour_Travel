@@ -9,7 +9,10 @@ import AddNews from "../page/admin/news/add-news";
 import UpdateNews from "../page/admin/news/edit-news";
 import NewsDetail from "../page/admin/news/news-details";
 import RegisterUser from "../page/admin/register-user";
-import Report from "../page/admin/report";
+import ReportList from "../page/admin/report-tour";
+import ReportDetails from "../page/admin/report-tour/report-detail";
+import PoliciesList from "../page/business/list-policies";
+import AddPolicyForm from "../page/business/list-policies/add-policies";
 const AdminRoutes = () => {
   return (
     <>
@@ -32,7 +35,11 @@ const AdminRoutes = () => {
             path="/contact-detail/:contact_id"
             element={<ContactDetail />}
           />
-          <Route path="/report" element={<Report />} />
+          <Route path="/report" element={<ReportList />} />
+          <Route path="/report-detail/:report_id" element={<ReportDetails />} />
+          <Route path="/list-policies" element={<PoliciesList />} />
+          <Route path="/add-policies" element={<AddPolicyForm />} />
+          <Route path="/edit-policy/:policy_id" element={<AddPolicyForm />} />
 
           <Route path="*" element={<Navigate to="/list-customer" />} />
         </Routes>

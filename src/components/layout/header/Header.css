@@ -1,4 +1,11 @@
+.navbar {
+  background-color: transparent;
+}
 
+.navbar.colorChange {
+  background-color: rgba(117, 186, 218, 0.8941176471);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 .decorate {
   text-decoration: none;
@@ -8,6 +15,26 @@
   .sidebar {
     display: flex;
     flex-direction: column;
+  }
+  .sizeimggg {
+    height: 3rem;
+    width: 3rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .whiteee {
+    color: black;
+  }
+}
+@media (min-width: 992px) {
+  .sizeimggg {
+    height: 2.3rem;
+    width: 2.3rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .whiteee {
+    color: white;
   }
 }
 .white {

@@ -14,7 +14,8 @@ const ADMIN = [
   { id: 2, name: "DOANH NGHIỆP", link: "/admin/list-business" },
   { id: 3, name: "TIN TỨC", link: "/admin/news" },
   { id: 4, name: "LIÊN HỆ", link: "/admin/contact" },
-  { id: 4, name: "REPORT", link: "/admin/report" },
+  { id: 5, name: "TỐ CÁO", link: "/admin/report" },
+  { id: 6, name: "CHÍNH SÁCH HUỶ", link: "/admin/list-policies" },
 ];
 const BUSINESS = [
   { id: 1, name: "TOUR", link: "/business/list-tour" },

@@ -6,6 +6,7 @@ import { MdLocationOn } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import { BLUE_COLOR, RED_COLOR } from "../../constants/color";
 import axios from "axios";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const TabSearch=()=>{
     const [destinationLocation, setDestinationLocation] = useState("");
@@ -75,9 +76,10 @@ const TabSearch=()=>{
       <>
         {" "}
         <div
-          className="my-4 rounded-5 shadow"
+          className="my-4 rounded-5 shadow p-2"
           style={{
-            border: "5px solid rgb(235, 236, 239)",
+            background: "white",
+            border: "3px solid var(--gray-600, #475467)",
           }}
         >
           <Container className="my-4">
@@ -128,7 +130,6 @@ const TabSearch=()=>{
                         id="justify-tab-example"
                         className="mb-3"
                         justify
-                        style={{ background: "white" }}
                       >
                         <Tab eventKey="home" title="Tìm điểm đến">
                           <div className="p-lg-2">
@@ -139,28 +140,39 @@ const TabSearch=()=>{
                             <form onSubmit={handleSearch}>
                               <Row>
                                 <Col className="col-lg-11 col-12 mb-3 mb-lg-0">
-                                  <Form.Select
-                                    aria-label="Default select example"
-                                    className="py-3 shadow-sm"
-                                    style={{ border: "3px solid #ffc107" }}
-                                    value={destinationLocation}
-                                    onChange={(e) =>
-                                      setDestinationLocation(e.target.value)
-                                    }
-                                    required
+                                  <FormControl
+                                    fullWidth
+                                    className="shadow rounded"
+                                    color="warning"
                                   >
-                                    <option value="">
+                                    <InputLabel id="demo-simple-select-label">
                                       Bạn muốn đi đến đâu ?
-                                    </option>
-                                    {provinces.map((province) => (
-                                      <option
-                                        key={province.id}
-                                        value={province.name}
-                                      >
-                                        {province.name}
-                                      </option>
-                                    ))}
-                                  </Form.Select>
+                                    </InputLabel>
+                                    <Select
+                                      defaultValue=""
+                                      labelId="demo-simple-select-label"
+                                      id="demo-simple-select"
+                                      label="Bạn muốn đi đến đâu ?"
+                                      sx={{
+                                        background: "white",
+                                      }}
+                                      value={destinationLocation}
+                                      onChange={(e) =>
+                                        setDestinationLocation(e.target.value)
+                                      }
+                                      required
+                                    >
+                                      {provinces.map((province) => (
+                                        <MenuItem
+                                          key={province.id}
+                                          value={province.name}
+                                        >
+                                          {province.name}
+                                        </MenuItem>
+                                      ))}
+                                      <MenuItem value={10}>Ten</MenuItem>
+                                    </Select>
+                                  </FormControl>
                                 </Col>
                                 <Col className="col-lg-1 col-12">
                                   <Button
@@ -237,28 +249,39 @@ const TabSearch=()=>{
                             <form onSubmit={handleSearch3}>
                               <Row>
                                 <Col className="col-lg-11 col-12 mb-3 mb-lg-0">
-                                  <Form.Select
-                                    aria-label="Default select example"
-                                    className="py-3 shadow-sm"
-                                    style={{ border: "3px solid #ffc107" }}
-                                    value={destinationLocation}
-                                    onChange={(e) =>
-                                      setDestinationLocation(e.target.value)
-                                    }
-                                    required
+                                  <FormControl
+                                    fullWidth
+                                    className="shadow rounded"
+                                    color="warning"
                                   >
-                                    <option value="">
+                                    <InputLabel id="demo-simple-select-label">
                                       Bạn muốn đi đến đâu ?
-                                    </option>
-                                    {regions.map((region) => (
-                                      <option
-                                        key={region.iso}
-                                        value={region.name}
-                                      >
-                                        {region.name}
-                                      </option>
-                                    ))}
-                                  </Form.Select>
+                                    </InputLabel>
+                                    <Select
+                                      defaultValue=""
+                                      labelId="demo-simple-select-label"
+                                      id="demo-simple-select"
+                                      label="Bạn muốn đi đến đâu ?"
+                                      sx={{
+                                        background: "white",
+                                      }}
+                                      value={destinationLocation}
+                                      onChange={(e) =>
+                                        setDestinationLocation(e.target.value)
+                                      }
+                                      required
+                                    >
+                                      {regions.map((region) => (
+                                        <MenuItem
+                                          key={region.iso}
+                                          value={region.name}
+                                        >
+                                          {region.name}
+                                        </MenuItem>
+                                      ))}
+                                      <MenuItem value={10}>Ten</MenuItem>
+                                    </Select>
+                                  </FormControl>
                                 </Col>
                                 <Col className="col-lg-1 col-12">
                                   <Button

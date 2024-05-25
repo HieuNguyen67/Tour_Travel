@@ -3,8 +3,8 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { BASE_URL } from "../../../constants/common";
 import LoadingBackdrop from "../../../components/backdrop";
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Button, Col, Row } from "react-bootstrap";
 import { MdTour } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { BLUE_COLOR } from "../../../constants/color";
@@ -16,16 +16,23 @@ import { IoShieldCheckmark } from "react-icons/io5";
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
   const [loading, setLoading] = useState(true);
- const [selectedRows, setSelectedRows] = useState([]);
- const [error, setError] = useState("");
- const {token, accountId}=useAuth();
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [error, setError] = useState("");
+  const { token, accountId } = useAuth();
 
+  const location = useLocation();
+  const isHomePage = location.pathname === "/business/list-policies";
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/list-policies/${accountId}`
-        ); 
+        if (isHomePage) {
+          var response = await axios.get(
+            `${BASE_URL}/list-policies/${accountId}`
+          );
+        } else {
+          var response = await axios.get(`${BASE_URL}/list-policies`);
+        }
+
         setPolicies(response.data);
       } catch (error) {
         console.error("Error fetching policies:", error);
@@ -35,7 +42,7 @@ const PoliciesList = () => {
     };
 
     fetchPolicies();
-  }, [accountId]);
+  }, [isHomePage,accountId]);
 
   const handleCheckboxChange = (event, row) => {
     if (event.target.checked) {
@@ -52,15 +59,14 @@ const PoliciesList = () => {
     try {
       await Promise.all(
         selectedRows.map(async (row) => {
-          await axios.delete(
-            `${BASE_URL}/delete-policy/${row.policy_id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+          await axios.delete(`${BASE_URL}/delete-policy/${row.policy_id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setPolicies(
+            policies.filter((item) => item.policy_id !== row.policy_id)
           );
-          setPolicies(policies.filter((item) => item.policy_id !== row.policy_id));
           toast.success("Xoá thành công!");
           window.location.reload();
         })
@@ -76,7 +82,11 @@ const PoliciesList = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    navigate(`/business/edit-policy/${params.row.policy_id}`)
+    if (isHomePage) {
+      navigate(`/business/edit-policy/${params.row.policy_id}`);
+    } else {
+      navigate(`/admin/edit-policy/${params.row.policy_id}`);
+    }
   };
 
   const columns = [
@@ -135,22 +145,44 @@ const PoliciesList = () => {
     <>
       {" "}
       <LoadingBackdrop open={loading} />
-      <p className="text-end">
-        <Button
-          variant="danger"
-          onClick={handleDeleteSelected}
-          className="me-2"
-        >
-          <MdDeleteForever className="fs-4" />
-        </Button>
-        <Link to="/business/add-policies" className="text-decoration-none">
-          {" "}
-          <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-            <IoMdAdd />
-            <IoShieldCheckmark className="fs-4" />
-          </Button>
-        </Link>
-      </p>
+      {isHomePage ? (
+        <>
+          <Row>
+            <Col>
+              <p>(Không bao gồm chính sách huỷ tour)</p>
+            </Col>
+            <Col>
+              {" "}
+              <p className="text-end">
+                <Button
+                  variant="danger"
+                  onClick={handleDeleteSelected}
+                  className="me-2"
+                >
+                  <MdDeleteForever className="fs-4" />
+                </Button>
+                <Link
+                  to={
+                    isHomePage
+                      ? "/business/add-policies"
+                      : "/admin/add-policies"
+                  }
+                  className="text-decoration-none"
+                >
+                  {" "}
+                  <Button style={{ background: BLUE_COLOR, border: "0px" }}>
+                    <IoMdAdd />
+                    <IoShieldCheckmark className="fs-4" />
+                  </Button>
+                </Link>
+              </p>
+            </Col>
+          </Row>
+         
+        </>
+      ) : (
+        <></>
+      )}
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={policies}

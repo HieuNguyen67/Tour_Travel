@@ -38,6 +38,7 @@ import TourListBusiness from "../../../components/list-tour-by-business";
 import { MdOutlineTour } from "react-icons/md";
 import ReportTour from "../../../components/report-tour";
 import { useAuth } from "../../../context";
+import ContactModal from "../../../components/contact-business";
 
 const TourDetail = () => {
   const { tour_id } = useParams();
@@ -49,6 +50,7 @@ const TourDetail = () => {
   const [destination, setDestination] = useState("");
 const [averageRating, setAverageRating] = useState(0);
 const [totalRatings, setTotalRatings] = useState(0);
+
   useEffect(() => {
     const fetchTourData = async () => {
       try {
@@ -198,12 +200,8 @@ const [totalRatings, setTotalRatings] = useState(0);
               >
                 <MdOutlineShoppingCartCheckout className="fs-4" /> Đặt ngay
               </Button>
-              <Button
-                className="col-lg-2 col-12  py-3"
-                style={{ background: GREY_COLOR, border: "0px" }}
-              >
-                Liên hệ tư vấn
-              </Button>
+
+              <ContactModal accountId={tour.account_id} tourId={tour_id} />
             </Col>
           </Row>
           <div>
@@ -283,9 +281,8 @@ const [totalRatings, setTotalRatings] = useState(0);
               <Col className="col-lg-5 col-12">
                 <div
                   style={{
-                    border: "3px solid #ebecef",
-                    background:
-                      "linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%)",
+                    border: "3px solid #ffc107",
+                    background: "white",
                   }}
                   className="p-4 rounded-4 shadow"
                 >
@@ -331,7 +328,7 @@ const [totalRatings, setTotalRatings] = useState(0);
               <Col className="col-lg-7 col-12 mt-3 mt-lg-0">
                 <div
                   style={{
-                    border: "3px solid #ebecef",
+                    border: "3px solid var(--gray-600, #475467)",
                   }}
                   className="p-4 rounded-4 shadow"
                 >
@@ -415,7 +412,8 @@ const [totalRatings, setTotalRatings] = useState(0);
             <TourReviews tour_id={tour_id} />
           </div>
           <h4 className=" fw-bold mt-5  ">
-            <MdOutlineTour className="fs-2" /> CÁC TOUR KHÁC CỦA DOANH NGHIỆP
+            <MdOutlineTour className="fs-2" /> CÁC TOUR KHÁC CỦA{" "}
+            {tour.account_name}
           </h4>
           <div className="mb-5">
             <TourListBusiness accountId={tour.account_id} />
