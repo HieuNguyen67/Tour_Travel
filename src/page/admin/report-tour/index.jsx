@@ -7,7 +7,6 @@ import { GREEN_COLOR, RED1_COLOR, YELLOW_COLOR } from "../../../constants/color"
 import { Button } from "react-bootstrap";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { MdReport } from "react-icons/md";
 
 const ReportList = () => {
   const [reports, setReports] = useState([]);
@@ -146,7 +145,6 @@ const ReportList = () => {
     <>
       {" "}
       <LoadingBackdrop open={loading} />
-       <h5 className="fw-bold"><MdReport className="fs-1 text-danger"/></h5>
         <div style={{ height: 600, width: "100%" }}>
           <DataGrid
             rows={reports}

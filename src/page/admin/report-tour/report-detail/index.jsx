@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  useNavigate, useParams } from "react-router-dom";
+import {  Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Box, CircularProgress, Typography } from "@mui/material";
 import { BASE_URL } from "../../../../constants/common";
@@ -12,6 +12,7 @@ import { RxUpdate } from "react-icons/rx";
 import { Button, Form } from "react-bootstrap";
 import { BLUE_COLOR } from "../../../../constants/color";
 import { FaSave } from "react-icons/fa";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const ReportDetails = () => {
   const { report_id } = useParams();
@@ -76,6 +77,9 @@ const ReportDetails = () => {
 
   return (
     <>
+      <Link to="/admin/report">
+        <IoArrowBackOutline className="fs-3" />
+      </Link>
 
       <Box my={4}>
         <Typography variant="h4" gutterBottom>

@@ -45,7 +45,7 @@ const LoadImage = () => {
           <img
             src={imageSrc || defaultImage}
             alt="Hình ảnh của tài khoản"
-            className="col-lg-9 col-12 sizeimgg  rounded-circle shadow"
+            className="col-lg-10 col-12 sizeimgg  rounded-circle shadow"
             style={{ objectFit: "cover" }}
           />
         )}

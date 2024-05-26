@@ -286,7 +286,7 @@ const AddTourForm = () => {
     <>
       {" "}
       <LoadingBackdrop open={loading} />
-      <div className="  px-3 ">
+      <div className="  px-3 px-lg-0 ">
         <Link to="/business/list-tour">
           <IoArrowBackOutline className="fs-3 mb-3" />
         </Link>

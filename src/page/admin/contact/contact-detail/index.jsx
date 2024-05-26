@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../../../../constants/common";
 import { toast } from "react-toastify";
 import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
@@ -14,24 +14,37 @@ import { MdOutlineContactMail } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 
 const ContactDetail = () => {
-    const{contact_id}=useParams();
+  const { contact_id } = useParams();
   const [contact, setContact] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-   const [status, setStatus] = useState("");
-const{token}=useAuth();
+  const [status, setStatus] = useState("");
+  const { token, role } = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchContact = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/contacts-detail/${contact_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        if (role == 2) {
+          var response = await axios.get(
+            `${BASE_URL}/contacts-detail/${contact_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        } else {
+          var response = await axios.get(
+            `${BASE_URL}/contacts-detail-business/${contact_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        }
+
         setContact(response.data);
         setStatus(response.data.status);
         setLoading(false);
@@ -45,46 +58,85 @@ const{token}=useAuth();
     fetchContact();
   }, [contact_id]);
   const navigate = useNavigate();
-  const handleUpdate = async () => {
+  const handleUpdate = async (e) => {
+    e.preventDefault();
     try {
-      await axios.put(
-        `${BASE_URL}/update-status-contact/${contact_id}`,
-        {
-          status,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      if (role == 2) {
+        await axios.put(
+          `${BASE_URL}/update-status-contact/${contact_id}`,
+          {
+            status,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("News status and note updated successfully");
+        toast.success("Cập nhật thành công!");
+        navigate("/admin/contact");
+      } else {
+        await axios.put(
+          `${BASE_URL}/update-status-contact-business/${contact_id}`,
+          {
+            status,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }
       console.log("News status and note updated successfully");
       toast.success("Cập nhật thành công!");
-      navigate("/admin/contact");
+      navigate("/business/list-contact");
     } catch (error) {
       console.error("Failed to update news status and note:", error);
       setError("Failed to update news status and note");
     }
   };
 
-
-  if (loading) return (
-    <div>
-      <LoadingBackdrop open={loading} />
-    </div>
-  );
+  if (loading)
+    return (
+      <div>
+        <LoadingBackdrop open={loading} />
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
   if (!contact) return <div>Contact not found</div>;
 
   return (
     <div className="px-2">
-      <Link to="/admin/contact">
-        <IoArrowBackOutline className="fs-3" />
-      </Link>
-      <h1 className="fw-bold text-center mb-4">
-        <MdOutlineContactMail className="fs-1 mb-lg-2 mb-1" /> LIÊN HỆ
-      </h1>
-      <form>
+      {role == 2 ? (
+        <>
+          <Link to="/admin/contact">
+            <IoArrowBackOutline className="fs-3" />
+          </Link>
+        </>
+      ) : (
+        <>
+          <Link to="/business/list-contact">
+            <IoArrowBackOutline className="fs-3" />
+          </Link>
+        </>
+      )}
+      {role == 2 ? (
+        <>
+          <h1 className="fw-bold text-center mb-4">
+            <MdOutlineContactMail className="fs-1 mb-lg-2 mb-1" /> LIÊN HỆ
+          </h1>
+        </>
+      ) : (
+        <>
+          <h1 className="fw-bold text-center mb-4">
+            <MdOutlineContactMail className="fs-1 mb-lg-2 mb-1" /> LIÊN HỆ TƯ VẤN
+          </h1>
+        </>
+      )}
+
+      <form onSubmit={handleUpdate}>
         <Form.Group className="mb-3">
           <Form.Label className="fw-bold">
             <RxUpdate className="fs-5" /> Trạng thái:
@@ -99,14 +151,25 @@ const{token}=useAuth();
           </Form.Control>
         </Form.Group>
         <Button
-          onClick={handleUpdate}
           disabled={loading}
+          type="submit"
           variant="warning"
           className="mb-3"
         >
           <FaSave /> Cập nhật
         </Button>
       </form>
+      {role != 2 ? (
+        <>
+          {" "}
+          <>
+            {" "}
+            <p className="fs-5 fw-bold">{contact.name}</p>
+          </>
+        </>
+      ) : (
+        <></>
+      )}
       <p>
         <strong>Từ:</strong> {contact.fullname}
       </p>
@@ -123,9 +186,16 @@ const{token}=useAuth();
         <strong>Ngày gửi:</strong>{" "}
         {format(new Date(contact.senttime), "dd/MM/yyyy")}
       </p>
-      <p>
-        <strong>Địa chỉ:</strong> {contact.address}
-      </p>
+      {role == 2 ? (
+        <>
+          {" "}
+          <p>
+            <strong>Địa chỉ:</strong> {contact.address}
+          </p>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

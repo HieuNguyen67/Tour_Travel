@@ -12,8 +12,6 @@ import ScrollIndicator from "../../ScrollIndicator";
 import { motion } from "framer-motion";
 import { useAuth } from "../../../context";
 import { BASE_URL, HEADER } from "../../../constants/common";
-import { FcBusinessman } from "react-icons/fc";
-import { FcManager } from "react-icons/fc";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -89,21 +87,7 @@ const Header = (props) => {
                 )}
 
                 <span>
-                  {role == 2 ? (
-                    <Link
-                      to="/admin/list-customer"
-                      className="text-decoration-none text-dark fw-bold fs-3"
-                    >
-                      <FcManager className="fs-1" /> ADMIN
-                    </Link>
-                  ) : role == 3 ? (
-                    <Link
-                      to="/business/list-tour"
-                      className="text-decoration-none  text-dark fw-bold fs-3"
-                    >
-                      <FcBusinessman className="fs-1" /> DOANH NGHIỆP
-                    </Link>
-                  ) : (
+                  {role == 1 ? (
                     <>
                       <Link
                         to="/"
@@ -116,7 +100,7 @@ const Header = (props) => {
                         Travel
                       </Link>
                     </>
-                  )}
+                  ):(<></>)}
                 </span>
               </Navbar.Brand>
             </NavLink>

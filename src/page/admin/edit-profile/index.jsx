@@ -140,7 +140,7 @@ const EditProfile = () => {
             <form onSubmit={handleSubmit}>
               <Row>
                 <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-lg-4 ">
+                  <Form.Group className="mb-lg-4 mb-3 ">
                     <Form.Select
                       as="select"
                       required

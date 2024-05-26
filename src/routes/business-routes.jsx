@@ -10,6 +10,8 @@ import ListTour from "../page/business/list-tour";
 import OrderTour from "../page/business/order-tour";
 import PoliciesList from "../page/business/list-policies";
 import AddPolicyForm from "../page/business/list-policies/add-policies";
+import ContactList from "../page/admin/contact";
+import ContactDetail from "../page/admin/contact/contact-detail";
 
 const BusinessRoutes = () => {
   return (
@@ -31,6 +33,8 @@ const BusinessRoutes = () => {
           <Route path="/list-policies" element={<PoliciesList />} />
           <Route path="/add-policies" element={<AddPolicyForm />} />
           <Route path="/edit-policy/:policy_id" element={<AddPolicyForm />} />
+          <Route path="/list-contact" element={<ContactList />} />
+          <Route path="/contact-detail/:contact_id" element={<ContactDetail />} />
 
           <Route path="*" element={<Navigate to="/list-tour" />} />
         </Routes>

@@ -396,7 +396,7 @@ const [totalRatings, setTotalRatings] = useState(0);
             <RiCalendarScheduleLine className="fs-2" /> LỊCH TRÌNH
           </h2>
           <div
-            style={{ border: BORDER, background: "white" }}
+            style={{ border: "3px solid var(--gray-600, #475467)", background: "white" }}
             className="rounded-3 p-lg-5 p-4 shadow my-5"
           >
             <HTMLContent htmlContent={tour.description} />
