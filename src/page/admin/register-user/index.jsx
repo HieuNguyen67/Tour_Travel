@@ -81,16 +81,10 @@ const RegisterUser = () => {
             <Link to="/admin/list-business">
               <IoArrowBackOutline className="fs-3 mb-3" />
             </Link>
-            <Row>
-              <Col></Col>
-              <Col className="col-10 ">
-                <h1 className="text-center text-break fw-bold font-family">
-                  <IoBusinessSharp className="fs-1 mb-lg-2 mb-1" /> ĐĂNG KÝ
+                <h3 className=" fw-bold my-3">
+                  <IoBusinessSharp className="fs-3" /> ĐĂNG KÝ
                   DOANH NGHIỆP
-                </h1>
-              </Col>
-              <Col></Col>
-            </Row>
+                </h3>
           </div>
         </Container>
         <br />

@@ -87,7 +87,7 @@ const Header = (props) => {
                 )}
 
                 <span>
-                  {role == 1 ? (
+                  {role != 2 && role != 3 ? (
                     <>
                       <Link
                         to="/"
@@ -100,7 +100,9 @@ const Header = (props) => {
                         Travel
                       </Link>
                     </>
-                  ):(<></>)}
+                  ) : (
+                    <></>
+                  )}
                 </span>
               </Navbar.Brand>
             </NavLink>

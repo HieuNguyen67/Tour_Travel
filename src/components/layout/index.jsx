@@ -16,6 +16,7 @@ const MainLayout = ({ children }) => {
         location.pathname === "/image" ||
         location.pathname === "/contact" ||
         location.pathname === "/login" ||
+        location.pathname === "/information/profile" ||
         location.pathname === "/signup";
 
   return (

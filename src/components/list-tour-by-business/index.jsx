@@ -84,7 +84,7 @@ const TourListBusiness = ({ accountId }) => {
         autoPlaySpeed={4000}
       >
         {tours.map((tour) => (
-          <div key={tour.tour_id} className="p-2">
+          <div key={tour.tour_id} className="p-2 py-3">
             <a
             href={`/tour-details/${tour.tour_id}`}
               className="text-decoration-none"

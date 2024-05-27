@@ -1,4 +1,4 @@
-import { Container,Button } from "react-bootstrap";
+import { Container,Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../../constants/color";
 import { MdDeleteForever } from "react-icons/md";
@@ -79,7 +79,6 @@ const handleRowClick = (params) => {
         <div
           style={{ cursor: "pointer" }}
           dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -99,7 +98,6 @@ const handleRowClick = (params) => {
               objectFit: "cover",
             }}
             className="rounded"
-            onClick={() => handleRowClick(params)}
           />
         ) : null,
     },
@@ -132,7 +130,6 @@ const handleRowClick = (params) => {
               border: "0px",
               color: buttonColor1,
             }}
-            onClick={() => handleRowClick(params)}
           >
             {params.value}
           </Button>
@@ -148,7 +145,6 @@ const handleRowClick = (params) => {
           className="fw-bold"
           style={{ cursor: "pointer" }}
           dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -161,7 +157,6 @@ const handleRowClick = (params) => {
         <div
           className="ms-2 fw-bold text-danger"
           dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -173,7 +168,6 @@ const handleRowClick = (params) => {
         <div
           className="fw-bold text-danger"
           dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -185,7 +179,6 @@ const handleRowClick = (params) => {
         <div
           className="fw-bold text-danger"
           dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -197,7 +190,6 @@ const handleRowClick = (params) => {
         <span
           className="fw-bold text-primary"
           style={{ cursor: "pointer" }}
-          onClick={() => handleRowClick(params)}
         >
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
@@ -211,7 +203,6 @@ const handleRowClick = (params) => {
         <span
           className="fw-bold text-primary"
           style={{ cursor: "pointer" }}
-          onClick={() => handleRowClick(params)}
         >
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
@@ -246,7 +237,6 @@ const handleRowClick = (params) => {
         <span
           className="fw-bold text-primary"
           style={{ cursor: "pointer" }}
-          onClick={() => handleRowClick(params)}
         >
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
@@ -257,15 +247,23 @@ const handleRowClick = (params) => {
   return (
     <>
       <LoadingBackdrop open={loading} />
-      <p className="text-end">
-        <Link to="/business/add-tour" className="text-decoration-none">
-          {" "}
-          <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-            <IoMdAdd />
-            <MdTour className="fs-3" />
-          </Button>
-        </Link>
-      </p>
+      <Row>
+        <Col>
+          <h3 className="fw-bold"> <MdTour className="fs-2" /> LIST TOUR</h3>
+        </Col>
+        <Col>
+          <p className="text-end">
+            <Link to="/business/add-tour" className="text-decoration-none">
+              {" "}
+              <Button style={{ background: BLUE_COLOR, border: "0px" }}>
+                <IoMdAdd />
+                <MdTour className="fs-3" />
+              </Button>
+            </Link>
+          </p>
+        </Col>
+      </Row>
+
       <Box sx={{ height: 600, width: "100%" }}>
         <DataGrid
           rows={tours}
@@ -273,6 +271,7 @@ const handleRowClick = (params) => {
           pageSize={10}
           getRowId={(row) => row.tour_id}
           getRowHeight={(params) => 100}
+          onRowClick={handleRowClick}
         />
       </Box>
     </>

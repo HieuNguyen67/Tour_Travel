@@ -1,4 +1,4 @@
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
 import "../news/news.scss";
@@ -48,7 +48,6 @@ const { token, role, accountId } = useAuth();
         const sortedNews = response.data.sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
-        console.log(response.data);
 
         setNews(sortedNews);
         setLoading(false);
@@ -252,20 +251,31 @@ const { token, role, accountId } = useAuth();
   return (
     <>
       <LoadingBackdrop open={loading} />
-      <p className="text-end">
-        <Button
-          variant="danger"
-          onClick={handleDeleteSelected}
-          className="me-2"
-        >
-          <MdDeleteForever className="fs-4" />
-        </Button>
-        <Link to={role == 2 ? "/admin/add-news" : "/business/add-news"}>
-          <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-            <IoMdAdd  /> <ImNewspaper className="fs-3" />
-          </Button>
-        </Link>
-      </p>
+      <Row>
+        <Col>
+          {" "}
+          <h3 className="fw-bold">
+            <ImNewspaper className="fs-3" /> TIN TỨC
+          </h3>
+        </Col>
+        <Col>
+          {" "}
+          <p className="text-end">
+            <Button
+              variant="danger"
+              onClick={handleDeleteSelected}
+              className="me-2"
+            >
+              <MdDeleteForever className="fs-4" />
+            </Button>
+            <Link to={role == 2 ? "/admin/add-news" : "/business/add-news"}>
+              <Button style={{ background: BLUE_COLOR, border: "0px" }}>
+                <IoMdAdd /> <ImNewspaper className="fs-3" />
+              </Button>
+            </Link>
+          </p>
+        </Col>
+      </Row>
 
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid

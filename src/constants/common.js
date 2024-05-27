@@ -8,6 +8,13 @@ import { IoMdAddCircle } from "react-icons/io";
 import { MdAddBusiness } from "react-icons/md";
 import { MdTour } from "react-icons/md";
 import { FaListAlt } from "react-icons/fa";
+import { BiSolidCommentDetail } from "react-icons/bi";
+import hanoi from "../assets/image/hanoi.jpg"
+import dalat from "../assets/image/dalat.jpg";
+import phuquoc from "../assets/image/phuquoc.jpg";
+import danang from "../assets/image/danang.jpg";
+import nhatrang from "../assets/image/nhatrang.jpg";
+
 
 const HEADER = [
   { id: 1, name: "TRANG CHỦ", link: "/" },
@@ -29,7 +36,7 @@ const ADMIN = [
     name: "DOANH NGHIỆP",
     link: "/admin/list-business",
     icon2: <MdAddBusiness />,
-    name2: "ĐĂNG KÝ DOANH NGHIỆP",
+    name2: "ĐĂNG KÝ",
     link2: "/admin/register-user/3",
   },
   {
@@ -69,6 +76,12 @@ const BUSINESS = [
   },
   {
     id: 4,
+    icon: <BiSolidCommentDetail />,
+    name: "PHẢN HỒI",
+    link: "/business/list-rating",
+  },
+  {
+    id: 5,
     name: "CHÍNH SÁCH",
     icon: <IoShieldCheckmark />,
     link: "/business/list-policies",
@@ -77,7 +90,7 @@ const BUSINESS = [
     link2: "/business/add-policies",
   },
   {
-    id: 5,
+    id: 6,
     icon: <ImNewspaper />,
     name: "TIN TỨC",
     link: "/business/list-news",
@@ -86,6 +99,13 @@ const BUSINESS = [
     link2: "/business/add-news",
   },
 ];
+const DESTINATION_LIKE = [
+  { id: 1, image: hanoi },
+  { id: 2, image: dalat },
+  { id: 3, image: phuquoc },
+  { id: 4, image: danang },
+  { id: 5, image: nhatrang },
+];
 
 const BASE_URL = "http://localhost:5020/v1/api/admin";
-export { HEADER, BASE_URL, ADMIN, BUSINESS };
+export { HEADER, BASE_URL, ADMIN, BUSINESS, DESTINATION_LIKE };

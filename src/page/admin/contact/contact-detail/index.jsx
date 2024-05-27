@@ -124,15 +124,15 @@ const ContactDetail = () => {
       )}
       {role == 2 ? (
         <>
-          <h1 className="fw-bold text-center mb-4">
-            <MdOutlineContactMail className="fs-1 mb-lg-2 mb-1" /> LIÊN HỆ
-          </h1>
+          <h3 className="fw-bold ">
+            <MdOutlineContactMail className="fs-3 my-3 " /> LIÊN HỆ
+          </h3>
         </>
       ) : (
         <>
-          <h1 className="fw-bold text-center mb-4">
-            <MdOutlineContactMail className="fs-1 mb-lg-2 mb-1" /> LIÊN HỆ TƯ VẤN
-          </h1>
+          <h3 className="fw-bold ">
+            <MdOutlineContactMail className="fs-3 my-3 " /> LIÊN HỆ TƯ VẤN
+          </h3>
         </>
       )}
 

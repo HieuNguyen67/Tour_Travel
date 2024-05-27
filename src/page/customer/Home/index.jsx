@@ -1,17 +1,19 @@
 import { motion, useAnimation } from "framer-motion";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Home.scss";
-import video from "../../../assets/video/video.mp4"
+import video from "../../../assets/video/video.mp4";
 import Footer from "../../../components/layout/footer";
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Header from "../../../components/layout/header";
-import Spinner from "react-bootstrap/Spinner";
-import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TabSearch from "../../../components/tab-search";
-
+import ListTourVietnam from "../../../components/list-tour-vietnam";
+import { RED1_COLOR, TEXT_RED_COLOR } from "../../../constants/color";
+import head from "../../../assets/image/heading-border.png";
+import { FaCircleArrowRight } from "react-icons/fa6";
+import { DESTINATION_LIKE } from "../../../constants/common";
 
 const Home = () => {
   const videoRef = useRef(null);
@@ -20,23 +22,23 @@ const Home = () => {
   const handleVideoLoad = () => {
     setIsLoading(false);
   };
-  
-const optimizedVideoElement = useMemo(
-  () => (
-    <video
-      ref={videoRef}
-      autoPlay
-      muted
-      loop
-      className="myVideo"
-      onLoadStart={() => setIsLoading(true)}
-      onLoadedData={handleVideoLoad}
-    >
-      <source src={video} type="video/mp4" />
-    </video>
-  ),
-  [video]
-);
+
+  const optimizedVideoElement = useMemo(
+    () => (
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        className="myVideo"
+        onLoadStart={() => setIsLoading(true)}
+        onLoadedData={handleVideoLoad}
+      >
+        <source src={video} type="video/mp4" />
+      </video>
+    ),
+    [video]
+  );
   return (
     <>
       {isLoading && (
@@ -90,9 +92,56 @@ const optimizedVideoElement = useMemo(
 
       <div className="boxhome col-12">
         <Container>
-          <TabSearch/>
-          
-          <h1>WELCOME</h1> <h1>WELCOME</h1> <h1>WELCOME</h1> <h1>WELCOME</h1>
+          <TabSearch />
+          <h3 className="fw-bold mt-5 px-2 ">
+            KHÁM PHÁ TOUR DU LỊCH TRONG NƯỚC
+          </h3>
+          <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
+
+          <div className=" my-3">
+            <ListTourVietnam tour_category={"Du lịch trong nước"} />
+          </div>
+          <p className="text-center">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
+              <Link to="/list-tour-vietnam/1" className="text-decoration-none">
+                <Button style={{ background: RED1_COLOR, border: "0px" }}>
+                  Xem tất cả&nbsp;&nbsp;
+                  <FaCircleArrowRight />
+                </Button>
+              </Link>
+            </motion.div>
+          </p>
+
+          <h3 className="fw-bold mt-5 px-2">
+            KHÁM PHÁ TOUR DU LỊCH NƯỚC NGOÀI
+          </h3>
+          <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
+
+          <div className=" my-3">
+            <ListTourVietnam tour_category={"Du lịch nước ngoài"} />
+          </div>
+          <p className="text-center">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
+              <Link to="/list-tour-foreign/2" className="text-decoration-none">
+                <Button style={{ background: RED1_COLOR, border: "0px" }}>
+                  Xem tất cả&nbsp;&nbsp;
+                  <FaCircleArrowRight />
+                </Button>
+              </Link>
+            </motion.div>
+          </p>
+
+          <h3 className="fw-bold mt-5 px-2">ĐỊA ĐIỂM ĐẾN YÊU THÍCH</h3>
+          <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
+          <Row className="row-cols-5 my-4">
+            {DESTINATION_LIKE.map((item) => (
+              <Col className="" key={item.id}>
+                <div className=" ">
+                  <img src={item.image} className="imgdestination rounded-4" />
+                </div>
+              </Col>
+            ))}
+          </Row>
         </Container>
         <Col className="col-12 ">
           <Footer />

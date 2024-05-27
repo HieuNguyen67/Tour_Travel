@@ -288,15 +288,15 @@ const AddTourForm = () => {
       <LoadingBackdrop open={loading} />
       <div className="  px-3 px-lg-0 ">
         <Link to="/business/list-tour">
-          <IoArrowBackOutline className="fs-3 mb-3" />
+          <IoArrowBackOutline className="fs-3" />
         </Link>
-        <h1 className="text-center fw-bold mb-lg-5 mt-3">
-          <MdTour className="fs-1" />{" "}
+        <h3 className="fw-bold my-3">
+          <MdTour className="fs-2" />{" "}
           {isHomePage ? <>THÊM TOUR</> : <>CHỈNH SỬA TOUR</>}
-        </h1>
+        </h3>
         <br />
         <div>
-          <Row className="mb-4">
+          <Row className="mb-lg-4">
             {image.map((image, index) => (
               <Col key={index} className="col-lg-3 col-12">
                 <img

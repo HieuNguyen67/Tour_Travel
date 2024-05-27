@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingBackdrop from "../../../components/backdrop";
 import { useAuth } from "../../../context";
+import { MdOutlineContactMail } from "react-icons/md";
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
@@ -201,25 +202,13 @@ if(isHomePage){ var columns = [
                border: "0px",
                color: buttonColor1,
              }}
-             onClick={() => handleRowClick(params)}
            >
              {params.value}
            </Button>
          );
        },
      },
-     {
-       field: "contact_id",
-       headerName: "ID",
-       width: 70,
-       renderCell: (params) => (
-         <div
-           style={{ cursor: "pointer" }}
-           dangerouslySetInnerHTML={{ __html: params.value }}
-           onClick={() => handleRowClick(params)}
-         />
-       ),
-     },
+    
      {
        field: "name",
        headerName: "Tour",
@@ -229,7 +218,6 @@ if(isHomePage){ var columns = [
            className="fw-bold"
            style={{ cursor: "pointer" }}
            dangerouslySetInnerHTML={{ __html: params.value }}
-           onClick={() => handleRowClick(params)}
          />
        ),
      },
@@ -237,13 +225,6 @@ if(isHomePage){ var columns = [
        field: "fullname",
        headerName: "Tên",
        width: 150,
-       renderCell: (params) => (
-         <div
-           style={{ cursor: "pointer" }}
-           dangerouslySetInnerHTML={{ __html: params.value }}
-           onClick={() => handleRowClick(params)}
-         />
-       ),
      },
      { field: "message", headerName: "Nội dung", width: 300 },
      {
@@ -254,7 +235,6 @@ if(isHomePage){ var columns = [
          <span
            className="fw-bold text-primary"
            style={{ cursor: "pointer" }}
-           onClick={() => handleRowClick(params)}
          >
            {format(new Date(params.value), "dd/MM/yyyy")}
          </span>
@@ -273,13 +253,14 @@ if(isHomePage){ var columns = [
 
   return (
     <>
-      
+    <h3 className="mb-3 fw-bold"><MdOutlineContactMail className="fs-3"/> LIÊN HỆ</h3>
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid
           rows={contacts}
           columns={columns}
           pageSize={10}
           getRowId={(row) => row.contact_id}
+          onRowClick={handleRowClick}
         />
       </div>
     </>

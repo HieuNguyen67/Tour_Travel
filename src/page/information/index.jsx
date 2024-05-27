@@ -6,6 +6,7 @@ import ChangePassword from "./change-password";
 import InformationLayout from "./layout";
 import ListOrder from "./order";
 import Profile from "./profile";
+import Header from "../../components/layout/header";
 
 const Information=()=>{
     const { isLoggedIn } = useAuth();
@@ -17,6 +18,8 @@ const Information=()=>{
      }, [isLoggedIn, navigate]);
     return (
       <>
+        {" "}
+        <Header />
         <InformationLayout>
           <Routes>
             <Route path="/profile" element={<Profile />} />

@@ -82,9 +82,9 @@ const ReportDetails = () => {
       </Link>
 
       <Box my={4}>
-        <Typography variant="h4" gutterBottom>
-          <MdReport className="fs-1 text-danger mb-2" /> Chi Tiết Tố Cáo
-        </Typography>
+        <h3 className="fw-bold">
+          <MdReport className="fs-2 text-danger my-3" /> CHI TIẾT TỐ CÁO
+        </h3>
         <form>
           <Form.Group className="my-4">
             <Form.Label className="fw-bold">
@@ -104,7 +104,7 @@ const ReportDetails = () => {
           <Button
             onClick={handleUpdate}
             disabled={loading}
-            style={{ background: BLUE_COLOR }}
+            style={{ background: BLUE_COLOR, border:'0px' }}
             className="mb-3"
           >
             <FaSave /> Cập nhật

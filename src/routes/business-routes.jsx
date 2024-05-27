@@ -12,6 +12,8 @@ import PoliciesList from "../page/business/list-policies";
 import AddPolicyForm from "../page/business/list-policies/add-policies";
 import ContactList from "../page/admin/contact";
 import ContactDetail from "../page/admin/contact/contact-detail";
+import RatingsList from "../page/business/list-rating";
+import TourReviewsDetail from "../page/business/list-rating/rating-detail";
 
 const BusinessRoutes = () => {
   return (
@@ -35,6 +37,8 @@ const BusinessRoutes = () => {
           <Route path="/edit-policy/:policy_id" element={<AddPolicyForm />} />
           <Route path="/list-contact" element={<ContactList />} />
           <Route path="/contact-detail/:contact_id" element={<ContactDetail />} />
+           <Route path="/list-rating" element={<RatingsList />} />
+           <Route path="/review-detail/:tour_id" element={<TourReviewsDetail />} />
 
           <Route path="*" element={<Navigate to="/list-tour" />} />
         </Routes>

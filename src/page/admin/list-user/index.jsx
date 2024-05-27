@@ -3,14 +3,15 @@ import axios from "axios";
 import { format } from "date-fns";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { MdAddBusiness } from "react-icons/md";
 import { toast } from "react-toastify";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
 import LoadingBackdrop from "../../../components/backdrop";
 import { useAuth } from "../../../context";
 import { BASE_URL } from "../../../constants/common";
-import { MdAccountCircle } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { MdBusinessCenter } from "react-icons/md";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -91,7 +92,7 @@ const ListUser = () => {
     {
       field: "account_id",
       headerName: "ID",
-      width: 70,
+      width: 50,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -99,6 +100,42 @@ const ListUser = () => {
           onClick={() => handleRowClick(params)}
         />
       ),
+    },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 135,
+      renderCell: (params) => {
+        let buttonColor;
+        let buttonColor1;
+        switch (params.value) {
+          case "Active":
+            buttonColor = GREEN_COLOR;
+            buttonColor1 = "black";
+
+            break;
+          case "Inactive":
+            buttonColor = RED_COLOR;
+            buttonColor1 = "white";
+
+            break;
+          default:
+            buttonColor = "gray";
+        }
+        return (
+          <Button
+            className="col-12 py-2"
+            style={{
+              background: buttonColor,
+              border: "0px",
+              color: buttonColor1,
+            }}
+            onClick={() => handleRowClick(params)}
+          >
+            {params.value}
+          </Button>
+        );
+      },
     },
     {
       field: "username",
@@ -175,42 +212,6 @@ const ListUser = () => {
         />
       ),
     },
-    {
-      field: "status",
-      headerName: "Trạng thái",
-      width: 135,
-      renderCell: (params) => {
-        let buttonColor;
-        let buttonColor1;
-        switch (params.value) {
-          case "Active":
-            buttonColor = GREEN_COLOR;
-            buttonColor1 = "black";
-
-            break;
-          case "Inactive":
-            buttonColor = RED_COLOR;
-            buttonColor1 = "white";
-
-            break;
-          default:
-            buttonColor = "gray";
-        }
-        return (
-          <Button
-            className="col-12 py-2"
-            style={{
-              background: buttonColor,
-              border: "0px",
-              color: buttonColor1,
-            }}
-            onClick={() => handleRowClick(params)}
-          >
-            {params.value}
-          </Button>
-        );
-      },
-    },
   ];
 
   if (error) return <div>Error: {error}</div>;
@@ -218,35 +219,51 @@ const ListUser = () => {
   return (
     <>
       <LoadingBackdrop open={loading} />
-        <p className="text-end">
-         
-          {isHomePage ? (
-            <>
-              
-            </>
-          ) : (
-            <>
-              <Link
-                to="/admin/register-user/3"
-                className="text-decoration-none"
-              >
+      <Row>
+        <Col className="col-8">
+          <h3 className="fw-bold ">
+            {isHomePage ? (
+              <>
                 {" "}
-                <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                  <MdAddBusiness className="fs-3" />
-                </Button>
-              </Link>
-            </>
-          )}
-        </p>
-        <div style={{ height: 520, width: "100%" }}>
-          <DataGrid
-            rows={users}
-            columns={columns}
-            pagination
-            autoPageSize
-            getRowId={(row) => row.account_id}
-          />
-        </div>
+                <FaUser className="fs-4" />
+                &nbsp; KHÁCH HÀNG
+              </>
+            ) : (
+              <><MdBusinessCenter className="fs-3"/> DOANH NGHIỆP</>
+            )}
+          </h3>
+        </Col>{" "}
+        <Col className="col-4">
+          {" "}
+          <p className="text-end">
+            {isHomePage ? (
+              <></>
+            ) : (
+              <>
+                <Link
+                  to="/admin/register-user/3"
+                  className="text-decoration-none"
+                >
+                  {" "}
+                  <Button style={{ background: BLUE_COLOR, border: "0px" }}>
+                    <MdAddBusiness className="fs-3" />
+                  </Button>
+                </Link>
+              </>
+            )}
+          </p>
+        </Col>
+      </Row>
+
+      <div style={{ height: 520, width: "100%" }}>
+        <DataGrid
+          rows={users}
+          columns={columns}
+          pagination
+          autoPageSize
+          getRowId={(row) => row.account_id}
+        />
+      </div>
     </>
   );
 };

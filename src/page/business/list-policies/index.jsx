@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "../../../context";
 import { MdDeleteForever } from "react-icons/md";
 import { IoShieldCheckmark } from "react-icons/io5";
+import { LuShieldCheck } from "react-icons/lu";
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -145,6 +146,7 @@ const PoliciesList = () => {
     <>
       {" "}
       <LoadingBackdrop open={loading} />
+      <h3 className="fw-bold mb-3"><LuShieldCheck className="fs-3"/> CHÍNH SÁCH</h3>
       {isHomePage ? (
         <>
           <Row>

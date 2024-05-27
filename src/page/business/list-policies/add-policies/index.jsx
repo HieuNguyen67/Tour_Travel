@@ -12,12 +12,11 @@ import { GiConfirmed } from "react-icons/gi";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { MdDescription } from "react-icons/md";
-import { PiShieldCheckBold } from "react-icons/pi";
 
 
 const AddPolicyForm = () => {
       const { policy_id } = useParams();
-
+const{role}=useAuth();
   const { accountId, token } = useAuth();
   const [policytype, setPolicytype] = useState("");
   const [description, setDescription] = useState("");
@@ -103,15 +102,14 @@ const AddPolicyForm = () => {
   return (
     <div className="px-3">
       <Link
-        to={isHomePage1 ? "/business/list-policies" : "/admin/list-policies"}
+        to={role==3 ? "/business/list-policies" : "/admin/list-policies"}
       >
         <IoArrowBackOutline className="fs-3 mb-3" />
       </Link>
-      <h1 className="fw-bold text-center mb-5 mt-3">
-        <PiShieldCheckBold className="fs-1 mb-2" />
-        &nbsp;
+      <h3 className="fw-bold my-3">
+        
         {isHomePage ? <>THÊM CHÍNH SÁCH</> : <>CHỈNH SỬA CHÍNH SÁCH</>}
-      </h1>
+      </h3>
       <form onSubmit={handleSubmit}>
         <Form.Group className="mb-4" controlId="formBasicEmail">
           <Form.Label className="font-family">

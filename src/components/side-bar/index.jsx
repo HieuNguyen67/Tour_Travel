@@ -120,7 +120,7 @@ const SidebarLayout = ({ children }) => {
           </List>
         </Col>
         <Col className="col-lg-10 col-12 my-lg-5 pt-lg-5">
-          <div className="col-12 d-lg-none d-block pt-5">
+          <div className="col-12 d-lg-none d-block pt-5 mb-3">
             <Button
               color="inherit"
               aria-label="open drawer"

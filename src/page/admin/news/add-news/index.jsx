@@ -82,7 +82,6 @@ const navigate=useNavigate();
           },
         }
       );
-      console.log("News posted:", response.data);
             toast.success("Thêm tin tức thành công!");
             role == 2 ? navigate("/admin/news") : navigate("/business/list-news");
             
@@ -104,20 +103,14 @@ const navigate=useNavigate();
         <Container className=" mx-auto">
           <div className="mt-2">
             <Link to={role == 2 ? "/admin/news" : "/business/list-news"}>
-              <IoArrowBackOutline className="fs-3 mb-3" />
+              <IoArrowBackOutline className="fs-3" />
             </Link>
-            <Row>
-              <Col></Col>
-              <Col className="col-10 ">
-                <h1 className="text-center text-break fw-bold font-family">
-                  <ImNewspaper className="fs-1" /> THÊM TIN TỨC
-                </h1>
-              </Col>
-              <Col></Col>
-            </Row>
+            
+                <h3 className=" text-break fw-bold font-family my-3">
+                  <ImNewspaper className="fs-3" /> THÊM TIN TỨC
+                </h3>             
           </div>
         </Container>
-        <br />
         <Container className="mb-5 pb-md-5">
           <form onSubmit={handleSubmit}>
             <Row>
