@@ -14,6 +14,8 @@ import { RED1_COLOR, TEXT_RED_COLOR } from "../../../constants/color";
 import head from "../../../assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { DESTINATION_LIKE } from "../../../constants/common";
+import DestinationFavourite from "../../../components/destination-favourite";
+import ListNewsHome from "../../../components/list-news-home";
 
 const Home = () => {
   const videoRef = useRef(null);
@@ -133,15 +135,24 @@ const Home = () => {
 
           <h3 className="fw-bold mt-5 px-2">ĐỊA ĐIỂM ĐẾN YÊU THÍCH</h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
-          <Row className="row-cols-5 my-4">
-            {DESTINATION_LIKE.map((item) => (
-              <Col className="" key={item.id}>
-                <div className=" ">
-                  <img src={item.image} className="imgdestination rounded-4" />
-                </div>
-              </Col>
-            ))}
-          </Row>
+          <DestinationFavourite />
+
+          <h3 className="fw-bold mt-5 px-2">BLOG</h3>
+          <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
+          <ListNewsHome />
+          <p className="text-center mb-5 pb-lg-5">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
+              <Link
+                to="/news/1/Tin%20tức%20du%20lịch"
+                className="text-decoration-none"
+              >
+                <Button style={{ background: RED1_COLOR, border: "0px" }}>
+                  Xem tất cả&nbsp;&nbsp;
+                  <FaCircleArrowRight />
+                </Button>
+              </Link>
+            </motion.div>
+          </p>
         </Container>
         <Col className="col-12 ">
           <Footer />

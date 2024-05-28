@@ -11,9 +11,15 @@ import { FaListAlt } from "react-icons/fa";
 import { BiSolidCommentDetail } from "react-icons/bi";
 import hanoi from "../assets/image/hanoi.jpg"
 import dalat from "../assets/image/dalat.jpg";
-import phuquoc from "../assets/image/phuquoc.jpg";
+import kiengiang from "../assets/image/kiengiang.jpg";
 import danang from "../assets/image/danang.jpg";
-import nhatrang from "../assets/image/nhatrang.jpg";
+import khanhhoa from "../assets/image/khanhhoa.jpg";
+import hoaky from "../assets/image/hoaky.jpg";
+import nhatban from "../assets/image/nhatban.jpg";
+import nga from "../assets/image/nga.jpg";
+import uc from "../assets/image/uc.jpg";
+import thailan from "../assets/image/thailan.jpg";
+
 
 
 const HEADER = [
@@ -99,13 +105,55 @@ const BUSINESS = [
     link2: "/business/add-news",
   },
 ];
-const DESTINATION_LIKE = [
-  { id: 1, image: hanoi },
-  { id: 2, image: dalat },
-  { id: 3, image: phuquoc },
-  { id: 4, image: danang },
-  { id: 5, image: nhatrang },
+const DESTINATION_FAVOURITE = [
+  {
+    id: 1,
+    image: hanoi,
+    link: "/list-tour-vietnam/1?destinationLocation=Hà%20Nội",
+  },
+  {
+    id: 2,
+    image: dalat,
+    link: "/list-tour-vietnam/1?destinationLocation=Đà%20Lạt",
+  },
+  {
+    id: 3,
+    image: kiengiang,
+    link: "/list-tour-vietnam/1?destinationLocation=Kiên%20Giang",
+  },
+  {
+    id: 4,
+    image: danang,
+    link: "/list-tour-vietnam/1?destinationLocation=Đà%20Nẵng",
+  },
+  {
+    id: 5,
+    image: khanhhoa,
+    link: "/list-tour-vietnam/1?destinationLocation=Khánh%20Hòa",
+  },
+];
+const DESTINATION_FAVOURITE_FOREIGN = [
+  { id: 1, image: hoaky, link: "/list-tour-foreign/2?destinationLocation=US" },
+  { id: 2, image: nga, link: "/list-tour-foreign/2?destinationLocation=Russia" },
+  {
+    id: 3,
+    image: thailan,
+    link: "/list-tour-foreign/2?destinationLocation=Thailand",
+  },
+  {
+    id: 4,
+    image: nhatban,
+    link: "/list-tour-foreign/2?destinationLocation=Japan",
+  },
+  { id: 5, image: uc, link: "/list-tour-foreign/2?destinationLocation=Australia" },
 ];
 
 const BASE_URL = "http://localhost:5020/v1/api/admin";
-export { HEADER, BASE_URL, ADMIN, BUSINESS, DESTINATION_LIKE };
+export {
+  HEADER,
+  BASE_URL,
+  ADMIN,
+  BUSINESS,
+  DESTINATION_FAVOURITE,
+  DESTINATION_FAVOURITE_FOREIGN,
+};
