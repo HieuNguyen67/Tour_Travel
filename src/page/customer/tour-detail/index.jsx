@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../../constants/common";
+import { BASE_URL } from "@/constants";
 import { Link, useParams } from "react-router-dom";
 import { Button, Col, Container, Row, Placeholder } from "react-bootstrap";
-import LoadingBackdrop from "../../../components/backdrop";
+import LoadingBackdrop from "@/components/backdrop";
 import { FaAngleRight } from "react-icons/fa";
 import { RiHome6Line } from "react-icons/ri";
 import {
@@ -12,7 +12,7 @@ import {
   RED1_COLOR,
   RED_COLOR,
   TEXT_RED_COLOR,
-} from "../../../constants/color";
+} from "@/constants";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import "./tour-detail.scss";
 import { LuCalendarDays } from "react-icons/lu";
@@ -24,32 +24,32 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import { GiPriceTag } from "react-icons/gi";
 import { IoManSharp } from "react-icons/io5";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
-import TourImagesCarousel from "../../../components/image-tour-multi-carousel";
+import TourImagesCarousel from "@/components/image-tour-multi-carousel";
 import { FaImage } from "react-icons/fa";
-import HTMLContent from "../../../components/HTMLContent";
+import HTMLContent from "@/components/HTMLContent";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { PiShieldCheckBold } from "react-icons/pi";
-import PolicesTour from "../../../components/policies-tour";
+import PolicesTour from "@/components/policies-tour";
 import { BiLike } from "react-icons/bi";
-import TourReviews from "../../../components/rating-tour";
+import TourReviews from "@/components/rating-tour";
 import { Box, Rating } from "@mui/material";
 import { MdOutlineBusinessCenter } from "react-icons/md";
-import TourListBusiness from "../../../components/list-tour-by-business";
+import TourListBusiness from "@/components/list-tour-by-business";
 import { MdOutlineTour } from "react-icons/md";
-import ReportTour from "../../../components/report-tour";
-import { useAuth } from "../../../context";
-import ContactModal from "../../../components/contact-business";
+import ReportTour from "@/components/report-tour";
+import { useAuth } from "@/context";
+import ContactModal from "@/components/contact-business";
 
 const TourDetail = () => {
   const { tour_id } = useParams();
-  const {accountId} = useAuth();
+  const { accountId } = useAuth();
   const [tour, setTour] = useState({});
   const [loading, setLoading] = useState(true);
-    const [loading1, setLoading1] = useState(true);
+  const [loading1, setLoading1] = useState(true);
   const [image, setImage] = useState([]);
   const [destination, setDestination] = useState("");
-const [averageRating, setAverageRating] = useState(0);
-const [totalRatings, setTotalRatings] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
+  const [totalRatings, setTotalRatings] = useState(0);
 
   useEffect(() => {
     const fetchTourData = async () => {
@@ -84,7 +84,6 @@ const [totalRatings, setTotalRatings] = useState(0);
     fetchTourImages();
   }, [tour_id]);
 
-  
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -396,7 +395,10 @@ const [totalRatings, setTotalRatings] = useState(0);
             <RiCalendarScheduleLine className="fs-2" /> LỊCH TRÌNH
           </h2>
           <div
-            style={{ border: "3px solid var(--gray-600, #475467)", background: "white" }}
+            style={{
+              border: "3px solid var(--gray-600, #475467)",
+              background: "white",
+            }}
             className="rounded-3 p-lg-5 p-4 shadow my-5"
           >
             <HTMLContent htmlContent={tour.description} />

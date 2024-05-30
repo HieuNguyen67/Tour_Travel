@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { format } from "date-fns";
-import { useAuth } from "../../../context";
+import { useAuth } from "@/context";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
 import LoadImage from "./load-image";
 import { IoArrowBackOutline } from "react-icons/io5";
-import LoadingBackdrop from "../../../components/backdrop";
-import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
+import LoadingBackdrop from "@/components/backdrop";
+import { BLUE_COLOR, RED_COLOR } from "@/constants";
 import { MdAccountBox } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -19,11 +19,11 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RxUpdate } from "react-icons/rx";
 import { RiBankCardFill } from "react-icons/ri";
 import { FaAddressCard } from "react-icons/fa6";
-import { BASE_URL } from "../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const EditProfile = () => {
-    const {account_id,role_id}=useParams();
-  const {  isLoggedIn,token } = useAuth();
+  const { account_id, role_id } = useParams();
+  const { isLoggedIn, token } = useAuth();
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -34,20 +34,17 @@ const EditProfile = () => {
   }, [isLoggedIn, navigate]);
   const [formData, setFormData] = useState({
     status: "",
-    note:""
+    note: "",
   });
 
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/account/${account_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${BASE_URL}/account/${account_id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const accountData = response.data;
         setFormData({
           ...accountData,
@@ -82,13 +79,13 @@ const EditProfile = () => {
       );
 
       toast.success("Thông tin tài khoản đã được cập nhật!");
-      {role_id == 3
-        ? navigate("/admin/list-business")
-        : role_id == 4
-        ? navigate("/business/list-guide")
-        : navigate("/admin/list-customer");};
-            
-
+      {
+        role_id == 3
+          ? navigate("/admin/list-business")
+          : role_id == 4
+          ? navigate("/business/list-guide")
+          : navigate("/admin/list-customer");
+      }
     } catch (error) {
       console.error("Failed to update account data:", error);
       toast.error(
@@ -155,14 +152,12 @@ const EditProfile = () => {
                   <Form.Group className="mb-lg-4 ">
                     <Form.Control
                       as="textarea"
-                      
-                      style={{height:'10rem'}}
+                      style={{ height: "10rem" }}
                       name="note"
                       placeholder="Ghi chú"
                       value={formData.note}
                       onChange={handleChange}
                     />
-                      
                   </Form.Group>
                 </Col>
                 <Col className="col-12 col-lg-3 my-3 my-lg-0">

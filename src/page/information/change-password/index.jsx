@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../context";
+import { useAuth } from "@/context";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { TbPasswordUser } from "react-icons/tb";
 import { MdOutlinePassword } from "react-icons/md";
-import { BASE_URL } from "../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const ChangePassword = () => {
-      const { accountId, isLoggedIn,token } = useAuth();
-        const navigate = useNavigate();
+  const { accountId, isLoggedIn, token } = useAuth();
+  const navigate = useNavigate();
 
- useEffect(() => {
-   if (isLoggedIn === false) {
-     navigate("/");
-   }
- }, [isLoggedIn, navigate]);
+  useEffect(() => {
+    if (isLoggedIn === false) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
   const [passwords, setPasswords] = useState({
     oldPassword: "",
     newPassword: "",
@@ -42,13 +42,12 @@ const ChangePassword = () => {
           },
         }
       );
-                  toast.success("Mật khẩu đã được thay đổi.");
-          setPasswords({
-            oldPassword: "",
-            newPassword: "",
-            confirmPassword: "",
-          });
-
+      toast.success("Mật khẩu đã được thay đổi.");
+      setPasswords({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message);
@@ -119,7 +118,7 @@ const ChangePassword = () => {
                 type="submit"
                 className="col-12 py-3 mt-3"
               >
-                <TbPasswordUser className="fs-4"/> Thay đổi mật khẩu
+                <TbPasswordUser className="fs-4" /> Thay đổi mật khẩu
               </Button>
             </Col>
           </Row>

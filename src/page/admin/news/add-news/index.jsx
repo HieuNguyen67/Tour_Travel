@@ -2,24 +2,23 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useAuth } from "../../../../context";
+import { useAuth } from "@/context";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { motion, useAnimation } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { BASE_URL } from "../../../../constants/common";
+import { BASE_URL } from "@/constants";
 import { ImNewspaper } from "react-icons/im";
 import { GiConfirmed } from "react-icons/gi";
-import { BLUE_COLOR } from "../../../../constants/color";
+import { BLUE_COLOR } from "@/constants";
 import { BiCategory } from "react-icons/bi";
 import { LuImagePlus } from "react-icons/lu";
 import { MdOutlineTitle } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 
-
 const AddNews = () => {
-  const { accountId ,token,role} = useAuth();
+  const { accountId, token, role } = useAuth();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -27,18 +26,15 @@ const AddNews = () => {
     image: null,
   });
   const [categories, setCategories] = useState([]);
-const navigate=useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/news-categories`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${BASE_URL}/news-categories`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setCategories(response.data);
       } catch (error) {
         console.error("Failed to fetch news categories:", error);
@@ -82,19 +78,16 @@ const navigate=useNavigate();
           },
         }
       );
-            toast.success("Thêm tin tức thành công!");
-            role == 2 ? navigate("/admin/news") : navigate("/business/list-news");
-            
+      toast.success("Thêm tin tức thành công!");
+      role == 2 ? navigate("/admin/news") : navigate("/business/list-news");
     } catch (error) {
       console.error("Failed to post news:", error);
-                  toast.error("Thêm tin tức thất bại. Vui lòng điền đầy đủ thông tin !");
-
+      toast.error("Thêm tin tức thất bại. Vui lòng điền đầy đủ thông tin !");
     }
   };
 
   return (
     <>
-    
       <motion.div
         initial={{ opacity: 0, y: 98 }}
         animate={{ opacity: 1, y: 1 }}
@@ -105,10 +98,10 @@ const navigate=useNavigate();
             <Link to={role == 2 ? "/admin/news" : "/business/list-news"}>
               <IoArrowBackOutline className="fs-3" />
             </Link>
-            
-                <h3 className=" text-break fw-bold font-family my-3">
-                  <ImNewspaper className="fs-3" /> THÊM TIN TỨC
-                </h3>             
+
+            <h3 className=" text-break fw-bold font-family my-3">
+              <ImNewspaper className="fs-3" /> THÊM TIN TỨC
+            </h3>
           </div>
         </Container>
         <Container className="mb-5 pb-md-5">

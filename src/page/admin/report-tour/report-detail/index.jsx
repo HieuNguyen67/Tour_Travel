@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-import {  Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Box, CircularProgress, Typography } from "@mui/material";
-import { BASE_URL } from "../../../../constants/common";
-import LoadingBackdrop from "../../../../components/backdrop";
+import { BASE_URL } from "@/constants";
+import LoadingBackdrop from "@/components/backdrop";
 import { MdReport } from "react-icons/md";
 import { format } from "date-fns";
-import { useAuth } from "../../../../context";
+import { useAuth } from "@/context";
 import { toast } from "react-toastify";
 import { RxUpdate } from "react-icons/rx";
 import { Button, Form } from "react-bootstrap";
-import { BLUE_COLOR } from "../../../../constants/color";
+import { BLUE_COLOR } from "@/constants";
 import { FaSave } from "react-icons/fa";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 const ReportDetails = () => {
   const { report_id } = useParams();
-  const {token}=useAuth();
+  const { token } = useAuth();
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
- const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -41,30 +41,30 @@ const ReportDetails = () => {
   }, [report_id]);
 
   const navigate = useNavigate();
- const handleUpdate = async () => {
-   try {
-     await axios.put(
-       `${BASE_URL}/update-status-report/${report_id}`,
-       {
-         status,
-       },
-       {
-         headers: {
-           Authorization: `Bearer ${token}`,
-         },
-       }
-     );
-     console.log("Report status updated successfully");
-     toast.success("Cập nhật thành công!");
-     navigate("/admin/report");
-   } catch (error) {
-     console.error("Failed to update Report status :", error);
-     setError("Failed to update Report status ");
-   }
- };
- if (loading) {
-   return <LoadingBackdrop open={loading} />;
- }
+  const handleUpdate = async () => {
+    try {
+      await axios.put(
+        `${BASE_URL}/update-status-report/${report_id}`,
+        {
+          status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Report status updated successfully");
+      toast.success("Cập nhật thành công!");
+      navigate("/admin/report");
+    } catch (error) {
+      console.error("Failed to update Report status :", error);
+      setError("Failed to update Report status ");
+    }
+  };
+  if (loading) {
+    return <LoadingBackdrop open={loading} />;
+  }
 
   if (!report) {
     return (
@@ -73,7 +73,6 @@ const ReportDetails = () => {
       </Container>
     );
   }
-  
 
   return (
     <>
@@ -104,7 +103,7 @@ const ReportDetails = () => {
           <Button
             onClick={handleUpdate}
             disabled={loading}
-            style={{ background: BLUE_COLOR, border:'0px' }}
+            style={{ background: BLUE_COLOR, border: "0px" }}
             className="mb-3"
           >
             <FaSave /> Cập nhật

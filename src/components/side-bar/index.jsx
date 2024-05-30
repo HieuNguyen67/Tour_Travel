@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import "./side-bar.scss";
-import { ADMIN, BUSINESS } from "../../constants/common";
-import { useAuth } from "../../context";
+import { ADMIN, BUSINESS } from "@/constants";
+import { useAuth } from "@/context";
 import {
   Collapse,
   List,

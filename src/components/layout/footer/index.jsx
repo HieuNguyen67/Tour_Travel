@@ -3,9 +3,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
-import dcma from "../../../assets/image/dmca.png";
-import congthuong from "../../../assets/image/congthuong.png";
-import { motion, useAnimation } from "framer-motion";
+import dcma from "@/assets/image/dmca.png";
+import congthuong from "@/assets/image/congthuong.png";
 
 const Footer = () => {
   return (

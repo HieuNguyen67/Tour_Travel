@@ -6,7 +6,7 @@ import { motion, useAnimation } from "framer-motion";
 import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { IoLogInSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { useAuth } from "../../../context";
+import { useAuth } from "@/context";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { IoBusinessSharp } from "react-icons/io5";
 import { MdAccountBox } from "react-icons/md";
@@ -17,11 +17,11 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
 import { FaAddressCard } from "react-icons/fa6";
-import {  RED_COLOR } from "../../../constants/color";
-import { BASE_URL } from "../../../constants/common";
+import { RED_COLOR } from "@/constants";
+import { BASE_URL } from "@/constants";
 
 const RegisterUser = () => {
-  const {role_id}=useParams();
+  const { role_id } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -44,18 +44,15 @@ const RegisterUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-       await axios.post(`${BASE_URL}/register-business`, formData, {
-         headers: {
-           Authorization: `Bearer ${token}`,
-         },
-       });
-     toast.success("Đăng ký thành công !");
-     navigate("/admin/list-business");
-    
-       
-     
+      await axios.post(`${BASE_URL}/register-business`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Đăng ký thành công !");
+      navigate("/admin/list-business");
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast.error("Tên đăng nhập hoặc email đã tồn tại.");
@@ -66,7 +63,6 @@ const RegisterUser = () => {
       }
     }
   };
- 
 
   return (
     <>
@@ -81,10 +77,9 @@ const RegisterUser = () => {
             <Link to="/admin/list-business">
               <IoArrowBackOutline className="fs-3 mb-3" />
             </Link>
-                <h3 className=" fw-bold my-3">
-                  <IoBusinessSharp className="fs-3" /> ĐĂNG KÝ
-                  DOANH NGHIỆP
-                </h3>
+            <h3 className=" fw-bold my-3">
+              <IoBusinessSharp className="fs-3" /> ĐĂNG KÝ DOANH NGHIỆP
+            </h3>
           </div>
         </Container>
         <br />
@@ -230,7 +225,7 @@ const RegisterUser = () => {
               </Col>
               {error && <p style={{ color: "red" }}>{error}</p>}
               <Button
-               style={{background:RED_COLOR,  border:'0px'}}
+                style={{ background: RED_COLOR, border: "0px" }}
                 className="col-12 col-lg-3 py-3 mt-4"
                 type="submit"
               >

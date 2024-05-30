@@ -1,9 +1,10 @@
+import { useAuth } from "@/context";
 import { Col, Row } from "react-bootstrap";
-import BackToTop from "../BackToTop";
+
+import {useLocation } from "react-router-dom";
 import Footer from "./footer";
 import Header from "./header";
-import {useLocation } from "react-router-dom";
-import { useAuth } from "../../context";
+import BackToTop from "../BackToTop";
 
 const MainLayout = ({ children }) => {
   const {role}=useAuth();

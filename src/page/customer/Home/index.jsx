@@ -1,21 +1,21 @@
 import { motion, useAnimation } from "framer-motion";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Home.scss";
-import video from "../../../assets/video/video.mp4";
-import Footer from "../../../components/layout/footer";
+import video from "@/assets/video/video.mp4";
+import Footer from "@/components/layout/footer";
 import { Backdrop, CircularProgress } from "@mui/material";
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import Header from "../../../components/layout/header";
+import Header from "@/components/layout/header";
 import LinearProgress from "@mui/material/LinearProgress";
 import { Link, useNavigate } from "react-router-dom";
-import TabSearch from "../../../components/tab-search";
-import ListTourVietnam from "../../../components/list-tour-vietnam";
-import { RED1_COLOR, TEXT_RED_COLOR } from "../../../constants/color";
-import head from "../../../assets/image/heading-border.png";
+import TabSearch from "@/components/tab-search";
+import ListTourVietnam from "@/components/list-tour-vietnam";
+import { RED1_COLOR, TEXT_RED_COLOR } from "@/constants";
+import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
-import { DESTINATION_LIKE } from "../../../constants/common";
-import DestinationFavourite from "../../../components/destination-favourite";
-import ListNewsHome from "../../../components/list-news-home";
+import { DESTINATION_LIKE } from "@/constants";
+import DestinationFavourite from "@/components/destination-favourite";
+import ListNewsHome from "@/components/list-news-home";
 
 const Home = () => {
   const videoRef = useRef(null);
@@ -103,7 +103,7 @@ const Home = () => {
           <div className=" my-3">
             <ListTourVietnam tour_category={"Du lịch trong nước"} />
           </div>
-          <p className="text-center">
+          <div className="text-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
               <Link to="/list-tour-vietnam/1" className="text-decoration-none">
                 <Button style={{ background: RED1_COLOR, border: "0px" }}>
@@ -112,7 +112,7 @@ const Home = () => {
                 </Button>
               </Link>
             </motion.div>
-          </p>
+          </div>
 
           <h3 className="fw-bold mt-5 px-2">
             KHÁM PHÁ TOUR DU LỊCH NƯỚC NGOÀI
@@ -122,7 +122,7 @@ const Home = () => {
           <div className=" my-3">
             <ListTourVietnam tour_category={"Du lịch nước ngoài"} />
           </div>
-          <p className="text-center">
+          <div className="text-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
               <Link to="/list-tour-foreign/2" className="text-decoration-none">
                 <Button style={{ background: RED1_COLOR, border: "0px" }}>
@@ -131,7 +131,7 @@ const Home = () => {
                 </Button>
               </Link>
             </motion.div>
-          </p>
+          </div>
 
           <h3 className="fw-bold mt-5 px-2">ĐỊA ĐIỂM ĐẾN YÊU THÍCH</h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
@@ -140,7 +140,7 @@ const Home = () => {
           <h3 className="fw-bold mt-5 px-2">BLOG</h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
           <ListNewsHome />
-          <p className="text-center mb-5 pb-lg-5">
+          <div className="text-center mb-5 pb-lg-5">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
               <Link
                 to="/news/1/Tin%20tức%20du%20lịch"
@@ -152,7 +152,7 @@ const Home = () => {
                 </Button>
               </Link>
             </motion.div>
-          </p>
+          </div>
         </Container>
         <Col className="col-12 ">
           <Footer />

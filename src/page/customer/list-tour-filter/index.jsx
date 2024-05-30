@@ -1,24 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { BASE_URL } from "../../../constants/common";
-import LoadingBackdrop from "../../../components/backdrop";
+import { BASE_URL } from "@/constants";
+import LoadingBackdrop from "@/components/backdrop";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import { LuFilter } from "react-icons/lu";
 import { FaFilter } from "react-icons/fa6";
-import {
-  BLUE_COLOR,
-  RED_COLOR,
-  TEXT_MAIN_COLOR,
-} from "../../../constants/color";
+import { BLUE_COLOR, RED_COLOR, TEXT_MAIN_COLOR } from "@/constants";
 import "../news/news.scss";
 import { format } from "date-fns";
 import { RiHotelFill } from "react-icons/ri";
 import { IoAirplaneSharp } from "react-icons/io5";
 import { FaCar } from "react-icons/fa6";
 import { motion } from "framer-motion";
-import Pagination from "@mui/material/Pagination"; 
+import Pagination from "@mui/material/Pagination";
 import Slider from "@mui/material/Slider";
 
 const useQuery = () => {
@@ -44,7 +40,7 @@ const TourSearch = () => {
   const [filteredTours, setFilteredTours] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-    const [loading1, setLoading1] = useState(true);
+  const [loading1, setLoading1] = useState(true);
 
   const [regions, setRegions] = useState([]);
   const [provinces, setProvinces] = useState([]);
@@ -73,12 +69,10 @@ const TourSearch = () => {
         );
         setTours(sortedTours);
         filterTours(sortedTours, initialDestinationLocation, initialTourName);
-        
       } catch (err) {
-         setLoading1(false);
+        setLoading1(false);
         console.error("Error fetching tours", err);
         setError("Error fetching tours. Please try again.");
-       
       }
     };
 
@@ -200,10 +194,10 @@ const TourSearch = () => {
   const pageCount = Math.ceil(filteredTours.length / itemsPerPage);
   const offset = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredTours.slice(offset, offset + itemsPerPage);
-     const today = new Date().toISOString().split("T")[0];
-if (loading1) {
-  return <LoadingBackdrop open={loading1} />;
-}
+  const today = new Date().toISOString().split("T")[0];
+  if (loading1) {
+    return <LoadingBackdrop open={loading1} />;
+  }
   return (
     <>
       <LoadingBackdrop open={loading} />

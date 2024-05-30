@@ -2,16 +2,16 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import HTMLContent from "../../../../components/HTMLContent";
+import HTMLContent from "@/components/HTMLContent";
 import "../news.scss";
 import { format } from "date-fns";
 import { LuClock8 } from "react-icons/lu";
-import {  useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
-import LoadingBackdrop from "../../../../components/backdrop";
+import LoadingBackdrop from "@/components/backdrop";
 import { ImNewspaper } from "react-icons/im";
-import { BASE_URL } from "../../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const truncateString = (str, maxLength) => {
   if (str.length <= maxLength) {
@@ -28,8 +28,7 @@ const NewsTravel = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState();
-    const [sortedNews, setSortedNews] = useState([]);
-
+  const [sortedNews, setSortedNews] = useState([]);
 
   useEffect(() => {
     let indexx = 0;
@@ -71,29 +70,29 @@ const NewsTravel = () => {
     navigate(`/news/news-detail/${newsId}`);
   };
 
-const handlePageClick = useCallback(
-  (data) => {
-    const { selected } = data;
-    setCurrentPage(selected);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", 
-    });
-  },
-  [setCurrentPage]
-);
- useEffect(() => {
-   const sorted = [...news].sort(
-     (a, b) => new Date(b.created_at) - new Date(a.created_at)
-   );
-   setSortedNews(sorted);
- }, [news]);
+  const handlePageClick = useCallback(
+    (data) => {
+      const { selected } = data;
+      setCurrentPage(selected);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
+    [setCurrentPage]
+  );
+  useEffect(() => {
+    const sorted = [...news].sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+    setSortedNews(sorted);
+  }, [news]);
 
- const currentNews = useMemo(() => {
-   const start = currentPage * itemsPerPage;
-   const end = start + itemsPerPage;
-   return sortedNews.slice(start, end);
- }, [currentPage, itemsPerPage, sortedNews]);
+  const currentNews = useMemo(() => {
+    const start = currentPage * itemsPerPage;
+    const end = start + itemsPerPage;
+    return sortedNews.slice(start, end);
+  }, [currentPage, itemsPerPage, sortedNews]);
 
   return (
     <>

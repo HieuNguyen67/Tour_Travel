@@ -6,8 +6,8 @@ import { motion, useAnimation } from "framer-motion";
 import { NavLink, useNavigate } from "react-router-dom";
 import { IoLogInSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { useAuth } from "../../../context";
-import Header from "../../../components/layout/header";
+import { useAuth } from "@/context";
+import Header from "@/components/layout/header";
 import { IoPersonAdd } from "react-icons/io5";
 import { MdAccountBox } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
@@ -17,10 +17,10 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
 import { FaAddressCard } from "react-icons/fa6";
-import { BASE_URL } from "../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const SignUp = () => {
-      const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -30,9 +30,9 @@ const SignUp = () => {
     phone_number: "",
     address: "",
     email: "",
-    id_card:""
+    id_card: "",
   });
- const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   const [error, setError] = useState("");
 
@@ -48,13 +48,11 @@ const SignUp = () => {
       navigate("/confirm");
     } catch (error) {
       if (error.response && error.response.status === 400) {
-         toast.error("Tên đăng nhập hoặc email đã tồn tại.");
+        toast.error("Tên đăng nhập hoặc email đã tồn tại.");
         setError("Tên đăng nhập hoặc email đã tồn tại.");
-        
       } else {
         console.error("Đăng ký không thành công:", error);
         toast.error("Đăng ký không thành công. Vui lòng thử lại sau.");
-      
       }
     }
   };

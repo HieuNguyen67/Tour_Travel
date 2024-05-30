@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import { BASE_URL } from "../../../constants/common";
-import LoadingBackdrop from "../../../components/backdrop";
-import { GREEN_COLOR, RED1_COLOR, YELLOW_COLOR } from "../../../constants/color";
+import { BASE_URL } from "@/constants";
+import LoadingBackdrop from "@/components/backdrop";
+import { GREEN_COLOR, RED1_COLOR, YELLOW_COLOR } from "@/constants";
 import { Button } from "react-bootstrap";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -28,14 +28,11 @@ const ReportList = () => {
     fetchReports();
   }, []);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-
-   const handleRowClick = (params) => {
-     navigate(
-       `/admin/report-detail/${params.row.report_id}`
-     );
-   };
+  const handleRowClick = (params) => {
+    navigate(`/admin/report-detail/${params.row.report_id}`);
+  };
 
   const columns = [
     {
@@ -146,15 +143,17 @@ const ReportList = () => {
     <>
       {" "}
       <LoadingBackdrop open={loading} />
-      <h3 className="fw-bold mb-3"><MdReportProblem className="fs-2 "/> TỐ CÁO</h3>
-        <div style={{ height: 600, width: "100%" }}>
-          <DataGrid
-            rows={reports}
-            columns={columns}
-            pageSize={10}
-            getRowId={(row) => row.report_id}
-          />
-        </div>
+      <h3 className="fw-bold mb-3">
+        <MdReportProblem className="fs-2 " /> TỐ CÁO
+      </h3>
+      <div style={{ height: 600, width: "100%" }}>
+        <DataGrid
+          rows={reports}
+          columns={columns}
+          pageSize={10}
+          getRowId={(row) => row.report_id}
+        />
+      </div>
     </>
   );
 };

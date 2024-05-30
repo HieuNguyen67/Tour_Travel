@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import { BASE_URL } from "../../../constants/common";
-import LoadingBackdrop from "../../../components/backdrop";
+import { BASE_URL } from "@/constants";
+import LoadingBackdrop from "@/components/backdrop";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
 import { MdTour } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
-import { BLUE_COLOR } from "../../../constants/color";
+import { BLUE_COLOR } from "@/constants";
 import { toast } from "react-toastify";
-import { useAuth } from "../../../context";
+import { useAuth } from "@/context";
 import { MdDeleteForever } from "react-icons/md";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { LuShieldCheck } from "react-icons/lu";
@@ -43,7 +43,7 @@ const PoliciesList = () => {
     };
 
     fetchPolicies();
-  }, [isHomePage,accountId]);
+  }, [isHomePage, accountId]);
 
   const handleCheckboxChange = (event, row) => {
     if (event.target.checked) {
@@ -146,7 +146,9 @@ const PoliciesList = () => {
     <>
       {" "}
       <LoadingBackdrop open={loading} />
-      <h3 className="fw-bold mb-3"><LuShieldCheck className="fs-3"/> CHÍNH SÁCH</h3>
+      <h3 className="fw-bold mb-3">
+        <LuShieldCheck className="fs-3" /> CHÍNH SÁCH
+      </h3>
       {isHomePage ? (
         <>
           <Row>
@@ -180,7 +182,6 @@ const PoliciesList = () => {
               </p>
             </Col>
           </Row>
-         
         </>
       ) : (
         <></>

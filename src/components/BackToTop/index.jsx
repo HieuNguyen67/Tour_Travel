@@ -7,9 +7,9 @@ import Fade from "@mui/material/Fade";
 import "./BackToTop.scss";
 import { motion } from "framer-motion";
 import { SiUpptime } from "react-icons/si";
-import { useAuth } from "../../context";
-import Chatbox from "../chatbox";
 import { Container } from "react-bootstrap";
+import Chatbox from "../chatbox";
+import { useAuth } from "@/context";
 
 
 function ScrollTop(props) {

@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { format } from "date-fns";  
-import { useAuth } from "../../../context";
+import { format } from "date-fns";
+import { useAuth } from "@/context";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
-import UpdateImage from "../../../components/up-images";
+import UpdateImage from "@/components/up-images";
 import { IoArrowBackOutline } from "react-icons/io5";
-import LoadingBackdrop from "../../../components/backdrop";
+import LoadingBackdrop from "@/components/backdrop";
 import { MdAccountBox } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -17,11 +17,11 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiBankCardFill } from "react-icons/ri";
 import { FaAddressCard } from "react-icons/fa6";
-import { BASE_URL } from "../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const Profile = () => {
-  const { accountId, isLoggedIn ,token} = useAuth();
-    const [loading, setLoading] = useState(true);
+  const { accountId, isLoggedIn, token } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -36,9 +36,9 @@ const Profile = () => {
     phone_number: "",
     address: "",
     email: "",
-    id_card:"",
-    bank_account_name:"",
-    bank_account_number:""
+    id_card: "",
+    bank_account_name: "",
+    bank_account_number: "",
   });
 
   useEffect(() => {
@@ -54,12 +54,10 @@ const Profile = () => {
           ...accountData,
           birth_of_date: formatDate(accountData.birth_of_date),
         });
-              setLoading(false);
-
+        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch account data:", error);
-                      setLoading(false);
-
+        setLoading(false);
       }
     };
 
@@ -87,14 +85,12 @@ const Profile = () => {
         }
       );
 
-            toast.success("Thông tin tài khoản đã được cập nhật!");
-
+      toast.success("Thông tin tài khoản đã được cập nhật!");
     } catch (error) {
       console.error("Failed to update account data:", error);
-        toast.error(
-          "Cập nhật thông tin tài khoản không thành công. Vui lòng thử lại sau."
-        );
-     
+      toast.error(
+        "Cập nhật thông tin tài khoản không thành công. Vui lòng thử lại sau."
+      );
     }
   };
 

@@ -9,42 +9,41 @@ import { format } from "date-fns";
 import { MdDeleteForever } from "react-icons/md";
 import { toast } from "react-toastify";
 import { BiEdit } from "react-icons/bi";
-import { BLUE_COLOR, COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../../constants/color";
-import LoadingBackdrop from "../../../components/backdrop";
-import { useAuth } from "../../../context";
+import {
+  BLUE_COLOR,
+  COLOR,
+  GREEN_COLOR,
+  RED_COLOR,
+  YELLOW_COLOR,
+} from "@/constants";
+import LoadingBackdrop from "@/components/backdrop";
+import { useAuth } from "@/context";
 import { ImNewspaper } from "react-icons/im";
-import { BASE_URL } from "../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const News = () => {
- const [news, setNews] = useState([]);
- const [loading, setLoading] = useState(true);
- const [error, setError] = useState("");
- const [selectedRows, setSelectedRows] = useState([]);
-const { token, role, accountId } = useAuth();
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedRows, setSelectedRows] = useState([]);
+  const { token, role, accountId } = useAuth();
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        if(role==2){
-          var response = await axios.get(
-            `${BASE_URL}/list-news`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-        }else{
-           var response = await axios.get(
-             `${BASE_URL}/list-news/${accountId}`,
-             {
-               headers: {
-                 Authorization: `Bearer ${token}`,
-               },
-             }
-           );
+        if (role == 2) {
+          var response = await axios.get(`${BASE_URL}/list-news`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } else {
+          var response = await axios.get(`${BASE_URL}/list-news/${accountId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
         }
-        
+
         const sortedNews = response.data.sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
@@ -64,54 +63,52 @@ const { token, role, accountId } = useAuth();
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    {role == 2
-      ? navigate(`/admin/news-detail/${params.row.news_id}`)
-      : navigate(`/business/news-detail/${params.row.news_id}`);}
-    
+    {
+      role == 2
+        ? navigate(`/admin/news-detail/${params.row.news_id}`)
+        : navigate(`/business/news-detail/${params.row.news_id}`);
+    }
   };
-   const handleRowClick1 = (params) => {
-    {role == 2
-      ? navigate(`/admin/edit-news/${params.row.news_id}`)
-      : navigate(`/business/edit-news/${params.row.news_id}`);}
-    
-   };
-   const handleCheckboxChange = (event, row) => {
-     if (event.target.checked) {
-       setSelectedRows([...selectedRows, row]);
-     } else {
-       setSelectedRows(
-         selectedRows.filter(
-           (selectedRow) => selectedRow.news_id !== row.news_id
-         )
-       );
-     }
-   };
-   const handleDeleteSelected = async () => {
-     try {
-       await Promise.all(
-         selectedRows.map(async (row) => {
-           await axios.delete(
-             `${BASE_URL}/delete-news/${row.news_id}`,
-             {
-               headers: {
-                 Authorization: `Bearer ${token}`               },
-             }
-           );
-           setNews(news.filter((item) => item.news_id !== row.news_id));
-                      toast.success("Xoá thành công!");
-                                   window.location.reload();
+  const handleRowClick1 = (params) => {
+    {
+      role == 2
+        ? navigate(`/admin/edit-news/${params.row.news_id}`)
+        : navigate(`/business/edit-news/${params.row.news_id}`);
+    }
+  };
+  const handleCheckboxChange = (event, row) => {
+    if (event.target.checked) {
+      setSelectedRows([...selectedRows, row]);
+    } else {
+      setSelectedRows(
+        selectedRows.filter(
+          (selectedRow) => selectedRow.news_id !== row.news_id
+        )
+      );
+    }
+  };
+  const handleDeleteSelected = async () => {
+    try {
+      await Promise.all(
+        selectedRows.map(async (row) => {
+          await axios.delete(`${BASE_URL}/delete-news/${row.news_id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setNews(news.filter((item) => item.news_id !== row.news_id));
+          toast.success("Xoá thành công!");
+          window.location.reload();
+        })
+      );
+      setSelectedRows([]);
+    } catch (error) {
+      toast.success("Xoá thất bại. Vui lòng thử lại !");
 
-
-         })
-       );
-       setSelectedRows([]);
-     } catch (error) {
-                 toast.success("Xoá thất bại. Vui lòng thử lại !");
-
-       console.error("Failed to delete selected news:", error);
-       setError("Failed to delete selected news");
-     }
-   };
+      console.error("Failed to delete selected news:", error);
+      setError("Failed to delete selected news");
+    }
+  };
   const columns = [
     {
       field: "checkbox",
@@ -220,14 +217,13 @@ const { token, role, accountId } = useAuth();
       width: 300,
       renderCell: (params) => (
         <div
-        className="fw-bold"
+          className="fw-bold"
           style={{ cursor: "pointer" }}
           dangerouslySetInnerHTML={{ __html: params.value }}
           onClick={() => handleRowClick(params)}
         />
       ),
     },
-   
 
     { field: "category_name", headerName: "Danh mục", width: 150 },
     {

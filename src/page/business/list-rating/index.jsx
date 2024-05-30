@@ -2,21 +2,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, CircularProgress, Rating } from "@mui/material";
-import { BASE_URL } from "../../../constants/common";
-import { useAuth } from "../../../context";
-import LoadingBackdrop from "../../../components/backdrop";
+import { BASE_URL } from "@/constants";
+import { useAuth } from "@/context";
+import LoadingBackdrop from "@/components/backdrop";
 import { useNavigate } from "react-router-dom";
 import { BiSolidCommentDetail } from "react-icons/bi";
 
 const ToursList = () => {
-    const{accountId}=useAuth();
+  const { accountId } = useAuth();
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/tours-rating/${accountId}`);
+        const response = await axios.get(
+          `${BASE_URL}/tours-rating/${accountId}`
+        );
         setTours(response.data);
         setLoading(false);
       } catch (error) {
@@ -27,11 +29,11 @@ const ToursList = () => {
 
     fetchTours();
   }, [accountId]);
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const handleRowClick = (params) => {
-  navigate(`/business/review-detail/${params.row.tour_id}`);
-};
+  const handleRowClick = (params) => {
+    navigate(`/business/review-detail/${params.row.tour_id}`);
+  };
   const columns = [
     { field: "tour_id", headerName: "ID", width: 60 },
     {
@@ -70,7 +72,7 @@ const handleRowClick = (params) => {
       headerName: "Đánh giá trung bình",
       width: 150,
       renderCell: (params) => (
-          <Rating value={parseFloat(params.value)} precision={0.1} readOnly />
+        <Rating value={parseFloat(params.value)} precision={0.1} readOnly />
       ),
     },
     {

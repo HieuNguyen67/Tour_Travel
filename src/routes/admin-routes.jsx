@@ -1,18 +1,18 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import SidebarLayout from "../components/side-bar";
-import ContactList from "../page/admin/contact";
-import ContactDetail from "../page/admin/contact/contact-detail";
-import EditProfile from "../page/admin/edit-profile";
-import ListUser from "../page/admin/list-user";
-import News from "../page/admin/news";
-import AddNews from "../page/admin/news/add-news";
-import UpdateNews from "../page/admin/news/edit-news";
-import NewsDetail from "../page/admin/news/news-details";
-import RegisterUser from "../page/admin/register-user";
-import ReportList from "../page/admin/report-tour";
-import ReportDetails from "../page/admin/report-tour/report-detail";
-import PoliciesList from "../page/business/list-policies";
-import AddPolicyForm from "../page/business/list-policies/add-policies";
+import SidebarLayout from "@/components/side-bar";
+import ContactList from "@/page/admin/contact";
+import ContactDetail from "@/page/admin/contact/contact-detail";
+import EditProfile from "@/page/admin/edit-profile";
+import ListUser from "@/page/admin/list-user";
+import News from "@/page/admin/news";
+import AddNews from "@/page/admin/news/add-news";
+import UpdateNews from "@/page/admin/news/edit-news";
+import NewsDetail from "@/page/admin/news/news-details";
+import RegisterUser from "@/page/admin/register-user";
+import ReportList from "@/page/admin/report-tour";
+import ReportDetails from "@/page/admin/report-tour/report-detail";
+import PoliciesList from "@/page/business/list-policies";
+import AddPolicyForm from "@/page/business/list-policies/add-policies";
 const AdminRoutes = () => {
   return (
     <>

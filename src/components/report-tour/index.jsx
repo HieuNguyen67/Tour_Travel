@@ -1,49 +1,51 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../constants/common";
+import { BASE_URL } from "@/constants";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { MdReportProblem } from "react-icons/md";
 import { Form } from "react-bootstrap";
 import { FaEdit } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
-import { useAuth } from "../../context";
+import { useAuth } from "@/context";
 import { Navigate, useNavigate } from "react-router-dom";
-import { RED1_COLOR } from "../../constants/color";
+import { RED1_COLOR } from "@/constants";
 import { toast } from "react-toastify";
 
-const ReportTour = ({tourId, accountId}) => {
+const ReportTour = ({ tourId, accountId }) => {
   const [typeReport, setTypeReport] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => { if(accountId){
-setShow(true);
-  } else{
-    navigate("/login");
-  } };
+  const handleShow = () => {
+    if (accountId) {
+      setShow(true);
+    } else {
+      navigate("/login");
+    }
+  };
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const handleReportTour = async (e) => {
     e.preventDefault();
     try {
-        if (accountId) {
-          const response = await axios.post(
-            `${BASE_URL}/report-tour/${tourId}/${accountId}`,
-            {
-              type_report: typeReport,
-              description,
-            }
-          );
-          setSuccessMessage(response.data.message);
-          setError("");
-          setTypeReport("");
-          setDescription("");
-          setShow(false);
+      if (accountId) {
+        const response = await axios.post(
+          `${BASE_URL}/report-tour/${tourId}/${accountId}`,
+          {
+            type_report: typeReport,
+            description,
+          }
+        );
+        setSuccessMessage(response.data.message);
+        setError("");
+        setTypeReport("");
+        setDescription("");
+        setShow(false);
         toast.success("Gửi tố cáo thành công!");
-        }
+      }
     } catch (error) {
       setError("Error reporting tour: " + error.response.data.error);
       setSuccessMessage("");
@@ -133,8 +135,9 @@ setShow(true);
               </Modal.Body>
               <Modal.Footer>
                 <Button
-                type="submit"
-                  style={{ background: RED1_COLOR, border: "0px" }}                >
+                  type="submit"
+                  style={{ background: RED1_COLOR, border: "0px" }}
+                >
                   Gửi tố cáo
                 </Button>
               </Modal.Footer>

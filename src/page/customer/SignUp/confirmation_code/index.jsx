@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Button, Col, Container, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { BLUE_COLOR } from "../../../../constants/color";
+import { BLUE_COLOR } from "@/constants";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const ConfirmationForm = () => {
   const [confirmationCode, setConfirmationCode] = useState("");
@@ -13,7 +13,7 @@ const ConfirmationForm = () => {
   const handleChange = (e) => {
     setConfirmationCode(e.target.value);
   };
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,13 +21,12 @@ const ConfirmationForm = () => {
       const response = await axios.get(
         `${BASE_URL}/confirm/${confirmationCode}`
       );
-            setMessage(response.data.message);
-            toast.success("Tài khoản đã được kích hoạt thành công!");
-            navigate("/login");
-
+      setMessage(response.data.message);
+      toast.success("Tài khoản đã được kích hoạt thành công!");
+      navigate("/login");
     } catch (error) {
       console.error("Xác nhận không thành công:", error);
-              setMessage(error.response.data.message);
+      setMessage(error.response.data.message);
 
       toast.error(error.response.data.message);
     }
@@ -68,7 +67,9 @@ const ConfirmationForm = () => {
                 Quay lại đăng nhập
               </Link>
             </form>
-            {message && <p className="mt-3 fw-bold fs-5 text-danger">{message}</p>}
+            {message && (
+              <p className="mt-3 fw-bold fs-5 text-danger">{message}</p>
+            )}
           </p>
         </Col>
       </Container>

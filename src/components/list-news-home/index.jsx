@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-import { BASE_URL } from "../../constants/common";
+import { BASE_URL } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { Card, Col, Placeholder, Row } from "react-bootstrap";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
-import HTMLContent from "../../components/HTMLContent";
 import { LuClock8 } from "react-icons/lu";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import HTMLContent from "../HTMLContent";
 
 const ListNewsHome=()=>{
       const [news, setNews] = useState([]);

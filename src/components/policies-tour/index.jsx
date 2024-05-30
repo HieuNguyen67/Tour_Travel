@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../constants/common";
+import { BASE_URL } from "@/constants";
 import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { FaCaretSquareDown } from "react-icons/fa";
-import { TEXT_MAIN_COLOR } from "../../constants/color";
+import { TEXT_MAIN_COLOR } from "@/constants";
 import HTMLContent from "../HTMLContent";
-import "../../page/customer/tour-detail/tour-detail.scss";
+import "@/page/customer/tour-detail/tour-detail.scss";
 
 const PolicesTour = ({ accountId }) => {
   const [policies, setPolicies] = useState([]);
@@ -31,22 +31,18 @@ const PolicesTour = ({ accountId }) => {
     fetchPolicies();
   }, [accountId]);
 
-    useEffect(() => {
-      const fetchPolicies = async () => {
-        try {
-         
-            const response = await axios.get(
-              `${BASE_URL}/list-policies`
-            );
-            setPolicyCancellation(response.data[0]);
+  useEffect(() => {
+    const fetchPolicies = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/list-policies`);
+        setPolicyCancellation(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching policies:", error);
+      }
+    };
 
-        } catch (error) {
-          console.error("Error fetching policies:", error);
-        }
-      };
-
-      fetchPolicies();
-    }, []);
+    fetchPolicies();
+  }, []);
 
   return (
     <>

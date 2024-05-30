@@ -43,7 +43,7 @@
     position: absolute;
     top: 22rem;
     width: 100%;
-    background-image: url(../../../assets/image/section-background.png);
+    background-image: url(@/assets/image/section-background.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -59,7 +59,7 @@
     position: absolute;
     top: 28rem;
     width: 100%;
-    background-image: url(../../../assets/image/section-background.png);
+    background-image: url(@/assets/image/section-background.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -84,7 +84,7 @@
     background-color: white;
     position: absolute;
     top: 50rem;
-    background-image: url(../../../assets/image/section-background.png);
+    background-image: url(@/assets/image/section-background.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;

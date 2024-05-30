@@ -1,113 +1,102 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useAuth } from "../../../../context";
+import { useAuth } from "@/context";
 import { toast } from "react-toastify";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { BASE_URL } from "../../../../constants/common";
+import { BASE_URL } from "@/constants";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button, Form } from "react-bootstrap";
-import { BLUE_COLOR } from "../../../../constants/color";
+import { BLUE_COLOR } from "@/constants";
 import { GiConfirmed } from "react-icons/gi";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { MdDescription } from "react-icons/md";
 
-
 const AddPolicyForm = () => {
-      const { policy_id } = useParams();
-const{role}=useAuth();
+  const { policy_id } = useParams();
+  const { role } = useAuth();
   const { accountId, token } = useAuth();
   const [policytype, setPolicytype] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
-    const location = useLocation();
-    const isHomePage =
-      location.pathname === "/business/add-policies" ||
-      location.pathname === "/admin/add-policies";
-      const isHomePage1 =
-      location.pathname === "/business/add-policies" || location.pathname === "/business/edit-policy" ;
+  const location = useLocation();
+  const isHomePage =
+    location.pathname === "/business/add-policies" ||
+    location.pathname === "/admin/add-policies";
+  const isHomePage1 =
+    location.pathname === "/business/add-policies" ||
+    location.pathname === "/business/edit-policy";
 
   const navigate = useNavigate();
 
-   useEffect(() => {
-     const fetchPolicy = async () => {
-        if(!isHomePage){
-             try {
-               const response = await axios.get(
-                 `${BASE_URL}/policies/${policy_id}`
-               );
-               setPolicytype(response.data.policytype);
-               setDescription(response.data.description);
-             } catch (error) {
-               console.error("Error fetching policy:", error);
-             }
+  useEffect(() => {
+    const fetchPolicy = async () => {
+      if (!isHomePage) {
+        try {
+          const response = await axios.get(`${BASE_URL}/policies/${policy_id}`);
+          setPolicytype(response.data.policytype);
+          setDescription(response.data.description);
+        } catch (error) {
+          console.error("Error fetching policy:", error);
         }
-     };
+      }
+    };
 
-     fetchPolicy();
-   }, [policy_id]);
-
+    fetchPolicy();
+  }, [policy_id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isHomePage) {
-        try {
-          const response = await axios.post(
-            `${BASE_URL}/add-policies/${accountId}`,
-            {
-              policytype,
-              description,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setMessage("Policy added successfully");
-          setPolicytype("");
-          setDescription("");
-          toast.success("Thêm thành công!");
-          navigate("/business/list-policies");
-        } catch (error) {
-          console.error("Error adding policy:", error);
-          setMessage("Failed to add policy");
-          toast.error("Thêm thất bại!");
-        }
-    }else{
-        try {
-          await axios.put(`${BASE_URL}/policies/${policy_id}`, {
+      try {
+        const response = await axios.post(
+          `${BASE_URL}/add-policies/${accountId}`,
+          {
             policytype,
             description,
-          });
-          toast.success("Cập nhật thành công!");
-          if(isHomePage1){
-            navigate("/business/list-policies");
-          }else{
-            navigate("/admin/list-policies");
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-
-          
-        } catch (error) {
-          console.error("Error updating policy:", error);
-          toast.error("Cập nhật thất bại!");
+        );
+        setMessage("Policy added successfully");
+        setPolicytype("");
+        setDescription("");
+        toast.success("Thêm thành công!");
+        navigate("/business/list-policies");
+      } catch (error) {
+        console.error("Error adding policy:", error);
+        setMessage("Failed to add policy");
+        toast.error("Thêm thất bại!");
+      }
+    } else {
+      try {
+        await axios.put(`${BASE_URL}/policies/${policy_id}`, {
+          policytype,
+          description,
+        });
+        toast.success("Cập nhật thành công!");
+        if (isHomePage1) {
+          navigate("/business/list-policies");
+        } else {
+          navigate("/admin/list-policies");
         }
+      } catch (error) {
+        console.error("Error updating policy:", error);
+        toast.error("Cập nhật thất bại!");
+      }
     }
-
-    
   };
-   
 
   return (
     <div className="px-3">
-      <Link
-        to={role==3 ? "/business/list-policies" : "/admin/list-policies"}
-      >
+      <Link to={role == 3 ? "/business/list-policies" : "/admin/list-policies"}>
         <IoArrowBackOutline className="fs-3 mb-3" />
       </Link>
       <h3 className="fw-bold my-3">
-        
         {isHomePage ? <>THÊM CHÍNH SÁCH</> : <>CHỈNH SỬA CHÍNH SÁCH</>}
       </h3>
       <form onSubmit={handleSubmit}>
@@ -165,7 +154,6 @@ AddPolicyForm.modules = {
     ["bold", "italic", "underline", "strike", "blockquote"],
     [{ align: [] }],
     [{ list: "ordered" }, { list: "bullet" }],
-    
   ],
 };
 
@@ -181,6 +169,5 @@ AddPolicyForm.formats = [
   "align",
   "list",
   "bullet",
-  
 ];
 export default AddPolicyForm;

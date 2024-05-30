@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "../../context";
+import { useAuth } from "@/context";
 import { Col } from "react-bootstrap";
-import defaultImage from "../../assets/image/6945124.png"; 
+import defaultImage from "@/assets/image/6945124.png";
 import "./load-image.scss";
-import { BASE_URL } from "../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const DisplayImage = () => {
-  const { accountId,token } = useAuth();
+  const { accountId, token } = useAuth();
 
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
@@ -41,7 +41,7 @@ const DisplayImage = () => {
     <div>
       <Col className="col-lg-12 col-5 col-md-3 mx-lg-0 mx-auto my-4 mt-lg-2">
         <img
-          src={imageSrc || defaultImage} 
+          src={imageSrc || defaultImage}
           alt="Hình ảnh của tài khoản"
           className="col-lg-9 col-12 sizeimgg  rounded-circle shadow"
           style={{ objectFit: "cover" }}

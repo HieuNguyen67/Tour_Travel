@@ -5,15 +5,15 @@ import "./Header.scss";
 import React, { useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Button from "react-bootstrap/Button";
-import Logo from "../../../assets/image/tải_xuống-removebg-preview.png";
-import defaultImage from "../../../assets/image/6945124.png"; 
+import Logo from "@/assets/image/tải_xuống-removebg-preview.png";
+import defaultImage from "@/assets/image/6945124.png"; 
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import ScrollIndicator from "../../ScrollIndicator";
 import { motion } from "framer-motion";
-import { useAuth } from "../../../context";
-import { BASE_URL, HEADER } from "../../../constants/common";
+import { BASE_URL, HEADER } from "@/constants";
 import { useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "@/context";
+import ScrollIndicator from "@/components/ScrollIndicator";
 
 const Header = (props) => {
   const { isLoggedIn, logout, username, role } = useAuth();
@@ -70,7 +70,7 @@ const Header = (props) => {
         >
           {" "}
           <Container className="my-2">
-            <NavLink className=" decorate">
+            <div className=" decorate">
               <Navbar.Brand>
                 {role == 2 ? (
                   <></>
@@ -105,7 +105,7 @@ const Header = (props) => {
                   )}
                 </span>
               </Navbar.Brand>
-            </NavLink>
+            </div>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Navbar.Offcanvas placement="end" className="offcanvas-size-sm">

@@ -3,15 +3,15 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { IoMdAddCircle } from "react-icons/io";
-import { useAuth } from "../../../../context";
-import { BASE_URL } from "../../../../constants/common";
+import { useAuth } from "@/context";
+import { BASE_URL } from "@/constants";
 
 const AddCategories = () => {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [showForm, setShowForm] = useState(false); 
-  const{token}=useAuth()
+  const [showForm, setShowForm] = useState(false);
+  const { token } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ const AddCategories = () => {
         }
       );
       toast.success("Thêm danh mục thành công!");
-      setName("");  
+      setName("");
       setSuccess(true);
       setTimeout(function () {
         window.location.reload();
@@ -42,7 +42,6 @@ const AddCategories = () => {
   return (
     <div>
       <Button
-      
         variant={showForm ? "danger" : "primary"}
         onClick={() => setShowForm(!showForm)}
       >

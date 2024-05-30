@@ -1,8 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import {
-  DESTINATION_FAVOURITE,
-  DESTINATION_FAVOURITE_FOREIGN,
-} from "../../constants/common";
+
 import Carousel from "react-multi-carousel";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -12,6 +9,10 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { Link } from "react-router-dom";
+import {
+  DESTINATION_FAVOURITE,
+  DESTINATION_FAVOURITE_FOREIGN,
+} from "@/constants";
 
 const DestinationFavourite = () => {
   const [value, setValue] = useState("1");

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "../../../context";
-import { BASE_URL } from "../../../constants/common";
+import { useAuth } from "@/context";
+import { BASE_URL } from "@/constants";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -23,9 +23,9 @@ import { MdOutlineStar } from "react-icons/md";
 import { MdTour } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
 import { format } from "date-fns";
-import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
+import { BLUE_COLOR, RED_COLOR } from "@/constants";
 import "./add-tour.scss";
-import LoadingBackdrop from "../../../components/backdrop";
+import LoadingBackdrop from "@/components/backdrop";
 
 const AddTourForm = () => {
   const { accountId, token } = useAuth();
@@ -170,92 +170,90 @@ const AddTourForm = () => {
   };
   const navigate = useNavigate();
 
- if(isHomePage){ var handleSubmit = async (e) => {
-   e.preventDefault();
-   if (images.length < 4) {
-     alert("Vui lòng chọn từ 4 hình ảnh trở lên");
-     return;
-   }
+  if (isHomePage) {
+    var handleSubmit = async (e) => {
+      e.preventDefault();
+      if (images.length < 4) {
+        alert("Vui lòng chọn từ 4 hình ảnh trở lên");
+        return;
+      }
 
-   const formData1 = new FormData();
-   for (const key in formData) {
-     if (Array.isArray(formData[key])) {
-       formData[key].forEach((item, index) => {
-         formData1.append(`${key}[${index}]`, item);
-       });
-     } else {
-       formData1.append(key, formData[key]);
-     }
-   }
-   for (let i = 0; i < images.length; i++) {
-     formData1.append("images", images[i]);
-   }
+      const formData1 = new FormData();
+      for (const key in formData) {
+        if (Array.isArray(formData[key])) {
+          formData[key].forEach((item, index) => {
+            formData1.append(`${key}[${index}]`, item);
+          });
+        } else {
+          formData1.append(key, formData[key]);
+        }
+      }
+      for (let i = 0; i < images.length; i++) {
+        formData1.append("images", images[i]);
+      }
 
-   try {
-     await axios.post(`${BASE_URL}/add-tours/${accountId}`, formData1, {
-       headers: {
-         Authorization: `Bearer ${token}`,
-         "Content-Type": "multipart/form-data",
-       },
-     });
-     toast.success("Thêm Tour thành công!");
-     navigate("/business/list-tour");
-     setLoading(false);
-   } catch (error) {
-     console.error("Error adding tour: ", error.response.data.error);
-     toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
-   }
- };}else{
-  var handleSubmit = async (e) => {
-    e.preventDefault();
-   
-    try {
-      const response = await axios.put(
-        `${BASE_URL}/update-tour/${formData.tour_id}`,
-        formData,
-        {
+      try {
+        await axios.post(`${BASE_URL}/add-tours/${accountId}`, formData1, {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
-        }
-      );
-      toast.success("Chỉnh sửa Tour thành công!");
-      navigate("/business/list-tour");
-           setLoading(false);
+        });
+        toast.success("Thêm Tour thành công!");
+        navigate("/business/list-tour");
+        setLoading(false);
+      } catch (error) {
+        console.error("Error adding tour: ", error.response.data.error);
+        toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
+      }
+    };
+  } else {
+    var handleSubmit = async (e) => {
+      e.preventDefault();
 
-    } catch (error) {
-      console.error("Error updating tour:", error);
-      toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
+      try {
+        const response = await axios.put(
+          `${BASE_URL}/update-tour/${formData.tour_id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Chỉnh sửa Tour thành công!");
+        navigate("/business/list-tour");
+        setLoading(false);
+      } catch (error) {
+        console.error("Error updating tour:", error);
+        toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
+      }
 
-    }
-    
+      const data = new FormData();
+      for (let i = 0; i < images.length; i++) {
+        data.append("images", images[i]);
+      }
 
-     const data = new FormData();
-     for (let i = 0; i < images.length; i++) {
-       data.append("images", images[i]);
-     }
+      try {
+        const response = await axios.put(
+          `${BASE_URL}/update-tour-images/${tour_id}`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
-     try {
-       const response = await axios.put(
-         `${BASE_URL}/update-tour-images/${tour_id}`,
-         data,
-         {
-           headers: {
-             Authorization: `Bearer ${token}`,
-             "Content-Type": "multipart/form-data",
-           },
-         }
-       );
-
-       console.log("Tour images updated successfully:", response.data);
-            setLoading(false);
-
-     } catch (error) {
-       console.error("Error updating tour images:", error);
-     }
-  };
- }
-   const formatDate = (dateString) => {
+        console.log("Tour images updated successfully:", response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error updating tour images:", error);
+      }
+    };
+  }
+  const formatDate = (dateString) => {
     return format(new Date(dateString), "yyyy-MM-dd");
   };
   const [image, setImage] = useState([]);
@@ -278,9 +276,8 @@ const AddTourForm = () => {
 
     fetchTourImages();
   }, [isHomePage, tour_id]);
- 
-     const today = new Date().toISOString().split("T")[0];
 
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <>

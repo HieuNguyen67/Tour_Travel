@@ -1,20 +1,20 @@
-import "../../page/customer/Image/Image.scss";
+import "@/page/customer/Image/Image.scss";
 import { motion, useAnimation } from "framer-motion";
 import Lightbox from "yet-another-react-lightbox";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import picture1 from "../../assets/image/picture-1.png";
-import picture2 from "../../assets/image/picture-2.png";
-import picture3 from "../../assets/image/picture-3.png";
-import picture4 from "../../assets/image/picture-4.png";
-import picture5 from "../../assets/image/picture-5.png";
-import picture6 from "../../assets/image/picture-6.png";
-import picture7 from "../../assets/image/picture-7.png";
-import picture8 from "../../assets/image/picture-8.png";
-import picture9 from "../../assets/image/picture-9.png";
-import picture10 from "../../assets/image/picture-10.png";
-import picture11 from "../../assets/image/picture-11.png";
-import picture12 from "../../assets/image/picture-12.png";
+import picture1 from "@/assets/image/picture-1.png";
+import picture2 from "@/assets/image/picture-2.png";
+import picture3 from "@/assets/image/picture-3.png";
+import picture4 from "@/assets/image/picture-4.png";
+import picture5 from "@/assets/image/picture-5.png";
+import picture6 from "@/assets/image/picture-6.png";
+import picture7 from "@/assets/image/picture-7.png";
+import picture8 from "@/assets/image/picture-8.png";
+import picture9 from "@/assets/image/picture-9.png";
+import picture10 from "@/assets/image/picture-10.png";
+import picture11 from "@/assets/image/picture-11.png";
+import picture12 from "@/assets/image/picture-12.png";
 
 import React from "react";
 

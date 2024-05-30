@@ -9,18 +9,16 @@ import { MdAddBusiness } from "react-icons/md";
 import { MdTour } from "react-icons/md";
 import { FaListAlt } from "react-icons/fa";
 import { BiSolidCommentDetail } from "react-icons/bi";
-import hanoi from "../assets/image/hanoi.jpg"
-import dalat from "../assets/image/dalat.jpg";
-import kiengiang from "../assets/image/kiengiang.jpg";
-import danang from "../assets/image/danang.jpg";
-import khanhhoa from "../assets/image/khanhhoa.jpg";
-import hoaky from "../assets/image/hoaky.jpg";
-import nhatban from "../assets/image/nhatban.jpg";
-import nga from "../assets/image/nga.jpg";
-import uc from "../assets/image/uc.jpg";
-import thailan from "../assets/image/thailan.jpg";
-
-
+import hanoi from "@/assets/image/hanoi.jpg";
+import dalat from "@/assets/image/dalat.jpg";
+import kiengiang from "@/assets/image/kiengiang.jpg";
+import danang from "@/assets/image/danang.jpg";
+import khanhhoa from "@/assets/image/khanhhoa.jpg";
+import hoaky from "@/assets/image/hoaky.jpg";
+import nhatban from "@/assets/image/nhatban.jpg";
+import nga from "@/assets/image/nga.jpg";
+import uc from "@/assets/image/uc.jpg";
+import thailan from "@/assets/image/thailan.jpg";
 
 const HEADER = [
   { id: 1, name: "TRANG CHỦ", link: "/" },
@@ -134,7 +132,11 @@ const DESTINATION_FAVOURITE = [
 ];
 const DESTINATION_FAVOURITE_FOREIGN = [
   { id: 1, image: hoaky, link: "/list-tour-foreign/2?destinationLocation=US" },
-  { id: 2, image: nga, link: "/list-tour-foreign/2?destinationLocation=Russia" },
+  {
+    id: 2,
+    image: nga,
+    link: "/list-tour-foreign/2?destinationLocation=Russia",
+  },
   {
     id: 3,
     image: thailan,
@@ -145,7 +147,11 @@ const DESTINATION_FAVOURITE_FOREIGN = [
     image: nhatban,
     link: "/list-tour-foreign/2?destinationLocation=Japan",
   },
-  { id: 5, image: uc, link: "/list-tour-foreign/2?destinationLocation=Australia" },
+  {
+    id: 5,
+    image: uc,
+    link: "/list-tour-foreign/2?destinationLocation=Australia",
+  },
 ];
 
 const BASE_URL = "http://localhost:5020/v1/api/admin";

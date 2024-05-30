@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import HTMLContent from "../../../../components/HTMLContent";
+import HTMLContent from "@/components/HTMLContent";
 import "./news-detail.scss";
-import head from "../../../../assets/image/heading-border.png";
-import {  Col, Container, Row } from "react-bootstrap";
+import head from "@/assets/image/heading-border.png";
+import { Col, Container, Row } from "react-bootstrap";
 import { format } from "date-fns";
 import { FiEdit } from "react-icons/fi";
 import { LuClock8 } from "react-icons/lu";
@@ -13,7 +13,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { RiHome6Line } from "react-icons/ri";
 import { FaAngleRight } from "react-icons/fa";
 import LinearProgress from "@mui/material/LinearProgress";
-import { BASE_URL } from "../../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const NewsDetailCustomer = () => {
   const [news, setNews] = useState(null);
@@ -26,7 +26,7 @@ const NewsDetailCustomer = () => {
       try {
         const response = await axios.get(`${BASE_URL}/news-detail/${news_id}`);
         setNews(response.data);
-          setCate(response.data[0]);
+        setCate(response.data[0]);
 
         setLoading(false);
       } catch (error) {
@@ -38,7 +38,7 @@ const NewsDetailCustomer = () => {
 
     fetchNews();
   }, [news_id]);
-  
+
   if (loading)
     return (
       <div>
@@ -63,7 +63,7 @@ const NewsDetailCustomer = () => {
     );
   if (error) return <div>Error: {error}</div>;
   if (!news) return null;
-   if (!cate) return null;
+  if (!cate) return null;
 
   return (
     <>
@@ -116,7 +116,7 @@ const NewsDetailCustomer = () => {
               <Col className=" col-6 my-3 ">
                 {" "}
                 <p
-                  style={{  fontSize: "16px" }}
+                  style={{ fontSize: "16px" }}
                   className="text-start rounded-3 fw-bold"
                 >
                   <FiEdit /> {item.profile_name}

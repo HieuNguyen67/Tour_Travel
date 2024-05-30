@@ -1,6 +1,6 @@
-import { Container,Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { BLUE_COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "../../../constants/color";
+import { BLUE_COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
 import { MdDeleteForever } from "react-icons/md";
 import { MdTour } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
@@ -8,33 +8,31 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
-import { useAuth } from "../../../context";
-import { BASE_URL } from "../../../constants/common";
+import { useAuth } from "@/context";
+import { BASE_URL } from "@/constants";
 import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
-import LoadingBackdrop from "../../../components/backdrop";
+import LoadingBackdrop from "@/components/backdrop";
 
 const TourList = () => {
-  const{accountId}=useAuth();
+  const { accountId } = useAuth();
   const [tours, setTours] = useState([]);
- const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-   const formatPrice = (price) => {
-     if (typeof price !== "number") {
-       return price;
-     }
-     return new Intl.NumberFormat("vi-VN", {
-       style: "currency",
-       currency: "VND",
-     }).format(price);
-   };
+  const formatPrice = (price) => {
+    if (typeof price !== "number") {
+      return price;
+    }
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
 
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/list-tours/${accountId}`
-        );
+        const response = await axios.get(`${BASE_URL}/list-tours/${accountId}`);
         const formattedTours = response.data.map((tour) => ({
           ...tour,
           formattedPrice_adult: formatPrice(tour.adult_price),
@@ -42,33 +40,31 @@ const TourList = () => {
           formattedPrice_infant: formatPrice(tour.infant_price),
         }));
         setTours(formattedTours);
-         setLoading(false);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching tours:", error);
-         setLoading(false);
+        setLoading(false);
       }
     };
 
     fetchTours();
   }, [accountId]);
 
-const renderStarIcon = (params) => {
-  const { value } = params;
-  return (
-    <div>
-      {Array.from({ length: value }).map((_, index) => (
-        <FaStar key={index} className="text-warning" />
-      ))}
-    </div>
-  );
-};
-const navigate = useNavigate();
+  const renderStarIcon = (params) => {
+    const { value } = params;
+    return (
+      <div>
+        {Array.from({ length: value }).map((_, index) => (
+          <FaStar key={index} className="text-warning" />
+        ))}
+      </div>
+    );
+  };
+  const navigate = useNavigate();
 
-const handleRowClick = (params) => {
-  navigate(
-    `/business/update-tour/${params.row.tour_id}`
-  );
-};
+  const handleRowClick = (params) => {
+    navigate(`/business/update-tour/${params.row.tour_id}`);
+  };
 
   const columns = [
     {
@@ -187,10 +183,7 @@ const handleRowClick = (params) => {
       headerName: "Ngày bắt đầu",
       width: 110,
       renderCell: (params) => (
-        <span
-          className="fw-bold text-primary"
-          style={{ cursor: "pointer" }}
-        >
+        <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
       ),
@@ -200,10 +193,7 @@ const handleRowClick = (params) => {
       headerName: "Ngày kết thúc",
       width: 110,
       renderCell: (params) => (
-        <span
-          className="fw-bold text-primary"
-          style={{ cursor: "pointer" }}
-        >
+        <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
       ),
@@ -234,10 +224,7 @@ const handleRowClick = (params) => {
       headerName: "Ngày tạo",
       width: 110,
       renderCell: (params) => (
-        <span
-          className="fw-bold text-primary"
-          style={{ cursor: "pointer" }}
-        >
+        <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
       ),
@@ -249,7 +236,10 @@ const handleRowClick = (params) => {
       <LoadingBackdrop open={loading} />
       <Row>
         <Col>
-          <h3 className="fw-bold"> <MdTour className="fs-2" /> LIST TOUR</h3>
+          <h3 className="fw-bold">
+            {" "}
+            <MdTour className="fs-2" /> LIST TOUR
+          </h3>
         </Col>
         <Col>
           <p className="text-end">

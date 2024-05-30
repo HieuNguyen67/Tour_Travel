@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import defaultImage from "../../../assets/image/6945124.png";
-import { useAuth } from "../../../context";
-import { BASE_URL } from "../../../constants/common";
+import defaultImage from "@/assets/image/6945124.png";
+import { useAuth } from "@/context";
+import { BASE_URL } from "@/constants";
 
 const LoadImage = () => {
- const{account_id}=useParams();
+  const { account_id } = useParams();
 
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
-  const{token}=useAuth();
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchImage = async () => {

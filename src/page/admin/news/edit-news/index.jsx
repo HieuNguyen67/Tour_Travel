@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; 
-import { Button, Col,Form } from "react-bootstrap";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { Button, Col, Form } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
-import LoadingBackdrop from "../../../../components/backdrop";
-import { useAuth } from "../../../../context";
-import { BASE_URL } from "../../../../constants/common";
+import LoadingBackdrop from "@/components/backdrop";
+import { useAuth } from "@/context";
+import { BASE_URL } from "@/constants";
 
 const UpdateNews = () => {
   const [title, setTitle] = useState("");
@@ -18,39 +18,35 @@ const UpdateNews = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { news_id } = useParams();
-  const{token,role}=useAuth();
+  const { token, role } = useAuth();
 
+  useEffect(() => {
+    const fetchNewsDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/select-status-note/${news_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const { title: initialTitle, content: initialContent } = response.data;
+        setTitle(initialTitle);
+        setContent(initialContent);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch news details:", error);
+        setError("Failed to fetch news details");
+        setLoading(false);
+      }
+    };
 
-useEffect(() => {
-  const fetchNewsDetails = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/select-status-note/${news_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const { title: initialTitle, content: initialContent } = response.data;
-      setTitle(initialTitle);
-      setContent(initialContent);
-              setLoading(false);
-
-    } catch (error) {
-      console.error("Failed to fetch news details:", error);
-      setError("Failed to fetch news details");
-              setLoading(false);
-
-    }
-  };
-
-  fetchNewsDetails();
-}, [news_id]);
-const navigate = useNavigate();
+    fetchNewsDetails();
+  }, [news_id]);
+  const navigate = useNavigate();
 
   const handleUpdate = async () => {
-
     try {
       await axios.put(
         `${BASE_URL}/update-news/${news_id}`,
@@ -65,17 +61,12 @@ const navigate = useNavigate();
         }
       );
       console.log("News updated successfully");
-                toast.success("Cập nhật thành công!");
-                           role == 2
-                             ? navigate("/admin/news")
-                             : navigate("/business/list-news");
-
-
+      toast.success("Cập nhật thành công!");
+      role == 2 ? navigate("/admin/news") : navigate("/business/list-news");
     } catch (error) {
       console.error("Failed to update news:", error);
       setError("Failed to update news");
-                toast.success("Cập nhật thất bại. Vui lòng thử lại !");
-
+      toast.success("Cập nhật thất bại. Vui lòng thử lại !");
     }
   };
 

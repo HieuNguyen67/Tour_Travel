@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../constants/common";
-import { TEXT_MAIN_COLOR } from "../../constants/color";
+import { BASE_URL } from "@/constants";
+import { TEXT_MAIN_COLOR } from "@/constants";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { motion } from "framer-motion";

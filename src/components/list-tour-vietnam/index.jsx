@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../constants/common";
+import { BASE_URL } from "@/constants";
 import { Card, Col, Placeholder, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { RiHotelFill } from "react-icons/ri";
 import { FaCar, FaStar } from "react-icons/fa";
 import { IoAirplaneSharp } from "react-icons/io5";
-import { TEXT_MAIN_COLOR } from "../../constants/color";
+import { TEXT_MAIN_COLOR } from "@/constants";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -24,14 +24,12 @@ const ListTourVietnam = ({ tour_category }) => {
           `${BASE_URL}/list-tours-filter?tourcategory_name=${tour_category}`
         );
 
-       
         const sortedTours = response.data.sort(
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
         setTours(sortedTours);
-         setLoading(false);
+        setLoading(false);
       } catch (err) {
-        
         console.error("Error fetching tours", err);
         setError("Error fetching tours. Please try again.");
         setLoading(false);

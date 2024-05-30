@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { BASE_URL } from "../../constants/common";
-import "../../page/customer/tour-detail/tour-detail.scss"
+import "@/page/customer/tour-detail/tour-detail.scss"
+import { BASE_URL } from "@/constants";
 const TourImagesCarousel = ({ tourId }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);

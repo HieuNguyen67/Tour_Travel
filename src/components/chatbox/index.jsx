@@ -8,7 +8,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { motion } from "framer-motion";
 import Modal from "react-bootstrap/Modal";
-import bot from "../../assets/image/bot-3.png";
+import bot from "@/assets/image/bot-3.png";
 import "./chatbox.scss";
 import { AiFillRobot } from "react-icons/ai";
 

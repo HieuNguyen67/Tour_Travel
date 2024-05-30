@@ -5,50 +5,49 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { IoIosSend } from "react-icons/io";
-import Header from "../../../components/layout/header";
+import Header from "@/components/layout/header";
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FcInfo } from "react-icons/fc";
 import { MdOutlineContactMail } from "react-icons/md";
-import { BASE_URL } from "../../../constants/common";
+import { BASE_URL } from "@/constants";
 
 const Contact = () => {
- const [formData, setFormData] = useState({
-   fullname: "",
-   email: "",
-   phonenumber: "",
-   message: "",
-   address: "",
- });
- const [error, setError] = useState("");
- const [successMessage, setSuccessMessage] = useState("");
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    phonenumber: "",
+    message: "",
+    address: "",
+  });
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
- const handleChange = (e) => {
-   setFormData({ ...formData, [e.target.name]: e.target.value });
- };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
- const handleSubmit = async (e) => {
-   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-   try {
-     await axios.post(`${BASE_URL}/admin/send-contact`, formData);
-     setSuccessMessage("Contact sent successfully");
-     setFormData({
-       fullname: "",
-       email: "",
-       phonenumber: "",
-       message: "",
-       address: "",
-     });
-              toast.success("Gửi thông tin liên hệ thành công !");
-
-   } catch (error) {
-     console.error("Failed to send contact:", error);
-     toast.success("Gửi thông tin liên hệ thất bại !");
-     setError("Failed to send contact");
-   }
- };
+    try {
+      await axios.post(`${BASE_URL}/admin/send-contact`, formData);
+      setSuccessMessage("Contact sent successfully");
+      setFormData({
+        fullname: "",
+        email: "",
+        phonenumber: "",
+        message: "",
+        address: "",
+      });
+      toast.success("Gửi thông tin liên hệ thành công !");
+    } catch (error) {
+      console.error("Failed to send contact:", error);
+      toast.success("Gửi thông tin liên hệ thất bại !");
+      setError("Failed to send contact");
+    }
+  };
   return (
     <>
       <Header />
@@ -165,7 +164,7 @@ const Contact = () => {
                 </Row>
 
                 <Button type="submit" variant="warning" className="shadow-sm">
-                  <IoIosSend className="fs-4"/>
+                  <IoIosSend className="fs-4" />
                   GỬI THÔNG TIN LIÊN HỆ
                 </Button>
               </Form>

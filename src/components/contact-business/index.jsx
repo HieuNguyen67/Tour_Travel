@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
-import { GREY_COLOR, RED1_COLOR } from "../../constants/color";
-import { BASE_URL } from "../../constants/common";
 import { toast } from "react-toastify";
+import { BASE_URL, RED1_COLOR, GREY_COLOR } from "@/constants";
 
 const ContactModal = ({ accountId, tourId }) => {
     const [show, setShow] = useState(false);

@@ -1,15 +1,15 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
-import head from "../../../assets/image/heading-border.png";
+import head from "@/assets/image/heading-border.png";
 import { Link } from "react-router-dom";
 import { IoIosSend } from "react-icons/io";
-import Header from "../../../components/layout/header";
+import Header from "@/components/layout/header";
 import "./business-link.scss";
 import { useEffect, useState } from "react";
-import LoadingBackdrop from "../../../components/backdrop";
+import LoadingBackdrop from "@/components/backdrop";
 import { IoBusinessSharp } from "react-icons/io5";
 import axios from "axios";
-import { BASE_URL } from "../../../constants/common";
-import imgdefault from "../../../assets/image/6945124.png"
+import { BASE_URL } from "@/constants";
+import imgdefault from "@/assets/image/6945124.png";
 const BusinessLink = () => {
   const [loading, setLoading] = useState(true);
 

@@ -6,10 +6,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { MdAddBusiness } from "react-icons/md";
 import { toast } from "react-toastify";
-import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "../../../constants/color";
-import LoadingBackdrop from "../../../components/backdrop";
-import { useAuth } from "../../../context";
-import { BASE_URL } from "../../../constants/common";
+import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "@/constants";
+import LoadingBackdrop from "@/components/backdrop";
+import { useAuth } from "@/context";
+import { BASE_URL } from "@/constants";
 import { FaUser } from "react-icons/fa";
 import { MdBusinessCenter } from "react-icons/md";
 
@@ -18,12 +18,10 @@ const ListUser = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
- const location = useLocation();
- const{token}=useAuth();
+  const location = useLocation();
+  const { token } = useAuth();
 
- const isHomePage =
-   location.pathname === "/admin/list-customer";
-    
+  const isHomePage = location.pathname === "/admin/list-customer";
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -35,14 +33,11 @@ const ListUser = () => {
             },
           });
         } else {
-          var response = await axios.get(
-            `${BASE_URL}/get-users?role_id=3`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          var response = await axios.get(`${BASE_URL}/get-users?role_id=3`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
         }
 
         setUsers(response.data);
@@ -68,7 +63,7 @@ const ListUser = () => {
       );
     }
   };
- 
+
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
@@ -229,7 +224,9 @@ const ListUser = () => {
                 &nbsp; KHÁCH HÀNG
               </>
             ) : (
-              <><MdBusinessCenter className="fs-3"/> DOANH NGHIỆP</>
+              <>
+                <MdBusinessCenter className="fs-3" /> DOANH NGHIỆP
+              </>
             )}
           </h3>
         </Col>{" "}

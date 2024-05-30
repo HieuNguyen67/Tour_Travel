@@ -6,9 +6,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "yet-another-react-lightbox/styles.css";
 import React from "react";
-import AlbumPicture from "../../../components/AlbumPicture";
-import Header from "../../../components/layout/header";
-
+import AlbumPicture from "@/components/AlbumPicture";
+import Header from "@/components/layout/header";
 
 const Image = () => {
   return (

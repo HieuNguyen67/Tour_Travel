@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { BASE_URL } from "../../../../constants/common";
+import { BASE_URL } from "@/constants";
 import { toast } from "react-toastify";
 import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
 import { Button, Container, Form } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
 import { format } from "date-fns";
 import { IoArrowBackOutline } from "react-icons/io5";
-import LoadingBackdrop from "../../../../components/backdrop";
-import { useAuth } from "../../../../context";
+import LoadingBackdrop from "@/components/backdrop";
+import { useAuth } from "@/context";
 import { MdOutlineContactMail } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 
