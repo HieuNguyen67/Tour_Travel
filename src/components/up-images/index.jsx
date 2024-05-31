@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { BASE_URL } from "@/constants";
 import { BsImageFill } from "react-icons/bs";
 import { FaSave } from "react-icons/fa";
-
+import "./"
 const UpdateImage = () => {
   const { accountId, isLoggedIn, token } = useAuth();
 

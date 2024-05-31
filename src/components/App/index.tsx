@@ -25,18 +25,18 @@ const Apps: React.FC = () => {
   return (
     <>
       <Routes>
-        {role === 1 && (
+        {role == 1 && (
           <>
             <Route path="/customer/*" element={<CustomerRoutes />} />
           </>
         )}
-        {role === 2 && (
+        {role == 2 && (
           <>
             <Route path="/admin/*" element={<AdminRoutes />} />
             <Route path="*" element={<Navigate to="/admin/list-customer" />} />
           </>
         )}
-        {role === 3 && (
+        {role == 3 && (
           <>
             <Route path="/business/*" element={<BusinessRoutes />} />
             <Route path="*" element={<Navigate to="/business/list-tour" />} />

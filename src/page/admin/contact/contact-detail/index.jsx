@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants";
 import { toast } from "react-toastify";
-import { Backdrop, CircularProgress, LinearProgress } from "@mui/material";
 import { Button, Container, Form } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
 import { format } from "date-fns";
@@ -88,10 +87,11 @@ const ContactDetail = () => {
             },
           }
         );
+         console.log("News status and note updated successfully");
+         toast.success("Cập nhật thành công!");
+         navigate("/business/list-contact");
       }
-      console.log("News status and note updated successfully");
-      toast.success("Cập nhật thành công!");
-      navigate("/business/list-contact");
+     
     } catch (error) {
       console.error("Failed to update news status and note:", error);
       setError("Failed to update news status and note");

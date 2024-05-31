@@ -32,7 +32,6 @@ const RegisterUser = () => {
     phone_number: "",
     address: "",
     email: "",
-    id_card: "",
   });
   const { isLoggedIn, token } = useAuth();
 
@@ -207,22 +206,7 @@ const RegisterUser = () => {
                   />
                 </Form.Group>
               </Col>
-              <Col className="col-6">
-                <Form.Group className="mb-4">
-                  <Form.Label className="font-family">
-                    <FaAddressCard className="fs-4" /> CCCD/ CMND{" "}
-                    <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="CCCD/ CMND"
-                    required
-                    name="id_card"
-                    value={formData.id_card}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </Col>
+             
               {error && <p style={{ color: "red" }}>{error}</p>}
               <Button
                 style={{ background: RED_COLOR, border: "0px" }}

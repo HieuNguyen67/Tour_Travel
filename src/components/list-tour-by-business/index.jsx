@@ -128,7 +128,7 @@ const TourListBusiness = ({ accountId }) => {
                       <FaStar key={index} className="text-warning" />
                     ))}
                     <span className="ms-4">
-                      {tour.vehicle === "Máy bay" ? (
+                      {tour.vehicle == "Máy bay" ? (
                         <IoAirplaneSharp className="text-dark" />
                       ) : (
                         <FaCar className="text-dark" />

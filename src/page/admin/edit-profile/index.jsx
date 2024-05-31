@@ -40,11 +40,31 @@ const EditProfile = () => {
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/account/${account_id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        if (role_id == 1) {
+          var response = await axios.get(`${BASE_URL}/account/${account_id}`, {
+            params: { role: 1 },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } else if (role_id == 3) {
+          var response = await axios.get(`${BASE_URL}/account/${account_id}`, {
+            params: { role: 3 },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } else {
+          var response = await axios.get(
+            `${BASE_URL}/account/${account_id}?role=2`,
+            {
+              params: { role: 2 },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        }
         const accountData = response.data;
         setFormData({
           ...accountData,
@@ -288,21 +308,7 @@ const EditProfile = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col className="col-lg-12 col-12">
-                  <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
-                      <FaAddressCard className="fs-4" /> CCCD/ CMND:
-                    </Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="id_card"
-                      value={formData.id_card}
-                      placeholder="chưa cập nhật"
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
+               
               </Row>
             </form>
           </Col>

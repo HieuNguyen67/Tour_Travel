@@ -11,14 +11,14 @@ const MainLayout = ({ children }) => {
    const location = useLocation();
    const isHomePage = location.pathname === "/";
       const isHomePage1 =
-        location.pathname === "/" ||
-        location.pathname === "/introduce" ||
-        location.pathname === "/business-link" ||
-        location.pathname === "/image" ||
-        location.pathname === "/contact" ||
-        location.pathname === "/login" ||
-        location.pathname === "/information/profile" ||
-        location.pathname === "/signup";
+        location.pathname == "/" ||
+        location.pathname == "/introduce" ||
+        location.pathname == "/business-link" ||
+        location.pathname == "/image" ||
+        location.pathname == "/contact" ||
+        location.pathname == "/login" ||
+        location.pathname == "/information/profile" ||
+        location.pathname == "/signup";
 
   return (
     <>

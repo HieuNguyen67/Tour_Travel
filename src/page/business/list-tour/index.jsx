@@ -15,7 +15,7 @@ import { FaStar } from "react-icons/fa";
 import LoadingBackdrop from "@/components/backdrop";
 
 const TourList = () => {
-  const { accountId } = useAuth();
+  const { businessId } = useAuth();
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +32,9 @@ const TourList = () => {
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/list-tours/${accountId}`);
+        const response = await axios.get(
+          `${BASE_URL}/list-tours/${businessId}`
+        );
         const formattedTours = response.data.map((tour) => ({
           ...tour,
           formattedPrice_adult: formatPrice(tour.adult_price),
@@ -48,7 +50,7 @@ const TourList = () => {
     };
 
     fetchTours();
-  }, [accountId]);
+  }, [businessId]);
 
   const renderStarIcon = (params) => {
     const { value } = params;

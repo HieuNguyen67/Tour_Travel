@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/context";
 import { Col } from "react-bootstrap";
-import defaultImage from "@/assets/image/6945124.png";
-import "./load-image.scss";
+import defaultImage from "../../assets/image/6945124.png";
 import { BASE_URL } from "@/constants";
+import "./load-image.scss";
 
-const DisplayImage = () => {
+const DisplayImage: React.FC = () => {
   const { accountId, token } = useAuth();
 
-  const [imageSrc, setImageSrc] = useState("");
-  const [error, setError] = useState("");
+  const [imageSrc, setImageSrc] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -19,8 +19,6 @@ const DisplayImage = () => {
           `${BASE_URL}/account/image/${accountId}`,
           {
             responseType: "blob",
-          },
-          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -31,11 +29,12 @@ const DisplayImage = () => {
       } catch (error) {
         console.error("Lỗi khi lấy hình ảnh:", error);
         setImageSrc(defaultImage);
+        setError("Lỗi khi lấy hình ảnh");
       }
     };
 
     fetchImage();
-  }, [accountId]);
+  }, [accountId, token]);
 
   return (
     <div>
@@ -43,7 +42,7 @@ const DisplayImage = () => {
         <img
           src={imageSrc || defaultImage}
           alt="Hình ảnh của tài khoản"
-          className="col-lg-9 col-12 sizeimgg  rounded-circle shadow"
+          className="col-lg-9 col-12 sizeimga rounded-circle shadow"
           style={{ objectFit: "cover" }}
         />
       </Col>

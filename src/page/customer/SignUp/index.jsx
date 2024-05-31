@@ -30,7 +30,6 @@ const SignUp = () => {
     phone_number: "",
     address: "",
     email: "",
-    id_card: "",
   });
   const { isLoggedIn } = useAuth();
 
@@ -176,20 +175,7 @@ const SignUp = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label className="font-family">
-                <FaAddressCard className="fs-4" /> CCCD/ CMND{" "}
-                <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="CCCD/ CMND"
-                required
-                name="id_card"
-                value={formData.id_card}
-                onChange={handleChange}
-              />
-            </Form.Group>
+           
             <Form.Group className="mb-4">
               <Form.Label className="font-family">
                 <TiLocation className="fs-4" /> Địa chỉ{" "}

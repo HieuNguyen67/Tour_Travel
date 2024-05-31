@@ -20,9 +20,10 @@ import { FaAddressCard } from "react-icons/fa6";
 import { BASE_URL } from "@/constants";
 
 const Profile = () => {
-  const { accountId, isLoggedIn, token } = useAuth();
+  const { accountId, isLoggedIn, token, role } = useAuth();
   const [loading, setLoading] = useState(true);
 
+  
   const navigate = useNavigate();
   useEffect(() => {
     if (isLoggedIn === false) {
@@ -36,7 +37,6 @@ const Profile = () => {
     phone_number: "",
     address: "",
     email: "",
-    id_card: "",
     bank_account_name: "",
     bank_account_number: "",
   });
@@ -44,11 +44,30 @@ const Profile = () => {
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/account/${accountId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        if (role == 1) {
+          var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
+             params: { role: 1 },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        }else if(role==3){
+           var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
+             params: { role: 3 },
+             headers: {
+               Authorization: `Bearer ${token}`,
+             },
+           });
+        }else{ var response = await axios.get(
+          `${BASE_URL}/account/${accountId}?role=2`,
+          {
+            params: { role: 2 },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );}
+
         const accountData = response.data;
         setFormData({
           ...accountData,
@@ -72,18 +91,50 @@ const Profile = () => {
     e.preventDefault();
     try {
       const formattedDate = formatDate(formData.birth_of_date);
-      await axios.put(
-        `${BASE_URL}/account/${accountId}`,
-        {
-          ...formData,
-          birth_of_date: formattedDate,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      if(role==1){
+        await axios.put(
+          `${BASE_URL}/account/${accountId}`,
+          {
+            ...formData,
+            birth_of_date: formattedDate,
           },
-        }
-      );
+          {
+            params: { role: 1 },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+      }else if(role==3){
+        await axios.put(
+          `${BASE_URL}/account/${accountId}`,
+          {
+            ...formData,
+            birth_of_date: formattedDate,
+          },
+          {
+            params: { role: 3 },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }else{
+        await axios.put(
+          `${BASE_URL}/account/${accountId}`,
+          {
+            ...formData,
+            birth_of_date: formattedDate,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }
+      
 
       toast.success("Thông tin tài khoản đã được cập nhật!");
     } catch (error) {
@@ -205,53 +256,45 @@ const Profile = () => {
                     />
                   </Form.Group>
                 </Col>
+                {role != 2 ? (
+                  <>
+                    {" "}
+                    <Col className="col-lg-6 col-12">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
+                        <Form.Label className="font-family  fw-bold">
+                          <RiBankCardFill className="fs-4" /> Tên tài khoản ngân
+                          hàng:
+                        </Form.Label>
+                        <Form.Control
+                          required
+                          type="text"
+                          name="bank_account_name"
+                          value={formData.bank_account_name}
+                          placeholder="chưa cập nhật"
+                          onChange={handleChange}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col className="col-lg-6 col-12">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
+                        <Form.Label className="font-family  fw-bold">
+                          <RiBankCardFill className="fs-4" /> STK ngân hàng:
+                        </Form.Label>
+                        <Form.Control
+                          required
+                          type="number"
+                          name="bank_account_number"
+                          value={formData.bank_account_number}
+                          placeholder="chưa cập nhật"
+                          onChange={handleChange}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </>
+                ) : (
+                  <></>
+                )}
 
-                <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
-                      <RiBankCardFill className="fs-4" /> Tên tài khoản ngân
-                      hàng:
-                    </Form.Label>
-                    <Form.Control
-                      required
-                      type="text"
-                      name="bank_account_name"
-                      value={formData.bank_account_name}
-                      placeholder="chưa cập nhật"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
-                      <RiBankCardFill className="fs-4" /> STK ngân hàng:
-                    </Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="bank_account_number"
-                      value={formData.bank_account_number}
-                      placeholder="chưa cập nhật"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col className="col-lg-12 col-12">
-                  <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
-                      <FaAddressCard className="fs-4" /> CCCD/ CMND:
-                    </Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="id_card"
-                      value={formData.id_card}
-                      placeholder="chưa cập nhật"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                </Col>
                 <Col className="col-12 col-lg-3">
                   <Button
                     variant="warning"

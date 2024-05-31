@@ -26,13 +26,13 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL}/login`, { usernameOrEmail, password });
-      const { token, role, account_id, username } = response.data;
-      login(token, role, username, account_id);
+      const { token, role, account_id, username, business_id, customer_id } = response.data;
+      login(token, role, username, account_id, business_id, customer_id);
       toast.success("Đăng nhập thành công !");
       if (role === 1) navigate("/");
       else if (role === 2) navigate("/admin/list-customer");
       else if (role === 3) navigate("/business/home");
-      else navigate("/guide/home");
+      console.log(response.data);
     } catch (error: any) {
       toast.error("Đăng nhập thất bại !");
       console.error("Đăng nhập không thành công:", error.response.data.message);
