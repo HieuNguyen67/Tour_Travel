@@ -14,7 +14,7 @@ const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { token, accountId } = useAuth();
+  const { token, businessId } = useAuth();
   const location = useLocation();
   const isHomePage = location.pathname === "/admin/contact";
   useEffect(() => {
@@ -28,7 +28,7 @@ const ContactList = () => {
           });
         } else {
           var response = await axios.get(
-            `${BASE_URL}/get-contacts-business/${accountId}`,
+            `${BASE_URL}/get-contacts-business/${businessId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ const ContactList = () => {
     };
 
     fetchContacts();
-  }, [isHomePage, accountId]);
+  }, [isHomePage, businessId]);
   const navigate = useNavigate();
   if (isHomePage) {
     var handleRowClick = (params) => {

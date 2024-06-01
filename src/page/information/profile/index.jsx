@@ -59,7 +59,7 @@ const Profile = () => {
              },
            });
         }else{ var response = await axios.get(
-          `${BASE_URL}/account/${accountId}?role=2`,
+          `${BASE_URL}/account/${accountId}`,
           {
             params: { role: 2 },
             headers: {

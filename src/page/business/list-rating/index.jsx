@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { BiSolidCommentDetail } from "react-icons/bi";
 
 const ToursList = () => {
-  const { accountId } = useAuth();
+  const { businessId } = useAuth();
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +17,7 @@ const ToursList = () => {
     const fetchTours = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/tours-rating/${accountId}`
+          `${BASE_URL}/tours-rating/${businessId}`
         );
         setTours(response.data);
         setLoading(false);
@@ -28,7 +28,7 @@ const ToursList = () => {
     };
 
     fetchTours();
-  }, [accountId]);
+  }, [businessId]);
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {

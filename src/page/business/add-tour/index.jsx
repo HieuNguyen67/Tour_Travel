@@ -28,7 +28,7 @@ import "./add-tour.scss";
 import LoadingBackdrop from "@/components/backdrop";
 
 const AddTourForm = () => {
-  const { accountId, token } = useAuth();
+  const { businessId, token } = useAuth();
   const { tour_id } = useParams();
   const [error, setError] = useState(null);
   const [tourCategories, setTourCategories] = useState([]);
@@ -193,7 +193,7 @@ const AddTourForm = () => {
       }
 
       try {
-        await axios.post(`${BASE_URL}/add-tours/${accountId}`, formData1, {
+        await axios.post(`${BASE_URL}/add-tours/${businessId}`, formData1, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

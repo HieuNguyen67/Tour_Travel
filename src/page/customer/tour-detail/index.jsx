@@ -42,7 +42,7 @@ import ContactModal from "@/components/contact-business";
 
 const TourDetail = () => {
   const { tour_id } = useParams();
-  const { accountId } = useAuth();
+  const { accountId, customerId } = useAuth();
   const [tour, setTour] = useState({});
   const [loading, setLoading] = useState(true);
   const [loading1, setLoading1] = useState(true);
@@ -179,7 +179,7 @@ const TourDetail = () => {
                   </Box>
                 </Col>
                 <Col>
-                  <ReportTour accountId={accountId} tourId={tour_id} />
+                  <ReportTour accountId={customerId} tourId={tour_id} />
                 </Col>
               </Row>
               <p className="">
@@ -200,7 +200,7 @@ const TourDetail = () => {
                 <MdOutlineShoppingCartCheckout className="fs-4" /> Đặt ngay
               </Button>
 
-              <ContactModal accountId={tour.account_id} tourId={tour_id} />
+              <ContactModal accountId={tour.business_id} tourId={tour_id} />
             </Col>
           </Row>
           <div>
@@ -406,7 +406,7 @@ const TourDetail = () => {
           <h2 className="text-center fw-bold my-5">
             <PiShieldCheckBold className="fs-2 mb-2" /> CHÍNH SÁCH TOUR
           </h2>
-          <PolicesTour accountId={tour.account_id} />
+          <PolicesTour businessId={tour.business_id} />
           <h4 className=" fw-bold mt-5 ">
             <BiLike className="fs-2 mb-2" /> ĐÁNH GIÁ TỪ KHÁCH HÀNG
           </h4>
@@ -418,7 +418,7 @@ const TourDetail = () => {
             {tour.account_name}
           </h4>
           <div className="mb-5">
-            <TourListBusiness accountId={tour.account_id} />
+            <TourListBusiness accountId={tour.business_id} />
           </div>
         </div>
       </Container>

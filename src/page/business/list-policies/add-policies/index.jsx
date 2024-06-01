@@ -16,17 +16,14 @@ import { MdDescription } from "react-icons/md";
 const AddPolicyForm = () => {
   const { policy_id } = useParams();
   const { role } = useAuth();
-  const { accountId, token } = useAuth();
+  const { businessId, token } = useAuth();
   const [policytype, setPolicytype] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
   const isHomePage =
-    location.pathname === "/business/add-policies" ||
-    location.pathname === "/admin/add-policies";
-  const isHomePage1 =
-    location.pathname === "/business/add-policies" ||
-    location.pathname === "/business/edit-policy";
+    location.pathname === "/business/add-policies";
+
 
   const navigate = useNavigate();
 
@@ -51,7 +48,7 @@ const AddPolicyForm = () => {
     if (isHomePage) {
       try {
         const response = await axios.post(
-          `${BASE_URL}/add-policies/${accountId}`,
+          `${BASE_URL}/add-policies/${businessId}`,
           {
             policytype,
             description,
@@ -63,8 +60,6 @@ const AddPolicyForm = () => {
           }
         );
         setMessage("Policy added successfully");
-        setPolicytype("");
-        setDescription("");
         toast.success("Thêm thành công!");
         navigate("/business/list-policies");
       } catch (error) {
@@ -79,11 +74,9 @@ const AddPolicyForm = () => {
           description,
         });
         toast.success("Cập nhật thành công!");
-        if (isHomePage1) {
+      
           navigate("/business/list-policies");
-        } else {
-          navigate("/admin/list-policies");
-        }
+        
       } catch (error) {
         console.error("Error updating policy:", error);
         toast.error("Cập nhật thất bại!");

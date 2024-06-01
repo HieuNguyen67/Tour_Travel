@@ -19,16 +19,16 @@ const PoliciesList = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
   const [error, setError] = useState("");
-  const { token, accountId } = useAuth();
+  const { token, businessId, role } = useAuth();
 
   const location = useLocation();
   const isHomePage = location.pathname === "/business/list-policies";
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        if (isHomePage) {
+        if (role==3) {
           var response = await axios.get(
-            `${BASE_URL}/list-policies/${accountId}`
+            `${BASE_URL}/list-policies/${businessId}`
           );
         } else {
           var response = await axios.get(`${BASE_URL}/list-policies`);
@@ -43,7 +43,7 @@ const PoliciesList = () => {
     };
 
     fetchPolicies();
-  }, [isHomePage, accountId]);
+  }, [businessId]);
 
   const handleCheckboxChange = (event, row) => {
     if (event.target.checked) {
@@ -58,9 +58,10 @@ const PoliciesList = () => {
   };
   const handleDeleteSelected = async () => {
     try {
-      await Promise.all(
+      if(role==2){ await Promise.all(
         selectedRows.map(async (row) => {
           await axios.delete(`${BASE_URL}/delete-policy/${row.policy_id}`, {
+            params: { role: 2 },
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -71,7 +72,24 @@ const PoliciesList = () => {
           toast.success("Xoá thành công!");
           window.location.reload();
         })
-      );
+      );}else{
+         await Promise.all(
+           selectedRows.map(async (row) => {
+             await axios.delete(`${BASE_URL}/delete-policy/${row.policy_id}`, {
+               params: { role: 3 },
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+             });
+             setPolicies(
+               policies.filter((item) => item.policy_id !== row.policy_id)
+             );
+             toast.success("Xoá thành công!");
+             window.location.reload();
+           })
+         );
+      }
+     
       setSelectedRows([]);
     } catch (error) {
       toast.success("Xoá thất bại. Vui lòng thử lại !");
@@ -83,14 +101,67 @@ const PoliciesList = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    if (isHomePage) {
+    if (role==3) {
       navigate(`/business/edit-policy/${params.row.policy_id}`);
     } else {
       navigate(`/admin/edit-policy/${params.row.policy_id}`);
     }
   };
+if(role==3){
+var columns = [
+  {
+    field: "checkbox",
+    headerName: "",
+    width: 50,
+    renderCell: (params) => (
+      <input
+        type="checkbox"
+        onChange={(event) => handleCheckboxChange(event, params.row)}
+        style={{ width: "18px", height: "18px" }}
+      />
+    ),
+  },
+  {
+    field: "policy_id",
+    headerName: "ID",
+    width: 60,
+    renderCell: (params) => (
+      <div
+        style={{ cursor: "pointer" }}
+        dangerouslySetInnerHTML={{ __html: params.value }}
+        onClick={() => handleRowClick(params)}
+      />
+    ),
+  },
+  {
+    field: "policytype",
+    headerName: "Loại chính sách",
+    width: 200,
+    renderCell: (params) => (
+      <div
+        className="fw-bold"
+        style={{ cursor: "pointer" }}
+        dangerouslySetInnerHTML={{ __html: params.value }}
+        onClick={() => handleRowClick(params)}
+      />
+    ),
+  },
+  {
+    field: "description",
+    headerName: "Mô tả",
+    width: 800,
+    renderCell: (params) => (
+      <div
+        style={{ cursor: "pointer" }}
+        dangerouslySetInnerHTML={{ __html: params.value }}
+        onClick={() => handleRowClick(params)}
+      />
+    ),
+  },
+];
 
-  const columns = [
+}else{
+  var columns = [
     {
       field: "checkbox",
       headerName: "",
@@ -116,38 +187,40 @@ const PoliciesList = () => {
       ),
     },
     {
-      field: "policytype",
-      headerName: "Loại chính sách",
-      width: 200,
+      field: "days_before_departure",
+      headerName: "Ngày trước khi khởi hành",
+      width: 350,
       renderCell: (params) => (
         <div
           className="fw-bold"
-          style={{ cursor: "pointer" }}
-          dangerouslySetInnerHTML={{ __html: params.value }}
           onClick={() => handleRowClick(params)}
-        />
+        >
+         trong vòng {params.value} ngày trước khởi hành
+        </div>
       ),
     },
     {
-      field: "description",
-      headerName: "Mô tả",
+      field: "refund_percentage",
+      headerName: "% Hoàn tiền",
       width: 800,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
-          dangerouslySetInnerHTML={{ __html: params.value }}
           onClick={() => handleRowClick(params)}
-        />
+        >Hoàn {params.value}%</div>
       ),
     },
   ];
 
+}
+  
   return (
     <>
       {" "}
       <LoadingBackdrop open={loading} />
       <h3 className="fw-bold mb-3">
-        <LuShieldCheck className="fs-3" /> CHÍNH SÁCH
+        <LuShieldCheck className="fs-3" />{" "}
+        {role == 2 ? <>CHÍNH SÁCH HOÀN TIỀN</> : <>CHÍNH SÁCH TOUR</>}
       </h3>
       {isHomePage ? (
         <>
@@ -166,11 +239,7 @@ const PoliciesList = () => {
                   <MdDeleteForever className="fs-4" />
                 </Button>
                 <Link
-                  to={
-                    isHomePage
-                      ? "/business/add-policies"
-                      : "/admin/add-policies"
-                  }
+                  to="/business/add-policies"
                   className="text-decoration-none"
                 >
                   {" "}
@@ -184,7 +253,30 @@ const PoliciesList = () => {
           </Row>
         </>
       ) : (
-        <></>
+        <>
+          {" "}
+          <Row>
+            <Col>
+              {" "}
+              <div className="text-end mb-2">
+                <Button
+                  variant="danger"
+                  onClick={handleDeleteSelected}
+                  className="me-2"
+                >
+                  <MdDeleteForever className="fs-4" />
+                </Button>
+                <Link to="/admin/add-policies" className="text-decoration-none">
+                  {" "}
+                  <Button style={{ background: BLUE_COLOR, border: "0px" }}>
+                    <IoMdAdd />
+                    <IoShieldCheckmark className="fs-4" />
+                  </Button>
+                </Link>
+              </div>
+            </Col>
+          </Row>
+        </>
       )}
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid

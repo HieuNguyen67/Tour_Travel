@@ -85,8 +85,8 @@ const TourListBusiness = ({ accountId }) => {
       >
         {tours.map((tour) => (
           <div key={tour.tour_id} className="p-2 py-3">
-            <a
-            href={`/tour-details/${tour.tour_id}`}
+            <Link
+            to={`/tour-details/${tour.tour_id}`}
               className="text-decoration-none"
             >
               <motion.div
@@ -164,7 +164,7 @@ const TourListBusiness = ({ accountId }) => {
                   </div>
                 </div>
               </motion.div>
-            </a>
+            </Link>
           </div>
         ))}
       </Carousel>

@@ -32,7 +32,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      await axios.post(`${BASE_URL}/admin/send-contact`, formData);
+      await axios.post(`${BASE_URL}/send-contact`, formData);
       setSuccessMessage("Contact sent successfully");
       setFormData({
         fullname: "",
@@ -44,7 +44,7 @@ const Contact = () => {
       toast.success("Gửi thông tin liên hệ thành công !");
     } catch (error) {
       console.error("Failed to send contact:", error);
-      toast.success("Gửi thông tin liên hệ thất bại !");
+      toast.error("Gửi thông tin liên hệ thất bại !");
       setError("Failed to send contact");
     }
   };

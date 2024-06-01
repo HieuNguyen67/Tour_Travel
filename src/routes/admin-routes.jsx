@@ -13,6 +13,7 @@ import ReportList from "@/page/admin/report-tour";
 import ReportDetails from "@/page/admin/report-tour/report-detail";
 import PoliciesList from "@/page/business/list-policies";
 import AddPolicyForm from "@/page/business/list-policies/add-policies";
+import AddPolicyCancellation from "@/page/admin/add-policies-cancellation";
 const AdminRoutes = () => {
   return (
     <>
@@ -38,8 +39,8 @@ const AdminRoutes = () => {
           <Route path="/report" element={<ReportList />} />
           <Route path="/report-detail/:report_id" element={<ReportDetails />} />
           <Route path="/list-policies" element={<PoliciesList />} />
-          <Route path="/add-policies" element={<AddPolicyForm />} />
-          <Route path="/edit-policy/:policy_id" element={<AddPolicyForm />} />
+          <Route path="/add-policies" element={<AddPolicyCancellation />} />
+          <Route path="/edit-policy/:policy_id" element={<AddPolicyCancellation />} />
 
           <Route path="*" element={<Navigate to="/list-customer" />} />
         </Routes>

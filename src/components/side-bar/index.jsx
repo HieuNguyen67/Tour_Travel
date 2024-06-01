@@ -51,7 +51,7 @@ const SidebarLayout = ({ children }) => {
             color: location.pathname === item.link ? "hsl(210, 100%, 42%)" : "",
           }}
         >
-          <span className="me-2 fs-5">{item.icon}</span>
+          <span className="me-3 fs-5">{item.icon}</span>
           <ListItemText primary={item.name} />
           {item.name2 && item.link2 && (
             <MdExpandMore

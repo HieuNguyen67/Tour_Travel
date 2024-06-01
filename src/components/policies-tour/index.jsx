@@ -10,16 +10,16 @@ import { TEXT_MAIN_COLOR } from "@/constants";
 import HTMLContent from "../HTMLContent";
 import "@/page/customer/tour-detail/tour-detail.scss";
 
-const PolicesTour = ({ accountId }) => {
+const PolicesTour = ({ businessId }) => {
   const [policies, setPolicies] = useState([]);
   const [policy_cancellation, setPolicyCancellation] = useState([]);
 
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        if (accountId) {
+        if (businessId) {
           const response = await axios.get(
-            `${BASE_URL}/list-policies/${accountId}`
+            `${BASE_URL}/list-policies/${businessId}`
           );
           setPolicies(response.data);
         }
@@ -29,20 +29,20 @@ const PolicesTour = ({ accountId }) => {
     };
 
     fetchPolicies();
-  }, [accountId]);
+  }, [businessId]);
 
-  useEffect(() => {
-    const fetchPolicies = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/list-policies`);
-        setPolicyCancellation(response.data[0]);
-      } catch (error) {
-        console.error("Error fetching policies:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPolicies = async () => {
+  //     try {
+  //       const response = await axios.get(`${BASE_URL}/list-policies`);
+  //       setPolicyCancellation(response.data[0]);
+  //     } catch (error) {
+  //       console.error("Error fetching policies:", error);
+  //     }
+  //   };
 
-    fetchPolicies();
-  }, []);
+  //   fetchPolicies();
+  // }, []);
 
   return (
     <>

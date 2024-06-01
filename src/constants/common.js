@@ -19,7 +19,35 @@ import nhatban from "@/assets/image/nhatban.jpg";
 import nga from "@/assets/image/nga.jpg";
 import uc from "@/assets/image/uc.jpg";
 import thailan from "@/assets/image/thailan.jpg";
+import Badge from "@mui/material/Badge";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
+
+const BadgeContent = () => {
+  const [pendingCount, setPendingCount] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/pending-count-status-contact`
+        );
+        setPendingCount(response.data.count);
+      } catch (error) {
+        console.error("Error fetching pending count:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <Badge badgeContent={pendingCount} color="secondary">
+      <MdContactMail />
+    </Badge>
+  );
+};
 const HEADER = [
   { id: 1, name: "TRANG CHỦ", link: "/" },
   { id: 2, name: "GIỚI THIỆU", link: "/introduce" },
@@ -27,6 +55,7 @@ const HEADER = [
   { id: 4, name: "TIN TỨC", link: "/news/1/Tin tức du lịch" },
   { id: 5, name: "LIÊN HỆ", link: "/contact" },
 ];
+
 const ADMIN = [
   {
     id: 1,
@@ -52,7 +81,12 @@ const ADMIN = [
     name2: "THÊM TIN TỨC",
     link2: "/admin/add-news",
   },
-  { id: 4, icon: <MdContactMail />, name: "LIÊN HỆ", link: "/admin/contact" },
+  {
+    id: 4,
+    icon: <BadgeContent />,
+    name: "LIÊN HỆ",
+    link: "/admin/contact",
+  },
   { id: 5, icon: <MdReportProblem />, name: "TỐ CÁO", link: "/admin/report" },
   {
     id: 6,
@@ -61,6 +95,7 @@ const ADMIN = [
     link: "/admin/list-policies",
   },
 ];
+
 const BUSINESS = [
   {
     id: 1,

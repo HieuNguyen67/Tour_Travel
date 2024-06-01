@@ -27,6 +27,7 @@ const ChangePassword = () => {
   const handleChange = (e) => {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,6 +49,7 @@ const ChangePassword = () => {
         newPassword: "",
         confirmPassword: "",
       });
+      navigate("/information/profile");
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message);
