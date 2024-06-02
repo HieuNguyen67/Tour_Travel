@@ -225,8 +225,8 @@ var columns = [
       {isHomePage ? (
         <>
           <Row>
-            <Col>
-              <p>(Không bao gồm chính sách huỷ tour)</p>
+            <Col >
+              <p>(Không bao gồm chính sách huỷ tour hoàn tiền)</p>
             </Col>
             <Col>
               {" "}

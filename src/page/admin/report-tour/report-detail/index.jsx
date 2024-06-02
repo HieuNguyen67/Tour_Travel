@@ -57,6 +57,7 @@ const ReportDetails = () => {
       console.log("Report status updated successfully");
       toast.success("Cập nhật thành công!");
       navigate("/admin/report");
+      window.location.reload();
     } catch (error) {
       console.error("Failed to update Report status :", error);
       setError("Failed to update Report status ");

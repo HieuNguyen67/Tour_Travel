@@ -17,7 +17,8 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiBankCardFill } from "react-icons/ri";
 import { FaAddressCard } from "react-icons/fa6";
-import { BASE_URL } from "@/constants";
+import { BASE_URL, RED1_COLOR } from "@/constants";
+import { RiBankFill } from "react-icons/ri";
 
 const Profile = () => {
   const { accountId, isLoggedIn, token, role } = useAuth();
@@ -39,7 +40,24 @@ const Profile = () => {
     email: "",
     bank_account_name: "",
     bank_account_number: "",
+    bank_name:""
   });
+    const [banknames, setBanknames] = useState([]);
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://api.vietqr.io/v2/banks");
+        setBanknames(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchAccountData = async () => {
@@ -256,9 +274,48 @@ const Profile = () => {
                     />
                   </Form.Group>
                 </Col>
+                {role == 1 ? (
+                  <>
+                    <p className="my-3 mb-4">
+                      (Quý khách vui lòng cung cấp STK Ngân hàng để thuận tiện
+                      cho quá trình chuyển trả/ hoàn tiền)
+                    </p>
+                  </>
+                ) : role ==3 ?(
+                  <>
+                    {" "}
+                    <p className="my-3 mb-4">
+                      (Vui lòng cung cấp STK Ngân hàng để thuận tiện cho quá
+                      trình chuyển trả/ hoàn tiền)
+                    </p>
+                  </>
+                ):(<></>)}
                 {role != 2 ? (
                   <>
                     {" "}
+                    <Col className="col-lg-12 col-12">
+                      {" "}
+                      <Form.Group className="mb-4">
+                        <Form.Label className="font-family fw-bold">
+                          <RiBankFill className="fs-4" /> Chọn ngân hàng{" "}
+                          <span className="text-danger">(*) </span>:
+                        </Form.Label>
+                        <Form.Select
+                          aria-label="Default select example"
+                          value={formData.bank_name}
+                          onChange={handleChange}
+                          name="bank_name"
+                          required
+                        >
+                          <option value="">Chọn ngân hàng</option>
+                          {banknames.map((item) => (
+                            <option key={item.id} value={item.name}>
+                              {item.name} - ({item.code})
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
                     <Col className="col-lg-6 col-12">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className="font-family  fw-bold">
@@ -297,7 +354,7 @@ const Profile = () => {
 
                 <Col className="col-12 col-lg-3">
                   <Button
-                    variant="warning"
+                    style={{ background: RED1_COLOR, border: "0px" }}
                     type="submit"
                     className="py-3  col-12 mt-2"
                   >

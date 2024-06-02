@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BASE_URL } from "@/constants";
+import { BASE_URL, TEXT_RED_COLOR } from "@/constants";
 import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import Accordion from "@mui/material/Accordion";
@@ -31,18 +31,18 @@ const PolicesTour = ({ businessId }) => {
     fetchPolicies();
   }, [businessId]);
 
-  // useEffect(() => {
-  //   const fetchPolicies = async () => {
-  //     try {
-  //       const response = await axios.get(`${BASE_URL}/list-policies`);
-  //       setPolicyCancellation(response.data[0]);
-  //     } catch (error) {
-  //       console.error("Error fetching policies:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchPolicies = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/list-policies`);
+        setPolicyCancellation(response.data);
+      } catch (error) {
+        console.error("Error fetching policies:", error);
+      }
+    };
 
-  //   fetchPolicies();
-  // }, []);
+    fetchPolicies();
+  }, []);
 
   return (
     <>
@@ -59,11 +59,31 @@ const PolicesTour = ({ businessId }) => {
                   className="fw-bold sizetext"
                   style={{ color: TEXT_MAIN_COLOR }}
                 >
-                  {policy_cancellation.policytype}
+                  Lưu ý khi huỷ tour
                 </span>
               </AccordionSummary>
               <AccordionDetails style={{ color: TEXT_MAIN_COLOR }}>
-                <HTMLContent htmlContent={policy_cancellation.description} />
+                {policy_cancellation.map((item, index) => (
+                  <>
+                    <div key={item.index}>
+                      <p>
+                        - Nếu huỷ chuyến du lịch trong vòng{" "}
+                        <span
+                          className="fw-bold"
+                        >
+                          {item.days_before_departure}
+                        </span>{" "}
+                        ngày trước khởi hành: Hoàn{" "}
+                        <span
+                          className="fw-bold"
+                        >
+                          {item.refund_percentage}%
+                        </span>{" "}
+                        giá vé
+                      </p>
+                    </div>
+                  </>
+                ))}
               </AccordionDetails>
             </Accordion>
           </div>

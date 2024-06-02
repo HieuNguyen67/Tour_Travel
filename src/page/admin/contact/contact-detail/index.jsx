@@ -75,6 +75,7 @@ const ContactDetail = () => {
         console.log("News status and note updated successfully");
         toast.success("Cập nhật thành công!");
         navigate("/admin/contact");
+        window.location.reload();
       } else {
         await axios.put(
           `${BASE_URL}/update-status-contact-business/${contact_id}`,
@@ -90,6 +91,7 @@ const ContactDetail = () => {
          console.log("News status and note updated successfully");
          toast.success("Cập nhật thành công!");
          navigate("/business/list-contact");
+          window.location.reload();
       }
      
     } catch (error) {

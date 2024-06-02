@@ -11,6 +11,8 @@ import { CgProfile } from "react-icons/cg";
 import Header from "@/components/layout/header";
 import { BASE_URL } from "@/constants";
 import { useAuth } from "@/context";
+import { FormControl, InputLabel, Input, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
+import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -19,8 +21,13 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleClose = () => setShow(false);
+
+  const handleToggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +39,6 @@ const Login: React.FC = () => {
       if (role === 1) navigate("/");
       else if (role === 2) navigate("/admin/list-customer");
       else if (role === 3) navigate("/business/home");
-      console.log(response.data);
     } catch (error: any) {
       toast.error("Đăng nhập thất bại !");
       console.error("Đăng nhập không thành công:", error.response.data.message);
@@ -50,7 +56,11 @@ const Login: React.FC = () => {
   return (
     <>
       <Header />
-      <motion.div initial={{ opacity: 0, y: 98 }} animate={{ opacity: 1, y: 1 }} transition={{ type: "spring", duration: 0.6 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 98 }}
+        animate={{ opacity: 1, y: 1 }}
+        transition={{ type: "spring", duration: 0.6 }}
+      >
         <Container className="mt-5 mx-auto pt-lg-5 pt-3 ">
           <div className="mt-5">
             <Row>
@@ -81,19 +91,38 @@ const Login: React.FC = () => {
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group className="mb-4" controlId="formBasicPassword">
-                <Form.Label className="font-family">
-                  <MdOutlinePassword className="fs-4" /> Password <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control
-                  type="password"
+              <Form.Label className="font-family">
+                <MdOutlinePassword className="fs-4" /> Password{" "}
+                <span className="text-danger">*</span>
+              </Form.Label>
+              <FormControl variant="outlined" fullWidth>
+                
+                <OutlinedInput
+                  size="small"
                   placeholder="Password"
-                  required
+                  id="outlined-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  sx={{background:"white"}}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleToggleShowPassword} edge="end">
+                        {showPassword ? (
+                          <MdOutlineVisibilityOff />
+                        ) : (
+                          <MdOutlineVisibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                 />
-              </Form.Group>
-              <Button variant="warning" type="submit" className="col-12 mt-4 font-family">
+              </FormControl>
+              <Button
+                variant="warning"
+                type="submit"
+                className="col-12 mt-4 font-family"
+              >
                 <span className="font-family">
                   Đăng Nhập <IoLogInSharp className="fs-4" />
                 </span>
@@ -106,7 +135,10 @@ const Login: React.FC = () => {
               <Col></Col>
               <Col className="col-12">
                 <h6 className="text-center text-break  ">
-                  <NavLink to="/" className=" link-dark text-danger decorate font-family">
+                  <NavLink
+                    to="/"
+                    className=" link-dark text-danger decorate font-family"
+                  >
                     <IoChevronBackSharp style={{ fontSize: 20 }} />
                     Go back
                   </NavLink>
@@ -123,7 +155,10 @@ const Login: React.FC = () => {
                 <Col>
                   <h6 className="text-secondary  text-center text-break fw-bold font-family">
                     Bạn không có tài khoản?
-                    <NavLink to="/SignUp" className=" link-dark text-danger decorate ">
+                    <NavLink
+                      to="/SignUp"
+                      className=" link-dark text-danger decorate "
+                    >
                       {" "}
                       Đăng ký
                     </NavLink>

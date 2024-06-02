@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "@/context";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { ImProfile } from "react-icons/im";
+import { TbCoinFilled } from "react-icons/tb";
 
 const InformationLayout = ({ children }) => {
   const { role } = useAuth();
@@ -89,6 +90,23 @@ const InformationLayout = ({ children }) => {
                     >
                       {" "}
                       <span className="text-dark">ĐƠN ĐẶT TOUR</span>
+                    </NavLink>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <NavLink
+                      className="nav-link "
+                      to="/information/coupons"
+                      style={({ isActive }) => {
+                        return {
+                          fontWeight: isActive ? "bold" : "",
+                          borderBottom: isActive ? "3px solid #f3c324" : "",
+                        };
+                      }}
+                    >
+                      {" "}
+                      <span className="text-dark">
+                        <TbCoinFilled className="fs-3 text-warning" /> XU
+                      </span>
                     </NavLink>
                   </Nav.Item>
                 </>

@@ -19,35 +19,9 @@ import nhatban from "@/assets/image/nhatban.jpg";
 import nga from "@/assets/image/nga.jpg";
 import uc from "@/assets/image/uc.jpg";
 import thailan from "@/assets/image/thailan.jpg";
-import Badge from "@mui/material/Badge";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import PendingBadge from "@/components/pending-badge";
 
 
-const BadgeContent = () => {
-  const [pendingCount, setPendingCount] = useState(0);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/pending-count-status-contact`
-        );
-        setPendingCount(response.data.count);
-      } catch (error) {
-        console.error("Error fetching pending count:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return (
-    <Badge badgeContent={pendingCount} color="secondary">
-      <MdContactMail />
-    </Badge>
-  );
-};
 const HEADER = [
   { id: 1, name: "TRANG CHỦ", link: "/" },
   { id: 2, name: "GIỚI THIỆU", link: "/introduce" },
@@ -74,7 +48,12 @@ const ADMIN = [
   },
   {
     id: 3,
-    icon: <ImNewspaper />,
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-news`}
+        icon={<ImNewspaper />}
+      />
+    ),
     name: "TIN TỨC",
     link: "/admin/news",
     icon2: <IoMdAddCircle />,
@@ -83,11 +62,26 @@ const ADMIN = [
   },
   {
     id: 4,
-    icon: <BadgeContent />,
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-contact`}
+        icon={<MdContactMail />}
+      />
+    ),
     name: "LIÊN HỆ",
     link: "/admin/contact",
   },
-  { id: 5, icon: <MdReportProblem />, name: "TỐ CÁO", link: "/admin/report" },
+  {
+    id: 5,
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-report`}
+        icon={<MdReportProblem />}
+      />
+    ),
+    name: "TỐ CÁO",
+    link: "/admin/report",
+  },
   {
     id: 6,
     icon: <IoShieldCheckmark />,
@@ -100,7 +94,9 @@ const BUSINESS = [
   {
     id: 1,
     name: "TOUR",
-    icon: <MdTour />,
+    icon: (
+      <PendingBadge endpoint={`/pending-count-status-tour`} icon={<MdTour />} />
+    ),
     link: "/business/list-tour",
     icon2: <IoMdAddCircle />,
     name2: "THÊM TOUR",
@@ -109,7 +105,12 @@ const BUSINESS = [
   { id: 2, icon: <FaListAlt />, name: "ORDER", link: "/business/order-tour" },
   {
     id: 3,
-    icon: <MdContactMail />,
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-contact-business`}
+        icon={<MdContactMail />}
+      />
+    ),
     name: "LIÊN HỆ TƯ VẤN",
     link: "/business/list-contact",
   },

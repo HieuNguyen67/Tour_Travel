@@ -31,7 +31,10 @@ const AddPolicyForm = () => {
     const fetchPolicy = async () => {
       if (!isHomePage) {
         try {
-          const response = await axios.get(`${BASE_URL}/policies/${policy_id}`);
+          const response = await axios.get(
+            `${BASE_URL}/policies/${policy_id}`,
+            { params: { role: 3 } }
+          );
           setPolicytype(response.data.policytype);
           setDescription(response.data.description);
         } catch (error) {
@@ -69,10 +72,14 @@ const AddPolicyForm = () => {
       }
     } else {
       try {
-        await axios.put(`${BASE_URL}/policies/${policy_id}`, {
-          policytype,
-          description,
-        });
+        await axios.put(
+          `${BASE_URL}/policies/${policy_id}`,
+          {
+            policytype,
+            description,
+          },
+          { params: { role: 3 } }
+        );
         toast.success("Cập nhật thành công!");
       
           navigate("/business/list-policies");

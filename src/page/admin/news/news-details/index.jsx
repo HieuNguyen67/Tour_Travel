@@ -90,6 +90,7 @@ const NewsDetail = () => {
       console.log("News status and note updated successfully");
       toast.success("Cập nhật thành công!");
       navigate("/admin/news");
+      window.location.reload();
     } catch (error) {
       console.error("Failed to update news status and note:", error);
       setError("Failed to update news status and note");

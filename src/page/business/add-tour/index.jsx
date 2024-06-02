@@ -224,6 +224,7 @@ const AddTourForm = () => {
         toast.success("Chỉnh sửa Tour thành công!");
         navigate("/business/list-tour");
         setLoading(false);
+        window.location.reload();
       } catch (error) {
         console.error("Error updating tour:", error);
         toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
