@@ -5,7 +5,7 @@ import head from "@/assets/image/heading-border.png";
 import { Button } from "react-bootstrap";
 import { IoIosSend } from "react-icons/io";
 import Header from "@/components/layout/header";
-import { HiIdentification } from "react-icons/hi2";
+import profileimg from "@/assets/image/profile.png";
 
 const Introduce = () => {
   return (
@@ -19,7 +19,12 @@ const Introduce = () => {
       >
         <Container className="mt-5 pt-5">
           <h2 className="mt-5 fw-bold">
-            <HiIdentification className="fs-1 mb-lg-2 mb-1" /> VỀ TOUR TRAVEL
+            <img
+              src={profileimg}
+              className="mb-2"
+              style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
+            />{" "}
+            VỀ TOUR TRAVEL
           </h2>
           <img src={head} className="col-lg-1 col-3" />
           <h4 className="fw-bold mt-5">1. Chúng tôi là TOUR TRAVEL</h4>

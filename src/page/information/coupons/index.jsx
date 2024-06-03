@@ -1,5 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import CouponsList from "@/components/modal-history-coupons";
+import CheckIn from "@/components/daily-checkin";
 
 const Coupons=()=>{
     return (
@@ -7,6 +8,7 @@ const Coupons=()=>{
         <Container className="my-3">
           <CouponsList />
           <hr />
+          <CheckIn/>
         </Container>
       </>
     );

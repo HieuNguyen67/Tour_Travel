@@ -3,19 +3,22 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Home.scss";
 import video from "@/assets/video/video.mp4";
 import Footer from "@/components/layout/footer";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop } from "@mui/material";
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Header from "@/components/layout/header";
 import LinearProgress from "@mui/material/LinearProgress";
 import { Link, useNavigate } from "react-router-dom";
 import TabSearch from "@/components/tab-search";
 import ListTourVietnam from "@/components/list-tour-vietnam";
-import { RED1_COLOR, TEXT_RED_COLOR } from "@/constants";
+import { RED1_COLOR,  } from "@/constants";
 import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
-import { DESTINATION_LIKE } from "@/constants";
 import DestinationFavourite from "@/components/destination-favourite";
 import ListNewsHome from "@/components/list-news-home";
+import tourimg from "@/assets/image/tour.png";
+import locationimg from "@/assets/image/location.png";
+import newsimg from "@/assets/image/news.png";
+
 
 const Home = () => {
   const videoRef = useRef(null);
@@ -96,6 +99,11 @@ const Home = () => {
         <Container>
           <TabSearch />
           <h3 className="fw-bold mt-5 px-2 ">
+            <img
+              src={tourimg}
+              className="mb-2"
+              style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
+            />{" "}
             KHÁM PHÁ TOUR DU LỊCH TRONG NƯỚC
           </h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
@@ -115,6 +123,11 @@ const Home = () => {
           </div>
 
           <h3 className="fw-bold mt-5 px-2">
+            <img
+              src={tourimg}
+              className="mb-2"
+              style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
+            />{" "}
             KHÁM PHÁ TOUR DU LỊCH NƯỚC NGOÀI
           </h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
@@ -133,11 +146,26 @@ const Home = () => {
             </motion.div>
           </div>
 
-          <h3 className="fw-bold mt-5 px-2">ĐỊA ĐIỂM ĐẾN YÊU THÍCH</h3>
+          <h3 className="fw-bold mt-5 px-2">
+            {" "}
+            <img
+              src={locationimg}
+              className="mb-2"
+              style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
+            />{" "}
+            ĐỊA ĐIỂM ĐẾN YÊU THÍCH
+          </h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
           <DestinationFavourite />
 
-          <h3 className="fw-bold mt-5 px-2">BLOG</h3>
+          <h3 className="fw-bold mt-5 px-2">
+            <img
+              src={newsimg}
+              className="mb-2"
+              style={{ width: "3rem", height: "3rem", objectFit: "cover" }}
+            />{" "}
+            BLOG
+          </h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
           <ListNewsHome />
           <div className="text-center mb-5 pb-lg-5">

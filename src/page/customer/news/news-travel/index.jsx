@@ -10,9 +10,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import LoadingBackdrop from "@/components/backdrop";
-import { ImNewspaper } from "react-icons/im";
 import { BASE_URL } from "@/constants";
-
+import newsimg from "@/assets/image/news.png"
 const truncateString = (str, maxLength) => {
   if (str.length <= maxLength) {
     return str;
@@ -98,7 +97,7 @@ const NewsTravel = () => {
     <>
       <LoadingBackdrop open={loading} />
       <h1 className="text-center my-lg-5 my-3 fw-bold">
-        <ImNewspaper className="fs-1" />
+        <img src={newsimg} className="mb-2" style={{width:'3rem',height:'3rem', objectFit:'cover'}}/>
         {isHomePage ? <> TIN TỨC DU LỊCH</> : <> CẨM NANG DU LỊCH</>}
       </h1>
       <Row className="row-cols-3 my-4">

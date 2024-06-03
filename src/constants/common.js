@@ -20,6 +20,7 @@ import nga from "@/assets/image/nga.jpg";
 import uc from "@/assets/image/uc.jpg";
 import thailan from "@/assets/image/thailan.jpg";
 import PendingBadge from "@/components/pending-badge";
+import coin from "@/assets/image/coin.png";
 
 
 const HEADER = [
@@ -189,7 +190,15 @@ const DESTINATION_FAVOURITE_FOREIGN = [
     link: "/list-tour-foreign/2?destinationLocation=Australia",
   },
 ];
-
+const CHECKINDAILY = [
+  { id: 1, point: "1000", icon: coin , date: "Ngày 1" },
+  { id: 2, point: "1000", icon:  coin , date: "Ngày 2" },
+  { id: 3, point: "1000", icon:  coin , date: "Ngày 3" },
+  { id: 4, point: "1000", icon:  coin , date: "Ngày 4" },
+  { id: 5, point: "1000", icon:  coin , date: "Ngày 5" },
+  { id: 6, point: "1000", icon:  coin , date: "Ngày 6" },
+  { id: 7, point: "1000", icon:  coin , date: "Ngày 7" },
+];
 const BASE_URL = "http://localhost:5020/v1/api/admin";
 export {
   HEADER,
@@ -198,4 +207,5 @@ export {
   BUSINESS,
   DESTINATION_FAVOURITE,
   DESTINATION_FAVOURITE_FOREIGN,
+  CHECKINDAILY,
 };

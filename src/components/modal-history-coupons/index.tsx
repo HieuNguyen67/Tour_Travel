@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Container,
-  Typography,
-  CircularProgress,
-  Box,
-  Button,
-  Modal,
-} from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { useAuth } from "@/context";
 import { BASE_URL } from "@/constants";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Modal, Row } from "react-bootstrap";
+import Pagination from "@mui/lab/Pagination";
 import coin from "@/assets/image/coin.png";
+import coin1 from "@/assets/image/coin1.png";
+import { TbCoinFilled } from "react-icons/tb";
+import { format } from "date-fns";
 import LoadingBackdrop from "../backdrop";
 
 interface Coupon {
@@ -21,7 +18,7 @@ interface Coupon {
   description: string;
   created_at: string;
   expires_at: string;
-  is_used: boolean;
+  is_used: string;
 }
 
 interface CouponResponse {
@@ -29,32 +26,28 @@ interface CouponResponse {
   totalUsedPoints: number;
 }
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-  maxHeight: "80vh",
-  overflowY: "auto",
-};
-
-const CouponsList: React.FC= () => {
-    const{customerId}=useAuth();
+const CouponsList: React.FC = () => {
+  const { customerId } = useAuth();
   const [coupons, setCoupons] = useState<Coupon[]>([]);
-  const [totalUsedPoints, settotalUsedPoints] = useState<number>(0);
+  const [totalUsedPoints, setTotalUsedPoints] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [open, setOpen] = useState<boolean>(false);
+  const [show, setShow] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const couponsPerPage = 5;
 
   const handleOpen = () => {
-    setOpen(true);
+    setShow(true);
   };
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setShow(false);
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
 
   useEffect(() => {
     const fetchCoupons = async () => {
@@ -63,7 +56,7 @@ const CouponsList: React.FC= () => {
           `${BASE_URL}/coupons/${customerId}`
         );
         setCoupons(response.data.coupons);
-        settotalUsedPoints(response.data.totalUsedPoints);
+        setTotalUsedPoints(response.data.totalUsedPoints);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching coupons:", error);
@@ -78,12 +71,16 @@ const CouponsList: React.FC= () => {
     return <LoadingBackdrop open={loading} />;
   }
 
+  const indexOfLastCoupon = currentPage * couponsPerPage;
+  const indexOfFirstCoupon = indexOfLastCoupon - couponsPerPage;
+  const currentCoupons = coupons.slice(indexOfFirstCoupon, indexOfLastCoupon);
+
   return (
     <>
       <Row>
         <Col className="col-lg-1 col-4">
           <img
-            src={coin}
+            src={coin1}
             style={{
               width: "7rem",
               height: "7rem",
@@ -92,7 +89,7 @@ const CouponsList: React.FC= () => {
           />
         </Col>
         <Col>
-          <p className=" mt-4">
+          <p className="ms-3 mt-4">
             <span className="fs-4 fw-bold text-warning">
               {totalUsedPoints} Xu đang có
             </span>
@@ -107,38 +104,63 @@ const CouponsList: React.FC= () => {
           </p>
         </Col>
       </Row>
-      <div style={{ marginTop: 20 }}>
-        <Modal open={open} onClose={handleClose}>
-          <Box sx={style}>
-            <Typography variant="h6" gutterBottom>
-              All Coupons
-            </Typography>
-            {coupons.map((coupon) => (
-              <Box
-                key={coupon.coupon_id}
-                border={1}
-                borderRadius={4}
-                padding={2}
-                marginBottom={2}
-                boxShadow={1}
-              >
-                <Typography variant="h6">
-                  Coupon ID: {coupon.coupon_id}
-                </Typography>
-                <Typography>Points: {coupon.points}</Typography>
-                <Typography>Description: {coupon.description}</Typography>
-                <Typography>
-                  Created At: {new Date(coupon.created_at).toLocaleDateString()}
-                </Typography>
-                <Typography>
-                  Expires At: {new Date(coupon.expires_at).toLocaleDateString()}
-                </Typography>
-                <Typography>Used: {coupon.is_used ? "Yes" : "No"}</Typography>
-              </Box>
-            ))}
+      <Modal show={show} onHide={handleClose} centered size="lg">
+        <Modal.Header closeButton>
+          <TbCoinFilled className="fs-1 text-warning" />
+        </Modal.Header>
+        <Modal.Body>
+          {currentCoupons.map((item) => (
+            <div key={item.coupon_id}>
+              <Row>
+                <Col className="col-lg-2">
+                  <img
+                    src={coin}
+                    style={{
+                      width: "5rem",
+                      height: "5rem",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Col>
+                <Col className="col-lg-8 col-12">
+                  <p className="mt-lg-0 mt-2">
+                    <span className="fs-5 fw-bold">
+                      Nhận xu từ {item.description}
+                    </span>
+                    <br />
+                    <span
+                      style={{ fontSize: "0.9rem" }}
+                      className="text-secondary"
+                    >
+                      Hạn sử dụng:&nbsp;
+                      {format(new Date(item.created_at), "dd/MM/yyyy")} -{" "}
+                      {format(new Date(item.expires_at), "dd/MM/yyyy")}
+                    </span>
+                    <br />
+                    <span>
+                      {item.is_used == "Unused" ? "Chưa dùng" : "Đã dùng"}
+                    </span>
+                  </p>
+                </Col>
+                <Col>
+                  <p className="fs-4 text-warning mt-lg-4">+ {item.points}</p>
+                </Col>
+              </Row>
+              <hr />
+            </div>
+          ))}
+          <Box display="flex" justifyContent="center" mt={2}>
+            <Pagination
+              variant="outlined"
+              shape="rounded"
+              count={Math.ceil(coupons.length / couponsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
           </Box>
-        </Modal>
-      </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

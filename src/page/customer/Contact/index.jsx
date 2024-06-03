@@ -9,9 +9,9 @@ import Header from "@/components/layout/header";
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { FcInfo } from "react-icons/fc";
-import { MdOutlineContactMail } from "react-icons/md";
 import { BASE_URL } from "@/constants";
+import infoimg from "@/assets/image/info.png";
+import contactimg from "@/assets/image/contact.png";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -62,7 +62,16 @@ const Contact = () => {
             <Col className="col-md-5 col-12">
               <p>
                 <h3 className="fw-bold">
-                  <FcInfo className="fs-2 mb-lg-2 mb-1" /> THÔNG TIN LIÊN HỆ
+                  <img
+                    src={infoimg}
+                    className="mb-2"
+                    style={{
+                      width: "3rem",
+                      height: "3rem",
+                      objectFit: "cover",
+                    }}
+                  />{" "}
+                  THÔNG TIN LIÊN HỆ
                 </h3>
                 <hr className="hr" />
 
@@ -81,8 +90,16 @@ const Contact = () => {
               <p>
                 <h3 className="fw-bold">
                   {" "}
-                  <MdOutlineContactMail className="fs-2 mb-lg-2 mb-1" /> LIÊN HỆ
-                  CHÚNG TÔI
+                  <img
+                    src={contactimg}
+                    className="mb-2"
+                    style={{
+                      width: "6rem",
+                      height: "3rem",
+                      objectFit: "cover",
+                    }}
+                  />{" "}
+                  LIÊN HỆ CHÚNG TÔI
                 </h3>
                 <hr className="hr" />
               </p>
