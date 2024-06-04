@@ -26,6 +26,7 @@ import { format } from "date-fns";
 import { BLUE_COLOR, RED_COLOR } from "@/constants";
 import "./add-tour.scss";
 import LoadingBackdrop from "@/components/backdrop";
+import tourimg from "@/assets/image/tour.png";
 
 const AddTourForm = () => {
   const { businessId, token } = useAuth();
@@ -289,10 +290,9 @@ const AddTourForm = () => {
           <IoArrowBackOutline className="fs-3" />
         </Link>
         <h3 className="fw-bold my-3">
-          <MdTour className="fs-2" />{" "}
+          <img src={tourimg} className="mb-2 location" />{" "}
           {isHomePage ? <>THÊM TOUR</> : <>CHỈNH SỬA TOUR</>}
         </h3>
-        <br />
         <div>
           <Row className="mb-lg-4">
             {image.map((image, index) => (

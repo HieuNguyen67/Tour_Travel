@@ -4,14 +4,14 @@ import { format } from "date-fns";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { MdAddBusiness } from "react-icons/md";
-import { toast } from "react-toastify";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
 import { BASE_URL } from "@/constants";
-import { FaUser } from "react-icons/fa";
-import { MdBusinessCenter } from "react-icons/md";
+import userimg from "@/assets/image/profile1.png";
+import businessimg from "@/assets/image/business1.png";
+import addimg from "@/assets/image/add.png";
+
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -220,12 +220,27 @@ const ListUser = () => {
             {isHomePage ? (
               <>
                 {" "}
-                <FaUser className="fs-4" />
-                &nbsp; KHÁCH HÀNG
+                <img
+                  src={userimg}
+                  style={{
+                    width: "3.5rem",
+                    height: "3.5rem",
+                    objectFit: "cover",
+                  }}
+                />{" "}
+                KHÁCH HÀNG
               </>
             ) : (
               <>
-                <MdBusinessCenter className="fs-3" /> DOANH NGHIỆP
+                <img
+                  src={businessimg}
+                  style={{
+                    width: "3.5rem",
+                    height: "3.5rem",
+                    objectFit: "cover",
+                  }}
+                />{" "}
+                DOANH NGHIỆP
               </>
             )}
           </h3>
@@ -241,10 +256,15 @@ const ListUser = () => {
                   to="/admin/register-user/3"
                   className="text-decoration-none"
                 >
-                  {" "}
-                  <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                    <MdAddBusiness className="fs-3" />
-                  </Button>
+                  <img
+                    src={addimg}
+                    className="mb-2"
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      objectFit: "cover",
+                    }}
+                  />
                 </Link>
               </>
             )}

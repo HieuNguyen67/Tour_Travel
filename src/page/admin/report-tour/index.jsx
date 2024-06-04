@@ -7,7 +7,7 @@ import { GREEN_COLOR, RED1_COLOR, YELLOW_COLOR } from "@/constants";
 import { Button } from "react-bootstrap";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { MdReportProblem } from "react-icons/md";
+import reportimg from "@/assets/image/report.png";
 
 const ReportList = () => {
   const [reports, setReports] = useState([]);
@@ -144,7 +144,15 @@ const ReportList = () => {
       {" "}
       <LoadingBackdrop open={loading} />
       <h3 className="fw-bold mb-3">
-        <MdReportProblem className="fs-2 " /> TỐ CÁO
+        <img
+          src={reportimg}
+          style={{
+            width: "3rem",
+            height: "3rem",
+            objectFit: "cover",
+          }}
+        />{" "}
+        TỐ CÁO
       </h3>
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid

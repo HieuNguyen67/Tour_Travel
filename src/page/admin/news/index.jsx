@@ -18,8 +18,11 @@ import {
 } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
-import { ImNewspaper } from "react-icons/im";
 import { BASE_URL } from "@/constants";
+import newsimg from "@/assets/image/news.png";
+import addimg from "@/assets/image/add.png";
+import deleteimg from "@/assets/image/delete.png";
+
 
 const News = () => {
   const [news, setNews] = useState([]);
@@ -251,23 +254,43 @@ const News = () => {
         <Col>
           {" "}
           <h3 className="fw-bold">
-            <ImNewspaper className="fs-3" /> TIN TỨC
+            <img
+              src={newsimg}
+              className="mb-2"
+              style={{
+                width: "3rem",
+                height: "3rem",
+                objectFit: "cover",
+              }}
+            />{" "}
+            TIN TỨC
           </h3>
         </Col>
         <Col>
           {" "}
           <p className="text-end">
-            <Button
-              variant="danger"
+            <img
               onClick={handleDeleteSelected}
-              className="me-2"
-            >
-              <MdDeleteForever className="fs-4" />
-            </Button>
+              src={deleteimg}
+              className="mb-2 me-2"
+              style={{
+                width: "3.5rem",
+                height: "3.5rem",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+            />{" "}
             <Link to={role == 2 ? "/admin/add-news" : "/business/add-news"}>
-              <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                <IoMdAdd /> <ImNewspaper className="fs-3" />
-              </Button>
+              <img
+                src={addimg}
+                className="mb-2 "
+                style={{
+                  width: "3.5rem",
+                  height: "3.5rem",
+                  objectFit: "cover",
+                  cursor: "pointer",
+                }}
+              />
             </Link>
           </p>
         </Col>

@@ -1,4 +1,4 @@
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Home.scss";
 import video from "@/assets/video/video.mp4";

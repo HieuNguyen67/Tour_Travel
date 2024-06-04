@@ -16,7 +16,7 @@ import { Col, Row } from "react-bootstrap";
 import { FcBusinessman } from "react-icons/fc";
 import { FcManager } from "react-icons/fc";
 import { MdExpandMore, MdMenu } from "react-icons/md";
-import { RiDashboardFill } from "react-icons/ri";
+import menuimg from "@/assets/image/menu.png";
 
 const SidebarLayout = ({ children }) => {
   const { role } = useAuth();
@@ -128,7 +128,7 @@ const SidebarLayout = ({ children }) => {
               className="mt-2"
               onClick={toggleDrawer}
             >
-              <RiDashboardFill className="fs-1" />
+              <img src={menuimg} className="ms-2" style={{width:'3rem',height:"3rem"}}/>
             </Button>
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
               <div style={{ width: "250px" }}>

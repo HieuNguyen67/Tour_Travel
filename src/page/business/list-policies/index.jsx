@@ -12,7 +12,9 @@ import { toast } from "react-toastify";
 import { useAuth } from "@/context";
 import { MdDeleteForever } from "react-icons/md";
 import { IoShieldCheckmark } from "react-icons/io5";
-import { LuShieldCheck } from "react-icons/lu";
+import policyimg from "@/assets/image/policy.png";
+import addimg from "@/assets/image/add.png";
+import deleteimg from "@/assets/image/delete.png";
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -218,35 +220,54 @@ var columns = [
     <>
       {" "}
       <LoadingBackdrop open={loading} />
-      <h3 className="fw-bold mb-3">
-        <LuShieldCheck className="fs-3" />{" "}
+      <h3 className="fw-bold ">
+        <img
+          onClick={handleDeleteSelected}
+          src={policyimg}
+          style={{
+            width: "3.5rem",
+            height: "3.5rem",
+            objectFit: "cover",
+            cursor: "pointer",
+          }}
+        />{" "}
         {role == 2 ? <>CHÍNH SÁCH HOÀN TIỀN</> : <>CHÍNH SÁCH TOUR</>}
       </h3>
       {isHomePage ? (
         <>
           <Row>
-            <Col >
-              <p>(Không bao gồm chính sách huỷ tour hoàn tiền)</p>
+            <Col>
+              <p className="mt-3">(Không bao gồm chính sách huỷ tour hoàn tiền)</p>
             </Col>
             <Col>
               {" "}
               <p className="text-end">
-                <Button
-                  variant="danger"
+                <img
                   onClick={handleDeleteSelected}
-                  className="me-2"
-                >
-                  <MdDeleteForever className="fs-4" />
-                </Button>
+                  src={deleteimg}
+                  className=" me-2"
+                  style={{
+                    width: "3.5rem",
+                    height: "3.5rem",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                  }}
+                />{" "}
                 <Link
                   to="/business/add-policies"
                   className="text-decoration-none"
                 >
                   {" "}
-                  <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                    <IoMdAdd />
-                    <IoShieldCheckmark className="fs-4" />
-                  </Button>
+                  <img
+                    src={addimg}
+                    className=""
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      objectFit: "cover",
+                      cursor: "pointer",
+                    }}
+                  />
                 </Link>
               </p>
             </Col>

@@ -8,7 +8,6 @@ import { IoLogInSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { useAuth } from "@/context";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { IoBusinessSharp } from "react-icons/io5";
 import { MdAccountBox } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -16,7 +15,7 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
-import { FaAddressCard } from "react-icons/fa6";
+import businessimg from "@/assets/image/business1.png";
 import { RED_COLOR } from "@/constants";
 import { BASE_URL } from "@/constants";
 
@@ -77,7 +76,15 @@ const RegisterUser = () => {
               <IoArrowBackOutline className="fs-3 mb-3" />
             </Link>
             <h3 className=" fw-bold my-3">
-              <IoBusinessSharp className="fs-3" /> ĐĂNG KÝ DOANH NGHIỆP
+              <img
+                src={businessimg}
+                style={{
+                  width: "3rem",
+                  height: "3rem",
+                  objectFit: "cover",
+                }}
+              />{" "}
+              ĐĂNG KÝ DOANH NGHIỆP
             </h3>
           </div>
         </Container>

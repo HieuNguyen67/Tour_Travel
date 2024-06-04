@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
-import { MdOutlineContactMail } from "react-icons/md";
+import contactimg from "@/assets/image/contact.png";
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
@@ -253,7 +253,16 @@ const ContactList = () => {
   return (
     <>
       <h3 className="mb-3 fw-bold">
-        <MdOutlineContactMail className="fs-3" /> LIÊN HỆ
+        <img
+          src={contactimg}
+          className=""
+          style={{
+            width: "3rem",
+            height: "3rem",
+            objectFit: "cover",
+          }}
+        />{" "}
+        LIÊN HỆ
       </h3>
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid

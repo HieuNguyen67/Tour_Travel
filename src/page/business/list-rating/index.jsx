@@ -6,7 +6,7 @@ import { BASE_URL } from "@/constants";
 import { useAuth } from "@/context";
 import LoadingBackdrop from "@/components/backdrop";
 import { useNavigate } from "react-router-dom";
-import { BiSolidCommentDetail } from "react-icons/bi";
+import feedbackimg from "@/assets/image/feedback.png";
 
 const ToursList = () => {
   const { businessId } = useAuth();
@@ -92,7 +92,16 @@ const ToursList = () => {
     <>
       <LoadingBackdrop open={loading} />
       <h3 className="fw-bold mb-3">
-        <BiSolidCommentDetail className="fs-2" /> PHẢN HỒI KHÁCH HÀNG
+        <img
+          src={feedbackimg}
+          className="mb-2"
+          style={{
+            width: "3.5rem",
+            height: "3.5rem",
+            objectFit: "cover",
+          }}
+        />{" "}
+        PHẢN HỒI KHÁCH HÀNG
       </h3>
 
       <div style={{ height: 600, width: "100%" }}>

@@ -76,8 +76,8 @@ const SignUp = () => {
                 src={registerimg}
                 className="mb-2"
                 style={{
-                  width: "3rem",
-                  height: "3rem",
+                  width: "3.5rem",
+                  height: "3.5rem",
                   objectFit: "cover",
                 }}
               />{" "}

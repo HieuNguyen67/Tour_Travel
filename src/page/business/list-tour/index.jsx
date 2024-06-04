@@ -1,9 +1,7 @@
 import { Container, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
-import { MdDeleteForever } from "react-icons/md";
-import { MdTour } from "react-icons/md";
-import { IoMdAdd } from "react-icons/io";
+import tourimg from "@/assets/image/tour.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
@@ -13,6 +11,7 @@ import { BASE_URL } from "@/constants";
 import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
 import LoadingBackdrop from "@/components/backdrop";
+import addimg from "@/assets/image/add.png";
 
 const TourList = () => {
   const { businessId } = useAuth();
@@ -237,20 +236,24 @@ const TourList = () => {
     <>
       <LoadingBackdrop open={loading} />
       <Row>
-        <Col>
+        <Col className="col-8">
           <h3 className="fw-bold">
             {" "}
-            <MdTour className="fs-2" /> LIST TOUR
+            <img src={tourimg} className="mb-2 location" /> LIST TOUR
           </h3>
         </Col>
         <Col>
           <p className="text-end">
             <Link to="/business/add-tour" className="text-decoration-none">
-              {" "}
-              <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                <IoMdAdd />
-                <MdTour className="fs-3" />
-              </Button>
+              <img
+                src={addimg}
+                className="mb-2"
+                style={{
+                  width: "3.5rem",
+                  height: "3.5rem",
+                  objectFit: "cover",
+                }}
+              />
             </Link>
           </p>
         </Col>
