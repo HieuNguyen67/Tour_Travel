@@ -34,7 +34,6 @@
     .fonttt {
         font-size: 1.5rem;
         font-weight: bold;
-        font-family: Georgia, serif;
     }
         .myVideo {
     
@@ -61,6 +60,11 @@
         background-attachment: fixed;
 
 }
+ .location {
+     width: 3rem;
+     height: 3rem;
+     object-fit: cover;
+ }
 
 }
 
@@ -96,7 +100,6 @@
     
         font-size: 3rem;
         font-weight: bold;
-        font-family: Georgia, serif;
     }
 
     .fonttts {
@@ -141,7 +144,6 @@
     .fonttt {
         font-size: 3rem;
         font-weight: bold;
-        font-family: Georgia, serif;
     }
 
     .fonttts {
@@ -160,11 +162,14 @@
         height: 20rem;
         object-fit: cover;
     }
+    .location{
+        width: 4rem;
+        height: 4rem;
+        object-fit: cover;
+    }
 }
 
-.font-family {
-    font-family: Georgia, serif;
-}
+
 
 .textshadow {
     text-shadow: 5px 5px 10px black;

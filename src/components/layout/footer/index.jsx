@@ -85,13 +85,6 @@ const Footer = () => {
                   </span>
                 </Link>
                 <br />
-                
-                <Link className="text-decoration-none black" to="/image">
-                  <span style={{ fontSize: "15px" }} className="hover">
-                    {">"} Hình ảnh
-                  </span>{" "}
-                </Link>
-                <br />
                 <Link className="text-decoration-none black" to="/contact">
                   <span style={{ fontSize: "15px" }} className="hover">
                     {">"} Liên hệ

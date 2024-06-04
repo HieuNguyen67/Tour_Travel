@@ -78,7 +78,7 @@ const CouponsList: React.FC = () => {
   return (
     <>
       <Row>
-        <Col className="col-lg-1 col-4">
+        <Col className="col-lg-1 col-md-2 col-4">
           <img
             src={coin1}
             style={{

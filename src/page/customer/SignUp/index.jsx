@@ -16,8 +16,8 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
-import { FaAddressCard } from "react-icons/fa6";
 import { BASE_URL } from "@/constants";
+import registerimg from "@/assets/image/register.png";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -71,25 +71,28 @@ const SignUp = () => {
       >
         <Container className="mt-5 mx-auto  pt-lg-5 pt-3">
           <div className="mt-5">
-            <Row>
-              <Col></Col>
-              <Col className="col-10 ">
-                <h1 className="text-center text-break fw-bold font-family">
-                  <IoPersonAdd className="fs-1 mb-lg-3 mb-1" /> ĐĂNG KÝ
-                </h1>
-              </Col>
-              <Col></Col>
-            </Row>
+            <h1 className="text-center fw-bold ">
+              <img
+                src={registerimg}
+                className="mb-2"
+                style={{
+                  width: "3rem",
+                  height: "3rem",
+                  objectFit: "cover",
+                }}
+              />{" "}
+              ĐĂNG KÝ
+            </h1>
           </div>
         </Container>
         <br />
         <Container className="mb-5 pb-md-5">
           <form
-            className="col-md-4 mt-3 col-12 mx-auto px-2 px-lg-0"
+            className="col-lg-4 mt-3 col-12 mx-auto px-2 px-lg-0"
             onSubmit={handleSubmit}
           >
             <Form.Group className="mb-4" controlId="formBasicEmail">
-              <Form.Label className="font-family">
+              <Form.Label className=" ">
                 <ImProfile className="fs-4" /> Họ và tên{" "}
                 <span className="text-danger">*</span>
               </Form.Label>
@@ -103,7 +106,7 @@ const SignUp = () => {
               />
             </Form.Group>
             <Form.Group className="mb-4">
-              <Form.Label className="font-family">
+              <Form.Label className=" ">
                 <MdAccountBox className="fs-4" /> UserName{" "}
                 <span className="text-danger">*</span>
               </Form.Label>
@@ -118,7 +121,7 @@ const SignUp = () => {
             </Form.Group>
 
             <Form.Group className="mb-4">
-              <Form.Label className="font-family">
+              <Form.Label className=" ">
                 <MdOutlinePassword className="fs-4" /> Password{" "}
                 <span className="text-danger">*</span>
               </Form.Label>
@@ -132,7 +135,7 @@ const SignUp = () => {
               />
             </Form.Group>
             <Form.Group className="mb-4">
-              <Form.Label className="font-family">
+              <Form.Label className=" ">
                 <HiOutlineMail className="fs-4" /> Email{" "}
                 <span className="text-danger">*</span>
               </Form.Label>
@@ -146,7 +149,7 @@ const SignUp = () => {
               />
             </Form.Group>
             <Form.Group className="mb-4">
-              <Form.Label className="font-family">
+              <Form.Label className=" ">
                 <LiaBirthdayCakeSolid className="fs-4" /> Ngày sinh{" "}
                 <span className="text-danger">*</span>
               </Form.Label>
@@ -161,7 +164,7 @@ const SignUp = () => {
               />
             </Form.Group>
             <Form.Group className="mb-4">
-              <Form.Label className="font-family">
+              <Form.Label className=" ">
                 <FaPhoneSquareAlt className="fs-4" /> Số điện thoại (Nhập đủ 10
                 số)
                 <span className="text-danger">*</span>
@@ -175,9 +178,9 @@ const SignUp = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-           
+
             <Form.Group className="mb-4">
-              <Form.Label className="font-family">
+              <Form.Label className=" ">
                 <TiLocation className="fs-4" /> Địa chỉ{" "}
                 <span className="text-danger">*</span>
               </Form.Label>
@@ -192,7 +195,7 @@ const SignUp = () => {
             </Form.Group>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <Button variant="warning" className="col-12 mt-4" type="submit">
-              <span className="font-family">
+              <span className=" ">
                 Đăng Ký <IoLogInSharp className="fs-4" />
               </span>
             </Button>
@@ -202,7 +205,7 @@ const SignUp = () => {
             <Row>
               <Col></Col>
               <Col className="col-12">
-                <h6 className="text-center text-break font-family ">
+                <h6 className="text-center text-break   ">
                   <NavLink to="/" className=" link-dark text-danger decorate ">
                     <IoChevronBackSharp />
                     Go back
@@ -218,7 +221,7 @@ const SignUp = () => {
               <Col></Col>
               <Col className="col-12 col-md-12 mt-3">
                 <Col>
-                  <h6 className="text-secondary  text-center text-break fw-bold font-family">
+                  <h6 className="text-secondary  text-center text-break fw-bold  ">
                     Bạn đã có tài khoản?
                     <NavLink
                       to="/Login"

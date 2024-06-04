@@ -6,13 +6,25 @@ import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { IoLogInSharp, IoChevronBackSharp } from "react-icons/io5";
 import "./Login.scss";
-import { MdAccountBox, MdOutlinePassword, MdReportProblem } from "react-icons/md";
+import {
+  MdAccountBox,
+  MdOutlinePassword,
+  MdReportProblem,
+} from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import Header from "@/components/layout/header";
 import { BASE_URL } from "@/constants";
 import { useAuth } from "@/context";
-import { FormControl, InputLabel, Input, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
-import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md';
+import {
+  FormControl,
+  InputLabel,
+  Input,
+  IconButton,
+  InputAdornment,
+  OutlinedInput,
+} from "@mui/material";
+import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
+import profile1img from "@/assets/image/profile1.png";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -32,8 +44,12 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL}/login`, { usernameOrEmail, password });
-      const { token, role, account_id, username, business_id, customer_id } = response.data;
+      const response = await axios.post(`${BASE_URL}/login`, {
+        usernameOrEmail,
+        password,
+      });
+      const { token, role, account_id, username, business_id, customer_id } =
+        response.data;
       login(token, role, username, account_id, business_id, customer_id);
       toast.success("Đăng nhập thành công !");
       if (role === 1) navigate("/");
@@ -63,23 +79,26 @@ const Login: React.FC = () => {
       >
         <Container className="mt-5 mx-auto pt-lg-5 pt-3 ">
           <div className="mt-5">
-            <Row>
-              <Col></Col>
-              <Col className="col-10 ">
-                <h1 className="text-center text-break fw-bold font-family">
-                  <MdAccountBox className="fs-1 mb-lg-2 mb-1" /> ĐĂNG NHẬP
-                </h1>
-              </Col>
-              <Col></Col>
-            </Row>
+            <h1 className="text-center fw-bold ">
+              <img
+                src={profile1img}
+                className="mb-2"
+                style={{
+                  width: "4rem",
+                  height: "4rem",
+                  objectFit: "cover",
+                }}
+              />{" "}
+              ĐĂNG NHẬP
+            </h1>
           </div>
         </Container>
         <br />
         <Container className="mb-5 pb-md-5 ">
-          <div className="col-md-4 mt-3 col-12 mx-auto px-2 px-lg-0">
+          <div className="col-lg-4 mt-3 col-12 mx-auto px-2 px-lg-0">
             <Form onSubmit={handleSubmit} noValidate>
               <Form.Group className="mb-4" controlId="formBasicEmail">
-                <Form.Label className="font-family">
+                <Form.Label className=" ">
                   <CgProfile className="fs-4" /> Username or Email
                   <span className="text-danger">*</span>
                 </Form.Label>
@@ -91,18 +110,17 @@ const Login: React.FC = () => {
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
                 />
               </Form.Group>
-              <Form.Label className="font-family">
+              <Form.Label className=" ">
                 <MdOutlinePassword className="fs-4" /> Password{" "}
                 <span className="text-danger">*</span>
               </Form.Label>
               <FormControl variant="outlined" fullWidth>
-                
                 <OutlinedInput
                   size="small"
                   placeholder="Password"
                   id="outlined-adornment-password"
                   type={showPassword ? "text" : "password"}
-                  sx={{background:"white"}}
+                  sx={{ background: "white" }}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   endAdornment={
@@ -118,12 +136,8 @@ const Login: React.FC = () => {
                   }
                 />
               </FormControl>
-              <Button
-                variant="warning"
-                type="submit"
-                className="col-12 mt-4 font-family"
-              >
-                <span className="font-family">
+              <Button variant="warning" type="submit" className="col-12 mt-4  ">
+                <span className=" ">
                   Đăng Nhập <IoLogInSharp className="fs-4" />
                 </span>
               </Button>
@@ -135,10 +149,7 @@ const Login: React.FC = () => {
               <Col></Col>
               <Col className="col-12">
                 <h6 className="text-center text-break  ">
-                  <NavLink
-                    to="/"
-                    className=" link-dark text-danger decorate font-family"
-                  >
+                  <NavLink to="/" className=" link-dark text-danger decorate  ">
                     <IoChevronBackSharp style={{ fontSize: 20 }} />
                     Go back
                   </NavLink>
@@ -153,7 +164,7 @@ const Login: React.FC = () => {
               <Col></Col>
               <Col className="col-12 col-md-12 mt-3">
                 <Col>
-                  <h6 className="text-secondary  text-center text-break fw-bold font-family">
+                  <h6 className="text-secondary  text-center text-break fw-bold  ">
                     Bạn không có tài khoản?
                     <NavLink
                       to="/SignUp"

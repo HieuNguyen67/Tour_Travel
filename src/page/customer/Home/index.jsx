@@ -10,7 +10,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { Link, useNavigate } from "react-router-dom";
 import TabSearch from "@/components/tab-search";
 import ListTourVietnam from "@/components/list-tour-vietnam";
-import { RED1_COLOR,  } from "@/constants";
+import { RED1_COLOR } from "@/constants";
 import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import DestinationFavourite from "@/components/destination-favourite";
@@ -18,7 +18,6 @@ import ListNewsHome from "@/components/list-news-home";
 import tourimg from "@/assets/image/tour.png";
 import locationimg from "@/assets/image/location.png";
 import newsimg from "@/assets/image/news.png";
-
 
 const Home = () => {
   const videoRef = useRef(null);
@@ -74,18 +73,18 @@ const Home = () => {
             <div className="pt-5 me-lg-5">
               <Row className="d-flex flex-column mt-5">
                 <Col className="pt-lg-5 pt-4 pt-md-5 mt-lg-5">
-                  <h2 className="white fontwelcome text-warning textshadow font-family">
+                  <h2 className="white fontwelcome text-warning textshadow   ">
                     Welcome to Travel Tour
                   </h2>
                 </Col>
                 <Col className="">
-                  <h1 className="white fonttttt fonttts textshadow font-family">
+                  <h1 className="white fonttttt fonttts textshadow   ">
                     {" "}
                     Khám phá địa điểm du lịch yêu thích của bạn với chúng tôi
                   </h1>
                 </Col>
                 <Col>
-                  <p className="white fontttts textshadow font-family">
+                  <p className="white fontttts textshadow   ">
                     Du lịch đến bất cứ nơi nào bạn chỉ cần liên hệ với chúng tôi
                   </p>
                 </Col>
@@ -99,12 +98,8 @@ const Home = () => {
         <Container>
           <TabSearch />
           <h3 className="fw-bold mt-5 px-2 ">
-            <img
-              src={tourimg}
-              className="mb-2"
-              style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
-            />{" "}
-            KHÁM PHÁ TOUR DU LỊCH TRONG NƯỚC
+            <img src={tourimg} className="mb-2 location" /> KHÁM PHÁ TOUR DU
+            LỊCH TRONG NƯỚC
           </h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
 
@@ -123,12 +118,8 @@ const Home = () => {
           </div>
 
           <h3 className="fw-bold mt-5 px-2">
-            <img
-              src={tourimg}
-              className="mb-2"
-              style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
-            />{" "}
-            KHÁM PHÁ TOUR DU LỊCH NƯỚC NGOÀI
+            <img src={tourimg} className="mb-2 location" /> KHÁM PHÁ TOUR DU
+            LỊCH NƯỚC NGOÀI
           </h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
 
@@ -148,12 +139,8 @@ const Home = () => {
 
           <h3 className="fw-bold mt-5 px-2">
             {" "}
-            <img
-              src={locationimg}
-              className="mb-2"
-              style={{ width: "4rem", height: "4rem", objectFit: "cover" }}
-            />{" "}
-            ĐỊA ĐIỂM ĐẾN YÊU THÍCH
+            <img src={locationimg} className="mb-2 location" /> ĐỊA ĐIỂM ĐẾN YÊU
+            THÍCH
           </h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
           <DestinationFavourite />

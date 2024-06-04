@@ -10,13 +10,13 @@ import {
   Tabs,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { FaSearchLocation } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
-import { BLUE_COLOR, RED_COLOR } from "@/constants";
+import { RED_COLOR } from "@/constants";
 import axios from "axios";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-
+import searchimg from "@/assets/image/search.png";
+import "@/page/customer/Home/Home.scss";
 const TabSearch = () => {
   const [destinationLocation, setDestinationLocation] = useState("");
   const [tourName, setTourName] = useState("");
@@ -91,7 +91,7 @@ const TabSearch = () => {
       >
         <Container className="my-4">
           <h2 className=" fw-bold">
-            <FaSearchLocation className="fs-2" /> Tìm kiếm Tour :
+            <img src={searchimg} className="mb-2 location" /> Tìm kiếm Tour :
           </h2>
           <hr />
           <Tab.Container id="left-tabs-example" defaultActiveKey="first">

@@ -10,7 +10,7 @@ import { IoBusinessSharp } from "react-icons/io5";
 import axios from "axios";
 import { BASE_URL } from "@/constants";
 import imgdefault from "@/assets/image/6945124.png";
-import businessimg from "@/assets/image/business.png"
+import businessimg from "@/assets/image/business.png";
 
 const BusinessLink = () => {
   const [loading, setLoading] = useState(true);
@@ -39,16 +39,14 @@ const BusinessLink = () => {
       <Container className="my-5 mx-auto pt-lg-3 pt-3 ">
         {loading && <LoadingBackdrop open={loading} />}
         <div className="mt-5">
-        
-           
-              <h1 className="text-center fw-bold font-family mb-lg-5 ">
-                <img
-                  src={businessimg}
-                  className="mb-2"
-                  style={{ width: "5rem", height: "5rem", objectFit: "cover" }}
-                />
-                &nbsp;DOANH NGHIỆP
-              </h1>
+          <h1 className="text-center fw-bold   mb-lg-5 ">
+            <img
+              src={businessimg}
+              className="mb-2"
+              style={{ width: "5rem", height: "5rem", objectFit: "cover" }}
+            />
+            &nbsp;DOANH NGHIỆP
+          </h1>
         </div>
 
         <br />

@@ -94,7 +94,7 @@ const Contact = () => {
                     src={contactimg}
                     className="mb-2"
                     style={{
-                      width: "6rem",
+                      width: "3rem",
                       height: "3rem",
                       objectFit: "cover",
                     }}

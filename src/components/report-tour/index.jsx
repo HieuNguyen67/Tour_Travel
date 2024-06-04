@@ -73,7 +73,7 @@ const ReportTour = ({ tourId, accountId }) => {
               <Modal.Body>
                 <div>
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family">
+                    <Form.Label className=" ">
                       <CiBoxList className="fs-4" /> Chọn lý do:
                     </Form.Label>
                     <Form.Select
@@ -119,7 +119,7 @@ const ReportTour = ({ tourId, accountId }) => {
                 </div>
                 <div>
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family">
+                    <Form.Label className=" ">
                       <FaEdit className="fs-4" /> Mô tả tố cáo:
                     </Form.Label>
                     <Form.Control

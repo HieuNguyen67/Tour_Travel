@@ -99,7 +99,7 @@ const AddNews = () => {
               <IoArrowBackOutline className="fs-3" />
             </Link>
 
-            <h3 className=" text-break fw-bold font-family my-3">
+            <h3 className=" text-break fw-bold   my-3">
               <ImNewspaper className="fs-3" /> THÊM TIN TỨC
             </h3>
           </div>
@@ -112,7 +112,7 @@ const AddNews = () => {
                   className="my-4 col-lg-6 col-12"
                   controlId="formBasicEmail"
                 >
-                  <Form.Label className="font-family fw-bold">
+                  <Form.Label className="  fw-bold">
                     <BiCategory className="fs-4" /> Chọn danh mục{" "}
                     <span className="text-danger">(*) </span>:
                   </Form.Label>
@@ -137,7 +137,7 @@ const AddNews = () => {
               </Col>
               <Col className="col-lg-6 col-12">
                 <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label className="font-family fw-bold">
+                  <Form.Label className="  fw-bold">
                     <MdOutlineTitle className="fs-4" /> Tiêu đề{" "}
                     <span className="text-danger">(*) </span>:
                   </Form.Label>
@@ -154,7 +154,7 @@ const AddNews = () => {
               <Col className="col-lg-6 col-12">
                 {" "}
                 <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label className="font-family fw-bold">
+                  <Form.Label className="  fw-bold">
                     <LuImagePlus className="fs-4" /> Ảnh tiêu đề{" "}
                     <span className="text-danger">(*) </span>:
                   </Form.Label>
@@ -168,7 +168,7 @@ const AddNews = () => {
                 </Form.Group>
               </Col>
             </Row>{" "}
-            <Form.Label className="font-family fw-bold">
+            <Form.Label className="  fw-bold">
               <FaEdit className="fs-4" /> Nội dung{" "}
               <span className="text-danger">(*) </span>:
             </Form.Label>

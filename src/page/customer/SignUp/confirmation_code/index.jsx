@@ -41,7 +41,7 @@ const ConfirmationForm = () => {
             <h3 className="fw-bold mt-3 mb-5">Nhập mã kích hoạt tài khoản</h3>
             <form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family fw-bold text-start mb-3">
+                <Form.Label className="fw-bold text-start mb-3">
                   Bạn vui lòng kiểm tra email đăng ký và nhập mã vào ô dưới đây
                 </Form.Label>
                 <Form.Control

@@ -192,7 +192,7 @@ const EditProfile = () => {
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family fw-bold">
+                    <Form.Label className="  fw-bold">
                       <MdAccountBox className="fs-4" /> Username:
                     </Form.Label>
                     <Form.Control
@@ -207,7 +207,7 @@ const EditProfile = () => {
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <ImProfile className="fs-4" /> Họ và Tên:
                     </Form.Label>
                     <Form.Control
@@ -222,7 +222,7 @@ const EditProfile = () => {
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <LiaBirthdayCakeSolid className="fs-4" /> Ngày sinh:
                     </Form.Label>
                     <Form.Control
@@ -237,7 +237,7 @@ const EditProfile = () => {
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <FaPhoneSquareAlt className="fs-4" /> Số điện thoại:
                     </Form.Label>
                     <Form.Control
@@ -251,7 +251,7 @@ const EditProfile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <TiLocation className="fs-4" /> Địa chỉ:
                     </Form.Label>
                     <Form.Control
@@ -265,7 +265,7 @@ const EditProfile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <HiOutlineMail className="fs-4" /> Email:
                     </Form.Label>
                     <Form.Control
@@ -279,7 +279,7 @@ const EditProfile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <RiBankCardFill className="fs-4" /> Tên tài khoản ngân
                       hàng:
                     </Form.Label>
@@ -295,7 +295,7 @@ const EditProfile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <RiBankCardFill className="fs-4" /> STK ngân hàng:
                     </Form.Label>
                     <Form.Control
@@ -308,7 +308,6 @@ const EditProfile = () => {
                     />
                   </Form.Group>
                 </Col>
-               
               </Row>
             </form>
           </Col>

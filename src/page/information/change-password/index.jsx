@@ -27,7 +27,6 @@ const ChangePassword = () => {
   const handleChange = (e) => {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,7 +67,7 @@ const ChangePassword = () => {
             <Col className="col-lg-5 col-12 mx-auto">
               {error && <div style={{ color: "red" }}>{error}</div>}
               <Form.Group className="mb-3 mt-2" controlId="formBasicEmail">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <MdOutlinePassword className="fs-4" /> Mật khẩu cũ:
                 </Form.Label>
                 <Form.Control
@@ -84,7 +83,7 @@ const ChangePassword = () => {
             </Col>
             <Col className="col-lg-5 col-12  mx-auto">
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <MdOutlinePassword className="fs-4" /> Mật khẩu mới:
                 </Form.Label>
                 <Form.Control
@@ -100,7 +99,7 @@ const ChangePassword = () => {
             </Col>
             <Col className="col-lg-5 col-12  mx-auto">
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <MdOutlinePassword className="fs-4" /> Nhập lại mật khẩu mới:
                 </Form.Label>
                 <Form.Control

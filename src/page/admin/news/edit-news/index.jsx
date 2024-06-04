@@ -80,7 +80,7 @@ const UpdateNews = () => {
       </div>
       <Col className="col-12">
         <Form.Group className="mb-3">
-          <Form.Label className="font-family fw-bold">Tiêu đề:</Form.Label>
+          <Form.Label className="  fw-bold">Tiêu đề:</Form.Label>
           <Form.Control
             type="text"
             id="title"
@@ -92,7 +92,7 @@ const UpdateNews = () => {
       </Col>
       <Col className=" col-12">
         <Form.Group className="mb-3">
-          <Form.Label className="font-family fw-bold">Nội dung:</Form.Label>
+          <Form.Label className="  fw-bold">Nội dung:</Form.Label>
           <div style={{ background: "white" }}>
             <ReactQuill
               id="content"

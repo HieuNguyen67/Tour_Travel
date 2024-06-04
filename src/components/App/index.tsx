@@ -2,7 +2,6 @@ import { useAuth } from "@/context";
 import Login from "@/page/Login";
 import Contact from "@/page/customer/Contact";
 import Home from "@/page/customer/Home";
-import Image from "@/page/customer/Image";
 import Introduce from "@/page/customer/Introduce";
 import SignUp from "@/page/customer/SignUp";
 import ConfirmationForm from "@/page/customer/SignUp/confirmation_code";
@@ -49,7 +48,6 @@ const Apps: React.FC = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/introduce" element={<Introduce />} />
         <Route path="/business-link" element={<BusinessLink />} />
-        <Route path="/image" element={<Image />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/information/*" element={<Information />} />
         <Route path="/news/*" element={<NewsMain />} />

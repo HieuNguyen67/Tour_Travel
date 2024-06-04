@@ -45,7 +45,7 @@ const InformationLayout = ({ children }) => {
               <></>
             )}
 
-            <h1 className="text-center text-break fw-bold font-family">
+            <h1 className="text-center text-break fw-bold ">
               <img
                 src={profile1img}
                 className="mb-2"

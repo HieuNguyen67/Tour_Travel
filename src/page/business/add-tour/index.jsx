@@ -312,7 +312,7 @@ const AddTourForm = () => {
             <Col className="col-lg-6 col-12">
               {" "}
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <BiCategory className="fs-4" /> Chọn danh mục{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -340,7 +340,7 @@ const AddTourForm = () => {
                 <>
                   {" "}
                   <Form.Group className="mb-4">
-                    <Form.Label className="font-family fw-bold">
+                    <Form.Label className="  fw-bold">
                       <LuImagePlus className="fs-4" /> Chọn hình ảnh tour ({">"}
                       = 4 ảnh) <span className="text-danger">(*) </span>:
                     </Form.Label>
@@ -357,7 +357,7 @@ const AddTourForm = () => {
                 <>
                   {" "}
                   <Form.Group className="mb-4">
-                    <Form.Label className="font-family fw-bold">
+                    <Form.Label className="  fw-bold">
                       <LuImagePlus className="fs-4" /> Thay đổi ảnh tour ({">"}=
                       4 ảnh) :
                     </Form.Label>
@@ -373,7 +373,7 @@ const AddTourForm = () => {
             </Col>
             <Col className="col-12">
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <MdOutlineTravelExplore className="fs-4" /> Tên Tour{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -389,7 +389,7 @@ const AddTourForm = () => {
             </Col>
             <Col className="col-lg-6 col-12">
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <MdEmojiTransportation className="fs-4" /> Chọn phương tiện{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -408,7 +408,7 @@ const AddTourForm = () => {
             </Col>
             <Col className="col-lg-6 col-12">
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <RiHotelFill className="fs-5" /> Chọn khách sạn{" "}
                   <MdOutlineStar className="text-warning fs-4" />
                   <span className="text-danger">(*) </span>:
@@ -433,7 +433,7 @@ const AddTourForm = () => {
             </Col>
             <Col className="col-lg-4 col-12">
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <FaRegMoneyBillAlt className="fs-4" /> Giá người lớn{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -451,7 +451,7 @@ const AddTourForm = () => {
             <Col className="col-lg-4 col-12">
               {" "}
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <FaRegMoneyBillAlt className="fs-4" /> Giá trẻ em (5 - 11
                   tuổi) <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -469,7 +469,7 @@ const AddTourForm = () => {
             <Col className="col-lg-4 col-12">
               {" "}
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <FaRegMoneyBillAlt className="fs-4" /> Giá trẻ nhỏ ({"<"} 5
                   tuổi) <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -487,7 +487,7 @@ const AddTourForm = () => {
             <Col className="col-lg-4 col-12">
               {" "}
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <RiAccountBoxLine className="fs-4" /> Số lượng hành khách{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -505,7 +505,7 @@ const AddTourForm = () => {
             <Col className="col-lg-4 col-12">
               {" "}
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <BsCalendarDate className="fs-4" /> Ngày bắt đầu{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -522,7 +522,7 @@ const AddTourForm = () => {
             </Col>
             <Col className="col-lg-4 col-12">
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <BsCalendarDate className="fs-4" /> Ngày kết thúc{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -541,7 +541,7 @@ const AddTourForm = () => {
             <Col className="col-lg-6 col-12">
               {" "}
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <FaMapLocationDot className="fs-4" /> Chọn điểm đi{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -563,7 +563,7 @@ const AddTourForm = () => {
             </Col>
             <Col className="col-lg-6 col-12">
               <Form.Group className="mb-4">
-                <Form.Label className="font-family fw-bold">
+                <Form.Label className="  fw-bold">
                   <FaMapLocationDot className="fs-4" /> Chọn điểm đến{" "}
                   <span className="text-danger">(*) </span>:
                 </Form.Label>
@@ -610,7 +610,7 @@ const AddTourForm = () => {
               </Form.Group>
             </Col>
 
-            <Form.Label className="font-family fw-bold">
+            <Form.Label className="  fw-bold">
               <FaEdit className="fs-4" /> Nội dung{" "}
               <span className="text-danger">(*) </span>:
             </Form.Label>

@@ -24,7 +24,6 @@ const Profile = () => {
   const { accountId, isLoggedIn, token, role } = useAuth();
   const [loading, setLoading] = useState(true);
 
-  
   const navigate = useNavigate();
   useEffect(() => {
     if (isLoggedIn === false) {
@@ -40,11 +39,10 @@ const Profile = () => {
     email: "",
     bank_account_name: "",
     bank_account_number: "",
-    bank_name:""
+    bank_name: "",
   });
-    const [banknames, setBanknames] = useState([]);
+  const [banknames, setBanknames] = useState([]);
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -64,27 +62,26 @@ const Profile = () => {
       try {
         if (role == 1) {
           var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
-             params: { role: 1 },
+            params: { role: 1 },
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-        }else if(role==3){
-           var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
-             params: { role: 3 },
-             headers: {
-               Authorization: `Bearer ${token}`,
-             },
-           });
-        }else{ var response = await axios.get(
-          `${BASE_URL}/account/${accountId}`,
-          {
+        } else if (role == 3) {
+          var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
+            params: { role: 3 },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } else {
+          var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
             params: { role: 2 },
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
-        );}
+          });
+        }
 
         const accountData = response.data;
         setFormData({
@@ -109,7 +106,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const formattedDate = formatDate(formData.birth_of_date);
-      if(role==1){
+      if (role == 1) {
         await axios.put(
           `${BASE_URL}/account/${accountId}`,
           {
@@ -123,8 +120,7 @@ const Profile = () => {
             },
           }
         );
-
-      }else if(role==3){
+      } else if (role == 3) {
         await axios.put(
           `${BASE_URL}/account/${accountId}`,
           {
@@ -138,7 +134,7 @@ const Profile = () => {
             },
           }
         );
-      }else{
+      } else {
         await axios.put(
           `${BASE_URL}/account/${accountId}`,
           {
@@ -152,7 +148,6 @@ const Profile = () => {
           }
         );
       }
-      
 
       toast.success("Thông tin tài khoản đã được cập nhật!");
     } catch (error) {
@@ -183,7 +178,7 @@ const Profile = () => {
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family fw-bold">
+                    <Form.Label className="  fw-bold">
                       <MdAccountBox className="fs-4" /> Username:
                     </Form.Label>
                     <Form.Control
@@ -199,7 +194,7 @@ const Profile = () => {
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <ImProfile className="fs-4" /> Họ và Tên:
                     </Form.Label>
                     <Form.Control
@@ -215,7 +210,7 @@ const Profile = () => {
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <LiaBirthdayCakeSolid className="fs-4" /> Ngày sinh:
                     </Form.Label>
                     <Form.Control
@@ -231,7 +226,7 @@ const Profile = () => {
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <FaPhoneSquareAlt className="fs-4" /> Số điện thoại:
                     </Form.Label>
                     <Form.Control
@@ -246,7 +241,7 @@ const Profile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <TiLocation className="fs-4" /> Địa chỉ:
                     </Form.Label>
                     <Form.Control
@@ -261,7 +256,7 @@ const Profile = () => {
                 </Col>
                 <Col className="col-lg-6 col-12">
                   <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="font-family  fw-bold">
+                    <Form.Label className="   fw-bold">
                       <HiOutlineMail className="fs-4" /> Email:
                     </Form.Label>
                     <Form.Control
@@ -281,7 +276,7 @@ const Profile = () => {
                       cho quá trình chuyển trả/ hoàn tiền)
                     </p>
                   </>
-                ) : role ==3 ?(
+                ) : role == 3 ? (
                   <>
                     {" "}
                     <p className="my-3 mb-4">
@@ -289,14 +284,16 @@ const Profile = () => {
                       trình chuyển trả/ hoàn tiền)
                     </p>
                   </>
-                ):(<></>)}
+                ) : (
+                  <></>
+                )}
                 {role != 2 ? (
                   <>
                     {" "}
                     <Col className="col-lg-12 col-12">
                       {" "}
                       <Form.Group className="mb-4">
-                        <Form.Label className="font-family fw-bold">
+                        <Form.Label className="  fw-bold">
                           <RiBankFill className="fs-4" /> Chọn ngân hàng{" "}
                           <span className="text-danger">(*) </span>:
                         </Form.Label>
@@ -318,7 +315,7 @@ const Profile = () => {
                     </Col>
                     <Col className="col-lg-6 col-12">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
-                        <Form.Label className="font-family  fw-bold">
+                        <Form.Label className="   fw-bold">
                           <RiBankCardFill className="fs-4" /> Tên tài khoản ngân
                           hàng:
                         </Form.Label>
@@ -334,7 +331,7 @@ const Profile = () => {
                     </Col>
                     <Col className="col-lg-6 col-12">
                       <Form.Group className="mb-4" controlId="formBasicEmail">
-                        <Form.Label className="font-family  fw-bold">
+                        <Form.Label className="   fw-bold">
                           <RiBankCardFill className="fs-4" /> STK ngân hàng:
                         </Form.Label>
                         <Form.Control

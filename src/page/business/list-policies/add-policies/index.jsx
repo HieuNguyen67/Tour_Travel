@@ -21,9 +21,7 @@ const AddPolicyForm = () => {
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
-  const isHomePage =
-    location.pathname === "/business/add-policies";
-
+  const isHomePage = location.pathname === "/business/add-policies";
 
   const navigate = useNavigate();
 
@@ -81,9 +79,8 @@ const AddPolicyForm = () => {
           { params: { role: 3 } }
         );
         toast.success("Cập nhật thành công!");
-      
-          navigate("/business/list-policies");
-        
+
+        navigate("/business/list-policies");
       } catch (error) {
         console.error("Error updating policy:", error);
         toast.error("Cập nhật thất bại!");
@@ -101,7 +98,7 @@ const AddPolicyForm = () => {
       </h3>
       <form onSubmit={handleSubmit}>
         <Form.Group className="mb-4" controlId="formBasicEmail">
-          <Form.Label className="font-family">
+          <Form.Label className=" ">
             <IoShieldCheckmark className="fs-4" /> Loại chính sách :
           </Form.Label>
           <Form.Control

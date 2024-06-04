@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Button from "react-bootstrap/Button";
 import Logo from "@/assets/image/tải_xuống-removebg-preview.png";
-import defaultImage from "@/assets/image/6945124.png"; 
+import defaultImage from "@/assets/image/6945124.png";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { BASE_URL, HEADER } from "@/constants";
@@ -31,32 +31,32 @@ const Header = (props) => {
 
   const location = useLocation();
   const isHomePage = location.pathname === "/";
- const { accountId } = useAuth();
+  const { accountId } = useAuth();
 
- const [imageSrc, setImageSrc] = useState("");
- const [error, setError] = useState("");
+  const [imageSrc, setImageSrc] = useState("");
+  const [error, setError] = useState("");
 
- useEffect(() => {
-   const fetchImage = async () => {
-     try {
-      if(isLoggedIn){ 
-        const response = await axios.get(
-        `${BASE_URL}/account/image/${accountId}`,
-        {
-          responseType: "blob",
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        if (isLoggedIn) {
+          const response = await axios.get(
+            `${BASE_URL}/account/image/${accountId}`,
+            {
+              responseType: "blob",
+            }
+          );
+          const imageURL = URL.createObjectURL(response.data);
+          setImageSrc(imageURL);
         }
-      );
-      const imageURL = URL.createObjectURL(response.data);
-      setImageSrc(imageURL);}
-      
-     } catch (error) {
-       console.error("Lỗi khi lấy hình ảnh:", error);
-       setImageSrc(defaultImage);
-     }
-   };
+      } catch (error) {
+        console.error("Lỗi khi lấy hình ảnh:", error);
+        setImageSrc(defaultImage);
+      }
+    };
 
-   fetchImage();
- }, [accountId]);
+    fetchImage();
+  }, [accountId]);
   return (
     <>
       {" "}
@@ -93,8 +93,8 @@ const Header = (props) => {
                         to="/"
                         className={
                           isHomePage
-                            ? "text-light  fs-3 fw-bold font-family text-decoration-none"
-                            : "text-dark  fs-3 fw-bold font-family text-decoration-none"
+                            ? "text-light  fs-3 fw-bold   text-decoration-none"
+                            : "text-dark  fs-3 fw-bold   text-decoration-none"
                         }
                       >
                         Travel
@@ -140,11 +140,7 @@ const Header = (props) => {
                             >
                               {" "}
                               <span
-                                className={
-                                  isHomePage
-                                    ? "whiteee font-family"
-                                    : "black font-family"
-                                }
+                                className={isHomePage ? "whiteee  " : "black  "}
                               >
                                 {item.name}
                               </span>
@@ -193,13 +189,13 @@ const Header = (props) => {
                               className="mx-lg-2 mb-lg-0 mb-2 shadow"
                               variant="warning"
                             >
-                              <span className="font-family">Login</span>
+                              <span>Login</span>
                             </Button>{" "}
                           </NavLink>
 
                           <NavLink className="sidebar decorate " to="/signup">
                             <Button className="shadow" variant="secondary">
-                              <span className="font-family">SignUp</span>
+                              <span>SignUp</span>
                             </Button>{" "}
                           </NavLink>
                         </div>
