@@ -18,6 +18,9 @@ export const AuthProvider = ({ children }) => {
     const [customerId, setCustomerId] = useState(
       sessionStorage.getItem("customer_id")
     );
+     const [adminId, setAdminId] = useState(
+       sessionStorage.getItem("admin_id")
+     );
 
   
   const isLoggedIn = !!token;
@@ -29,12 +32,14 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.setItem("account_id", accountId);
     sessionStorage.setItem("business_id", businessId);
     sessionStorage.setItem("customer_id", customerId);
+    sessionStorage.setItem("admin_id", adminId);
     setToken(token);
     setRole(role);
     setUsername(username);
     setAccountId(accountId);
     setBusinessId(businessId);
     setCustomerId(customerId);
+     setAdminId(adminId);
   };
 
   const logout = () => {
@@ -44,12 +49,14 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.removeItem("account_id");
      sessionStorage.removeItem("business_id");
       sessionStorage.removeItem("customer_id");
+        sessionStorage.removeItem("admin_id");
     setToken(null);
     setRole(null);
     setUsername(null);
     setAccountId(null);
     setBusinessId(null);
     setCustomerId(null);
+    setAdminId(null);
      navigate("/login");
     
   };
@@ -63,6 +70,7 @@ export const AuthProvider = ({ children }) => {
         accountId,
         businessId,
         customerId,
+        adminId,
         isLoggedIn,
         login,
         logout,

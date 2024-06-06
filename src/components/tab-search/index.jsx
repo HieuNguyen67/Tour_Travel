@@ -12,7 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
-import { RED_COLOR } from "@/constants";
+import { BASE_URL, RED_COLOR } from "@/constants";
 import axios from "axios";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import searchimg from "@/assets/image/search.png";
@@ -29,9 +29,9 @@ const TabSearch = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://esgoo.net/api-tinhthanh/1/0.htm"
+          `${BASE_URL}/locations?location_type=nội địa`
         );
-        setProvinces(response.data.data);
+        setProvinces(response.data);
         setLoading(false);
       } catch (error) {
         setError("Error fetching provinces: " + error.message);
@@ -46,16 +46,9 @@ const TabSearch = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          "https://covid-19-statistics.p.rapidapi.com/regions",
-          {
-            headers: {
-              "X-RapidAPI-Key":
-                "59cc4e63b3msh4d842910a03af33p1c1163jsn6fe5d033ef64",
-              "X-RapidAPI-Host": "covid-19-statistics.p.rapidapi.com",
-            },
-          }
+          `${BASE_URL}/locations?location_type=nước ngoài`
         );
-        setRegions(response.data.data);
+        setRegions(response.data);
         setLoading(false);
       } catch (error) {
         setError("Error fetching provinces: " + error.message);
@@ -171,13 +164,12 @@ const TabSearch = () => {
                                   >
                                     {provinces.map((province) => (
                                       <MenuItem
-                                        key={province.id}
-                                        value={province.name}
+                                        key={province.location_id}
+                                        value={province.location_id}
                                       >
-                                        {province.name}
+                                        {province.location_name}
                                       </MenuItem>
                                     ))}
-                                    <MenuItem value={10}>Ten</MenuItem>
                                   </Select>
                                 </FormControl>
                               </Col>
@@ -278,13 +270,12 @@ const TabSearch = () => {
                                   >
                                     {regions.map((region) => (
                                       <MenuItem
-                                        key={region.iso}
-                                        value={region.name}
+                                        key={region.location_id}
+                                        value={region.location_id}
                                       >
-                                        {region.name}
+                                        {region.location_name}
                                       </MenuItem>
                                     ))}
-                                    <MenuItem value={10}>Ten</MenuItem>
                                   </Select>
                                 </FormControl>
                               </Col>

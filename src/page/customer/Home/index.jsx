@@ -18,7 +18,9 @@ import ListNewsHome from "@/components/list-news-home";
 import tourimg from "@/assets/image/tour.png";
 import locationimg from "@/assets/image/location.png";
 import newsimg from "@/assets/image/news.png";
+import { helix } from "ldrs";
 
+helix.register();
 const Home = () => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,8 +60,10 @@ const Home = () => {
           <Container>
             <Container>
               {" "}
-              <h5 className="text-center text-light mb-3">LOADING...</h5>
-              <LinearProgress color="inherit" />
+              <div className="text-center">
+                {" "}
+                <l-helix size="150" speed="1.6" color="white"></l-helix>
+              </div>
             </Container>
           </Container>
         </Backdrop>

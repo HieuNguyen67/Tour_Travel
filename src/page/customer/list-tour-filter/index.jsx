@@ -83,9 +83,9 @@ const TourSearch = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://esgoo.net/api-tinhthanh/1/0.htm"
+          `${BASE_URL}/locations?location_type=nội địa`
         );
-        setProvinces(response.data.data);
+        setProvinces(response.data);
         setLoading(false);
       } catch (error) {
         setError("Error fetching provinces: " + error.message);
@@ -100,16 +100,9 @@ const TourSearch = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          "https://covid-19-statistics.p.rapidapi.com/regions",
-          {
-            headers: {
-              "X-RapidAPI-Key":
-                "59cc4e63b3msh4d842910a03af33p1c1163jsn6fe5d033ef64",
-              "X-RapidAPI-Host": "covid-19-statistics.p.rapidapi.com",
-            },
-          }
+          `${BASE_URL}/locations?location_type=nước ngoài`
         );
-        setRegions(response.data.data);
+        setRegions(response.data);
         setLoading(false);
       } catch (error) {
         setError("Error fetching provinces: " + error.message);
@@ -128,7 +121,7 @@ const TourSearch = () => {
     const filtered = tours.filter((tour) => {
       return (
         (destinationLocation
-          ? tour.destination_locations.includes(destinationLocation)
+          ? tour.destination_locations.includes(parseInt(destinationLocation))
           : true) &&
         (tourName
           ? removeDiacritics(tour.tour_name.toLowerCase()).includes(
@@ -150,10 +143,10 @@ const TourSearch = () => {
 
       return (
         (departureLocation
-          ? tour.departure_location_name.includes(departureLocation)
+          ? tour.location_departure_id === parseInt(departureLocation)
           : true) &&
         (destinationLocation
-          ? tour.destination_locations.includes(destinationLocation)
+          ? tour.destination_locations.includes(parseInt(destinationLocation))
           : true) &&
         meetsMinPriceCriteria &&
         meetsMaxPriceCriteria &&
@@ -195,6 +188,18 @@ const TourSearch = () => {
   const offset = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredTours.slice(offset, offset + itemsPerPage);
   const today = new Date().toISOString().split("T")[0];
+    const getLocationNameById = (id, locations) => {
+      const location = locations.find(
+        (location) => location.location_id === parseInt(id)
+      );
+      return location ? location.location_name : "";
+    };
+
+    const destinationLocationName =
+      location == 1
+        ? getLocationNameById(destinationLocation, provinces)
+        : getLocationNameById(destinationLocation, regions);
+        
   if (loading1) {
     return <LoadingBackdrop open={loading1} />;
   }
@@ -215,7 +220,7 @@ const TourSearch = () => {
                 style={{ background: "#ffc107" }}
                 className="text-center p-2 mt-3 "
               >
-                {tourName} {destinationLocation}
+                {tourName} {destinationLocationName}
               </h5>
               <form>
                 <div>
@@ -230,8 +235,11 @@ const TourSearch = () => {
                   >
                     <option value="">----Tất cả----</option>
                     {provinces.map((province) => (
-                      <option key={province.id} value={province.name}>
-                        {province.name}
+                      <option
+                        key={province.location_id}
+                        value={province.location_id}
+                      >
+                        {province.location_name}
                       </option>
                     ))}
                   </Form.Select>
@@ -250,8 +258,11 @@ const TourSearch = () => {
                       >
                         <option value="">----Tất cả----</option>
                         {provinces.map((province) => (
-                          <option key={province.id} value={province.name}>
-                            {province.name}
+                          <option
+                            key={province.location_id}
+                            value={province.location_id}
+                          >
+                            {province.location_name}
                           </option>
                         ))}
                       </Form.Select>
@@ -268,8 +279,11 @@ const TourSearch = () => {
                       >
                         <option value="">----Tất cả----</option>
                         {regions.map((region) => (
-                          <option key={region.iso} value={region.name}>
-                            {region.name}
+                          <option
+                            key={region.location_id}
+                            value={region.location_id}
+                          >
+                            {region.location_name}
                           </option>
                         ))}
                       </Form.Select>

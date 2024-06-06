@@ -56,7 +56,7 @@ const TourDetail = () => {
       try {
         const response = await axios.get(`${BASE_URL}/get-tour/${tour_id}`);
         setTour(response.data);
-        setDestination(response.data.destination_locations.join(", "));
+        setDestination(response.data.destination_location_name.join(", "));
         setLoading(false);
       } catch (error) {
         console.error("Error fetching tour:", error);

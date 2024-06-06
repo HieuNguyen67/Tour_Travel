@@ -46,7 +46,7 @@ const AddTourForm = () => {
     vehicle: "",
     hotel: "",
     tourcategory_id: "",
-    departure_location_name: "",
+    location_departure_id: "",
     destination_locations: [],
   });
   const [provinces, setProvinces] = useState([]);
@@ -73,9 +73,9 @@ const AddTourForm = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://esgoo.net/api-tinhthanh/1/0.htm"
+          `${BASE_URL}/locations?location_type=nội địa`
         );
-        setProvinces(response.data.data);
+        setProvinces(response.data);
         setLoading(false);
       } catch (error) {
         setError("Error fetching provinces: " + error.message);
@@ -89,16 +89,9 @@ const AddTourForm = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          "https://covid-19-statistics.p.rapidapi.com/regions",
-          {
-            headers: {
-              "X-RapidAPI-Key":
-                "59cc4e63b3msh4d842910a03af33p1c1163jsn6fe5d033ef64",
-              "X-RapidAPI-Host": "covid-19-statistics.p.rapidapi.com",
-            },
-          }
+          `${BASE_URL}/locations?location_type=nước ngoài`
         );
-        setRegions(response.data.data);
+        setRegions(response.data);
         setLoading(false);
       } catch (error) {
         setError("Error fetching provinces: " + error.message);
@@ -547,15 +540,18 @@ const AddTourForm = () => {
                 </Form.Label>
                 <Form.Select
                   aria-label="Default select example"
-                  value={formData.departure_location_name}
+                  value={formData.location_departure_id}
                   onChange={handleChange}
-                  name="departure_location_name"
+                  name="location_departure_id"
                   required
                 >
                   <option value="">Nơi khởi hành</option>
                   {provinces.map((province) => (
-                    <option key={province.id} value={province.name}>
-                      {province.name}
+                    <option
+                      key={province.location_id}
+                      value={province.location_id}
+                    >
+                      {province.location_name}
                     </option>
                   ))}
                 </Form.Select>
@@ -580,13 +576,19 @@ const AddTourForm = () => {
                         <option value="">Hãy chọn điểm đến</option>
                         {formData.tourcategory_id == 1
                           ? provinces.map((province) => (
-                              <option key={province.id} value={province.name}>
-                                {province.name}
+                              <option
+                                key={province.location_id}
+                                value={province.location_id}
+                              >
+                                {province.location_name}
                               </option>
                             ))
                           : regions.map((region) => (
-                              <option key={region.iso} value={region.name}>
-                                {region.name}
+                              <option
+                                key={region.location_id}
+                                value={region.location_id}
+                              >
+                                {region.location_name}
                               </option>
                             ))}
                       </Form.Select>

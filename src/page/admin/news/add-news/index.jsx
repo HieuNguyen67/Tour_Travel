@@ -18,7 +18,7 @@ import { MdOutlineTitle } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 
 const AddNews = () => {
-  const { accountId, token, role } = useAuth();
+  const { businessId,adminId, token, role } = useAuth();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -64,20 +64,35 @@ const AddNews = () => {
     formDataToSend.append("title", title);
     formDataToSend.append("content", content);
     formDataToSend.append("newscategory_id", newscategory_id);
-    formDataToSend.append("account_id", accountId);
     formDataToSend.append("image", image);
 
     try {
-      const response = await axios.post(
-        `${BASE_URL}/add-news`,
-        formDataToSend,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      if(role==2){
+        var response = await axios.post(
+          `${BASE_URL}/add-news/${adminId}`,
+          formDataToSend,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+            params: { role: 2 },
+          }
+        );
+      }else{
+        var response = await axios.post(
+          `${BASE_URL}/add-news/${businessId}`,
+          formDataToSend,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+            params: { role: 3 },
+          }
+        );
+      }
+      
       toast.success("Thêm tin tức thành công!");
       role == 2 ? navigate("/admin/news") : navigate("/business/list-news");
     } catch (error) {

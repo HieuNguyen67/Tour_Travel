@@ -29,7 +29,7 @@ const News = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
-  const { token, role, accountId } = useAuth();
+  const { token, role, businessId } = useAuth();
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -40,7 +40,7 @@ const News = () => {
             },
           });
         } else {
-          var response = await axios.get(`${BASE_URL}/list-news/${accountId}`, {
+          var response = await axios.get(`${BASE_URL}/list-news/${businessId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

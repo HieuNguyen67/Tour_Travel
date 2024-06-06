@@ -48,9 +48,9 @@ const Login: React.FC = () => {
         usernameOrEmail,
         password,
       });
-      const { token, role, account_id, username, business_id, customer_id } =
+      const { token, role, account_id, username, business_id, customer_id ,admin_id} =
         response.data;
-      login(token, role, username, account_id, business_id, customer_id);
+      login(token, role, username, account_id, business_id, customer_id, admin_id);
       toast.success("Đăng nhập thành công !");
       if (role === 1) navigate("/");
       else if (role === 2) navigate("/admin/list-customer");

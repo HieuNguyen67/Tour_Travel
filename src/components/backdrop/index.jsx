@@ -1,6 +1,10 @@
 import React from "react";
 import { Backdrop, Container, LinearProgress } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { helix } from 'ldrs'
+
+helix.register()
+
 
 const LoadingBackdrop = ({ open }) => {
   return (
@@ -15,8 +19,10 @@ const LoadingBackdrop = ({ open }) => {
       >
         <Container>
           <Container>
-            <h5 className="text-center text-dark mb-3">LOADING...</h5>
-            <LinearProgress color="secondary" />
+            <div className="text-center">
+              {" "}
+              <l-helix size="150" speed="1.6" color="black"></l-helix>
+            </div>
           </Container>
         </Container>
       </Backdrop>
