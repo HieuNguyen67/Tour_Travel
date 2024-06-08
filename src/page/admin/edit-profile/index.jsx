@@ -23,7 +23,7 @@ import { BASE_URL } from "@/constants";
 
 const EditProfile = () => {
   const { account_id, role_id } = useParams();
-  const { isLoggedIn, token } = useAuth();
+  const { isLoggedIn, token, accountId } = useAuth();
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -102,9 +102,9 @@ const EditProfile = () => {
       {
         role_id == 3
           ? navigate("/admin/list-business")
-          : role_id == 4
-          ? navigate("/business/list-guide")
-          : navigate("/admin/list-customer");
+          : role_id == 1
+          ? navigate("/business/list-customer")
+          : navigate("/admin/list-admin");
       }
     } catch (error) {
       console.error("Failed to update account data:", error);
@@ -126,11 +126,13 @@ const EditProfile = () => {
           <Link to="/admin/list-business">
             <IoArrowBackOutline className="fs-3 mb-3" />
           </Link>
-        ) : (
+        ) :role_id == 1 ?  (
           <Link to="/admin/list-customer">
             <IoArrowBackOutline className="fs-3 mb-3" />
           </Link>
-        )}
+        ):(<><Link to="/admin/list-admin">
+            <IoArrowBackOutline className="fs-3 mb-3" />
+          </Link></>)}
 
         {role_id == 3 ? (
           <>
@@ -139,11 +141,19 @@ const EditProfile = () => {
               <ImProfile className="fs-3" /> THÔNG TIN DOANH NGHIỆP:
             </h4>
           </>
-        ) : (
+        ) : role_id == 1 ? (
           <>
             <h4 className="mb-lg-5 fw-bold">
               {" "}
               <ImProfile className="fs-3" /> THÔNG TIN KHÁCH HÀNG:
+            </h4>
+          </>
+        ) : (
+          <>
+            {" "}
+            <h4 className="mb-lg-5 fw-bold">
+              {" "}
+              <ImProfile className="fs-3" /> THÔNG TIN {formData.role_name} :
             </h4>
           </>
         )}
@@ -156,39 +166,46 @@ const EditProfile = () => {
             {" "}
             <form onSubmit={handleSubmit}>
               <Row>
-                <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-lg-4 mb-3 ">
-                    <Form.Select
-                      as="select"
-                      required
-                      name="status"
-                      value={formData.status}
-                      onChange={handleChange}
-                    >
-                      <option value="Inactive">Inactive</option>
-                      <option value="Active">Active</option>
-                    </Form.Select>
-                  </Form.Group>
-                  <Form.Group className="mb-lg-4 ">
-                    <Form.Control
-                      as="textarea"
-                      style={{ height: "10rem" }}
-                      name="note"
-                      placeholder="Ghi chú"
-                      value={formData.note}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col className="col-12 col-lg-3 my-3 my-lg-0">
-                  <Button
-                    style={{ background: RED_COLOR, border: "0px" }}
-                    type="submit"
-                    className="  col-12 "
-                  >
-                    <FaSave /> Cập nhật trạng thái
-                  </Button>
-                </Col>
+                {formData.role_name == "Super Admin" ||
+                formData.account_id == accountId ? (
+                  <></>
+                ) : (
+                  <>
+                    <Col className="col-lg-6 col-12">
+                      <Form.Group className="mb-lg-4 mb-3 ">
+                        <Form.Select
+                          as="select"
+                          required
+                          name="status"
+                          value={formData.status}
+                          onChange={handleChange}
+                        >
+                          <option value="Inactive">Inactive</option>
+                          <option value="Active">Active</option>
+                        </Form.Select>
+                      </Form.Group>
+                      <Form.Group className="mb-lg-4 ">
+                        <Form.Control
+                          as="textarea"
+                          style={{ height: "10rem" }}
+                          name="note"
+                          placeholder="Ghi chú"
+                          value={formData.note}
+                          onChange={handleChange}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col className="col-12 col-lg-3 my-3 my-lg-0">
+                      <Button
+                        style={{ background: RED_COLOR, border: "0px" }}
+                        type="submit"
+                        className="  col-12 "
+                      >
+                        <FaSave /> Cập nhật trạng thái
+                      </Button>
+                    </Col>
+                  </>
+                )}
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
@@ -277,37 +294,43 @@ const EditProfile = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="   fw-bold">
-                      <RiBankCardFill className="fs-4" /> Tên tài khoản ngân
-                      hàng:
-                    </Form.Label>
-                    <Form.Control
-                      required
-                      type="text"
-                      name="bank_account_name"
-                      value={formData.bank_account_name}
-                      placeholder="chưa cập nhật"
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
-                <Col className="col-lg-6 col-12">
-                  <Form.Group className="mb-4" controlId="formBasicEmail">
-                    <Form.Label className="   fw-bold">
-                      <RiBankCardFill className="fs-4" /> STK ngân hàng:
-                    </Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      name="bank_account_number"
-                      value={formData.bank_account_number}
-                      placeholder="chưa cập nhật"
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
+                {!role_id == 1 && !role_id == 3 ? (
+                  <>
+                    <Col className="col-lg-6 col-12">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
+                        <Form.Label className="   fw-bold">
+                          <RiBankCardFill className="fs-4" /> Tên tài khoản ngân
+                          hàng:
+                        </Form.Label>
+                        <Form.Control
+                          required
+                          type="text"
+                          name="bank_account_name"
+                          value={formData.bank_account_name}
+                          placeholder="chưa cập nhật"
+                          readOnly
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col className="col-lg-6 col-12">
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
+                        <Form.Label className="   fw-bold">
+                          <RiBankCardFill className="fs-4" /> STK ngân hàng:
+                        </Form.Label>
+                        <Form.Control
+                          required
+                          type="number"
+                          name="bank_account_number"
+                          value={formData.bank_account_number}
+                          placeholder="chưa cập nhật"
+                          readOnly
+                        />
+                      </Form.Group>
+                    </Col>
+                  </>
+                ) : (
+                  <></>
+                )}
               </Row>
             </form>
           </Col>

@@ -175,6 +175,27 @@ const Profile = () => {
             {" "}
             <form onSubmit={handleSubmit}>
               <Row>
+                {role != 1 && role != 3 ? (
+                  <>
+                    {" "}
+                    <Col className="col-12">
+                      {" "}
+                      <Form.Group className="mb-4" controlId="formBasicEmail">
+                        <Form.Label className="  fw-bold">
+                          <MdAccountBox className="fs-4" /> Vai trò:
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          readOnly
+                          value={formData.role_name}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </>
+                ) : (
+                  <></>
+                )}
+
                 <Col className="col-lg-6 col-12">
                   {" "}
                   <Form.Group className="mb-4" controlId="formBasicEmail">
@@ -287,7 +308,7 @@ const Profile = () => {
                 ) : (
                   <></>
                 )}
-                {role != 2 ? (
+                {role != 2 && role != 4 && role != 5 && role != 6 ? (
                   <>
                     {" "}
                     <Col className="col-lg-12 col-12">

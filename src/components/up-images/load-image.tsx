@@ -29,7 +29,7 @@ const DisplayImage: React.FC = () => {
       } catch (error) {
         console.error("Lỗi khi lấy hình ảnh:", error);
         setImageSrc(defaultImage);
-        setError("Lỗi khi lấy hình ảnh");
+
       }
     };
 

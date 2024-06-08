@@ -30,7 +30,6 @@ const LoadImage = () => {
         const imageURL = URL.createObjectURL(response.data);
         setImageSrc(imageURL);
       } catch (error) {
-        console.error("Lỗi khi lấy hình ảnh:", error);
         setImageSrc(defaultImage);
       }
     };

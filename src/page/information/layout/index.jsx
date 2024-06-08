@@ -42,7 +42,12 @@ const InformationLayout = ({ children }) => {
                 </Link>
               </>
             ) : (
-              <></>
+              <>
+                {" "}
+                <Link to="/admin/list-customer">
+                  <IoArrowBackOutline className="fs-3 mb-3" />
+                </Link>
+              </>
             )}
 
             <h1 className="text-center text-break fw-bold ">

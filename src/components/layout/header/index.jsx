@@ -72,23 +72,18 @@ const Header = (props) => {
           <Container className="my-2">
             <div className=" decorate">
               <Navbar.Brand>
-                {role == 2 ? (
-                  <></>
-                ) : role == 3 ? (
-                  <></>
-                ) : (
-                  <>
-                    <img
-                      alt=""
-                      src={Logo}
-                      className="d-inline-block justify-content-center  align-items-center logoo mb-2"
-                    />
-                  </>
-                )}
-
                 <span>
-                  {role != 2 && role != 3 ? (
+                  {role != 2 &&
+                  role != 3 &&
+                  role != 4 &&
+                  role != 5 &&
+                  role != 6 ? (
                     <>
+                      <img
+                        alt=""
+                        src={Logo}
+                        className="d-inline-block justify-content-center  align-items-center logoo mb-2"
+                      />
                       <Link
                         to="/"
                         className={
@@ -116,7 +111,11 @@ const Header = (props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body className="d-flex justify-content-center  align-items-center sidebar">
                   <Nav className="d-flex   align-items-center align-items-center  mx-auto  ">
-                    {role == 2 || role == 3 ? (
+                    {role == 2 ||
+                    role == 3 ||
+                    role == 4 ||
+                    role == 5 ||
+                    role == 6 ? (
                       <>{""}</>
                     ) : (
                       <>

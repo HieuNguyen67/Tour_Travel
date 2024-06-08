@@ -21,7 +21,7 @@ const LoadingBackdrop = ({ open }) => {
           <Container>
             <div className="text-center">
               {" "}
-              <l-helix size="150" speed="1.6" color="black"></l-helix>
+              <l-helix size="150" speed="1.6" color="#161108"></l-helix>
             </div>
           </Container>
         </Container>

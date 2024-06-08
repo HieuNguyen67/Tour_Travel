@@ -10,6 +10,7 @@ import { useAuth } from "@/context";
 import { BASE_URL } from "@/constants";
 import userimg from "@/assets/image/profile1.png";
 import businessimg from "@/assets/image/business1.png";
+import adminimg from "@/assets/image/admin.png";
 import addimg from "@/assets/image/add.png";
 
 
@@ -22,6 +23,7 @@ const ListUser = () => {
   const { token } = useAuth();
 
   const isHomePage = location.pathname === "/admin/list-customer";
+  const isHomePage1 = location.pathname === "/admin/list-business";
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,8 +34,14 @@ const ListUser = () => {
               Authorization: `Bearer ${token}`,
             },
           });
-        } else {
+        } else if (isHomePage1) {
           var response = await axios.get(`${BASE_URL}/get-users?role_id=3`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } else {
+          var response = await axios.get(`${BASE_URL}/get-admins`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -50,7 +58,7 @@ const ListUser = () => {
     };
 
     fetchUsers();
-  }, [isHomePage]);
+  }, [isHomePage, isHomePage1]);
 
   const handleCheckboxChange = (event, row) => {
     if (event.target.checked) {
@@ -208,6 +216,25 @@ const ListUser = () => {
       ),
     },
   ];
+ 
+  if (!isHomePage && !isHomePage1) {
+    const nameIndex = columns.findIndex((column) => column.field === "status");
+    if (nameIndex !== -1) {
+      columns.splice(nameIndex + 1, 0, {
+        field: "role_name",
+        headerName: "Quyền hạn",
+        width: 150,
+        renderCell: (params) => (
+          <div
+          className="fw-bold"
+            style={{ cursor: "pointer" }}
+            dangerouslySetInnerHTML={{ __html: params.value }}
+            onClick={() => handleRowClick(params)}
+          />
+        ),
+      });
+    }
+  }
 
   if (error) return <div>Error: {error}</div>;
 
@@ -230,7 +257,7 @@ const ListUser = () => {
                 />{" "}
                 KHÁCH HÀNG
               </>
-            ) : (
+            ) : isHomePage1 ? (
               <>
                 <img
                   src={businessimg}
@@ -242,18 +269,47 @@ const ListUser = () => {
                 />{" "}
                 DOANH NGHIỆP
               </>
+            ) : (
+              <>
+                <img
+                  src={adminimg}
+                  style={{
+                    width: "3.5rem",
+                    height: "3.5rem",
+                    objectFit: "cover",
+                  }}
+                />{" "}
+                ADMIN
+              </>
             )}
           </h3>
         </Col>{" "}
         <Col className="col-4">
           {" "}
           <p className="text-end">
-            {isHomePage ? (
+            {isHomePage1 ? (
+              <>
+                <Link
+                  to="/admin/register-user/3"
+                  className="text-decoration-none"
+                >
+                  <img
+                    src={addimg}
+                    className="mb-2"
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Link>
+              </>
+            ) : isHomePage ? (
               <></>
             ) : (
               <>
                 <Link
-                  to="/admin/register-user/3"
+                  to="/admin/register-user/2"
                   className="text-decoration-none"
                 >
                   <img

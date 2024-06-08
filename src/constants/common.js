@@ -21,6 +21,8 @@ import uc from "@/assets/image/uc.jpg";
 import thailan from "@/assets/image/thailan.jpg";
 import PendingBadge from "@/components/pending-badge";
 import coin from "@/assets/image/coin.png";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { useAuth } from "@/context";
 
 
 const HEADER = [
@@ -49,6 +51,15 @@ const ADMIN = [
   },
   {
     id: 3,
+    icon: <MdAdminPanelSettings />,
+    name: "ADMIN",
+    link: "/admin/list-admin",
+    icon2: <IoMdAddCircle />,
+    name2: "ĐĂNG KÝ",
+    link2: "/admin/register-user/2",
+  },
+  {
+    id: 4,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-news`}
@@ -62,7 +73,7 @@ const ADMIN = [
     link2: "/admin/add-news",
   },
   {
-    id: 4,
+    id: 5,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-contact`}
@@ -73,7 +84,7 @@ const ADMIN = [
     link: "/admin/contact",
   },
   {
-    id: 5,
+    id: 6,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-report`}
@@ -84,10 +95,36 @@ const ADMIN = [
     link: "/admin/report",
   },
   {
-    id: 6,
+    id: 7,
     icon: <IoShieldCheckmark />,
     name: "CHÍNH SÁCH HUỶ",
     link: "/admin/list-policies",
+  },
+];
+const ACCOUNTMANAGEMENT = [
+  {
+    id: 1,
+    icon: <FaUser />,
+    name: "KHÁCH HÀNG",
+    link: "/admin/list-customer",
+  },
+  {
+    id: 2,
+    icon: <MdBusinessCenter />,
+    name: "DOANH NGHIỆP",
+    link: "/admin/list-business",
+    icon2: <MdAddBusiness />,
+    name2: "ĐĂNG KÝ",
+    link2: "/admin/register-user/3",
+  },
+  {
+    id: 3,
+    icon: <MdAdminPanelSettings />,
+    name: "ADMIN",
+    link: "/admin/list-admin",
+    icon2: <IoMdAddCircle />,
+    name2: "ĐĂNG KÝ",
+    link2: "/admin/register-user/2",
   },
 ];
 
@@ -204,6 +241,7 @@ export {
   HEADER,
   BASE_URL,
   ADMIN,
+  ACCOUNTMANAGEMENT,
   BUSINESS,
   DESTINATION_FAVOURITE,
   DESTINATION_FAVOURITE_FOREIGN,

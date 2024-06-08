@@ -67,7 +67,7 @@ export default function BackToTop(props) {
           </Button>
         </motion.div>
       </ScrollTop>
-      {role == 2 || role == 3 ? (
+      {role == 2 || role == 3 || role == 4 || role == 5 || role == 6 ? (
         <> </>
       ) : (
         <>

@@ -1,5 +1,9 @@
 import { useAuth } from "@/context";
 import Login from "@/page/Login";
+import ContactDetail from "@/page/admin/contact/contact-detail";
+import EditProfile from "@/page/admin/edit-profile";
+import ListUser from "@/page/admin/list-user";
+import RegisterUser from "@/page/admin/register-user";
 import Contact from "@/page/customer/Contact";
 import Home from "@/page/customer/Home";
 import Introduce from "@/page/customer/Introduce";
@@ -16,6 +20,7 @@ import BusinessRoutes from "@/routes/business-routes";
 import CustomerRoutes from "@/routes/customer-routes";
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+import SidebarLayout from "../side-bar";
 
 
 const Apps: React.FC = () => {
@@ -29,7 +34,7 @@ const Apps: React.FC = () => {
             <Route path="/customer/*" element={<CustomerRoutes />} />
           </>
         )}
-        {role == 2 && (
+        {(role == 2 || role == 4 ) && (
           <>
             <Route path="/admin/*" element={<AdminRoutes />} />
             <Route path="*" element={<Navigate to="/admin/list-customer" />} />

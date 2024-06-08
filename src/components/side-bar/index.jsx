@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import "./side-bar.scss";
-import { ADMIN, BUSINESS } from "@/constants";
+import { ACCOUNTMANAGEMENT, ADMIN, BUSINESS } from "@/constants";
 import { useAuth } from "@/context";
 import {
   Collapse,
@@ -9,7 +9,6 @@ import {
   ListItem,
   ListItemText,
   Drawer,
-  IconButton,
   Button,
 } from "@mui/material";
 import { Col, Row } from "react-bootstrap";
@@ -17,6 +16,8 @@ import { FcBusinessman } from "react-icons/fc";
 import { FcManager } from "react-icons/fc";
 import { MdExpandMore, MdMenu } from "react-icons/md";
 import menuimg from "@/assets/image/menu.png";
+import adminimg from "@/assets/image/admin.png";
+import businessimg from "@/assets/image/business1.png";
 
 const SidebarLayout = ({ children }) => {
   const { role } = useAuth();
@@ -103,20 +104,37 @@ const SidebarLayout = ({ children }) => {
         <Col className="col-lg-2 col-12 d-lg-block d-none sidebarrr">
           <List>
             <ListItem className="mb-3">
-              {role == 2 ? (
+              {role == 2 || role == 4 || role == 5 || role == 6 ? (
                 <div className="text-dark fw-bold fs-3">
-                  <FcManager className="fs-1" /> ADMIN
+                  <img
+                    src={adminimg}
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      objectFit: "cover",
+                    }}
+                  />{" "}
+                  ADMIN
                 </div>
               ) : role == 3 ? (
                 <div className="text-dark fw-bold fs-3">
-                  <FcBusinessman className="fs-1" /> DOANH NGHIỆP
+                  <img
+                    src={businessimg}
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      objectFit: "cover",
+                    }}
+                  />{" "}
+                  DOANH NGHIỆP
                 </div>
               ) : (
                 <></>
               )}
             </ListItem>
-            {role == 2 && renderNavItems(ADMIN)}
+            {role == 2  && renderNavItems(ADMIN)}
             {role == 3 && renderNavItems(BUSINESS)}
+            {role == 4 && renderNavItems(ACCOUNTMANAGEMENT)}
           </List>
         </Col>
         <Col className="col-lg-10 col-12 my-lg-5 pt-lg-5">
@@ -128,7 +146,11 @@ const SidebarLayout = ({ children }) => {
               className="mt-2"
               onClick={toggleDrawer}
             >
-              <img src={menuimg} className="ms-2" style={{width:'3rem',height:"3rem"}}/>
+              <img
+                src={menuimg}
+                className="ms-2"
+                style={{ width: "3rem", height: "3rem" }}
+              />
             </Button>
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
               <div style={{ width: "250px" }}>
@@ -148,6 +170,7 @@ const SidebarLayout = ({ children }) => {
                   </ListItem>
                   {role == 2 && renderNavItems(ADMIN)}
                   {role == 3 && renderNavItems(BUSINESS)}
+                  {role == 4 && renderNavItems(ACCOUNTMANAGEMENT)}
                 </List>
               </div>
             </Drawer>

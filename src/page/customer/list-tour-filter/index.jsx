@@ -157,6 +157,10 @@ const TourSearch = () => {
     });
     setFilteredTours(filtered);
     setCurrentPage(1);
+     window.scrollTo({
+       top: 0,
+       behavior: "smooth",
+     });
   };
 
   const handlePageClick = (event, value) => {

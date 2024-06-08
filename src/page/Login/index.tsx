@@ -55,6 +55,7 @@ const Login: React.FC = () => {
       if (role === 1) navigate("/");
       else if (role === 2) navigate("/admin/list-customer");
       else if (role === 3) navigate("/business/home");
+      else if (role === 4) navigate("/admin/list-customer");
     } catch (error: any) {
       toast.error("Đăng nhập thất bại !");
       console.error("Đăng nhập không thành công:", error.response.data.message);

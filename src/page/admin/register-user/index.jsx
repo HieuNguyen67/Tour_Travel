@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { IoChevronBackSharp } from "react-icons/io5";
 import { motion, useAnimation } from "framer-motion";
 import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { IoLogInSharp } from "react-icons/io5";
@@ -16,8 +15,10 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
 import businessimg from "@/assets/image/business1.png";
+import adminimg from "@/assets/image/admin.png";
 import { RED_COLOR } from "@/constants";
 import { BASE_URL } from "@/constants";
+import { GrUserAdmin } from "react-icons/gr";
 
 const RegisterUser = () => {
   const { role_id } = useParams();
@@ -31,6 +32,7 @@ const RegisterUser = () => {
     phone_number: "",
     address: "",
     email: "",
+    role: "",
   });
   const { isLoggedIn, token } = useAuth();
 
@@ -44,23 +46,41 @@ const RegisterUser = () => {
     e.preventDefault();
 
     try {
-      await axios.post(`${BASE_URL}/register-business`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      toast.success("Đăng ký thành công !");
-      navigate("/admin/list-business");
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        toast.error("Tên đăng nhập hoặc email đã tồn tại.");
-        setError("Tên đăng nhập hoặc email đã tồn tại.");
-      } else {
-        console.error("Đăng ký không thành công:", error);
-        toast.error("Đăng ký không thành công. Vui lòng thử lại sau.");
+      if(role_id==3){
+
+         await axios.post(`${BASE_URL}/register-business`, formData, {
+           headers: {
+             Authorization: `Bearer ${token}`,
+           },
+         });
+         toast.success("Đăng ký thành công !");
+         navigate("/admin/list-business");
+
+      }else{
+          await axios.post(`${BASE_URL}/register-admin`, formData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          toast.success("Đăng ký thành công !");
+          navigate("/admin/list-admin");
       }
+     
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setError(error.response.data.message);
     }
   };
+    const getMaxDate = () => {
+      const today = new Date();
+      const year = today.getFullYear() - 18;
+      const month = today.getMonth() + 1; 
+      const day = today.getDate();
+      return `${year}-${month.toString().padStart(2, "0")}-${day
+        .toString()
+        .padStart(2, "0")}`;
+    };
+
 
   return (
     <>
@@ -71,20 +91,46 @@ const RegisterUser = () => {
       >
         <Container className=" mx-auto">
           <div className="mt-2">
-            {" "}
-            <Link to="/admin/list-business">
-              <IoArrowBackOutline className="fs-3 mb-3" />
-            </Link>
+            {role_id == 3 ? (
+              <>
+                <Link to="/admin/list-business">
+                  <IoArrowBackOutline className="fs-3 mb-3" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/admin/list-admin">
+                  <IoArrowBackOutline className="fs-3 mb-3" />
+                </Link>
+              </>
+            )}
+
             <h3 className=" fw-bold my-3">
-              <img
-                src={businessimg}
-                style={{
-                  width: "3rem",
-                  height: "3rem",
-                  objectFit: "cover",
-                }}
-              />{" "}
-              ĐĂNG KÝ DOANH NGHIỆP
+              {role_id == 3 ? (
+                <>
+                  <img
+                    src={businessimg}
+                    style={{
+                      width: "3rem",
+                      height: "3rem",
+                      objectFit: "cover",
+                    }}
+                  />{" "}
+                  ĐĂNG KÝ DOANH NGHIỆP
+                </>
+              ) : (
+                <>
+                  <img
+                    src={adminimg}
+                    style={{
+                      width: "3rem",
+                      height: "3rem",
+                      objectFit: "cover",
+                    }}
+                  />{" "}
+                  ĐĂNG KÝ ADMIN
+                </>
+              )}
             </h3>
           </div>
         </Container>
@@ -92,10 +138,37 @@ const RegisterUser = () => {
         <Container className="mb-5 pb-md-5">
           <form className=" mt-3 col-12 mx-auto" onSubmit={handleSubmit}>
             <Row>
+              {role_id == 2 ? (
+                <>
+                  <Col className="col-12">
+                    <Form.Group className="mb-lg-4 mb-3 ">
+                      <Form.Label className=" ">
+                        <GrUserAdmin className="fs-4" /> Quyền hạn{" "}
+                        <span className="text-danger">*</span>
+                      </Form.Label>
+                      <Form.Select
+                        required
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                      >
+                        <option value="">Chọn quyền</option>
+                        <option value="4">Account Management</option>
+                        <option value="5">News Management</option>
+                        <option value="6">Support Management</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+                </>
+              ) : (
+                <></>
+              )}
+
               <Col className="col-lg-6 col-12">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className=" ">
-                    <ImProfile className="fs-4" /> Tên doanh nghiệp:{" "}
+                    <ImProfile className="fs-4" />{" "}
+                    {role_id == 3 ? <>Tên doanh nghiệp</> : <>Họ và tên</>}
                     <span className="text-danger">*</span>
                   </Form.Label>
                   <Form.Control
@@ -175,7 +248,7 @@ const RegisterUser = () => {
                     name="birth_of_date"
                     value={formData.birth_of_date}
                     onChange={handleChange}
-                    max="2008-12-31"
+                    max={getMaxDate()}
                   />
                 </Form.Group>
               </Col>
@@ -197,7 +270,7 @@ const RegisterUser = () => {
                   />
                 </Form.Group>
               </Col>
-              <Col className="col-6">
+              <Col className="col-lg-6 col-12">
                 <Form.Group className="mb-3">
                   <Form.Label className=" ">
                     <TiLocation className="fs-4" /> Địa chỉ{" "}
