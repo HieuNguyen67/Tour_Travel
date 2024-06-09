@@ -16,7 +16,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 
 const ReportDetails = () => {
   const { report_id } = useParams();
-  const { token } = useAuth();
+  const { token, adminId } = useAuth();
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
@@ -44,7 +44,7 @@ const ReportDetails = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `${BASE_URL}/update-status-report/${report_id}`,
+        `${BASE_URL}/update-status-report/${report_id}/${adminId}`,
         {
           status,
         },

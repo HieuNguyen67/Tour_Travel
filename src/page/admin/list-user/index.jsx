@@ -12,7 +12,7 @@ import userimg from "@/assets/image/profile1.png";
 import businessimg from "@/assets/image/business1.png";
 import adminimg from "@/assets/image/admin.png";
 import addimg from "@/assets/image/add.png";
-
+import "./list-user.scss";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -243,7 +243,7 @@ const ListUser = () => {
       <LoadingBackdrop open={loading} />
       <Row>
         <Col className="col-8">
-          <h3 className="fw-bold ">
+          <h3 className="fw-bold sizetextuser">
             {isHomePage ? (
               <>
                 {" "}

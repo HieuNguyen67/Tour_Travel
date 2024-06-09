@@ -67,7 +67,7 @@ const AddNews = () => {
     formDataToSend.append("image", image);
 
     try {
-      if(role==2){
+      if (role == 2 || role == 5) {
         var response = await axios.post(
           `${BASE_URL}/add-news/${adminId}`,
           formDataToSend,
@@ -79,7 +79,7 @@ const AddNews = () => {
             params: { role: 2 },
           }
         );
-      }else{
+      } else {
         var response = await axios.post(
           `${BASE_URL}/add-news/${businessId}`,
           formDataToSend,
@@ -94,7 +94,9 @@ const AddNews = () => {
       }
       
       toast.success("Thêm tin tức thành công!");
-      role == 2 ? navigate("/admin/news") : navigate("/business/list-news");
+      (role == 2 || role == 5)
+        ? navigate("/admin/news")
+        : navigate("/business/list-news");
     } catch (error) {
       console.error("Failed to post news:", error);
       toast.error("Thêm tin tức thất bại. Vui lòng điền đầy đủ thông tin !");
@@ -110,7 +112,11 @@ const AddNews = () => {
       >
         <Container className=" mx-auto">
           <div className="mt-2">
-            <Link to={role == 2 ? "/admin/news" : "/business/list-news"}>
+            <Link
+              to={
+                (role == 2 || role == 5) ? "/admin/news" : "/business/list-news"
+              }
+            >
               <IoArrowBackOutline className="fs-3" />
             </Link>
 

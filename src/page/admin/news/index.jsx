@@ -33,18 +33,21 @@ const News = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        if (role == 2) {
+        if (role == 2 || role == 5) {
           var response = await axios.get(`${BASE_URL}/list-news`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
         } else {
-          var response = await axios.get(`${BASE_URL}/list-news/${businessId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${BASE_URL}/list-news/${businessId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         }
 
         const sortedNews = response.data.sort(
@@ -67,14 +70,14 @@ const News = () => {
 
   const handleRowClick = (params) => {
     {
-      role == 2
+      (role == 2 || role==5)
         ? navigate(`/admin/news-detail/${params.row.news_id}`)
         : navigate(`/business/news-detail/${params.row.news_id}`);
     }
   };
   const handleRowClick1 = (params) => {
     {
-      role == 2
+      (role == 2 || role==5)
         ? navigate(`/admin/edit-news/${params.row.news_id}`)
         : navigate(`/business/edit-news/${params.row.news_id}`);
     }
@@ -280,7 +283,7 @@ const News = () => {
                 cursor: "pointer",
               }}
             />{" "}
-            <Link to={role == 2 ? "/admin/add-news" : "/business/add-news"}>
+            <Link to={(role == 2 || role==5) ? "/admin/add-news" : "/business/add-news"}>
               <img
                 src={addimg}
                 className="mb-2 "

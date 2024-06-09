@@ -25,7 +25,15 @@ export const AuthProvider = ({ children }) => {
   
   const isLoggedIn = !!token;
 
-  const login = (token, role, username, accountId, businessId, customerId) => {
+  const login = (
+    token,
+    role,
+    username,
+    accountId,
+    businessId,
+    customerId,
+    adminId
+  ) => {
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("role", role);
     sessionStorage.setItem("username", username);
@@ -39,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     setAccountId(accountId);
     setBusinessId(businessId);
     setCustomerId(customerId);
-     setAdminId(adminId);
+    setAdminId(adminId);
   };
 
   const logout = () => {

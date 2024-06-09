@@ -35,8 +35,11 @@ const MainLayout = ({ children }) => {
 
         {children}
       </Col>
-      {isHomePage ? null : 
-      role==2||role==3||role==4?null:(
+      {isHomePage ? null : role == 2 ||
+        role == 3 ||
+        role == 4 ||
+        role == 5 ||
+        role == 6 ? null : (
         <Col className="col-12">
           <Footer />
         </Col>

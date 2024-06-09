@@ -23,7 +23,7 @@ import { BASE_URL } from "@/constants";
 
 const EditProfile = () => {
   const { account_id, role_id } = useParams();
-  const { isLoggedIn, token, accountId } = useAuth();
+  const { isLoggedIn, token, accountId, adminId } = useAuth();
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -87,7 +87,7 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `${BASE_URL}/account/${account_id}`,
+        `${BASE_URL}/update-status-accounts/${account_id}/${adminId}`,
         {
           ...formData,
         },
@@ -109,7 +109,7 @@ const EditProfile = () => {
     } catch (error) {
       console.error("Failed to update account data:", error);
       toast.error(
-        "Cập nhật thông tin tài khoản không thành công. Vui lòng thử lại sau."
+       error.response.data.message
       );
     }
   };

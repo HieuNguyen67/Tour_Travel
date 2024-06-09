@@ -34,10 +34,10 @@ const Apps: React.FC = () => {
             <Route path="/customer/*" element={<CustomerRoutes />} />
           </>
         )}
-        {(role == 2 || role == 4 ) && (
+        {(role == 2 || role == 4 || role == 5 || role == 6) && (
           <>
             <Route path="/admin/*" element={<AdminRoutes />} />
-            <Route path="*" element={<Navigate to="/admin/list-customer" />} />
+            <Route path="*" element={<NotFound />} />
           </>
         )}
         {role == 3 && (

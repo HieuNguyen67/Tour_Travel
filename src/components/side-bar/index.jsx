@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import "./side-bar.scss";
-import { ACCOUNTMANAGEMENT, ADMIN, BUSINESS } from "@/constants";
+import { ACCOUNTMANAGEMENT, ADMIN, BUSINESS, NEWSMANAGEMENT, SUPPORTMANAGEMENT } from "@/constants";
 import { useAuth } from "@/context";
 import {
   Collapse,
@@ -132,9 +132,11 @@ const SidebarLayout = ({ children }) => {
                 <></>
               )}
             </ListItem>
-            {role == 2  && renderNavItems(ADMIN)}
+            {role == 2 && renderNavItems(ADMIN)}
             {role == 3 && renderNavItems(BUSINESS)}
             {role == 4 && renderNavItems(ACCOUNTMANAGEMENT)}
+            {role == 5 && renderNavItems(NEWSMANAGEMENT)}
+            {role == 6 && renderNavItems(SUPPORTMANAGEMENT)}
           </List>
         </Col>
         <Col className="col-lg-10 col-12 my-lg-5 pt-lg-5">

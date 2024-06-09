@@ -127,7 +127,51 @@ const ACCOUNTMANAGEMENT = [
     link2: "/admin/register-user/2",
   },
 ];
-
+const NEWSMANAGEMENT = [
+ 
+  {
+    id: 1,
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-news`}
+        icon={<ImNewspaper />}
+      />
+    ),
+    name: "TIN TỨC",
+    link: "/admin/news",
+    icon2: <IoMdAddCircle />,
+    name2: "THÊM TIN TỨC",
+    link2: "/admin/add-news",
+  },
+  
+];
+const SUPPORTMANAGEMENT = [
+  
+ 
+  {
+    id: 1,
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-contact`}
+        icon={<MdContactMail />}
+      />
+    ),
+    name: "LIÊN HỆ",
+    link: "/admin/contact",
+  },
+  {
+    id: 2,
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-report`}
+        icon={<MdReportProblem />}
+      />
+    ),
+    name: "TỐ CÁO",
+    link: "/admin/report",
+  },
+  
+];
 const BUSINESS = [
   {
     id: 1,
@@ -242,6 +286,8 @@ export {
   BASE_URL,
   ADMIN,
   ACCOUNTMANAGEMENT,
+  NEWSMANAGEMENT,
+  SUPPORTMANAGEMENT,
   BUSINESS,
   DESTINATION_FAVOURITE,
   DESTINATION_FAVOURITE_FOREIGN,

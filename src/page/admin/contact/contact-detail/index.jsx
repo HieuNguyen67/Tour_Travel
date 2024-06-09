@@ -18,7 +18,7 @@ const ContactDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
-  const { token, role } = useAuth();
+  const { token, role, adminId } = useAuth();
   const location = useLocation();
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const ContactDetail = () => {
     try {
       if (role == 2) {
         await axios.put(
-          `${BASE_URL}/update-status-contact/${contact_id}`,
+          `${BASE_URL}/update-status-contact/${contact_id}/${adminId}`,
           {
             status,
           },

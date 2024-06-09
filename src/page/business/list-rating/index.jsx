@@ -91,7 +91,7 @@ const ToursList = () => {
   return (
     <>
       <LoadingBackdrop open={loading} />
-      <h3 className="fw-bold mb-3">
+      <h3 className="fw-bold mb-3 sizetextuser">
         <img
           src={feedbackimg}
           className="mb-2"

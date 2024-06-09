@@ -26,7 +26,7 @@ const NewsDetail = () => {
   const [details, setDetails] = useState({});
   const [status, setStatus] = useState("");
   const [note, setNote] = useState("");
-  const { token, role } = useAuth();
+  const { token, role, adminId } = useAuth();
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -76,7 +76,7 @@ const NewsDetail = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `${BASE_URL}/update-status/${news_id}`,
+        `${BASE_URL}/update-status-news/${news_id}/${adminId}`,
         {
           status,
           note,
@@ -108,10 +108,10 @@ const NewsDetail = () => {
 
   return (
     <>
-      <Link to={role == 2 ? "/admin/news" : "/business/list-news"}>
+      <Link to={(role == 2 || role == 5 )? "/admin/news" : "/business/list-news"}>
         <IoArrowBackOutline className="fs-3 mb-3" />
       </Link>
-      {role == 2 ? (
+      {(role == 2 || role == 5) ? (
         <>
           <div className="border shadow-sm py-3 px-3 rounded-4 mb-4">
             <h2 className="fw-bold">DUYỆT BÀI</h2>

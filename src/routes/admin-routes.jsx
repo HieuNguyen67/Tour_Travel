@@ -52,7 +52,7 @@ const AdminRoutes = () => {
               path="/edit-policy/:policy_id"
               element={<AddPolicyCancellation />}
             />
-            <Route path="*" element={<Navigate to="/list-customer" />} />
+            <Route path="*" element={<Navigate to="/admin/list-customer" />} />
           </Routes>
         </SidebarLayout>
       )}
@@ -77,11 +77,41 @@ const AdminRoutes = () => {
               />
               <Route
                 path="*"
-                element={<Navigate to="/list-customer" />}
+                element={<Navigate to="/admin/list-customer" />}
               />
             </Routes>
           </SidebarLayout>
         </>
+      )}
+      {role == 5 && (
+        <SidebarLayout>
+          <Routes>
+            <Route path="/add-news" element={<AddNews />} />
+            <Route path="/news-detail/:news_id" element={<NewsDetail />} />
+            <Route path="/edit-news/:news_id" element={<UpdateNews />} />
+            <Route path="/news" element={<News />} />
+            <Route path="*" element={<Navigate to="/admin/news" />} />
+          </Routes>
+        </SidebarLayout>
+      )}
+      {role == 6 && (
+        <SidebarLayout>
+          <Routes>
+            <Route
+              path="/contact-detail/:contact_id"
+              element={<ContactDetail />}
+            />
+
+            <Route path="/contact" element={<ContactList />} />
+
+            <Route path="/report" element={<ReportList />} />
+            <Route
+              path="/report-detail/:report_id"
+              element={<ReportDetails />}
+            />
+            <Route path="*" element={<Navigate to="/admin/contact" />} />
+          </Routes>
+        </SidebarLayout>
       )}
     </>
   );

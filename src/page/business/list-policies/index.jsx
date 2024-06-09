@@ -220,7 +220,7 @@ var columns = [
     <>
       {" "}
       <LoadingBackdrop open={loading} />
-      <h3 className="fw-bold ">
+      <h3 className="fw-bold sizetextuser">
         <img
           onClick={handleDeleteSelected}
           src={policyimg}
@@ -237,7 +237,9 @@ var columns = [
         <>
           <Row>
             <Col>
-              <p className="mt-3">(Không bao gồm chính sách huỷ tour hoàn tiền)</p>
+              <p className="mt-3">
+                (Không bao gồm chính sách huỷ tour hoàn tiền)
+              </p>
             </Col>
             <Col>
               {" "}

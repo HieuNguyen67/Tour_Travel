@@ -62,7 +62,7 @@ const UpdateNews = () => {
       );
       console.log("News updated successfully");
       toast.success("Cập nhật thành công!");
-      role == 2 ? navigate("/admin/news") : navigate("/business/list-news");
+      (role == 2 || role==5) ? navigate("/admin/news") : navigate("/business/list-news");
     } catch (error) {
       console.error("Failed to update news:", error);
       setError("Failed to update news");
@@ -74,7 +74,9 @@ const UpdateNews = () => {
     <>
       <LoadingBackdrop open={loading} />
       <div className="mt-2">
-        <Link to={role == 2 ? "/admin/news" : "/business/list-news"}>
+        <Link
+          to={(role == 2 || role == 5) ? "/admin/news" : "/business/list-news"}
+        >
           <IoArrowBackOutline className="fs-3 mb-3" />
         </Link>
       </div>

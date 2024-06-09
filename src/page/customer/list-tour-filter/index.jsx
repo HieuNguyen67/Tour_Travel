@@ -35,7 +35,7 @@ const TourSearch = () => {
   const [values, setValues] = useState([minAdultPrice, maxAdultPrice]);
   const [hotel, setHotel] = useState("");
   const [vehicle, setVehicle] = useState("");
-  const [createdAt, setCreatedAt] = useState("");
+  const [start_date, setStartdate] = useState("");
   const [tours, setTours] = useState([]);
   const [filteredTours, setFilteredTours] = useState([]);
   const [error, setError] = useState("");
@@ -152,7 +152,7 @@ const TourSearch = () => {
         meetsMaxPriceCriteria &&
         (hotel ? tour.hotel === parseInt(hotel) : true) &&
         (vehicle ? tour.vehicle.includes(vehicle) : true) &&
-        (createdAt ? new Date(tour.created_at) >= new Date(createdAt) : true)
+        (start_date ? new Date(tour.start_date) >= new Date(start_date) : true)
       );
     });
     setFilteredTours(filtered);
@@ -299,8 +299,8 @@ const TourSearch = () => {
                   <Form.Control
                     type="date"
                     style={{ border: "3px solid #ffc107" }}
-                    value={createdAt}
-                    onChange={(e) => setCreatedAt(e.target.value)}
+                    value={start_date}
+                    onChange={(e) => setStartdate(e.target.value)}
                     min={today}
                   />
                 </div>

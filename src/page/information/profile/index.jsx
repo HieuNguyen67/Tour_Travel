@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
 import UpdateImage from "@/components/up-images";
-import { IoArrowBackOutline } from "react-icons/io5";
 import LoadingBackdrop from "@/components/backdrop";
 import { MdAccountBox } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
@@ -16,7 +15,7 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiBankCardFill } from "react-icons/ri";
-import { FaAddressCard } from "react-icons/fa6";
+import { GrUserAdmin } from "react-icons/gr";
 import { BASE_URL, RED1_COLOR } from "@/constants";
 import { RiBankFill } from "react-icons/ri";
 
@@ -182,7 +181,7 @@ const Profile = () => {
                       {" "}
                       <Form.Group className="mb-4" controlId="formBasicEmail">
                         <Form.Label className="  fw-bold">
-                          <MdAccountBox className="fs-4" /> Vai trò:
+                          <GrUserAdmin className="fs-4" /> Vai trò:
                         </Form.Label>
                         <Form.Control
                           type="text"
