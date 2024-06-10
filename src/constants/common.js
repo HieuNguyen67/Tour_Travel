@@ -22,8 +22,7 @@ import thailan from "@/assets/image/thailan.jpg";
 import PendingBadge from "@/components/pending-badge";
 import coin from "@/assets/image/coin.png";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { useAuth } from "@/context";
-
+import { RiRefund2Line } from "react-icons/ri";
 
 const HEADER = [
   { id: 1, name: "TRANG CHỦ", link: "/" },
@@ -94,12 +93,6 @@ const ADMIN = [
     name: "TỐ CÁO",
     link: "/admin/report",
   },
-  {
-    id: 7,
-    icon: <IoShieldCheckmark />,
-    name: "CHÍNH SÁCH HUỶ",
-    link: "/admin/list-policies",
-  },
 ];
 const ACCOUNTMANAGEMENT = [
   {
@@ -128,7 +121,6 @@ const ACCOUNTMANAGEMENT = [
   },
 ];
 const NEWSMANAGEMENT = [
- 
   {
     id: 1,
     icon: (
@@ -143,11 +135,8 @@ const NEWSMANAGEMENT = [
     name2: "THÊM TIN TỨC",
     link2: "/admin/add-news",
   },
-  
 ];
 const SUPPORTMANAGEMENT = [
-  
- 
   {
     id: 1,
     icon: (
@@ -170,7 +159,6 @@ const SUPPORTMANAGEMENT = [
     name: "TỐ CÁO",
     link: "/admin/report",
   },
-  
 ];
 const BUSINESS = [
   {
@@ -204,15 +192,24 @@ const BUSINESS = [
   },
   {
     id: 5,
-    name: "CHÍNH SÁCH",
+    name: "QUY ĐỊNH",
     icon: <IoShieldCheckmark />,
     link: "/business/list-policies",
-    name2: "THÊM CHÍNH SÁCH",
+    name2: "THÊM QUY ĐỊNH",
     icon2: <IoMdAddCircle />,
     link2: "/business/add-policies",
   },
   {
     id: 6,
+    icon: <RiRefund2Line />,
+    name: "CHÍNH SÁCH HUỶ",
+    link: "/business/list-policies-cancellation",
+    name2: "THÊM CHÍNH SÁCH",
+    icon2: <IoMdAddCircle />,
+    link2: "/business/add-policies-cancellation",
+  },
+  {
+    id: 7,
     icon: <ImNewspaper />,
     name: "TIN TỨC",
     link: "/business/list-news",
@@ -225,60 +222,60 @@ const DESTINATION_FAVOURITE = [
   {
     id: 1,
     image: hanoi,
-    link: "/list-tour-vietnam/1?destinationLocation=Hà%20Nội",
+    link: "/list-tour-vietnam/1?destinationLocation=1",
   },
   {
     id: 2,
     image: dalat,
-    link: "/list-tour-vietnam/1?destinationLocation=Đà%20Lạt",
+    link: "/list-tour-vietnam/1?destinationLocation=36",
   },
   {
     id: 3,
     image: kiengiang,
-    link: "/list-tour-vietnam/1?destinationLocation=Kiên%20Giang",
+    link: "/list-tour-vietnam/1?destinationLocation=33",
   },
   {
     id: 4,
     image: danang,
-    link: "/list-tour-vietnam/1?destinationLocation=Đà%20Nẵng",
+    link: "/list-tour-vietnam/1?destinationLocation=3",
   },
   {
     id: 5,
     image: khanhhoa,
-    link: "/list-tour-vietnam/1?destinationLocation=Khánh%20Hòa",
+    link: "/list-tour-vietnam/1?destinationLocation=32",
   },
 ];
 const DESTINATION_FAVOURITE_FOREIGN = [
-  { id: 1, image: hoaky, link: "/list-tour-foreign/2?destinationLocation=US" },
+  { id: 1, image: hoaky, link: "/list-tour-foreign/2?destinationLocation=63" },
   {
     id: 2,
     image: nga,
-    link: "/list-tour-foreign/2?destinationLocation=Russia",
+    link: "/list-tour-foreign/2?destinationLocation=75",
   },
   {
     id: 3,
     image: thailan,
-    link: "/list-tour-foreign/2?destinationLocation=Thailand",
+    link: "/list-tour-foreign/2?destinationLocation=88",
   },
   {
     id: 4,
     image: nhatban,
-    link: "/list-tour-foreign/2?destinationLocation=Japan",
+    link: "/list-tour-foreign/2?destinationLocation=70",
   },
   {
     id: 5,
     image: uc,
-    link: "/list-tour-foreign/2?destinationLocation=Australia",
+    link: "/list-tour-foreign/2?destinationLocation=66",
   },
 ];
 const CHECKINDAILY = [
-  { id: 1, point: "1000", icon: coin , date: "Ngày 1" },
-  { id: 2, point: "1000", icon:  coin , date: "Ngày 2" },
-  { id: 3, point: "1000", icon:  coin , date: "Ngày 3" },
-  { id: 4, point: "1000", icon:  coin , date: "Ngày 4" },
-  { id: 5, point: "1000", icon:  coin , date: "Ngày 5" },
-  { id: 6, point: "1000", icon:  coin , date: "Ngày 6" },
-  { id: 7, point: "1000", icon:  coin , date: "Ngày 7" },
+  { id: 1, point: "1000", icon: coin, date: "Ngày 1" },
+  { id: 2, point: "1000", icon: coin, date: "Ngày 2" },
+  { id: 3, point: "1000", icon: coin, date: "Ngày 3" },
+  { id: 4, point: "1000", icon: coin, date: "Ngày 4" },
+  { id: 5, point: "1000", icon: coin, date: "Ngày 5" },
+  { id: 6, point: "1000", icon: coin, date: "Ngày 6" },
+  { id: 7, point: "1000", icon: coin, date: "Ngày 7" },
 ];
 const BASE_URL = "http://localhost:5020/v1/api/admin";
 export {

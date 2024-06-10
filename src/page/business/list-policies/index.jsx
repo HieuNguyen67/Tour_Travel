@@ -5,16 +5,13 @@ import { BASE_URL } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
-import { MdTour } from "react-icons/md";
-import { IoMdAdd } from "react-icons/io";
-import { BLUE_COLOR } from "@/constants";
 import { toast } from "react-toastify";
 import { useAuth } from "@/context";
-import { MdDeleteForever } from "react-icons/md";
-import { IoShieldCheckmark } from "react-icons/io5";
 import policyimg from "@/assets/image/policy.png";
 import addimg from "@/assets/image/add.png";
 import deleteimg from "@/assets/image/delete.png";
+import refundimg from "@/assets/image/refund.png";
+
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -28,12 +25,14 @@ const PoliciesList = () => {
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        if (role==3) {
+        if (isHomePage) {
           var response = await axios.get(
             `${BASE_URL}/list-policies/${businessId}`
           );
         } else {
-          var response = await axios.get(`${BASE_URL}/list-policies`);
+          var response = await axios.get(
+            `${BASE_URL}/list-policies-cancellation/${businessId}`
+          );
         }
 
         setPolicies(response.data);
@@ -45,7 +44,7 @@ const PoliciesList = () => {
     };
 
     fetchPolicies();
-  }, [businessId]);
+  }, [isHomePage, businessId]);
 
   const handleCheckboxChange = (event, row) => {
     if (event.target.checked) {
@@ -60,7 +59,7 @@ const PoliciesList = () => {
   };
   const handleDeleteSelected = async () => {
     try {
-      if(role==2){ await Promise.all(
+      if(!isHomePage){ await Promise.all(
         selectedRows.map(async (row) => {
           await axios.delete(`${BASE_URL}/delete-policy/${row.policy_id}`, {
             params: { role: 2 },
@@ -103,13 +102,13 @@ const PoliciesList = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    if (role==3) {
+    if (isHomePage) {
       navigate(`/business/edit-policy/${params.row.policy_id}`);
     } else {
-      navigate(`/admin/edit-policy/${params.row.policy_id}`);
+      navigate(`/business/edit-policy-cancellation/${params.row.policy_id}`);
     }
   };
-if(role==3){
+if(isHomePage){
 var columns = [
   {
     field: "checkbox",
@@ -220,18 +219,36 @@ var columns = [
     <>
       {" "}
       <LoadingBackdrop open={loading} />
-      <h3 className="fw-bold sizetextuser">
-        <img
-          onClick={handleDeleteSelected}
-          src={policyimg}
-          style={{
-            width: "3.5rem",
-            height: "3.5rem",
-            objectFit: "cover",
-            cursor: "pointer",
-          }}
-        />{" "}
-        {role == 2 ? <>CHÍNH SÁCH HOÀN TIỀN</> : <>CHÍNH SÁCH TOUR</>}
+      <h3 className="fw-bold sizetextuser1">
+        {isHomePage ? (
+          <>
+            {" "}
+            <img
+              src={policyimg}
+              style={{
+                width: "3.5rem",
+                height: "3.5rem",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+            />{" "}
+            CHÍNH SÁCH/ QUY ĐỊNH TOUR
+          </>
+        ) : (
+          <>
+            {" "}
+            <img
+              src={refundimg}
+              className="mb-2"
+              style={{
+                width: "4rem",
+                height: "4rem",
+                objectFit: "cover",
+              }}
+            />{" "}
+            CHÍNH SÁCH HOÀN TRẢ
+          </>
+        )}
       </h3>
       {isHomePage ? (
         <>
@@ -282,19 +299,32 @@ var columns = [
             <Col>
               {" "}
               <div className="text-end mb-2">
-                <Button
-                  variant="danger"
+                <img
                   onClick={handleDeleteSelected}
-                  className="me-2"
+                  src={deleteimg}
+                  className=" me-2"
+                  style={{
+                    width: "3.5rem",
+                    height: "3.5rem",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                  }}
+                />{" "}
+                <Link
+                  to="/business/add-policies-cancellation"
+                  className="text-decoration-none"
                 >
-                  <MdDeleteForever className="fs-4" />
-                </Button>
-                <Link to="/admin/add-policies" className="text-decoration-none">
                   {" "}
-                  <Button style={{ background: BLUE_COLOR, border: "0px" }}>
-                    <IoMdAdd />
-                    <IoShieldCheckmark className="fs-4" />
-                  </Button>
+                  <img
+                    src={addimg}
+                    className=""
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      objectFit: "cover",
+                      cursor: "pointer",
+                    }}
+                  />
                 </Link>
               </div>
             </Col>

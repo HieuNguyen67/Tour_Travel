@@ -43,7 +43,7 @@ const BusinessLink = () => {
             <img
               src={businessimg}
               className="mb-2"
-              style={{ width: "5rem", height: "5rem", objectFit: "cover" }}
+              style={{ width: "6rem", height: "6rem", objectFit: "cover" }}
             />
             &nbsp;DOANH NGHIỆP
           </h1>

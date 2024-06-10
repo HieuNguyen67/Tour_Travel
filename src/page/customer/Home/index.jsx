@@ -6,7 +6,6 @@ import Footer from "@/components/layout/footer";
 import { Backdrop } from "@mui/material";
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Header from "@/components/layout/header";
-import LinearProgress from "@mui/material/LinearProgress";
 import { Link, useNavigate } from "react-router-dom";
 import TabSearch from "@/components/tab-search";
 import ListTourVietnam from "@/components/list-tour-vietnam";
@@ -15,9 +14,11 @@ import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import DestinationFavourite from "@/components/destination-favourite";
 import ListNewsHome from "@/components/list-news-home";
-import tourimg from "@/assets/image/tour.png";
-import locationimg from "@/assets/image/location.png";
+import locationmanimg from "@/assets/image/locationman.png";
 import newsimg from "@/assets/image/news.png";
+import mantravelimg from "@/assets/image/vlogger.png";
+import travelmanimg from "@/assets/image/travelman.png";
+
 import { helix } from "ldrs";
 
 helix.register();
@@ -101,10 +102,28 @@ const Home = () => {
       <div className="boxhome col-12">
         <Container>
           <TabSearch />
-          <h3 className="fw-bold mt-5 px-2 ">
-            <img src={tourimg} className="mb-2 location" /> KHÁM PHÁ TOUR DU
-            LỊCH TRONG NƯỚC
-          </h3>
+          <Row className="fw-bold mt-5 px-2 ">
+            <Col className="col-lg-1 col-3">
+              {" "}
+              <img
+                src={mantravelimg}
+                className="mb-2 "
+                style={{ width: "10rem", height: "10rem" }}
+              />{" "}
+            </Col>
+            <Col>
+              <div
+                style={{
+                  height: "10rem",
+                  placeItems: "center start",
+                  display: "grid",
+                }}
+                className=" ms-5 fstour fw-bold"
+              >
+                KHÁM PHÁ TOUR DU LỊCH TRONG NƯỚC
+              </div>
+            </Col>
+          </Row>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
 
           <div className=" my-3">
@@ -121,10 +140,28 @@ const Home = () => {
             </motion.div>
           </div>
 
-          <h3 className="fw-bold mt-5 px-2">
-            <img src={tourimg} className="mb-2 location" /> KHÁM PHÁ TOUR DU
-            LỊCH NƯỚC NGOÀI
-          </h3>
+          <Row className="fw-bold mt-5 px-2 ">
+            <Col className="col-lg-1 col-3">
+              {" "}
+              <img
+                src={travelmanimg}
+                className="mb-2 "
+                style={{ width: "10rem", height: "10rem" }}
+              />{" "}
+            </Col>
+            <Col>
+              <div
+                style={{
+                  height: "10rem",
+                  placeItems: "center start",
+                  display: "grid",
+                }}
+                className="ms-lg-4 ms-5 fstour fw-bold"
+              >
+                KHÁM PHÁ TOUR DU LỊCH NƯỚC NGOÀI
+              </div>
+            </Col>
+          </Row>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
 
           <div className=" my-3">
@@ -141,11 +178,28 @@ const Home = () => {
             </motion.div>
           </div>
 
-          <h3 className="fw-bold mt-5 px-2">
-            {" "}
-            <img src={locationimg} className="mb-2 location" /> ĐỊA ĐIỂM ĐẾN YÊU
-            THÍCH
-          </h3>
+          <Row className="fw-bold mt-5 px-2 ">
+            <Col className="col-lg-1 col-3">
+              {" "}
+              <img
+                src={locationmanimg}
+                className="mb-2 "
+                style={{ width: "8rem", height: "10rem" }}
+              />{" "}
+            </Col>
+            <Col>
+              <div
+                style={{
+                  height: "10rem",
+                  placeItems: "center start",
+                  display: "grid",
+                }}
+                className="ms-lg-4 ms-5 fstour fw-bold"
+              >
+                ĐỊA ĐIỂM ĐẾN YÊU THÍCH
+              </div>
+            </Col>
+          </Row>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
           <DestinationFavourite />
 

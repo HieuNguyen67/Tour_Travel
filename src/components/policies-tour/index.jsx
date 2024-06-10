@@ -34,15 +34,19 @@ const PolicesTour = ({ businessId }) => {
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/list-policies`);
-        setPolicyCancellation(response.data);
+        if (businessId) {
+          const response = await axios.get(
+            `${BASE_URL}/list-policies-cancellation/${businessId}`
+          );
+          setPolicyCancellation(response.data);
+        }
       } catch (error) {
         console.error("Error fetching policies:", error);
       }
     };
 
     fetchPolicies();
-  }, []);
+  }, [businessId]);
 
   return (
     <>

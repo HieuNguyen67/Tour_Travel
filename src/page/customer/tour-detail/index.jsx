@@ -25,20 +25,22 @@ import { GiPriceTag } from "react-icons/gi";
 import { IoManSharp } from "react-icons/io5";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import TourImagesCarousel from "@/components/image-tour-multi-carousel";
-import { FaImage } from "react-icons/fa";
 import HTMLContent from "@/components/HTMLContent";
-import { RiCalendarScheduleLine } from "react-icons/ri";
-import { PiShieldCheckBold } from "react-icons/pi";
 import PolicesTour from "@/components/policies-tour";
 import { BiLike } from "react-icons/bi";
 import TourReviews from "@/components/rating-tour";
 import { Box, Rating } from "@mui/material";
 import { MdOutlineBusinessCenter } from "react-icons/md";
 import TourListBusiness from "@/components/list-tour-by-business";
-import { MdOutlineTour } from "react-icons/md";
 import ReportTour from "@/components/report-tour";
 import { useAuth } from "@/context";
 import ContactModal from "@/components/contact-business";
+import picturetourimg from "@/assets/image/picturetour.png";
+import scheduleimg from "@/assets/image/schedule.png";
+import ratingimg from "@/assets/image/feedback.png";
+import policyimg from "@/assets/image/policy.png";
+import tourimg from "@/assets/image/tour.png";
+
 
 const TourDetail = () => {
   const { tour_id } = useParams();
@@ -340,7 +342,7 @@ const TourDetail = () => {
                         <IoManSharp className="fs-4 text-dark" /> Loại khách
                       </p>
                       <p className="mt-4 fw-bold fontp">
-                        Người lớn ( {">"} 12 tuổi ) :
+                        Người lớn ({">"} 12 tuổi) :
                       </p>
                       <p className="mt-4   fw-bold fontp">
                         Trẻ em ( 5 - 11 tuổi ) :
@@ -386,13 +388,31 @@ const TourDetail = () => {
             </Row>
           </div>
           <h2 className="text-center fw-bold mt-5">
-            <FaImage className="fs-2" /> HÌNH ẢNH TOUR
+            <img
+              src={picturetourimg}
+              className="mb-2"
+              style={{
+                width: "3.5rem",
+                height: "3.5rem",
+                objectFit: "cover",
+              }}
+            />{" "}
+            HÌNH ẢNH TOUR
           </h2>
           <div className=" my-4">
             <TourImagesCarousel tourId={tour_id} />
           </div>
           <h2 className="text-center fw-bold mt-5">
-            <RiCalendarScheduleLine className="fs-2" /> LỊCH TRÌNH
+            <img
+              src={scheduleimg}
+              className="mb-2"
+              style={{
+                width: "3.5rem",
+                height: "3.5rem",
+                objectFit: "cover",
+              }}
+            />{" "}
+            LỊCH TRÌNH
           </h2>
           <div
             style={{
@@ -404,18 +424,44 @@ const TourDetail = () => {
             <HTMLContent htmlContent={tour.description} />
           </div>
           <h2 className="text-center fw-bold my-5">
-            <PiShieldCheckBold className="fs-2 mb-2" /> CHÍNH SÁCH TOUR
+            <img
+              src={policyimg}
+              style={{
+                width: "3.5rem",
+                height: "3.5rem",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+            />{" "}
+            CHÍNH SÁCH/ QUY ĐỊNH TOUR
           </h2>
           <PolicesTour businessId={tour.business_id} />
-          <h4 className=" fw-bold mt-5 ">
-            <BiLike className="fs-2 mb-2" /> ĐÁNH GIÁ TỪ KHÁCH HÀNG
+          <h4 className=" fw-bold mt-5 sizetextrate">
+            <img
+              src={ratingimg}
+              className="mb-2 "
+              style={{
+                width: "4rem",
+                height: "4rem",
+                objectFit: "cover",
+              }}
+            />{" "}
+            ĐÁNH GIÁ TỪ KHÁCH HÀNG
           </h4>
           <div>
             <TourReviews tour_id={tour_id} />
           </div>
-          <h4 className=" fw-bold mt-5  ">
-            <MdOutlineTour className="fs-2" /> CÁC TOUR KHÁC CỦA{" "}
-            {tour.account_name}
+          <h4 className=" fw-bold mt-5  sizetextrate">
+            <img
+              src={tourimg}
+              style={{
+                width: "4rem",
+                height: "4rem",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+            />{" "}
+            CÁC TOUR KHÁC CỦA {tour.account_name}
           </h4>
           <div className="mb-5">
             <TourListBusiness accountId={tour.business_id} />

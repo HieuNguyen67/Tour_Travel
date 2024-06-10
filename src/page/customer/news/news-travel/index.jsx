@@ -97,7 +97,7 @@ const NewsTravel = () => {
     <>
       <LoadingBackdrop open={loading} />
       <h1 className="text-center my-lg-5 my-3 fw-bold">
-        <img src={newsimg} className="mb-2" style={{width:'3rem',height:'3rem', objectFit:'cover'}}/>
+        <img src={newsimg} className="mb-2" style={{width:'3.5rem',height:'3.5rem', objectFit:'cover'}}/>
         {isHomePage ? <> TIN TỨC DU LỊCH</> : <> CẨM NANG DU LỊCH</>}
       </h1>
       <Row className="row-cols-3 my-4">

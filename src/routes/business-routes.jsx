@@ -14,6 +14,7 @@ import ContactList from "@/page/admin/contact";
 import ContactDetail from "@/page/admin/contact/contact-detail";
 import RatingsList from "@/page/business/list-rating";
 import TourReviewsDetail from "@/page/business/list-rating/rating-detail";
+import AddPolicyCancellation from "@/page/business/add-policies-cancellation";
 
 const BusinessRoutes = () => {
   return (
@@ -45,8 +46,20 @@ const BusinessRoutes = () => {
             path="/review-detail/:tour_id"
             element={<TourReviewsDetail />}
           />
+          <Route
+            path="/add-policies-cancellation"
+            element={<AddPolicyCancellation />}
+          />
+          <Route
+            path="/edit-policy-cancellation/:policy_id"
+            element={<AddPolicyCancellation />}
+          />
+          <Route
+            path="/list-policies-cancellation"
+            element={<PoliciesList />}
+          />
 
-          <Route path="*" element={<Navigate to="/list-tour" />} />
+          <Route path="*" element={<Navigate to="/business/list-tour" />} />
         </Routes>
       </SidebarLayout>
     </>

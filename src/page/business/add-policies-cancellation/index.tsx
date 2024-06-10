@@ -8,6 +8,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa";
 import { IoAddCircle } from "react-icons/io5";
+import { useAuth } from "@/context";
 
 interface PolicyCancellation {
   policy_id: number;
@@ -25,7 +26,8 @@ const AddPolicyCancellation: React.FC = () => {
   });
   const [message, setMessage] = useState<string>("");
   const location = useLocation();
-  const isHomePage = location.pathname === "/admin/add-policies";
+  const { businessId }=useAuth();
+  const isHomePage = location.pathname === "/business/add-policies-cancellation";
 
   useEffect(() => {
     const fetchPolicy = async () => {
@@ -58,7 +60,7 @@ const AddPolicyCancellation: React.FC = () => {
     if (isHomePage) {
       try {
         const response = await axios.post(
-          `${BASE_URL}/add-policy-cancellation`,
+          `${BASE_URL}/add-policy-cancellation/${businessId}`,
           {
             days_before_departure: policy.days_before_departure,
             refund_percentage: policy.refund_percentage,
@@ -68,7 +70,7 @@ const AddPolicyCancellation: React.FC = () => {
           `Policy added successfully: ${JSON.stringify(response.data)}`
         );
         toast.success("Thêm thành công!");
-        navigate("/admin/list-policies");
+        navigate("/business/list-policies-cancellation");
       } catch (error) {
         toast.error("Thêm thất bại!");
 
@@ -85,7 +87,7 @@ const AddPolicyCancellation: React.FC = () => {
           }
         );
         toast.success("Cập nhật thành công!");
-        navigate("/admin/list-policies");
+        navigate("/business/list-policies-cancellation");
       } catch (error) {
         toast.error("Cập nhật thất bại!");
 
@@ -99,7 +101,7 @@ const AddPolicyCancellation: React.FC = () => {
       <Container className=" mx-auto">
         <div className="mt-2">
           {" "}
-          <Link to="/admin/list-policies">
+          <Link to="/business/list-policies-cancellation">
             <IoArrowBackOutline className="fs-3 mb-3" />
           </Link>
           <h3 className=" fw-bold my-3">
@@ -137,9 +139,16 @@ const AddPolicyCancellation: React.FC = () => {
             type="submit"
             style={{ background: RED1_COLOR, border: "0px" }}
             className="mt-4 py-2 col-lg-2 col-12"
-
           >
-            {isHomePage ? <><IoAddCircle/> Thêm</> : <><FaSave/> Cập nhật</>}
+            {isHomePage ? (
+              <>
+                <IoAddCircle /> Thêm
+              </>
+            ) : (
+              <>
+                <FaSave /> Cập nhật
+              </>
+            )}
           </Button>
         </Form>
         {message && <p className="mt-3">{message}</p>}

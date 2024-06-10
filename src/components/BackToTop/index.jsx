@@ -10,6 +10,7 @@ import { SiUpptime } from "react-icons/si";
 import { Container } from "react-bootstrap";
 import Chatbox from "../chatbox";
 import { useAuth } from "@/context";
+import topimg from "@/assets/image/top.png";
 
 
 function ScrollTop(props) {
@@ -58,13 +59,15 @@ export default function BackToTop(props) {
 
       <ScrollTop {...props}>
         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-          <Button
-            size="small"
-            variant="warning"
-            className="rounded py-2 shadow-sm fs-5 "
-          >
-            <SiUpptime />
-          </Button>
+          <img
+            src={topimg}
+            style={{
+              width: "3rem",
+              height: "3rem",
+              objectFit: "cover",
+              cursor: "pointer",
+            }}
+          />
         </motion.div>
       </ScrollTop>
       {role == 2 || role == 3 || role == 4 || role == 5 || role == 6 ? (

@@ -90,7 +90,9 @@ const AddPolicyForm = () => {
 
   return (
     <div className="px-3">
-      <Link to={role == 3 ? "/business/list-policies" : "/admin/list-policies"}>
+      <Link
+        to={role == 3 ? "/business/list-policies" : "/business/list-policies"}
+      >
         <IoArrowBackOutline className="fs-3 mb-3" />
       </Link>
       <h3 className="fw-bold my-3">

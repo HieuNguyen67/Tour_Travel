@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { Container, Box, CircularProgress, Typography } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 import { BASE_URL } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
-import { MdReport } from "react-icons/md";
+import reportimg from "@/assets/image/report.png";
 import { format } from "date-fns";
 import { useAuth } from "@/context";
 import { toast } from "react-toastify";
@@ -83,7 +83,15 @@ const ReportDetails = () => {
 
       <Box my={4}>
         <h3 className="fw-bold">
-          <MdReport className="fs-2 text-danger my-3" /> CHI TIẾT TỐ CÁO
+          <img
+            src={reportimg}
+            style={{
+              width: "3rem",
+              height: "3rem",
+              objectFit: "cover",
+            }}
+          />{" "}
+          CHI TIẾT TỐ CÁO
         </h3>
         <form>
           <Form.Group className="my-4">
