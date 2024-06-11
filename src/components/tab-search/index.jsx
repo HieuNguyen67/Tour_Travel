@@ -12,11 +12,13 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
-import { BASE_URL, RED_COLOR } from "@/constants";
+import { BASE_URL, BORDER, RED_COLOR } from "@/constants";
 import axios from "axios";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import searchimg from "@/assets/image/search.png";
 import "@/page/customer/Home/Home.scss";
+import "./tab-search.scss";
+
 const TabSearch = () => {
   const [destinationLocation, setDestinationLocation] = useState("");
   const [tourName, setTourName] = useState("");
@@ -94,7 +96,7 @@ const TabSearch = () => {
                   <Nav.Item
                     className="mx-lg-2 rounded-3 shadow-sm col-lg-2 col-12 mb-2 mb-lg-0 "
                     style={{
-                      border: "3px solid #ffc107",
+                      border: BORDER,
                       background: "white",
                     }}
                   >
@@ -108,7 +110,7 @@ const TabSearch = () => {
                   <Nav.Item
                     className="mx-lg-2 rounded-3 shadow-sm col-lg-2 col-12 "
                     style={{
-                      border: "3px solid #ffc107",
+                      border: BORDER,
                       background: "white",
                     }}
                   >

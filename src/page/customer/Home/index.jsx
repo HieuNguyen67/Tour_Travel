@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Home.scss";
-import video from "@/assets/video/video.mp4";
 import Footer from "@/components/layout/footer";
 import { Backdrop } from "@mui/material";
 import React, { useState, useEffect, useRef, useMemo } from "react";
@@ -9,7 +8,7 @@ import Header from "@/components/layout/header";
 import { Link, useNavigate } from "react-router-dom";
 import TabSearch from "@/components/tab-search";
 import ListTourVietnam from "@/components/list-tour-vietnam";
-import { RED1_COLOR } from "@/constants";
+import { IMGHOME, RED1_COLOR } from "@/constants";
 import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import DestinationFavourite from "@/components/destination-favourite";
@@ -18,6 +17,8 @@ import locationmanimg from "@/assets/image/locationman.png";
 import newsimg from "@/assets/image/news.png";
 import mantravelimg from "@/assets/image/vlogger.png";
 import travelmanimg from "@/assets/image/travelman.png";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 import { helix } from "ldrs";
 
@@ -29,23 +30,16 @@ const Home = () => {
   const handleVideoLoad = () => {
     setIsLoading(false);
   };
+    const targetRef = useRef(null);
 
-  const optimizedVideoElement = useMemo(
-    () => (
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        className="myVideo"
-        onLoadStart={() => setIsLoading(true)}
-        onLoadedData={handleVideoLoad}
-      >
-        <source src={video} type="video/mp4" />
-      </video>
-    ),
-    [video]
-  );
+    const scrollToTarget = () => {
+      if (targetRef.current) {
+        targetRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+
+
+  
   return (
     <>
       {isLoading && (
@@ -71,35 +65,71 @@ const Home = () => {
       )}
       <Header />
 
-      {optimizedVideoElement}
-      <div>
-        <Container className="">
-          <div className="pt-lg-5 zindex">
-            <div className="pt-5 me-lg-5">
-              <Row className="d-flex flex-column mt-5">
-                <Col className="pt-lg-5 pt-4 pt-md-5 mt-lg-5">
-                  <h2 className="white fontwelcome text-warning textshadow   ">
-                    Welcome to Travel Tour
-                  </h2>
-                </Col>
-                <Col className="">
-                  <h1 className="white fonttttt fonttts textshadow   ">
-                    {" "}
-                    Khám phá địa điểm du lịch yêu thích của bạn với chúng tôi
-                  </h1>
-                </Col>
-                <Col>
-                  <p className="white fontttts textshadow   ">
-                    Du lịch đến bất cứ nơi nào bạn chỉ cần liên hệ với chúng tôi
-                  </p>
-                </Col>
-              </Row>
-            </div>
-          </div>
-        </Container>{" "}
-      </div>
+      <Container>
+        <div className="mt-5 pt-5">
+          <Row className="mt-3">
+            <Col className="col-lg-5">
+              {" "}
+              <h2 className="mt-5 roboto-bold sizetexthome">
+                CÙNG BẠN KHÁM PHÁ NHỮNG ĐIỂM ĐẾN TUYỆT VỜI
+              </h2>
+              <br />
+              <h5 className="roboto-bold fw-bold text-secondary">
+                Du lịch đến bất cứ nơi nào bạn chỉ cần liên hệ với chúng tôi
+              </h5>
+              <br />
+              <Button
+                variant="dark"
+                className="fs-5 fw-bold"
+                onClick={scrollToTarget}
+              >
+                KHÁM PHÁ NGAY
+              </Button>
+            </Col>
+            <Col className="col-lg-7">
+              {" "}
 
-      <div className="boxhome col-12">
+                <Carousel
+                  infinite={true}
+              autoPlay={true}
+              autoPlaySpeed={4000}
+              arrows={false}
+                  responsive={{
+                    superLargeDesktop: {
+                      breakpoint: { max: 4000, min: 3000 },
+                      items: 5,
+                    },
+                    desktop: {
+                      breakpoint: { max: 3000, min: 1024 },
+                      items: 1,
+                    },
+                    tablet: {
+                      breakpoint: { max: 1024, min: 464 },
+                      items: 1,
+                    },
+                    mobile: {
+                      breakpoint: { max: 464, min: 0 },
+                      items: 1,
+                    },
+                  }}
+                  
+                >
+                  {IMGHOME.map((item) => (
+                    <div key={item.id} style={{display:'grid',placeItems:'center'}}>
+                      <img
+                        style={{ width: "35rem", height: "35rem" }}
+                        src={item.image}
+                        alt={`Tour Image ${item.id + 1}`}
+                      />
+                    </div>
+                  ))}
+                </Carousel>
+            </Col>
+          </Row>
+        </div>
+      </Container>
+
+      <div className="col-12 mt-5" ref={targetRef}>
         <Container>
           <TabSearch />
           <Row className="fw-bold mt-5 px-2 ">

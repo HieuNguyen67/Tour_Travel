@@ -5,7 +5,20 @@
 .black {
     color: black;
 }
-
+.roboto-bold {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: #050505;
+   
+}
+.sizetexthome{
+    font-size: 2.8rem;
+    line-height: 4rem;
+}
+.sizetexthome1 {
+    font-size: 2rem;
+}
 
 @media (max-width: 992px) {
 .fstour {

@@ -1,0 +1,12 @@
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link{
+    background: radial-gradient(circle 986.6px at 10% 20%, rgba(251, 6, 6, 0.94) 0%, rgba(3, 31, 213, 1) 82.8%, rgba(248, 101, 248, 1) 87.9%) !important;
+    color: white !important;
+}
+.nav-link{
+    color: var(--gray-600, #475467) !important;
+}
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active{
+    background: hsl(210, 100%, 96%) !important;
+}

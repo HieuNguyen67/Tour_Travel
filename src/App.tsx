@@ -9,7 +9,7 @@ import Apps from './components/App';
 const GlobalStyle = createGlobalStyle`
   body {
       font-family: "Lora", serif;
-      color: #2d4271;
+      color:  #2d4271;
   }
 `;
 

@@ -86,11 +86,8 @@ const Header = (props) => {
                       />
                       <Link
                         to="/"
-                        className={
-                          isHomePage
-                            ? "text-light  fs-3 fw-bold   text-decoration-none"
-                            : "text-dark  fs-3 fw-bold   text-decoration-none"
-                        }
+                        className="text-dark  fs-3 fw-bold   text-decoration-none"
+                      
                       >
                         Travel
                       </Link>
@@ -139,7 +136,7 @@ const Header = (props) => {
                             >
                               {" "}
                               <span
-                                className={isHomePage ? "whiteee  " : "black  "}
+                                className="text-dark"
                               >
                                 {item.name}
                               </span>
