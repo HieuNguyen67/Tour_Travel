@@ -12,13 +12,6 @@
     color: #050505;
    
 }
-.sizetexthome{
-    font-size: 2.8rem;
-    line-height: 4rem;
-}
-.sizetexthome1 {
-    font-size: 2rem;
-}
 
 @media (max-width: 992px) {
 .fstour {
@@ -81,6 +74,12 @@
      object-fit: cover;
  }
 
+
+ .sizeimghome {
+     width: 20rem;
+     height: 20rem;
+ }
+
 }
 
 @media (min-width: 600px) and (max-width: 992px) {
@@ -121,6 +120,11 @@
         font-size: 3rem;
         font-weight: bold;
     }
+        .sizeimghome {
+            width: 26rem;
+                height: 26rem;
+            
+        }
 }
 
 
@@ -185,6 +189,15 @@
         height: 4rem;
         object-fit: cover;
     }
+        .sizetexthome {
+            font-size: 2.8rem;
+            line-height: 4rem;
+        }
+    
+        .sizeimghome {
+            width: 35rem;
+            height: 35rem;
+        }
 }
 
 

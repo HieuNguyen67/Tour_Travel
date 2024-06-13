@@ -8,7 +8,7 @@ import Header from "@/components/layout/header";
 import { Link, useNavigate } from "react-router-dom";
 import TabSearch from "@/components/tab-search";
 import ListTourVietnam from "@/components/list-tour-vietnam";
-import { IMGHOME, RED1_COLOR } from "@/constants";
+import { GREY_COLOR, IMGHOME, RED1_COLOR } from "@/constants";
 import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import DestinationFavourite from "@/components/destination-favourite";
@@ -67,7 +67,7 @@ const Home = () => {
 
       <Container>
         <div className="mt-5 pt-5">
-          <Row className="mt-3">
+          <Row className="mt-lg-3">
             <Col className="col-lg-5">
               {" "}
               <h2 className="mt-5 roboto-bold sizetexthome">
@@ -79,57 +79,58 @@ const Home = () => {
               </h5>
               <br />
               <Button
-                variant="dark"
+              style={{background:GREY_COLOR,border:'0px'}}
                 className="fs-5 fw-bold"
                 onClick={scrollToTarget}
               >
                 KHÁM PHÁ NGAY
               </Button>
             </Col>
-            <Col className="col-lg-7">
+            <Col className="col-lg-7 mt-lg-0 mt-5">
               {" "}
-
-                <Carousel
-                  infinite={true}
-              autoPlay={true}
-              autoPlaySpeed={4000}
-              arrows={false}
-                  responsive={{
-                    superLargeDesktop: {
-                      breakpoint: { max: 4000, min: 3000 },
-                      items: 5,
-                    },
-                    desktop: {
-                      breakpoint: { max: 3000, min: 1024 },
-                      items: 1,
-                    },
-                    tablet: {
-                      breakpoint: { max: 1024, min: 464 },
-                      items: 1,
-                    },
-                    mobile: {
-                      breakpoint: { max: 464, min: 0 },
-                      items: 1,
-                    },
-                  }}
-                  
-                >
-                  {IMGHOME.map((item) => (
-                    <div key={item.id} style={{display:'grid',placeItems:'center'}}>
-                      <img
-                        style={{ width: "35rem", height: "35rem" }}
-                        src={item.image}
-                        alt={`Tour Image ${item.id + 1}`}
-                      />
-                    </div>
-                  ))}
-                </Carousel>
+              <Carousel
+                infinite={true}
+                autoPlay={true}
+                autoPlaySpeed={4000}
+                arrows={false}
+                responsive={{
+                  superLargeDesktop: {
+                    breakpoint: { max: 4000, min: 3000 },
+                    items: 5,
+                  },
+                  desktop: {
+                    breakpoint: { max: 3000, min: 1024 },
+                    items: 1,
+                  },
+                  tablet: {
+                    breakpoint: { max: 1024, min: 464 },
+                    items: 1,
+                  },
+                  mobile: {
+                    breakpoint: { max: 464, min: 0 },
+                    items: 1,
+                  },
+                }}
+              >
+                {IMGHOME.map((item) => (
+                  <div
+                    key={item.id}
+                    style={{ display: "grid", placeItems: "center" }}
+                  >
+                    <img
+                      className="sizeimghome"
+                      src={item.image}
+                      alt={`Tour Image ${item.id + 1}`}
+                    />
+                  </div>
+                ))}
+              </Carousel>
             </Col>
           </Row>
         </div>
       </Container>
 
-      <div className="col-12 mt-5" ref={targetRef}>
+      <div className="col-12 mt-5 " ref={targetRef}>
         <Container>
           <TabSearch />
           <Row className="fw-bold mt-5 px-2 ">
