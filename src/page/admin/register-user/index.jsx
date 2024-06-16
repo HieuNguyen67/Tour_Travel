@@ -34,7 +34,7 @@ const RegisterUser = () => {
     email: "",
     role: "",
   });
-  const { isLoggedIn, token } = useAuth();
+  const { isLoggedIn, token, adminId } = useAuth();
 
   const [error, setError] = useState("");
 
@@ -48,7 +48,7 @@ const RegisterUser = () => {
     try {
       if(role_id==3){
 
-         await axios.post(`${BASE_URL}/register-business`, formData, {
+         await axios.post(`${BASE_URL}/register-business/${adminId}`, formData, {
            headers: {
              Authorization: `Bearer ${token}`,
            },
@@ -57,7 +57,7 @@ const RegisterUser = () => {
          navigate("/admin/list-business");
 
       }else{
-          await axios.post(`${BASE_URL}/register-admin`, formData, {
+          await axios.post(`${BASE_URL}/register-admin/${adminId}`, formData, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

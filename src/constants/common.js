@@ -23,6 +23,7 @@ import PendingBadge from "@/components/pending-badge";
 import coin from "@/assets/image/coin.png";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RiRefund2Line } from "react-icons/ri";
+import { FaFilePen } from "react-icons/fa6";
 
 
 
@@ -94,6 +95,12 @@ const ADMIN = [
     ),
     name: "TỐ CÁO",
     link: "/admin/report",
+  },
+  {
+    id: 7,
+    icon: <FaFilePen/>,
+    name: "AUDIT LOG",
+    link: "/admin/admin-actions",
   },
 ];
 const ACCOUNTMANAGEMENT = [

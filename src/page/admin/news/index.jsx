@@ -1,17 +1,13 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { IoMdAdd } from "react-icons/io";
 import "../news/news.scss";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { format } from "date-fns";
-import { MdDeleteForever } from "react-icons/md";
 import { toast } from "react-toastify";
 import { BiEdit } from "react-icons/bi";
 import {
-  BLUE_COLOR,
-  COLOR,
   GREEN_COLOR,
   RED_COLOR,
   YELLOW_COLOR,
@@ -29,7 +25,7 @@ const News = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
-  const { token, role, businessId } = useAuth();
+  const { token, role, businessId, adminId } = useAuth();
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -97,11 +93,20 @@ const News = () => {
     try {
       await Promise.all(
         selectedRows.map(async (row) => {
-          await axios.delete(`${BASE_URL}/delete-news/${row.news_id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          if(role==3){
+             await axios.delete(`${BASE_URL}/delete-news/${row.news_id}`, {
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+             });
+          }else{
+             await axios.delete(`${BASE_URL}/delete-news/${row.news_id}/${adminId}`, {
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+             });
+          }
+         
           setNews(news.filter((item) => item.news_id !== row.news_id));
           toast.success("Xoá thành công!");
           window.location.reload();

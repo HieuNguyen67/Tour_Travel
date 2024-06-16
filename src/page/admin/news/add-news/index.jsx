@@ -68,8 +68,8 @@ const AddNews = () => {
 
     try {
       if (role == 2 || role == 5) {
-        var response = await axios.post(
-          `${BASE_URL}/add-news/${adminId}`,
+       await axios.post(
+          `${BASE_URL}/add-news/${adminId}/${adminId}`,
           formDataToSend,
           {
             headers: {
@@ -80,7 +80,7 @@ const AddNews = () => {
           }
         );
       } else {
-        var response = await axios.post(
+        await axios.post(
           `${BASE_URL}/add-news/${businessId}`,
           formDataToSend,
           {

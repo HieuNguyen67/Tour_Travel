@@ -14,6 +14,7 @@ import ReportDetails from "@/page/admin/report-tour/report-detail";
 import PoliciesList from "@/page/business/list-policies";
 import AddPolicyCancellation from "@/page/business/add-policies-cancellation";
 import { useAuth } from "@/context";
+import AdminActionsList from "@/page/admin/admin-actions";
 const AdminRoutes = () => {
   const { role } = useAuth();
 
@@ -46,6 +47,7 @@ const AdminRoutes = () => {
               path="/report-detail/:report_id"
               element={<ReportDetails />}
             />
+            <Route path="/admin-actions" element={<AdminActionsList />} />
 
             <Route path="*" element={<Navigate to="/admin/list-customer" />} />
           </Routes>

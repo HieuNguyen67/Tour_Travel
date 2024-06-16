@@ -8,7 +8,7 @@ import Header from "@/components/layout/header";
 import { Link, useNavigate } from "react-router-dom";
 import TabSearch from "@/components/tab-search";
 import ListTourVietnam from "@/components/list-tour-vietnam";
-import { GREY_COLOR, IMGHOME, RED1_COLOR } from "@/constants";
+import { GREY_COLOR, RED1_COLOR } from "@/constants";
 import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import DestinationFavourite from "@/components/destination-favourite";
