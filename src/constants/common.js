@@ -23,11 +23,7 @@ import PendingBadge from "@/components/pending-badge";
 import coin from "@/assets/image/coin.png";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RiRefund2Line } from "react-icons/ri";
-import earthimg from "@/assets/image/earth.png";
-import manlookimg from "@/assets/image/manlook.png";
-import girlhiimg from "@/assets/image/girlhi.png";
-import mantravelimg from "@/assets/image/mantravel.png";
-import beachmanimg from "@/assets/image/beachman.png";
+
 
 
 const HEADER = [
@@ -274,28 +270,7 @@ const DESTINATION_FAVOURITE_FOREIGN = [
     link: "/list-tour-foreign/2?destinationLocation=66",
   },
 ];
-const IMGHOME = [
-  {
-    id: 1,
-    image: earthimg,
-  },
-  {
-    id: 2,
-    image: manlookimg,
-  },
-  {
-    id: 3,
-    image: girlhiimg,
-  },
-  {
-    id: 4,
-    image: mantravelimg,
-  },
-  {
-    id: 5,
-    image: beachmanimg,
-  },
-];
+
 const CHECKINDAILY = [
   { id: 1, point: "1000", icon: coin, date: "Ngày 1" },
   { id: 2, point: "1000", icon: coin, date: "Ngày 2" },
@@ -317,5 +292,4 @@ export {
   DESTINATION_FAVOURITE,
   DESTINATION_FAVOURITE_FOREIGN,
   CHECKINDAILY,
-  IMGHOME,
 };

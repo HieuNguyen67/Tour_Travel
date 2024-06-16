@@ -17,26 +17,35 @@ import locationmanimg from "@/assets/image/locationman.png";
 import newsimg from "@/assets/image/news.png";
 import mantravelimg from "@/assets/image/vlogger.png";
 import travelmanimg from "@/assets/image/travelman.png";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+import video from "@/assets/video/video.mp4";
 
 import { helix } from "ldrs";
 
 helix.register();
 const Home = () => {
-  const videoRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
+ const videoRef = useRef(null);
+ const [isLoading, setIsLoading] = useState(false);
 
-  const handleVideoLoad = () => {
-    setIsLoading(false);
-  };
-    const targetRef = useRef(null);
+ const handleVideoLoad = () => {
+   setIsLoading(false);
+ };
 
-    const scrollToTarget = () => {
-      if (targetRef.current) {
-        targetRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    };
+ const optimizedVideoElement = useMemo(
+   () => (
+     <video
+       ref={videoRef}
+       autoPlay
+       muted
+       loop
+       className="myVideo"
+       onLoadStart={() => setIsLoading(true)}
+       onLoadedData={handleVideoLoad}
+     >
+       <source src={video} type="video/mp4" />
+     </video>
+   ),
+   [video]
+ );
 
 
   
@@ -65,72 +74,34 @@ const Home = () => {
       )}
       <Header />
 
-      <Container>
-        <div className="mt-5 pt-5">
-          <Row className="mt-lg-3">
-            <Col className="col-lg-5">
-              {" "}
-              <h2 className="mt-5 roboto-bold sizetexthome">
-                CÙNG BẠN KHÁM PHÁ NHỮNG ĐIỂM ĐẾN TUYỆT VỜI
-              </h2>
-              <br />
-              <h5 className="roboto-bold fw-bold text-secondary">
-                Du lịch đến bất cứ nơi nào bạn chỉ cần liên hệ với chúng tôi
-              </h5>
-              <br />
-              <Button
-              style={{background:GREY_COLOR,border:'0px'}}
-                className="fs-5 fw-bold"
-                onClick={scrollToTarget}
-              >
-                KHÁM PHÁ NGAY
-              </Button>
-            </Col>
-            <Col className="col-lg-7 mt-lg-0 mt-5">
-              {" "}
-              <Carousel
-                infinite={true}
-                autoPlay={true}
-                autoPlaySpeed={4000}
-                arrows={false}
-                responsive={{
-                  superLargeDesktop: {
-                    breakpoint: { max: 4000, min: 3000 },
-                    items: 5,
-                  },
-                  desktop: {
-                    breakpoint: { max: 3000, min: 1024 },
-                    items: 1,
-                  },
-                  tablet: {
-                    breakpoint: { max: 1024, min: 464 },
-                    items: 1,
-                  },
-                  mobile: {
-                    breakpoint: { max: 464, min: 0 },
-                    items: 1,
-                  },
-                }}
-              >
-                {IMGHOME.map((item) => (
-                  <div
-                    key={item.id}
-                    style={{ display: "grid", placeItems: "center" }}
-                  >
-                    <img
-                      className="sizeimghome"
-                      src={item.image}
-                      alt={`Tour Image ${item.id + 1}`}
-                    />
-                  </div>
-                ))}
-              </Carousel>
-            </Col>
-          </Row>
-        </div>
-      </Container>
-
-      <div className="col-12 mt-5 " ref={targetRef}>
+      {optimizedVideoElement}
+      <div>
+        <Container className="">
+          <div className="pt-lg-5 zindex">
+            <div className="pt-5 me-lg-5">
+              <Row className="d-flex flex-column mt-5">
+                <Col className="pt-lg-5 pt-4 pt-md-5 mt-lg-5">
+                  <h2 className="white fontwelcome text-warning textshadow   ">
+                    Welcome to Travel Tour
+                  </h2>
+                </Col>
+                <Col className="">
+                  <h1 className="white fonttttt fonttts textshadow   ">
+                    {" "}
+                    Khám phá địa điểm du lịch yêu thích của bạn với chúng tôi
+                  </h1>
+                </Col>
+                <Col>
+                  <p className="white fontttts textshadow   ">
+                    Du lịch đến bất cứ nơi nào bạn chỉ cần liên hệ với chúng tôi
+                  </p>
+                </Col>
+              </Row>
+            </div>
+          </div>
+        </Container>{" "}
+      </div>
+      <div className="col-12 boxhome ">
         <Container>
           <TabSearch />
           <Row className="fw-bold mt-5 px-2 ">

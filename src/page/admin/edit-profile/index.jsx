@@ -103,7 +103,7 @@ const EditProfile = () => {
         role_id == 3
           ? navigate("/admin/list-business")
           : role_id == 1
-          ? navigate("/business/list-customer")
+          ? navigate("/admin/list-customer")
           : navigate("/admin/list-admin");
       }
     } catch (error) {
