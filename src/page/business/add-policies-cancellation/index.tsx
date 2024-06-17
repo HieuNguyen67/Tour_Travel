@@ -27,6 +27,7 @@ const AddPolicyCancellation: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const location = useLocation();
   const { businessId }=useAuth();
+    const [loading, setLoading] = useState<boolean>(false);
   const isHomePage = location.pathname === "/business/add-policies-cancellation";
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const AddPolicyCancellation: React.FC = () => {
   const navigate = useNavigate();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     if (isHomePage) {
       try {
         const response = await axios.post(
@@ -94,6 +96,8 @@ const AddPolicyCancellation: React.FC = () => {
         console.error("Error updating policy cancellation:", error);
       }
     }
+        setLoading(false);
+
   };
 
   return (
@@ -139,8 +143,11 @@ const AddPolicyCancellation: React.FC = () => {
             type="submit"
             style={{ background: RED1_COLOR, border: "0px" }}
             className="mt-4 py-2 col-lg-2 col-12"
+            disabled={loading}
           >
-            {isHomePage ? (
+            {loading ? (
+              <>Loading...</>
+            ) : isHomePage ? (
               <>
                 <IoAddCircle /> Thêm
               </>

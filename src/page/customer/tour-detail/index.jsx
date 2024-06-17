@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "@/constants";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Col, Container, Row, Placeholder } from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
 import { FaAngleRight } from "react-icons/fa";
@@ -119,6 +119,10 @@ const TourDetail = () => {
       currency: "VND",
     }).format(price);
   };
+  const navigate= useNavigate();
+  const handleClick=()=>{
+    navigate(`/booking-tour/${tour_id}`)
+  }
 
   return (
     <>
@@ -196,6 +200,7 @@ const TourDetail = () => {
             </Col>
             <Col className="col-12">
               <Button
+              onClick={handleClick}
                 className="col-lg-2 col-12 me-2 py-3 mb-2 mb-lg-0"
                 style={{ background: RED1_COLOR, border: "0px" }}
               >

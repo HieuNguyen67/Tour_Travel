@@ -21,6 +21,7 @@ import CustomerRoutes from "@/routes/customer-routes";
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import SidebarLayout from "../side-bar";
+import BookTour from "@/page/customer/booking-tour";
 
 
 const Apps: React.FC = () => {
@@ -60,6 +61,7 @@ const Apps: React.FC = () => {
         <Route path="/list-tour-vietnam/:location" element={<TourSearch />} />
         <Route path="/list-tour-foreign/:location" element={<TourSearch />} />
         <Route path="/tour-details/:tour_id" element={<TourDetail />} />
+        <Route path="/booking-tour/:tour_id" element={<BookTour />} />
       </Routes>
     </>
   );

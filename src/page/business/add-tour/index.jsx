@@ -34,6 +34,7 @@ const AddTourForm = () => {
   const [error, setError] = useState(null);
   const [tourCategories, setTourCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+   const [loading1, setLoading1] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -167,6 +168,7 @@ const AddTourForm = () => {
   if (isHomePage) {
     var handleSubmit = async (e) => {
       e.preventDefault();
+       setLoading1(true);
       if (images.length < 4) {
         alert("Vui lòng chọn từ 4 hình ảnh trở lên");
         return;
@@ -204,6 +206,7 @@ const AddTourForm = () => {
   } else {
     var handleSubmit = async (e) => {
       e.preventDefault();
+       setLoading1(true);
 
       try {
         const response = await axios.put(
@@ -247,6 +250,7 @@ const AddTourForm = () => {
         console.error("Error updating tour images:", error);
       }
     };
+     setLoading1(false);
   }
   const formatDate = (dateString) => {
     return format(new Date(dateString), "yyyy-MM-dd");
@@ -638,8 +642,15 @@ const AddTourForm = () => {
               style={{ background: BLUE_COLOR, border: "0px" }}
               type="submit"
               className="mt-5 mt-lg-3 mb-4 py-3 col-lg-2 col-12 fw-bold"
+              disabled={loading1}
             >
-              <GiConfirmed className="fs-4" /> Xác Nhận
+              {loading1 ? (
+                <>Loading...</>
+              ) : (
+                <>
+                  <GiConfirmed className="fs-4" /> Xác Nhận
+                </>
+              )}
             </Button>{" "}
           </div>
         </form>

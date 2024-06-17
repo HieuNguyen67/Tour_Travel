@@ -47,9 +47,7 @@ const Profile = () => {
       try {
         const response = await axios.get("https://api.vietqr.io/v2/banks");
         setBanknames(response.data.data);
-        setLoading(false);
       } catch (error) {
-        setLoading(false);
       }
     };
 
