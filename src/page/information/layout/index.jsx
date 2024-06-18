@@ -5,6 +5,7 @@ import { useAuth } from "@/context";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { TbCoinFilled } from "react-icons/tb";
 import profile1img from "@/assets/image/profile1.png";
+import { RiRefund2Line } from "react-icons/ri";
 
 const InformationLayout = ({ children }) => {
   const { role } = useAuth();
@@ -14,7 +15,6 @@ const InformationLayout = ({ children }) => {
       <Container>
         <Container className="mt-5 mx-auto pt-lg-3 pt-3 ">
           <div className="mt-5">
-           
             {role == 1 ? (
               <>
                 {" "}
@@ -82,6 +82,24 @@ const InformationLayout = ({ children }) => {
                     >
                       {" "}
                       <span className="text-dark">ĐƠN ĐẶT TOUR</span>
+                    </NavLink>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <NavLink
+                      className="nav-link "
+                      to="/information/refunds"
+                      style={({ isActive }) => {
+                        return {
+                          fontWeight: isActive ? "bold" : "",
+                          borderBottom: isActive ? "3px solid #f3c324" : "",
+                        };
+                      }}
+                    >
+                      {" "}
+                      <span className="text-dark">
+                        <RiRefund2Line className="fs-3 text-warning" />
+                        REFUNDS
+                      </span>
                     </NavLink>
                   </Nav.Item>
                   <Nav.Item>

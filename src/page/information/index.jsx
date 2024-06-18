@@ -8,6 +8,7 @@ import ListOrder from "./order";
 import Profile from "./profile";
 import Header from "@/components/layout/header";
 import Coupons from "./coupons";
+import Refunds from "./refunds";
 
 const Information = () => {
   const { isLoggedIn } = useAuth();
@@ -27,6 +28,7 @@ const Information = () => {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/list-order" element={<ListOrder />} />
           <Route path="/coupons" element={<Coupons />} />
+          <Route path="/refunds" element={<Refunds />} />
           <Route path="*" element={<Navigate to="/information/profile" />} />
         </Routes>
       </InformationLayout>

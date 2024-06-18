@@ -54,7 +54,6 @@ const ReportDetails = () => {
           },
         }
       );
-      console.log("Report status updated successfully");
       toast.success("Cập nhật thành công!");
       navigate("/admin/report");
       window.location.reload();

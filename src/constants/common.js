@@ -181,7 +181,17 @@ const BUSINESS = [
     name2: "THÊM TOUR",
     link2: "/business/add-tour",
   },
-  { id: 2, icon: <FaListAlt />, name: "ORDER", link: "/business/order-tour" },
+  {
+    id: 2,
+    name: "ORDER",
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-orders`}
+        icon={<FaListAlt />}
+      />
+    ),
+    link: "/business/order-tour",
+  },
   {
     id: 3,
     icon: (

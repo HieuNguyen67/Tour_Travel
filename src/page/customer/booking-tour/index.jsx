@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {  Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL, RED1_COLOR, TEXT_RED_COLOR } from "@/constants";
 import { Col, Container, Placeholder, Form, Button, Row, Table } from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
 import { LuCalendarDays } from "react-icons/lu";
@@ -16,7 +16,10 @@ import { toast } from "react-toastify";
 import pricetagimg from "@/assets/image/pricetag.png";
 import infocontactimg from "@/assets/image/infocontact.png";
 import customerimg from "@/assets/image/customer.png";
+import paymentimg from "@/assets/image/payment.png";
 import { FaChevronRight } from "react-icons/fa";
+import { IoMdAdd } from "react-icons/io";
+import { IoMdRemove } from "react-icons/io";
 
 const BookTour = () => {
     const {tour_id}=useParams();
@@ -124,6 +127,39 @@ const handleQuantityChange = (type, value) => {
     }
   }
 };
+  const handleIncrement = (type) => {
+    handleQuantityChange(
+      type,
+      (type === "adult"
+        ? adultQuantity
+        : type === "child"
+        ? childQuantity
+        : infantQuantity) + 1
+    );
+  };
+
+   const handleDecrement = (type) => {
+     const currentQuantity =
+       type === "adult"
+         ? adultQuantity
+         : type === "child"
+         ? childQuantity
+         : infantQuantity;
+     if (currentQuantity > 0) {
+       handleQuantityChange(type, currentQuantity - 1);
+     }
+   };
+   const handleDecrement1 = (type) => {
+     const currentQuantity =
+       type === "adult"
+         ? adultQuantity
+         : type === "child"
+         ? childQuantity
+         : infantQuantity;
+     if (currentQuantity > 1) {
+       handleQuantityChange(type, currentQuantity - 1);
+     }
+   };
   const handleBookTour = async () => {
     setLoading2(true);
     try {
@@ -179,7 +215,10 @@ const handleQuantityChange = (type, value) => {
       <LoadingBackdrop open={loading} />
       <Container>
         <div className="mt-5 pt-5">
-          <div style={{ background: "#f9f9f9" }} className="rounded-3 mt-lg-3">
+          <div
+            style={{ background: "#f9f9f9" }}
+            className="rounded-3 mt-lg-3 shadow"
+          >
             <Row>
               <Col className="col-lg-4 col-12">
                 {loading1 ? (
@@ -352,87 +391,249 @@ const handleQuantityChange = (type, value) => {
                 objectFit: "cover",
               }}
             />{" "}
-           HÀNH KHÁCH
+            HÀNH KHÁCH
+          </h3>
+          <Row>
+            <Col className="col-lg-9 col-5">
+              <h5>Người lớn</h5>
+              <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
+                {" "}
+                {formatPrice(tour.adult_price)}
+              </h3>
+              <p>Trên 11 tuổi</p>
+            </Col>
+            <Col className="col-lg-3 col-7 mt-4">
+              <Row>
+                <Col>
+                  {" "}
+                  <div style={{ display: "grid", placeItems: "end" }}>
+                    <Button
+                      style={{ border: "0px", background: RED1_COLOR }}
+                      onClick={() => handleDecrement1("adult")}
+                      className="col-lg-7 col-md-7 col-12"
+                    >
+                      <IoMdRemove className="fs-4" />
+                    </Button>
+                  </div>
+                </Col>
+                <Col>
+                  {" "}
+                  <Form.Control
+                    type="number"
+                    value={adultQuantity}
+                    onChange={(e) =>
+                      handleQuantityChange("adult", parseInt(e.target.value))
+                    }
+                    min={1}
+                    className=" col-12"
+                  />
+                </Col>
+                <Col>
+                  <Button
+                    style={{ border: "0px", background: RED1_COLOR }}
+                    onClick={() => handleIncrement("adult")}
+                    className="col-lg-7 col-md-7 col-12"
+                  >
+                    <IoMdAdd className="fs-4" />
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col className="col-lg-9 col-5">
+              <h5>Trẻ em</h5>
+              <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
+                {" "}
+                {formatPrice(tour.child_price)}
+              </h3>
+              <p>Từ 5 - 11 tuổi</p>
+            </Col>
+            <Col className="col-lg-3 mt-4 col-7">
+              <Row>
+                <Col>
+                  {" "}
+                  <div style={{ display: "grid", placeItems: "end" }}>
+                    <Button
+                      style={{ border: "0px", background: RED1_COLOR }}
+                      onClick={() => handleDecrement("child")}
+                      className="col-lg-7 col-md-7 col-12"
+                    >
+                      <IoMdRemove className="fs-4" />
+                    </Button>
+                  </div>
+                </Col>
+                <Col>
+                  {" "}
+                  <Form.Control
+                    type="number"
+                    value={childQuantity}
+                    onChange={(e) =>
+                      handleQuantityChange("child", parseInt(e.target.value))
+                    }
+                    min={0}
+                    className="col-12"
+                  />
+                </Col>
+                <Col>
+                  <Button
+                    style={{ border: "0px", background: RED1_COLOR }}
+                    onClick={() => handleIncrement("child")}
+                    className="col-lg-7 col-md-7 col-12"
+                  >
+                    <IoMdAdd className="fs-4" />
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col className="col-lg-9 col-5">
+              <h5>Trẻ nhỏ</h5>
+              <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
+                {" "}
+                {formatPrice(tour.infant_price)}
+              </h3>
+              <p>{"<"} 5 tuổi</p>
+            </Col>
+            <Col className="col-lg-3 mt-4 col-7">
+              <Row>
+                <Col>
+                  {" "}
+                  <div style={{ display: "grid", placeItems: "end" }}>
+                    <Button
+                      style={{ border: "0px", background: RED1_COLOR }}
+                      onClick={() => handleDecrement("infant")}
+                      className="col-lg-7 col-md-7 col-12"
+                    >
+                      <IoMdRemove className="fs-4" />
+                    </Button>
+                  </div>
+                </Col>
+                <Col>
+                  {" "}
+                  <Form.Control
+                    type="number"
+                    value={infantQuantity}
+                    onChange={(e) =>
+                      handleQuantityChange("infant", parseInt(e.target.value))
+                    }
+                    min={0}
+                    className="col-12"
+                  />
+                </Col>
+                <Col>
+                  <Button
+                    style={{ border: "0px", background: RED1_COLOR }}
+                    onClick={() => handleIncrement("infant")}
+                    className="col-lg-7 col-md-7 col-12"
+                  >
+                    <IoMdAdd className="fs-4" />
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <hr />
+          <h4 className="text-end">
+            TỔNG TIỀN: &nbsp;
+            <span className="fw-bold fs-2" style={{ color: TEXT_RED_COLOR }}>
+              {formatPrice(totalPrice)}
+            </span>
+          </h4>
+
+          <Form.Group className="mt-4">
+            <Form.Label>
+              {" "}
+              Ghi chú/ Nhập danh sách người đi cùng (Họ tên - Giới tính - Ngày
+              sinh):
+            </Form.Label>
+
+            <Form.Control
+              as="textarea"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              style={{ height: "8rem" }}
+            />
+          </Form.Group>
+          <h3 className="text-center fw-bold my-5">
+            {" "}
+            <img
+              src={paymentimg}
+              style={{
+                width: "3.5rem",
+                height: "3.5rem",
+                objectFit: "cover",
+              }}
+            />{" "}
+            PHƯƠNG THỨC THANH TOÁN
           </h3>
 
-          <label>
-            Số lượng người lớn:
-            <input
-              type="number"
-              value={adultQuantity}
-              onChange={(e) =>
-                handleQuantityChange("adult", parseInt(e.target.value))
-              }
-              min={1}
-            />
-          </label>
-          <label>
-            Số lượng trẻ em:
-            <input
-              type="number"
-              value={childQuantity}
-              onChange={(e) =>
-                handleQuantityChange("child", parseInt(e.target.value))
-              }
-              min={0}
-            />
-          </label>
-          <label>
-            Số lượng trẻ sơ sinh:
-            <input
-              type="number"
-              value={infantQuantity}
-              onChange={(e) =>
-                handleQuantityChange("infant", parseInt(e.target.value))
-              }
-              min={0}
-            />
-          </label>
-          <label>
-            Ghi chú:
-            <textarea value={note} onChange={(e) => setNote(e.target.value)} />
-          </label>
-          <h3>Tổng giá: {formatPrice(totalPrice)}</h3>
           <Form.Group controlId="paymentMethod">
-            <Form.Label>Phương thức thanh toán</Form.Label>
-            <Col>
-              <Form.Check
-                type="radio"
-                label="Chuyển khoản ngân hàng"
-                name="paymentMethod"
-                id="bank"
-                value="bank"
-                checked={paymentMethod === "bank"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-              <Form.Check
-                type="radio"
-                label="Momo"
-                name="paymentMethod"
-                id="momo"
-                value="momo"
-                checked={paymentMethod === "momo"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-              <Form.Check
-                type="radio"
-                label="Zalopay"
-                name="paymentMethod"
-                id="zalopay"
-                value="zalopay"
-                checked={paymentMethod === "zalopay"}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-            </Col>
+            <Row>
+              <Col className="col-12 col-lg-4">
+                {" "}
+                <div style={{ display: "grid", placeItems: "center" }}>
+                  <Form.Check
+                    className="fs-5 fw-bold"
+                    type="radio"
+                    label="Chuyển khoản ngân hàng"
+                    name="paymentMethod"
+                    id="bank"
+                    value="bank"
+                    checked={paymentMethod === "bank"}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                </div>
+              </Col>
+              <Col className="col-12 col-lg-4">
+                <div style={{ display: "grid", placeItems: "center" }}>
+                  <Form.Check
+                    className="fs-5 fw-bold"
+                    type="radio"
+                    label="Momo"
+                    name="paymentMethod"
+                    id="momo"
+                    value="momo"
+                    checked={paymentMethod === "momo"}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                </div>
+              </Col>
+              <Col className="col-12 col-lg-4">
+                <div style={{ display: "grid", placeItems: "center" }}>
+                  <Form.Check
+                    className="fs-5 fw-bold"
+                    type="radio"
+                    label="Zalopay"
+                    name="paymentMethod"
+                    id="zalopay"
+                    value="zalopay"
+                    checked={paymentMethod === "zalopay"}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                </div>
+              </Col>
+            </Row>
           </Form.Group>
-          <button onClick={handleBookTour} disabled={loading2}>
-            {loading2 ? <>Loading...</> : <>Đặt Tour</>}
-          </button>
+
           {message && <p>{message}</p>}
-          <p className="text-danger">
+          <p className="text-danger mt-4">
             * Lưu ý khi chọn chuyên khoản ngân hàng, quý khách vui lòng chờ hệ
             thống xác nhận và sẽ gửi email thanh toán đến quý khách !
           </p>
+          <div style={{ display: "grid", placeItems: "end" }} className="my-4">
+            <Button
+              style={{ border: "0px", background: RED1_COLOR }}
+              onClick={handleBookTour}
+              disabled={loading2}
+              className="py-3 col-lg-3 col-12"
+            >
+              {loading2 ? <>Loading...</> : <>Đặt Ngay</>}
+            </Button>
+          </div>
         </div>
       </Container>
     </>
