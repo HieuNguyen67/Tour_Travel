@@ -9,13 +9,14 @@ import { toast } from "react-toastify";
 import { RxUpdate } from "react-icons/rx";
 import { FaSave } from "react-icons/fa";
 import { IoArrowBackOutline } from "react-icons/io5";
-import listorderimg from "@/assets/image/listorder.png";
+import detailimg from "@/assets/image/detail.png";
 import { Stepper, Step, StepLabel, Box } from "@mui/material";
 import { styled } from "@mui/system";
 import { MdPending } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
 import { MdIncompleteCircle } from "react-icons/md";
 import { MdCancel } from "react-icons/md";
+import { GiCancel } from "react-icons/gi";
 
 import StepConnector, {
   stepConnectorClasses,
@@ -23,10 +24,10 @@ import StepConnector, {
 import LoadingBackdrop from "@/components/backdrop";
 
 const steps = [
-  "Pending",
-  "Confirm",
-  "Complete",
-  "Cancle",
+  "Chờ xác nhận",
+  "Đã xác nhận",
+  "Đã hoàn thành",
+  "Đã huỷ",
 ];
 
 const getStatusIndex = (status) => {
@@ -108,8 +109,9 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { order_id } = useParams();
-  const {token}= useAuth();
+  const {token, role}= useAuth();
   const [status, setStatus] = useState("");
+  const [statuspayments, setStatuspayments] = useState("");
 
   useEffect(() => {
     const fetchOrderDetail = async () => {
@@ -121,6 +123,7 @@ const OrderDetail = () => {
         });
         setOrderDetail(response.data);
          setStatus(response.data.status);
+         setStatuspayments(response.data.status_payment);
       } catch (error) {
         setError("Failed to fetch order detail");
       } finally {
@@ -169,19 +172,43 @@ const OrderDetail = () => {
 
   return (
     <Container>
-      <Link to="/business/order-tour">
-        <IoArrowBackOutline className="fs-3" />
-      </Link>
+      {role == 3 ? (
+        <>
+          <Link to="/business/order-tour">
+            <IoArrowBackOutline className="fs-3" />
+          </Link>
+        </>
+      ) : role == 1 ? (
+        <>
+          {" "}
+          <div className="mt-3">
+            <Link
+              to="/information/list-order"
+              className="text-decoration-none text-dark "
+            >
+              <IoArrowBackOutline className="fs-5" /> Quay lại
+            </Link>
+          </div>
+        </>
+      ) : (
+        <>
+          {" "}
+          <Link to="/admin/list-payments">
+            <IoArrowBackOutline className="fs-3" />
+          </Link>
+        </>
+      )}
+
       <h3 className="fw-bold my-4">
         <img
-          src={listorderimg}
+          src={detailimg}
           style={{
-            width: "3rem",
-            height: "3rem",
+            width: "3.5rem",
+            height: "3.5rem",
             objectFit: "cover",
           }}
         />{" "}
-        CHI TIẾT ORDER
+        CHI TIẾT BOOKING
       </h3>
       <Box sx={{ width: "100%", mt: 3 }}>
         <Stepper
@@ -201,14 +228,17 @@ const OrderDetail = () => {
       <Row className="justify-content-md-center">
         <Col className="col-12">
           <Card className="my-4">
-            <Card.Header>Chi tiết Order</Card.Header>
+            <Card.Header>Chi tiết Booking</Card.Header>
             <Card.Body style={{ color: TEXT_MAIN_COLOR }}>
               <Card.Text>
-                <strong>Mã Order:</strong> {orderDetail.code_order}
+                <strong>Mã Booking:</strong> {orderDetail.code_order}
               </Card.Text>
               <Card.Text>
                 <strong>Tour:</strong>
-                <span className="fw-bold text-dark"> {orderDetail.tour_name}</span>
+                <span className="fw-bold text-dark">
+                  {" "}
+                  {orderDetail.tour_name}
+                </span>
               </Card.Text>
 
               <Card.Text>
@@ -272,31 +302,73 @@ const OrderDetail = () => {
           </Card>
         </Col>
       </Row>
-      <form>
-        <Form.Group className="my-3">
-          <Form.Label className="fw-bold">
-            {" "}
-            <RxUpdate className="fs-5" /> Trạng thái:
-          </Form.Label>
-          <Form.Control
-            as="select"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="Pending">Pending</option>
-            <option value="Confirm">Confirm</option>
-            <option value="Complete">Complete</option>
-          </Form.Control>
-        </Form.Group>
-        <Button
-          onClick={handleUpdate}
-          disabled={loading}
-          style={{ background: RED1_COLOR, border: "0px" }}
-          className="mb-3 py-3 col-3"
-        >
-          <FaSave /> Cập nhật
-        </Button>
-      </form>
+      {role == 3 ? (
+        <>
+          <form>
+            <Form.Group className="my-3">
+              <Form.Label className="fw-bold">
+                {" "}
+                <RxUpdate className="fs-5" /> Trạng thái:
+              </Form.Label>
+              <Form.Control
+                as="select"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="Pending">Pending</option>
+                <option value="Confirm">Confirm</option>
+                <option value="Complete">Complete</option>
+              </Form.Control>
+            </Form.Group>
+            <Button
+              onClick={handleUpdate}
+              disabled={loading}
+              style={{ background: RED1_COLOR, border: "0px" }}
+              className="mb-3 py-3 col-lg-3 col-12"
+            >
+              <FaSave /> Cập nhật
+            </Button>
+          </form>
+        </>
+      ) : role == 3 ? (
+        <>
+          <div style={{ display: "grid", placeItems: "end" }}>
+            <Button
+              style={{ background: RED1_COLOR, border: "0px" }}
+              className="mt-3 mb-5 py-3 col-lg-3 col-12"
+            >
+              <GiCancel className="fs-4" /> Yêu cầu huỷ
+            </Button>
+          </div>
+        </>
+      ) : (
+        <>
+          <form>
+            <Form.Group className="my-3">
+              <Form.Label className="fw-bold">
+                {" "}
+                <RxUpdate className="fs-5" /> Trạng thái:
+              </Form.Label>
+              <Form.Control
+                as="select"
+                value={statuspayments}
+                onChange={(e) => setStatuspayments(e.target.value)}
+              >
+                <option value="Unpaid">Chưa thanh toán</option>
+                <option value="Paid">Đã thanh toán</option>
+              </Form.Control>
+            </Form.Group>
+            <Button
+              onClick={handleUpdate}
+              disabled={loading}
+              style={{ background: RED1_COLOR, border: "0px" }}
+              className="mb-3 py-3 col-lg-3 col-12"
+            >
+              <FaSave /> Cập nhật
+            </Button>
+          </form>
+        </>
+      )}
     </Container>
   );
 };

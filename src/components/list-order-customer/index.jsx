@@ -89,9 +89,13 @@ if(role==3){
     var handleRowClick = (params) => {
       navigate(`/business/order-detail/${params.row.order_id}`);
     };
+}else{
+   var handleRowClick = (params) => {
+     navigate(`/information/order-detail/${params.row.order_id}`);
+   };
 }
   const columns = [
-    { field: "code_order", headerName: "Mã đơn", width: 150 },
+    { field: "code_order", headerName: "Mã Booking", width: 150 },
     {
       field: "status",
       headerName: "Trạng thái",
@@ -154,9 +158,25 @@ if(role==3){
       headerName: "Thanh toán",
       width: 170,
       renderCell: (params) => (
-        <Button style={{ background: GREEN1_COLOR, border: "0px" }}>
-          {params.value === "Unpaid" ? "Chưa thanh toán" : "Đã thanh toán"}
-        </Button>
+        <span>
+          {params.value === "Unpaid" ? (
+            <>
+              <Button
+                style={{ background: BLUE_COLOR, border: "0px" }}
+                className="col-12"
+              >
+                Chưa thanh toán
+              </Button>
+            </>
+          ) : (
+            <Button
+              style={{ background: GREEN_COLOR, border: "0px" }}
+              className="col-12 text-dark"
+            >
+              Đã thanh toán
+            </Button>
+          )}
+        </span>
       ),
     },
     {
@@ -182,6 +202,7 @@ if(role==3){
           columns={columns}
           getRowId={(row) => row.code_order}
           onRowClick={handleRowClick}
+          getRowHeight={(params) => 100}
         />
       </div>
     </>

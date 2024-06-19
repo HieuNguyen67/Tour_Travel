@@ -1,9 +1,6 @@
 import { useAuth } from "@/context";
 import Login from "@/page/Login";
-import ContactDetail from "@/page/admin/contact/contact-detail";
-import EditProfile from "@/page/admin/edit-profile";
-import ListUser from "@/page/admin/list-user";
-import RegisterUser from "@/page/admin/register-user";
+
 import Contact from "@/page/customer/Contact";
 import Home from "@/page/customer/Home";
 import Introduce from "@/page/customer/Introduce";
@@ -20,8 +17,8 @@ import BusinessRoutes from "@/routes/business-routes";
 import CustomerRoutes from "@/routes/customer-routes";
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import SidebarLayout from "../side-bar";
 import BookTour from "@/page/customer/booking-tour";
+import Checkout from "@/page/customer/checkout";
 
 
 const Apps: React.FC = () => {
@@ -58,6 +55,7 @@ const Apps: React.FC = () => {
         <Route path="/information/*" element={<Information />} />
         <Route path="/news/*" element={<NewsMain />} />
         <Route path="/confirm" element={<ConfirmationForm />} />
+        <Route path="/checkout/:code_order" element={<Checkout />} />
         <Route path="/list-tour-vietnam/:location" element={<TourSearch />} />
         <Route path="/list-tour-foreign/:location" element={<TourSearch />} />
         <Route path="/tour-details/:tour_id" element={<TourDetail />} />

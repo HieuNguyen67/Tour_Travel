@@ -181,7 +181,7 @@ const handleQuantityChange = (type, value) => {
 
            setMessage(response.data.message);
             toast.success(response.data.message);
-            navigate(`/information/list-order`);
+            navigate(`/checkout/${response.data.order.code_order}`);
          } else {
            
            alert("Chúng tôi đang cập nhật hình thức thanh toán toán này. Quý khách vui lòng chờ đợi");

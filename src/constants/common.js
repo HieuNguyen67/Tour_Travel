@@ -24,6 +24,7 @@ import coin from "@/assets/image/coin.png";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RiRefund2Line } from "react-icons/ri";
 import { FaFilePen } from "react-icons/fa6";
+import { MdPayments } from "react-icons/md";
 
 
 
@@ -62,6 +63,12 @@ const ADMIN = [
   },
   {
     id: 4,
+    icon: <MdPayments />,
+    name: "PAYMENTS",
+    link: "/admin/list-payments",
+  },
+  {
+    id: 5,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-news`}
@@ -75,7 +82,7 @@ const ADMIN = [
     link2: "/admin/add-news",
   },
   {
-    id: 5,
+    id: 6,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-contact`}
@@ -86,7 +93,7 @@ const ADMIN = [
     link: "/admin/contact",
   },
   {
-    id: 6,
+    id: 7,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-report`}
@@ -97,8 +104,8 @@ const ADMIN = [
     link: "/admin/report",
   },
   {
-    id: 7,
-    icon: <FaFilePen/>,
+    id: 8,
+    icon: <FaFilePen />,
     name: "AUDIT LOG",
     link: "/admin/admin-actions",
   },

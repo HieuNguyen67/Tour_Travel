@@ -9,6 +9,7 @@ import Profile from "./profile";
 import Header from "@/components/layout/header";
 import Coupons from "./coupons";
 import Refunds from "./refunds";
+import OrderDetail from "../business/order-detail";
 
 const Information = () => {
   const { isLoggedIn } = useAuth();
@@ -29,6 +30,7 @@ const Information = () => {
           <Route path="/list-order" element={<ListOrder />} />
           <Route path="/coupons" element={<Coupons />} />
           <Route path="/refunds" element={<Refunds />} />
+          <Route path="/order-detail/:order_id" element={<OrderDetail />} />
           <Route path="*" element={<Navigate to="/information/profile" />} />
         </Routes>
       </InformationLayout>

@@ -21,7 +21,7 @@ const OrderTour = () => {
       <h3 className="fw-bold">
         {" "}
         <img src={listorderimg} className="mb-2 location" />
-        DANH SÁCH ORDER
+        DANH SÁCH BOOKING
       </h3>
       <Box
         sx={{
@@ -71,6 +71,7 @@ const OrderTour = () => {
           </TabPanel>
         </TabContext>
       </Box>
+     
     </>
   );
 };
