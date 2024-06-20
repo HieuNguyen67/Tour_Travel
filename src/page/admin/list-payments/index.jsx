@@ -8,17 +8,23 @@ import { Button } from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context";
 
 const Payments = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const {token}= useAuth();
 const navigate = useNavigate();
 
     useEffect(() => {
       const fetchOrders = async () => {
         try {
-          const response = await axios.get(`${BASE_URL}/list-orders`);
+          const response = await axios.get(`${BASE_URL}/list-orders`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           setOrders(response.data);
         } catch (err) {
           setError(err.message);

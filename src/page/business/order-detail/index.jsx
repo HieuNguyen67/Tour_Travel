@@ -138,20 +138,38 @@ const OrderDetail = () => {
 
    const handleUpdate = async () => {
      try {
-       await axios.put(
-         `${BASE_URL}/update-status-orders/${order_id}`,
-         {
-           status,
-         },
-         {
-           headers: {
-             Authorization: `Bearer ${token}`,
-           },
-         }
-       );
-       toast.success("Cập nhật thành công!");
-       navigate("/business/order-tour");
-       window.location.reload();
+      if(role==3){
+        await axios.put(
+        `${BASE_URL}/update-status-orders/${order_id}`,
+        {
+          status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Cập nhật thành công!");
+      navigate("/business/order-tour");
+      window.location.reload();
+    }else{
+        await axios.put(
+          `${BASE_URL}/update-status-payment-orders/${order_id}`,
+          {
+            statuspayments,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Cập nhật thành công!");
+        navigate("/admin/list-payments");
+        window.location.reload();
+      }
+       
      } catch (error) {
        console.error("Failed to update orders status :", error);
        setError("Failed to update order status ");
@@ -330,7 +348,7 @@ const OrderDetail = () => {
             </Button>
           </form>
         </>
-      ) : role == 3 ? (
+      ) : role == 1 ? (
         <>
           <div style={{ display: "grid", placeItems: "end" }}>
             <Button

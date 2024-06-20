@@ -38,6 +38,7 @@ const BookTour = () => {
 
   const [formData, setFormData] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("bank");
+  const [paymentUrl, setPaymentUrl] = useState("");
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -182,9 +183,31 @@ const handleQuantityChange = (type, value) => {
            setMessage(response.data.message);
             toast.success(response.data.message);
             navigate(`/checkout/${response.data.order.code_order}`);
-         } else {
-           
-           alert("Chúng tôi đang cập nhật hình thức thanh toán toán này. Quý khách vui lòng chờ đợi");
+         } else if(paymentMethod === "zalopay"){
+           const response = await axios.post(
+             `${BASE_URL}/book-tour-zalopay/${tour_id}/${customerId}`,
+             {
+               adult_quantity: adultQuantity,
+               child_quantity: childQuantity,
+               infant_quantity: infantQuantity,
+               note: note,
+             },
+             {
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+             }
+           );
+
+           if (response.data.payment_url) {
+             setPaymentUrl(response.data.payment_url);
+           }
+           setMessage(response.data.message);
+          
+         }else{
+           alert(
+             "Chúng tôi đang cập nhật hình thức thanh toán toán này. Quý khách vui lòng chờ đợi"
+           );
          }
     } catch (error) {
       console.error("Failed to book tour:", error);
@@ -634,6 +657,13 @@ const handleQuantityChange = (type, value) => {
               {loading2 ? <>Loading...</> : <>Đặt Ngay</>}
             </Button>
           </div>
+          {paymentUrl && (
+            <div>
+              <a href={paymentUrl} target="_blank" rel="noopener noreferrer">
+                Thanh toán
+              </a>
+            </div>
+          )}
         </div>
       </Container>
     </>
