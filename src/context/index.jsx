@@ -6,20 +6,20 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
       const navigate = useNavigate();
    
-  const [token, setToken] = useState(sessionStorage.getItem("token"));
-  const [role, setRole] = useState(sessionStorage.getItem("role"));
-  const [username, setUsername] = useState(sessionStorage.getItem("username"));
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [role, setRole] = useState(localStorage.getItem("role"));
+  const [username, setUsername] = useState(localStorage.getItem("username"));
   const [accountId, setAccountId] = useState(
-    sessionStorage.getItem("account_id")
+    localStorage.getItem("account_id")
   );
    const [businessId, setBusinessId] = useState(
-     sessionStorage.getItem("business_id")
+     localStorage.getItem("business_id")
    );
     const [customerId, setCustomerId] = useState(
-      sessionStorage.getItem("customer_id")
+      localStorage.getItem("customer_id")
     );
      const [adminId, setAdminId] = useState(
-       sessionStorage.getItem("admin_id")
+       localStorage.getItem("admin_id")
      );
 
   
@@ -34,13 +34,13 @@ export const AuthProvider = ({ children }) => {
     customerId,
     adminId
   ) => {
-    sessionStorage.setItem("token", token);
-    sessionStorage.setItem("role", role);
-    sessionStorage.setItem("username", username);
-    sessionStorage.setItem("account_id", accountId);
-    sessionStorage.setItem("business_id", businessId);
-    sessionStorage.setItem("customer_id", customerId);
-    sessionStorage.setItem("admin_id", adminId);
+    localStorage.setItem("token", token);
+    localStorage.setItem("role", role);
+    localStorage.setItem("username", username);
+    localStorage.setItem("account_id", accountId);
+    localStorage.setItem("business_id", businessId);
+    localStorage.setItem("customer_id", customerId);
+    localStorage.setItem("admin_id", adminId);
     setToken(token);
     setRole(role);
     setUsername(username);
@@ -51,13 +51,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("role");
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("account_id");
-     sessionStorage.removeItem("business_id");
-      sessionStorage.removeItem("customer_id");
-        sessionStorage.removeItem("admin_id");
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("username");
+    localStorage.removeItem("account_id");
+     localStorage.removeItem("business_id");
+      localStorage.removeItem("customer_id");
+        localStorage.removeItem("admin_id");
     setToken(null);
     setRole(null);
     setUsername(null);

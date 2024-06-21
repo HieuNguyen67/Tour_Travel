@@ -123,7 +123,7 @@ const AddTourForm = () => {
     };
 
     fetchTourData();
-  }, []);
+  }, [isHomePage,tour_id]);
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -165,8 +165,7 @@ const AddTourForm = () => {
   };
   const navigate = useNavigate();
 
-  if (isHomePage) {
-    var handleSubmit = async (e) => {
+    const handleSubmitAdd = async (e) => {
       e.preventDefault();
        setLoading1(true);
       if (images.length < 4) {
@@ -202,9 +201,11 @@ const AddTourForm = () => {
         console.error("Error adding tour: ", error.response.data.error);
         toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
       }
+                 setLoading1(false);
+
     };
-  } else {
-    var handleSubmit = async (e) => {
+ 
+    const handleSubmitUpdate = async (e) => {
       e.preventDefault();
        setLoading1(true);
 
@@ -249,9 +250,10 @@ const AddTourForm = () => {
       } catch (error) {
         console.error("Error updating tour images:", error);
       }
+           setLoading1(false);
+
     };
-     setLoading1(false);
-  }
+  
   const formatDate = (dateString) => {
     return format(new Date(dateString), "yyyy-MM-dd");
   };
@@ -304,7 +306,7 @@ const AddTourForm = () => {
           </Row>
         </div>
 
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={isHomePage?handleSubmitAdd:handleSubmitUpdate} className="">
           <Row>
             <Col className="col-lg-6 col-12">
               {" "}

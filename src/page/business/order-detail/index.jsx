@@ -112,6 +112,7 @@ const OrderDetail = () => {
   const {token, role}= useAuth();
   const [status, setStatus] = useState("");
   const [statuspayments, setStatuspayments] = useState("");
+  const [paymentDetail, setPaymentDetail] = useState(null);
 
   useEffect(() => {
     const fetchOrderDetail = async () => {
@@ -133,6 +134,30 @@ const OrderDetail = () => {
 
     fetchOrderDetail();
   }, [order_id]);
+
+  useEffect(() => {
+    const fetchPaymentDetail = async () => {
+      if (orderDetail.status_payment === "Paid") {
+        try {
+          var response = await axios.get(
+            `${BASE_URL}/payment-detail/${order_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setPaymentDetail(response.data);
+        } catch (error) {
+          setError("Failed to fetch payment detail");
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchPaymentDetail();
+  }, [orderDetail.status_payment, order_id]);
 
   const navigate = useNavigate();
 
@@ -243,6 +268,16 @@ const OrderDetail = () => {
           ))}
         </Stepper>
       </Box>
+      <h3 className=" fw-bold mt-5 ">
+        <span
+          className="fw-bold mt-4"
+          style={{ border: "3px solid red", color: "red", padding: "1rem" }}
+        >
+          {orderDetail.status_payment === "Unpaid"
+            ? "CHƯA THANH TOÁN"
+            : "ĐÃ THANH TOÁN"}
+        </span>
+      </h3>
       <Row className="justify-content-md-center">
         <Col className="col-12">
           <Card className="my-4">
@@ -320,6 +355,55 @@ const OrderDetail = () => {
           </Card>
         </Col>
       </Row>
+      {paymentDetail && (
+        <Row className="justify-content-md-center">
+          <Col className="col-12">
+            <Card className="my-4">
+              <Card.Header>Chi tiết Thanh toán</Card.Header>
+              <Card.Body style={{ color: TEXT_MAIN_COLOR }}>
+                <>
+                  <Card.Text>
+                    <strong>Mã booking:</strong>{" "}
+                    <span className="fw-bold text-dark">
+                      {paymentDetail.code_order}
+                    </span>
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Khách hàng:</strong> {paymentDetail.customer_name}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>
+                      Thời gian thanh toán:{" "}
+                      <span className="fw-bold text-primary">
+                        {format(
+                          new Date(paymentDetail.payment_date),
+                          "yyyy-MM-dd HH:mm:ss"
+                        )}
+                      </span>
+                    </strong>{" "}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Tổng giá:</strong>{" "}
+                    <span className="text-danger fw-bold">
+                      {formatPrice(paymentDetail.amount)}
+                    </span>
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Hình thức thanh toán:</strong>{" "}
+                    {paymentDetail.payment_method}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Trạng thái thanh toán:</strong>{" "}
+                    {paymentDetail.payment_status == "Completed"
+                      ? "Đã thanh toán"
+                      : "Chưa thanh toán"}
+                  </Card.Text>
+                </>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      )}
       {role == 3 ? (
         <>
           <form>

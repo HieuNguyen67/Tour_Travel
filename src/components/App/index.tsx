@@ -55,7 +55,7 @@ const Apps: React.FC = () => {
         <Route path="/information/*" element={<Information />} />
         <Route path="/news/*" element={<NewsMain />} />
         <Route path="/confirm" element={<ConfirmationForm />} />
-        <Route path="/checkout/:code_order" element={<Checkout />} />
+        <Route path="/checkout/:page/:code_order" element={<Checkout />} />
         <Route path="/list-tour-vietnam/:location" element={<TourSearch />} />
         <Route path="/list-tour-foreign/:location" element={<TourSearch />} />
         <Route path="/tour-details/:tour_id" element={<TourDetail />} />

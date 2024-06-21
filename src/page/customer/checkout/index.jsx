@@ -1,9 +1,12 @@
 import { Button, Col, Container } from "react-bootstrap";
 import verifiedimg from "@/assets/image/verified.png";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const Checkout =()=>{
-    const{code_order}=useParams();
+    const{code_order, page }=useParams();
+      const location = useLocation();
+
+
     return (
       <>
         <Container className="mt-5 pt-5">
@@ -20,7 +23,9 @@ const Checkout =()=>{
                 objectFit: "cover",
               }}
             />{" "}
-            <h3 className="fw-bold mt-4">ĐẶT TOUR THÀNH CÔNG</h3>
+            <h3 className="fw-bold mt-4">
+              {page == 1 ? <>ĐẶT TOUR THÀNH CÔNG</> : <>THANH TOÁN THÀNH CÔNG</>}
+            </h3>
             <p>
               Mã Booking: <span className="fw-bold">{code_order}</span>
             </p>

@@ -104,11 +104,14 @@ const TourDetail = () => {
     fetchReviews();
   }, [tour_id]);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return date.toLocaleDateString("vi-VN", options);
-  };
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return date.toLocaleDateString("vi-VN", options);
+};
+
+
 
   const formatPrice = (price) => {
     if (typeof price !== "number") {
@@ -200,7 +203,7 @@ const TourDetail = () => {
             </Col>
             <Col className="col-12">
               <Button
-              onClick={handleClick}
+                onClick={handleClick}
                 className="col-lg-2 col-12 me-2 py-3 mb-2 mb-lg-0"
                 style={{ background: RED1_COLOR, border: "0px" }}
               >

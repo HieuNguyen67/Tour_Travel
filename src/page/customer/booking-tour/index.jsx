@@ -182,7 +182,7 @@ const handleQuantityChange = (type, value) => {
 
            setMessage(response.data.message);
             toast.success(response.data.message);
-            navigate(`/checkout/${response.data.order.code_order}`);
+            navigate(`/checkout/1/${response.data.order.code_order}`);
          } else if(paymentMethod === "zalopay"){
            const response = await axios.post(
              `${BASE_URL}/book-tour-zalopay/${tour_id}/${customerId}`,
@@ -205,9 +205,27 @@ const handleQuantityChange = (type, value) => {
            setMessage(response.data.message);
           
          }else{
-           alert(
-             "Chúng tôi đang cập nhật hình thức thanh toán toán này. Quý khách vui lòng chờ đợi"
-           );
+          const response = await axios.post(
+            `${BASE_URL}/book-tour-momopay/${tour_id}/${customerId}`,
+            {
+              adult_quantity: adultQuantity,
+              child_quantity: childQuantity,
+              infant_quantity: infantQuantity,
+              note: note,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+         
+
+          if (response.data.payment_url) {
+             window.location.href= response.data.payment_url;
+            setPaymentUrl(response.data.payment_url);
+          }
+          setMessage(response.data.message);
          }
     } catch (error) {
       console.error("Failed to book tour:", error);
@@ -642,7 +660,7 @@ const handleQuantityChange = (type, value) => {
             </Row>
           </Form.Group>
 
-          {message && <p>{message}</p>}
+          {/* {message && <p>{message}</p>} */}
           <p className="text-danger mt-4">
             * Lưu ý khi chọn chuyên khoản ngân hàng, quý khách vui lòng chờ hệ
             thống xác nhận và sẽ gửi email thanh toán đến quý khách !
