@@ -7,18 +7,13 @@ import { DataGrid } from "@mui/x-data-grid";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import { BiEdit } from "react-icons/bi";
-import {
-  GREEN_COLOR,
-  RED_COLOR,
-  YELLOW_COLOR,
-} from "@/constants";
+import { GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 import newsimg from "@/assets/image/news.png";
 import addimg from "@/assets/image/add.png";
 import deleteimg from "@/assets/image/delete.png";
-
 
 const News = () => {
   const [news, setNews] = useState([]);
@@ -30,14 +25,14 @@ const News = () => {
     const fetchNews = async () => {
       try {
         if (role == 2 || role == 5) {
-          var response = await axios.get(`${BASE_URL}/list-news`, {
+          var response = await axios.get(`${BASE_URL_ADMIN}/list-news`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
         } else {
           var response = await axios.get(
-            `${BASE_URL}/list-news/${businessId}`,
+            `${BASE_URL_ADMIN}/list-news/${businessId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -66,14 +61,14 @@ const News = () => {
 
   const handleRowClick = (params) => {
     {
-      (role == 2 || role==5)
+      role == 2 || role == 5
         ? navigate(`/admin/news-detail/${params.row.news_id}`)
         : navigate(`/business/news-detail/${params.row.news_id}`);
     }
   };
   const handleRowClick1 = (params) => {
     {
-      (role == 2 || role==5)
+      role == 2 || role == 5
         ? navigate(`/admin/edit-news/${params.row.news_id}`)
         : navigate(`/business/edit-news/${params.row.news_id}`);
     }
@@ -93,20 +88,23 @@ const News = () => {
     try {
       await Promise.all(
         selectedRows.map(async (row) => {
-          if(role==3){
-             await axios.delete(`${BASE_URL}/delete-news/${row.news_id}`, {
-               headers: {
-                 Authorization: `Bearer ${token}`,
-               },
-             });
-          }else{
-             await axios.delete(`${BASE_URL}/delete-news/${row.news_id}/${adminId}`, {
-               headers: {
-                 Authorization: `Bearer ${token}`,
-               },
-             });
+          if (role == 3) {
+            await axios.delete(`${BASE_URL_ADMIN}/delete-news/${row.news_id}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+          } else {
+            await axios.delete(
+              `${BASE_URL_ADMIN}/delete-news/${row.news_id}/${adminId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
           }
-         
+
           setNews(news.filter((item) => item.news_id !== row.news_id));
           toast.success("Xoá thành công!");
           window.location.reload();
@@ -288,7 +286,13 @@ const News = () => {
                 cursor: "pointer",
               }}
             />{" "}
-            <Link to={(role == 2 || role==5) ? "/admin/add-news" : "/business/add-news"}>
+            <Link
+              to={
+                role == 2 || role == 5
+                  ? "/admin/add-news"
+                  : "/business/add-news"
+              }
+            >
               <img
                 src={addimg}
                 className="mb-2 "

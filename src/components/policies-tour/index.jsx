@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BASE_URL, TEXT_RED_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_BUSINESS, TEXT_RED_COLOR } from "@/constants";
 import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import Accordion from "@mui/material/Accordion";
@@ -19,7 +19,7 @@ const PolicesTour = ({ businessId }) => {
       try {
         if (businessId) {
           const response = await axios.get(
-            `${BASE_URL}/list-policies/${businessId}`
+            `${BASE_URL_BUSINESS}/list-policies/${businessId}`
           );
           setPolicies(response.data);
         }
@@ -36,7 +36,7 @@ const PolicesTour = ({ businessId }) => {
       try {
         if (businessId) {
           const response = await axios.get(
-            `${BASE_URL}/list-policies-cancellation/${businessId}`
+            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}`
           );
           setPolicyCancellation(response.data);
         }
@@ -72,15 +72,11 @@ const PolicesTour = ({ businessId }) => {
                     <div key={item.index}>
                       <p>
                         - Nếu huỷ chuyến du lịch trong vòng{" "}
-                        <span
-                          className="fw-bold"
-                        >
+                        <span className="fw-bold">
                           {item.days_before_departure}
                         </span>{" "}
                         ngày trước khởi hành: Hoàn{" "}
-                        <span
-                          className="fw-bold"
-                        >
+                        <span className="fw-bold">
                           {item.refund_percentage}%
                         </span>{" "}
                         giá vé

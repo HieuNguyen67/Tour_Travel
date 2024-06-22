@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Typography, Box } from "@mui/material";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER } from "@/constants";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import Pagination from "@mui/lab/Pagination";
 import coin from "@/assets/image/coin.png";
@@ -53,7 +53,7 @@ const CouponsList: React.FC = () => {
     const fetchCoupons = async () => {
       try {
         const response = await axios.get<CouponResponse>(
-          `${BASE_URL}/coupons/${customerId}`
+          `${BASE_URL_CUSTOMER}/coupons/${customerId}`
         );
         setCoupons(response.data.coupons);
         setTotalUsedPoints(response.data.totalUsedPoints);

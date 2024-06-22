@@ -10,8 +10,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import LoadingBackdrop from "@/components/backdrop";
-import { BASE_URL } from "@/constants";
-import newsimg from "@/assets/image/news.png"
+import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
+import newsimg from "@/assets/image/news.png";
 const truncateString = (str, maxLength) => {
   if (str.length <= maxLength) {
     return str;
@@ -45,11 +45,11 @@ const NewsTravel = () => {
       var response;
       if (isHomePage) {
         response = await axios.get(
-          `${BASE_URL}/list-news-travel/${news_travel}`
+          `${BASE_URL_USER}/list-news-travel/${news_travel}`
         );
       } else {
         response = await axios.get(
-          `${BASE_URL}/list-news-travel/${travel_guide}`
+          `${BASE_URL_USER}/list-news-travel/${travel_guide}`
         );
       }
       setNews(response.data);
@@ -97,7 +97,11 @@ const NewsTravel = () => {
     <>
       <LoadingBackdrop open={loading} />
       <h1 className="text-center my-lg-5 my-3 fw-bold">
-        <img src={newsimg} className="mb-2" style={{width:'3.5rem',height:'3.5rem', objectFit:'cover'}}/>
+        <img
+          src={newsimg}
+          className="mb-2"
+          style={{ width: "3.5rem", height: "3.5rem", objectFit: "cover" }}
+        />
         {isHomePage ? <> TIN TỨC DU LỊCH</> : <> CẨM NANG DU LỊCH</>}
       </h1>
       <Row className="row-cols-3 my-4">

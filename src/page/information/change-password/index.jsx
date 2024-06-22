@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { TbPasswordUser } from "react-icons/tb";
 import { MdOutlinePassword } from "react-icons/md";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 
 const ChangePassword = () => {
   const { accountId, isLoggedIn, token } = useAuth();
@@ -34,7 +34,7 @@ const ChangePassword = () => {
 
     try {
       await axios.put(
-        `${BASE_URL}/account/change-password/${accountId}`,
+        `${BASE_URL_USER}/account/change-password/${accountId}`,
         passwords,
         {
           headers: {

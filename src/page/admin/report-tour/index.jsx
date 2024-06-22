@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { GREEN_COLOR, RED1_COLOR, YELLOW_COLOR } from "@/constants";
 import { Button } from "react-bootstrap";
@@ -16,7 +16,7 @@ const ReportList = () => {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/report-list`);
+        const response = await axios.get(`${BASE_URL_ADMIN}/report-list`);
         setReports(response.data);
         setLoading(false);
       } catch (error) {

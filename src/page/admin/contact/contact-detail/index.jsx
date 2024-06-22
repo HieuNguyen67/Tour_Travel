@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_BUSINESS } from "@/constants";
 import { toast } from "react-toastify";
 import { Button, Container, Form } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
@@ -26,7 +26,7 @@ const ContactDetail = () => {
       try {
         if (role == 2) {
           var response = await axios.get(
-            `${BASE_URL}/contacts-detail/${contact_id}`,
+            `${BASE_URL_ADMIN}/contacts-detail/${contact_id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -35,7 +35,7 @@ const ContactDetail = () => {
           );
         } else {
           var response = await axios.get(
-            `${BASE_URL}/contacts-detail-business/${contact_id}`,
+            `${BASE_URL_BUSINESS}/contacts-detail-business/${contact_id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ const ContactDetail = () => {
     try {
       if (role == 2) {
         await axios.put(
-          `${BASE_URL}/update-status-contact/${contact_id}/${adminId}`,
+          `${BASE_URL_ADMIN}/update-status-contact/${contact_id}/${adminId}`,
           {
             status,
           },
@@ -78,7 +78,7 @@ const ContactDetail = () => {
         window.location.reload();
       } else {
         await axios.put(
-          `${BASE_URL}/update-status-contact-business/${contact_id}`,
+          `${BASE_URL_BUSINESS}/update-status-contact-business/${contact_id}`,
           {
             status,
           },
@@ -88,12 +88,11 @@ const ContactDetail = () => {
             },
           }
         );
-         console.log("News status and note updated successfully");
-         toast.success("Cập nhật thành công!");
-         navigate("/business/list-contact");
-          window.location.reload();
+        console.log("News status and note updated successfully");
+        toast.success("Cập nhật thành công!");
+        navigate("/business/list-contact");
+        window.location.reload();
       }
-     
     } catch (error) {
       console.error("Failed to update news status and note:", error);
       setError("Failed to update news status and note");

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { IoMdAddCircle } from "react-icons/io";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 
 const AddCategories = () => {
   const [name, setName] = useState("");
@@ -17,7 +17,7 @@ const AddCategories = () => {
     e.preventDefault();
     try {
       await axios.post(
-        `${BASE_URL}/add-newscategories`,
+        `${BASE_URL_ADMIN}/add-newscategories`,
         {
           name,
         },

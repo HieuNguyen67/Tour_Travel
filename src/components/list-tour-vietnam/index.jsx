@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER } from "@/constants";
 import { Card, Col, Placeholder, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -21,7 +21,7 @@ const ListTourVietnam = ({ tour_category }) => {
     const fetchTours = async () => {
       try {
         var response = await axios.get(
-          `${BASE_URL}/list-tours-filter?tourcategory_name=${tour_category}`
+          `${BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=${tour_category}`
         );
 
         const sortedTours = response.data.sort(

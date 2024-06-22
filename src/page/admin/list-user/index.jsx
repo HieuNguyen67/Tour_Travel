@@ -7,7 +7,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 import userimg from "@/assets/image/profile1.png";
 import businessimg from "@/assets/image/business1.png";
 import adminimg from "@/assets/image/admin.png";
@@ -29,19 +29,25 @@ const ListUser = () => {
     const fetchUsers = async () => {
       try {
         if (isHomePage) {
-          var response = await axios.get(`${BASE_URL}/get-users?role_id=1`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${BASE_URL_ADMIN}/get-users?role_id=1`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         } else if (isHomePage1) {
-          var response = await axios.get(`${BASE_URL}/get-users?role_id=3`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${BASE_URL_ADMIN}/get-users?role_id=3`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         } else {
-          var response = await axios.get(`${BASE_URL}/get-admins`, {
+          var response = await axios.get(`${BASE_URL_ADMIN}/get-admins`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -216,7 +222,7 @@ const ListUser = () => {
       ),
     },
   ];
- 
+
   if (!isHomePage && !isHomePage1) {
     const nameIndex = columns.findIndex((column) => column.field === "status");
     if (nameIndex !== -1) {
@@ -226,7 +232,7 @@ const ListUser = () => {
         width: 150,
         renderCell: (params) => (
           <div
-          className="fw-bold"
+            className="fw-bold"
             style={{ cursor: "pointer" }}
             dangerouslySetInnerHTML={{ __html: params.value }}
             onClick={() => handleRowClick(params)}

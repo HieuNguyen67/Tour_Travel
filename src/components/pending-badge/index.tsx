@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ReactNode } from "react";
 import Badge from "@mui/material/Badge";
 import axios from "axios";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 
 interface PendingBadgeProps {
   endpoint: string;
@@ -15,7 +15,7 @@ const PendingBadge: React.FC<PendingBadgeProps> = ({ endpoint, icon }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get<{ count: number }>(
-          `${BASE_URL}${endpoint}`
+          `${BASE_URL_ADMIN}${endpoint}`
         );
         setPendingCount(response.data.count);
       } catch (error) {

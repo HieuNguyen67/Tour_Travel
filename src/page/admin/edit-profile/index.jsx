@@ -9,7 +9,7 @@ import { FaSave } from "react-icons/fa";
 import LoadImage from "./load-image";
 import { IoArrowBackOutline } from "react-icons/io5";
 import LoadingBackdrop from "@/components/backdrop";
-import { BLUE_COLOR, RED_COLOR } from "@/constants";
+import { BASE_URL_USER, BLUE_COLOR, RED_COLOR } from "@/constants";
 import { MdAccountBox } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -19,7 +19,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RxUpdate } from "react-icons/rx";
 import { RiBankCardFill } from "react-icons/ri";
 import { FaAddressCard } from "react-icons/fa6";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 
 const EditProfile = () => {
   const { account_id, role_id } = useParams();
@@ -41,22 +41,25 @@ const EditProfile = () => {
     const fetchAccountData = async () => {
       try {
         if (role_id == 1) {
-          var response = await axios.get(`${BASE_URL}/account/${account_id}`, {
+          var response = await axios.get(`${BASE_URL_USER}/account/${account_id}`, {
             params: { role: 1 },
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
         } else if (role_id == 3) {
-          var response = await axios.get(`${BASE_URL}/account/${account_id}`, {
-            params: { role: 3 },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${BASE_URL_USER}/account/${account_id}`,
+            {
+              params: { role: 3 },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         } else {
           var response = await axios.get(
-            `${BASE_URL}/account/${account_id}?role=2`,
+            `${BASE_URL_USER}/account/${account_id}?role=2`,
             {
               params: { role: 2 },
               headers: {
@@ -87,7 +90,7 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `${BASE_URL}/update-status-accounts/${account_id}/${adminId}`,
+        `${BASE_URL_ADMIN}/update-status-accounts/${account_id}/${adminId}`,
         {
           ...formData,
         },

@@ -16,7 +16,7 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER } from "@/constants";
 import registerimg from "@/assets/image/register.png";
 
 const SignUp = () => {
@@ -42,7 +42,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${BASE_URL}/register`, formData);
+      await axios.post(`${BASE_URL_CUSTOMER}/register`, formData);
       toast.success("Đăng ký thành công !");
       navigate("/confirm");
     } catch (error) {

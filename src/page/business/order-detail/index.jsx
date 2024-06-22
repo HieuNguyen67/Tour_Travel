@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Row, Col, Card, Spinner, Alert, Form, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Spinner,
+  Alert,
+  Form,
+  Button,
+} from "react-bootstrap";
 import { format } from "date-fns";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context";
-import { BASE_URL, BLUE_COLOR, RED1_COLOR, RED_COLOR, TEXT_MAIN_COLOR } from "@/constants";
+import {
+  BASE_URL_ADMIN,
+  BASE_URL_BUSINESS,
+  BASE_URL_USER,
+  BLUE_COLOR,
+  RED1_COLOR,
+  RED_COLOR,
+  TEXT_MAIN_COLOR,
+} from "@/constants";
 import { toast } from "react-toastify";
 import { RxUpdate } from "react-icons/rx";
 import { FaSave } from "react-icons/fa";
@@ -23,12 +40,7 @@ import StepConnector, {
 } from "@mui/material/StepConnector";
 import LoadingBackdrop from "@/components/backdrop";
 
-const steps = [
-  "Chờ xác nhận",
-  "Đã xác nhận",
-  "Đã hoàn thành",
-  "Đã huỷ",
-];
+const steps = ["Chờ xác nhận", "Đã xác nhận", "Đã hoàn thành", "Đã huỷ"];
 
 const getStatusIndex = (status) => {
   switch (status) {
@@ -109,7 +121,7 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { order_id } = useParams();
-  const {token, role}= useAuth();
+  const { token, role } = useAuth();
   const [status, setStatus] = useState("");
   const [statuspayments, setStatuspayments] = useState("");
   const [paymentDetail, setPaymentDetail] = useState(null);
@@ -117,14 +129,17 @@ const OrderDetail = () => {
   useEffect(() => {
     const fetchOrderDetail = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/order-detail/${order_id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${BASE_URL_USER}/order-detail/${order_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setOrderDetail(response.data);
-         setStatus(response.data.status);
-         setStatuspayments(response.data.status_payment);
+        setStatus(response.data.status);
+        setStatuspayments(response.data.status_payment);
       } catch (error) {
         setError("Failed to fetch order detail");
       } finally {
@@ -140,7 +155,7 @@ const OrderDetail = () => {
       if (orderDetail.status_payment === "Paid") {
         try {
           var response = await axios.get(
-            `${BASE_URL}/payment-detail/${order_id}`,
+            `${BASE_URL_USER}/payment-detail/${order_id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -161,26 +176,26 @@ const OrderDetail = () => {
 
   const navigate = useNavigate();
 
-   const handleUpdate = async () => {
-     try {
-      if(role==3){
+  const handleUpdate = async () => {
+    try {
+      if (role == 3) {
         await axios.put(
-        `${BASE_URL}/update-status-orders/${order_id}`,
-        {
-          status,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+          `${BASE_URL_BUSINESS}/update-status-orders/${order_id}`,
+          {
+            status,
           },
-        }
-      );
-      toast.success("Cập nhật thành công!");
-      navigate("/business/order-tour");
-      window.location.reload();
-    }else{
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Cập nhật thành công!");
+        navigate("/business/order-tour");
+        window.location.reload();
+      } else {
         await axios.put(
-          `${BASE_URL}/update-status-payment-orders/${order_id}`,
+          `${BASE_URL_ADMIN}/update-status-payment-orders/${order_id}`,
           {
             statuspayments,
           },
@@ -194,21 +209,20 @@ const OrderDetail = () => {
         navigate("/admin/list-payments");
         window.location.reload();
       }
-       
-     } catch (error) {
-       console.error("Failed to update orders status :", error);
-       setError("Failed to update order status ");
-     }
-   };
-    const formatPrice = (price) => {
-      if (typeof price !== "number") {
-        return price;
-      }
-      return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-      }).format(price);
-    };
+    } catch (error) {
+      console.error("Failed to update orders status :", error);
+      setError("Failed to update order status ");
+    }
+  };
+  const formatPrice = (price) => {
+    if (typeof price !== "number") {
+      return price;
+    }
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
 
   if (loading) return <LoadingBackdrop open={loading} />;
   if (error) return <Alert variant="danger">{error}</Alert>;

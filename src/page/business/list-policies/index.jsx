@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_BUSINESS } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
@@ -11,7 +11,6 @@ import policyimg from "@/assets/image/policy.png";
 import addimg from "@/assets/image/add.png";
 import deleteimg from "@/assets/image/delete.png";
 import refundimg from "@/assets/image/refund.png";
-
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -27,11 +26,11 @@ const PoliciesList = () => {
       try {
         if (isHomePage) {
           var response = await axios.get(
-            `${BASE_URL}/list-policies/${businessId}`
+            `${BASE_URL_BUSINESS}/list-policies/${businessId}`
           );
         } else {
           var response = await axios.get(
-            `${BASE_URL}/list-policies-cancellation/${businessId}`
+            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}`
           );
         }
 
@@ -59,38 +58,46 @@ const PoliciesList = () => {
   };
   const handleDeleteSelected = async () => {
     try {
-      if(!isHomePage){ await Promise.all(
-        selectedRows.map(async (row) => {
-          await axios.delete(`${BASE_URL}/delete-policy/${row.policy_id}`, {
-            params: { role: 2 },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setPolicies(
-            policies.filter((item) => item.policy_id !== row.policy_id)
-          );
-          toast.success("Xoá thành công!");
-          window.location.reload();
-        })
-      );}else{
-         await Promise.all(
-           selectedRows.map(async (row) => {
-             await axios.delete(`${BASE_URL}/delete-policy/${row.policy_id}`, {
-               params: { role: 3 },
-               headers: {
-                 Authorization: `Bearer ${token}`,
-               },
-             });
-             setPolicies(
-               policies.filter((item) => item.policy_id !== row.policy_id)
-             );
-             toast.success("Xoá thành công!");
-             window.location.reload();
-           })
-         );
+      if (!isHomePage) {
+        await Promise.all(
+          selectedRows.map(async (row) => {
+            await axios.delete(
+              `${BASE_URL_BUSINESS}/delete-policy/${row.policy_id}`,
+              {
+                params: { role: 2 },
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            setPolicies(
+              policies.filter((item) => item.policy_id !== row.policy_id)
+            );
+            toast.success("Xoá thành công!");
+            window.location.reload();
+          })
+        );
+      } else {
+        await Promise.all(
+          selectedRows.map(async (row) => {
+            await axios.delete(
+              `${BASE_URL_ADMIN}/delete-policy/${row.policy_id}`,
+              {
+                params: { role: 3 },
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            setPolicies(
+              policies.filter((item) => item.policy_id !== row.policy_id)
+            );
+            toast.success("Xoá thành công!");
+            window.location.reload();
+          })
+        );
       }
-     
+
       setSelectedRows([]);
     } catch (error) {
       toast.success("Xoá thất bại. Vui lòng thử lại !");
@@ -108,113 +115,110 @@ const PoliciesList = () => {
       navigate(`/business/edit-policy-cancellation/${params.row.policy_id}`);
     }
   };
-if(isHomePage){
-var columns = [
-  {
-    field: "checkbox",
-    headerName: "",
-    width: 50,
-    renderCell: (params) => (
-      <input
-        type="checkbox"
-        onChange={(event) => handleCheckboxChange(event, params.row)}
-        style={{ width: "18px", height: "18px" }}
-      />
-    ),
-  },
-  {
-    field: "policy_id",
-    headerName: "ID",
-    width: 60,
-    renderCell: (params) => (
-      <div
-        style={{ cursor: "pointer" }}
-        dangerouslySetInnerHTML={{ __html: params.value }}
-        onClick={() => handleRowClick(params)}
-      />
-    ),
-  },
-  {
-    field: "policytype",
-    headerName: "Loại chính sách",
-    width: 200,
-    renderCell: (params) => (
-      <div
-        className="fw-bold"
-        style={{ cursor: "pointer" }}
-        dangerouslySetInnerHTML={{ __html: params.value }}
-        onClick={() => handleRowClick(params)}
-      />
-    ),
-  },
-  {
-    field: "description",
-    headerName: "Mô tả",
-    width: 800,
-    renderCell: (params) => (
-      <div
-        style={{ cursor: "pointer" }}
-        dangerouslySetInnerHTML={{ __html: params.value }}
-        onClick={() => handleRowClick(params)}
-      />
-    ),
-  },
-];
+  if (isHomePage) {
+    var columns = [
+      {
+        field: "checkbox",
+        headerName: "",
+        width: 50,
+        renderCell: (params) => (
+          <input
+            type="checkbox"
+            onChange={(event) => handleCheckboxChange(event, params.row)}
+            style={{ width: "18px", height: "18px" }}
+          />
+        ),
+      },
+      {
+        field: "policy_id",
+        headerName: "ID",
+        width: 60,
+        renderCell: (params) => (
+          <div
+            style={{ cursor: "pointer" }}
+            dangerouslySetInnerHTML={{ __html: params.value }}
+            onClick={() => handleRowClick(params)}
+          />
+        ),
+      },
+      {
+        field: "policytype",
+        headerName: "Loại chính sách",
+        width: 200,
+        renderCell: (params) => (
+          <div
+            className="fw-bold"
+            style={{ cursor: "pointer" }}
+            dangerouslySetInnerHTML={{ __html: params.value }}
+            onClick={() => handleRowClick(params)}
+          />
+        ),
+      },
+      {
+        field: "description",
+        headerName: "Mô tả",
+        width: 800,
+        renderCell: (params) => (
+          <div
+            style={{ cursor: "pointer" }}
+            dangerouslySetInnerHTML={{ __html: params.value }}
+            onClick={() => handleRowClick(params)}
+          />
+        ),
+      },
+    ];
+  } else {
+    var columns = [
+      {
+        field: "checkbox",
+        headerName: "",
+        width: 50,
+        renderCell: (params) => (
+          <input
+            type="checkbox"
+            onChange={(event) => handleCheckboxChange(event, params.row)}
+            style={{ width: "18px", height: "18px" }}
+          />
+        ),
+      },
+      {
+        field: "policy_id",
+        headerName: "ID",
+        width: 60,
+        renderCell: (params) => (
+          <div
+            style={{ cursor: "pointer" }}
+            dangerouslySetInnerHTML={{ __html: params.value }}
+            onClick={() => handleRowClick(params)}
+          />
+        ),
+      },
+      {
+        field: "days_before_departure",
+        headerName: "Ngày trước khi khởi hành",
+        width: 350,
+        renderCell: (params) => (
+          <div className="fw-bold" onClick={() => handleRowClick(params)}>
+            trong vòng {params.value} ngày trước khởi hành
+          </div>
+        ),
+      },
+      {
+        field: "refund_percentage",
+        headerName: "% Hoàn tiền",
+        width: 800,
+        renderCell: (params) => (
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => handleRowClick(params)}
+          >
+            Hoàn {params.value}%
+          </div>
+        ),
+      },
+    ];
+  }
 
-}else{
-  var columns = [
-    {
-      field: "checkbox",
-      headerName: "",
-      width: 50,
-      renderCell: (params) => (
-        <input
-          type="checkbox"
-          onChange={(event) => handleCheckboxChange(event, params.row)}
-          style={{ width: "18px", height: "18px" }}
-        />
-      ),
-    },
-    {
-      field: "policy_id",
-      headerName: "ID",
-      width: 60,
-      renderCell: (params) => (
-        <div
-          style={{ cursor: "pointer" }}
-          dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
-        />
-      ),
-    },
-    {
-      field: "days_before_departure",
-      headerName: "Ngày trước khi khởi hành",
-      width: 350,
-      renderCell: (params) => (
-        <div
-          className="fw-bold"
-          onClick={() => handleRowClick(params)}
-        >
-         trong vòng {params.value} ngày trước khởi hành
-        </div>
-      ),
-    },
-    {
-      field: "refund_percentage",
-      headerName: "% Hoàn tiền",
-      width: 800,
-      renderCell: (params) => (
-        <div
-          style={{ cursor: "pointer" }}
-          onClick={() => handleRowClick(params)}
-        >Hoàn {params.value}%</div>
-      ),
-    },
-  ];
-
-}
-  
   return (
     <>
       {" "}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_BUSINESS } from "@/constants";
 import { TEXT_MAIN_COLOR } from "@/constants";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
@@ -31,7 +31,7 @@ const TourListBusiness = ({ accountId }) => {
       try {
         if (accountId) {
           const response = await axios.get(
-            `${BASE_URL}/list-tours/${accountId}`
+            `${BASE_URL_BUSINESS}/list-tours/${accountId}`
           );
           setTours(response.data);
           setLoading(false);
@@ -86,7 +86,7 @@ const TourListBusiness = ({ accountId }) => {
         {tours.map((tour) => (
           <div key={tour.tour_id} className="p-2 py-3">
             <Link
-            to={`/tour-details/${tour.tour_id}`}
+              to={`/tour-details/${tour.tour_id}`}
               className="text-decoration-none"
             >
               <motion.div

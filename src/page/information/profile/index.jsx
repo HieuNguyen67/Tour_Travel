@@ -16,7 +16,7 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiBankCardFill } from "react-icons/ri";
 import { GrUserAdmin } from "react-icons/gr";
-import { BASE_URL, RED1_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER, RED1_COLOR } from "@/constants";
 import { RiBankFill } from "react-icons/ri";
 
 const Profile = () => {
@@ -47,8 +47,7 @@ const Profile = () => {
       try {
         const response = await axios.get("https://api.vietqr.io/v2/banks");
         setBanknames(response.data.data);
-      } catch (error) {
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -58,26 +57,35 @@ const Profile = () => {
     const fetchAccountData = async () => {
       try {
         if (role == 1) {
-          var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
-            params: { role: 1 },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${BASE_URL_USER}/account/${accountId}`,
+            {
+              params: { role: 1 },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         } else if (role == 3) {
-          var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
-            params: { role: 3 },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${BASE_URL_USER}/account/${accountId}`,
+            {
+              params: { role: 3 },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         } else {
-          var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
-            params: { role: 2 },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${BASE_URL_USER}/account/${accountId}`,
+            {
+              params: { role: 2 },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         }
 
         const accountData = response.data;
@@ -105,7 +113,7 @@ const Profile = () => {
       const formattedDate = formatDate(formData.birth_of_date);
       if (role == 1) {
         await axios.put(
-          `${BASE_URL}/account/${accountId}`,
+          `${BASE_URL_USER}/account/${accountId}`,
           {
             ...formData,
             birth_of_date: formattedDate,
@@ -119,7 +127,7 @@ const Profile = () => {
         );
       } else if (role == 3) {
         await axios.put(
-          `${BASE_URL}/account/${accountId}`,
+          `${BASE_URL_USER}/account/${accountId}`,
           {
             ...formData,
             birth_of_date: formattedDate,
@@ -133,7 +141,7 @@ const Profile = () => {
         );
       } else {
         await axios.put(
-          `${BASE_URL}/account/${accountId}`,
+          `${BASE_URL_USER}/account/${accountId}`,
           {
             ...formData,
             birth_of_date: formattedDate,

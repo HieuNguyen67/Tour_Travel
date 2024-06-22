@@ -16,8 +16,8 @@ import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
 import businessimg from "@/assets/image/business1.png";
 import adminimg from "@/assets/image/admin.png";
-import { RED_COLOR } from "@/constants";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_BUSINESS, RED_COLOR } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 import { GrUserAdmin } from "react-icons/gr";
 
 const RegisterUser = () => {
@@ -46,41 +46,45 @@ const RegisterUser = () => {
     e.preventDefault();
 
     try {
-      if(role_id==3){
-
-         await axios.post(`${BASE_URL}/register-business/${adminId}`, formData, {
-           headers: {
-             Authorization: `Bearer ${token}`,
-           },
-         });
-         toast.success("Đăng ký thành công !");
-         navigate("/admin/list-business");
-
-      }else{
-          await axios.post(`${BASE_URL}/register-admin/${adminId}`, formData, {
+      if (role_id == 3) {
+        await axios.post(
+          `${BASE_URL_BUSINESS}/register-business/${adminId}`,
+          formData,
+          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          });
-          toast.success("Đăng ký thành công !");
-          navigate("/admin/list-admin");
+          }
+        );
+        toast.success("Đăng ký thành công !");
+        navigate("/admin/list-business");
+      } else {
+        await axios.post(
+          `${BASE_URL_ADMIN}/register-admin/${adminId}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Đăng ký thành công !");
+        navigate("/admin/list-admin");
       }
-     
     } catch (error) {
       toast.error(error.response.data.message);
       setError(error.response.data.message);
     }
   };
-    const getMaxDate = () => {
-      const today = new Date();
-      const year = today.getFullYear() - 18;
-      const month = today.getMonth() + 1; 
-      const day = today.getDate();
-      return `${year}-${month.toString().padStart(2, "0")}-${day
-        .toString()
-        .padStart(2, "0")}`;
-    };
-
+  const getMaxDate = () => {
+    const today = new Date();
+    const year = today.getFullYear() - 18;
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    return `${year}-${month.toString().padStart(2, "0")}-${day
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
   return (
     <>

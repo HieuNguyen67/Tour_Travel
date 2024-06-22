@@ -15,8 +15,8 @@ import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
 import { RxUpdate } from "react-icons/rx";
 import { PiNotePencilFill } from "react-icons/pi";
-import { BLUE_COLOR } from "@/constants";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_USER, BLUE_COLOR } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 
 const NewsDetail = () => {
   const [news, setNews] = useState(null);
@@ -30,11 +30,14 @@ const NewsDetail = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/news-detail/${news_id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${BASE_URL_USER}/news-detail/${news_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setNews(response.data);
         setLoading(false);
       } catch (error) {
@@ -51,7 +54,7 @@ const NewsDetail = () => {
     const fetchNewsDetails = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/select-status-note/${news_id}`,
+          `${BASE_URL_ADMIN}/select-status-note/${news_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -76,7 +79,7 @@ const NewsDetail = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `${BASE_URL}/update-status-news/${news_id}/${adminId}`,
+        `${BASE_URL_ADMIN}/update-status-news/${news_id}/${adminId}`,
         {
           status,
           note,
@@ -108,10 +111,10 @@ const NewsDetail = () => {
 
   return (
     <>
-      <Link to={(role == 2 || role == 5 )? "/admin/news" : "/business/list-news"}>
+      <Link to={role == 2 || role == 5 ? "/admin/news" : "/business/list-news"}>
         <IoArrowBackOutline className="fs-3 mb-3" />
       </Link>
-      {(role == 2 || role == 5) ? (
+      {role == 2 || role == 5 ? (
         <>
           <div className="border shadow-sm py-3 px-3 rounded-4 mb-4">
             <h2 className="fw-bold">DUYỆT BÀI</h2>

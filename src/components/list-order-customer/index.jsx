@@ -3,7 +3,17 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { format } from "date-fns";
 import { Alert, CircularProgress, Container } from "@mui/material";
-import { BASE_URL, BLUE_COLOR, GREEN1_COLOR, GREEN_COLOR, RED1_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
+import {
+  BASE_URL_ADMIN,
+  BASE_URL_BUSINESS,
+  BASE_URL_CUSTOMER,
+  BLUE_COLOR,
+  GREEN1_COLOR,
+  GREEN_COLOR,
+  RED1_COLOR,
+  RED_COLOR,
+  YELLOW_COLOR,
+} from "@/constants";
 import { Button } from "react-bootstrap";
 import { useAuth } from "@/context";
 import LoadingBackdrop from "../backdrop";
@@ -13,15 +23,15 @@ const OrdersList = ({ customerId, status }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const{token, role}= useAuth();
-const navigate = useNavigate();
+  const { token, role } = useAuth();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        if(role==1){
+        if (role == 1) {
           if (status) {
             var response = await axios.get(
-              `${BASE_URL}/list-orders-customer/${customerId}/${status}`,
+              `${BASE_URL_CUSTOMER}/list-orders-customer/${customerId}/${status}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -30,7 +40,7 @@ const navigate = useNavigate();
             );
           } else {
             var response = await axios.get(
-              `${BASE_URL}/list-orders-customer/${customerId}`,
+              `${BASE_URL_CUSTOMER}/list-orders-customer/${customerId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -38,28 +48,28 @@ const navigate = useNavigate();
               }
             );
           }
-        }else{
-            if (status) {
-              var response = await axios.get(
-                `${BASE_URL}/list-orders-business/${customerId}/${status}`,
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-            } else {
-              var response = await axios.get(
-                `${BASE_URL}/list-orders-business/${customerId}`,
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-            }
+        } else {
+          if (status) {
+            var response = await axios.get(
+              `${BASE_URL_BUSINESS}/list-orders-business/${customerId}/${status}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+          } else {
+            var response = await axios.get(
+              `${BASE_URL_BUSINESS}/list-orders-business/${customerId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+          }
         }
-        
+
         setOrders(response.data);
       } catch (error) {
         setError("Failed to fetch orders");
@@ -74,26 +84,25 @@ const navigate = useNavigate();
   if (loading) return <LoadingBackdrop open={loading} />;
   if (error) return <Alert severity="error">Không tìm thấy giao dịch</Alert>;
 
-const formatPrice = (price) => {
-  if (typeof price !== "number") {
-    return price;
-  }
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
-};
+  const formatPrice = (price) => {
+    if (typeof price !== "number") {
+      return price;
+    }
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
 
-
-if(role==3){
+  if (role == 3) {
     var handleRowClick = (params) => {
       navigate(`/business/order-detail/${params.row.order_id}`);
     };
-}else{
-   var handleRowClick = (params) => {
-     navigate(`/information/order-detail/${params.row.order_id}`);
-   };
-}
+  } else {
+    var handleRowClick = (params) => {
+      navigate(`/information/order-detail/${params.row.order_id}`);
+    };
+  }
   const columns = [
     { field: "code_order", headerName: "Mã Booking", width: 150 },
     {

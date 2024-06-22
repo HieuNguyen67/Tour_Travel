@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Col, Container, Row, Placeholder } from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
@@ -41,7 +41,6 @@ import ratingimg from "@/assets/image/feedback.png";
 import policyimg from "@/assets/image/policy.png";
 import tourimg from "@/assets/image/tour.png";
 
-
 const TourDetail = () => {
   const { tour_id } = useParams();
   const { accountId, customerId } = useAuth();
@@ -56,7 +55,9 @@ const TourDetail = () => {
   useEffect(() => {
     const fetchTourData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/get-tour/${tour_id}`);
+        const response = await axios.get(
+          `${BASE_URL_USER}/get-tour/${tour_id}`
+        );
         setTour(response.data);
         setDestination(response.data.destination_location_name.join(", "));
         setLoading(false);
@@ -73,7 +74,7 @@ const TourDetail = () => {
     const fetchTourImages = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/get-all-tour-images/${tour_id}`
+          `${BASE_URL_USER}/get-all-tour-images/${tour_id}`
         );
         setImage(response.data);
         setLoading1(false);
@@ -90,7 +91,7 @@ const TourDetail = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/get-ratings-tour/${tour_id}`
+          `${BASE_URL_USER}/get-ratings-tour/${tour_id}`
         );
         setAverageRating(response.data.averageRating);
         setTotalRatings(response.data.totalRatings);
@@ -104,14 +105,11 @@ const TourDetail = () => {
     fetchReviews();
   }, [tour_id]);
 
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return date.toLocaleDateString("vi-VN", options);
-};
-
-
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("vi-VN", options);
+  };
 
   const formatPrice = (price) => {
     if (typeof price !== "number") {
@@ -122,10 +120,10 @@ const formatDate = (dateString) => {
       currency: "VND",
     }).format(price);
   };
-  const navigate= useNavigate();
-  const handleClick=()=>{
-    navigate(`/booking-tour/${tour_id}`)
-  }
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/booking-tour/${tour_id}`);
+  };
 
   return (
     <>

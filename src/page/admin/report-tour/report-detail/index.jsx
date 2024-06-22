@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Box, Typography } from "@mui/material";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import reportimg from "@/assets/image/report.png";
 import { format } from "date-fns";
@@ -26,7 +26,7 @@ const ReportDetails = () => {
     const fetchReportDetails = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/report-details/${report_id}`
+          `${BASE_URL_ADMIN}/report-details/${report_id}`
         );
         setReport(response.data);
         setStatus(response.data.status);
@@ -44,7 +44,7 @@ const ReportDetails = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `${BASE_URL}/update-status-report/${report_id}/${adminId}`,
+        `${BASE_URL_ADMIN}/update-status-report/${report_id}/${adminId}`,
         {
           status,
         },

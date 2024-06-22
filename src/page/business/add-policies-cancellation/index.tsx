@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Form, Button, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BASE_URL, RED1_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_BUSINESS, RED1_COLOR } from "@/constants";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
@@ -26,16 +26,17 @@ const AddPolicyCancellation: React.FC = () => {
   });
   const [message, setMessage] = useState<string>("");
   const location = useLocation();
-  const { businessId }=useAuth();
-    const [loading, setLoading] = useState<boolean>(false);
-  const isHomePage = location.pathname === "/business/add-policies-cancellation";
+  const { businessId } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
+  const isHomePage =
+    location.pathname === "/business/add-policies-cancellation";
 
   useEffect(() => {
     const fetchPolicy = async () => {
       if (!isHomePage) {
         try {
           const response = await axios.get(
-            `${BASE_URL}/policies/${policy_id}`,
+            `${BASE_URL_BUSINESS}/policies/${policy_id}`,
             { params: { role: 2 } }
           );
           setPolicy(response.data);
@@ -62,7 +63,7 @@ const AddPolicyCancellation: React.FC = () => {
     if (isHomePage) {
       try {
         const response = await axios.post(
-          `${BASE_URL}/add-policy-cancellation/${businessId}`,
+          `${BASE_URL_BUSINESS}/add-policy-cancellation/${businessId}`,
           {
             days_before_departure: policy.days_before_departure,
             refund_percentage: policy.refund_percentage,
@@ -82,7 +83,7 @@ const AddPolicyCancellation: React.FC = () => {
     } else {
       try {
         const response = await axios.put<PolicyCancellation>(
-          `${BASE_URL}/policies/${policy_id}`,
+          `${BASE_URL_BUSINESS}/policies/${policy_id}`,
           {
             days_before_departure: policy.days_before_departure,
             refund_percentage: policy.refund_percentage,
@@ -96,8 +97,7 @@ const AddPolicyCancellation: React.FC = () => {
         console.error("Error updating policy cancellation:", error);
       }
     }
-        setLoading(false);
-
+    setLoading(false);
   };
 
   return (

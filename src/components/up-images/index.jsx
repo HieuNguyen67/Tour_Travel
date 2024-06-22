@@ -3,10 +3,10 @@ import axios from "axios";
 import { useAuth } from "@/context";
 import DisplayImage from "./load-image";
 import { Button } from "react-bootstrap";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { BsImageFill } from "react-icons/bs";
 import { FaSave } from "react-icons/fa";
-import "./"
+import "./";
 const UpdateImage = () => {
   const { accountId, isLoggedIn, token } = useAuth();
 
@@ -32,7 +32,7 @@ const UpdateImage = () => {
       formData.append("image", image);
 
       await axios.put(
-        `${BASE_URL}/account/update-image/${accountId}`,
+        `${BASE_URL_USER}/account/update-image/${accountId}`,
         formData,
         {
           headers: {

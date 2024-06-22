@@ -9,7 +9,7 @@ import Header from "@/components/layout/header";
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER } from "@/constants";
 import infoimg from "@/assets/image/info.png";
 import contactimg from "@/assets/image/contact.png";
 
@@ -32,7 +32,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      await axios.post(`${BASE_URL}/send-contact`, formData);
+      await axios.post(`${BASE_URL_CUSTOMER}/send-contact`, formData);
       setSuccessMessage("Contact sent successfully");
       setFormData({
         fullname: "",

@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, Container, Spinner, Alert, Row, Col } from "react-bootstrap";
-import { BASE_URL, CHECKINDAILY, RED1_COLOR, YELLOW_COLOR } from "@/constants";
+import {
+  BASE_URL_ADMIN,
+  BASE_URL_CUSTOMER,
+  CHECKINDAILY,
+  RED1_COLOR,
+  YELLOW_COLOR,
+} from "@/constants";
 import { useAuth } from "@/context";
 import { toast } from "react-toastify";
 import coin from "@/assets/image/coin.png";
 
-
 const CheckIn: React.FC = () => {
-    const{customerId}=useAuth();
+  const { customerId } = useAuth();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -19,11 +24,11 @@ const CheckIn: React.FC = () => {
     setError(null);
     try {
       const response = await axios.post(
-        `${BASE_URL}/daily-checkin/${customerId}`
+        `${BASE_URL_CUSTOMER}/daily-checkin/${customerId}`
       );
       setMessage(response.data.message);
       toast.success(response.data.message);
-    } catch (error:any) {
+    } catch (error: any) {
       setError(error.response.data.message);
       toast.error(error.response.data.message);
     } finally {

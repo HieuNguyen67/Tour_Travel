@@ -10,7 +10,7 @@ import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 
 const UpdateNews = () => {
   const [title, setTitle] = useState("");
@@ -24,7 +24,7 @@ const UpdateNews = () => {
     const fetchNewsDetails = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/select-status-note/${news_id}`,
+          `${BASE_URL_ADMIN}/select-status-note/${news_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ const UpdateNews = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `${BASE_URL}/update-news/${news_id}`,
+        `${BASE_URL_ADMIN}/update-news/${news_id}`,
         {
           title,
           content,
@@ -62,7 +62,9 @@ const UpdateNews = () => {
       );
       console.log("News updated successfully");
       toast.success("Cập nhật thành công!");
-      (role == 2 || role==5) ? navigate("/admin/news") : navigate("/business/list-news");
+      role == 2 || role == 5
+        ? navigate("/admin/news")
+        : navigate("/business/list-news");
     } catch (error) {
       console.error("Failed to update news:", error);
       setError("Failed to update news");
@@ -75,7 +77,7 @@ const UpdateNews = () => {
       <LoadingBackdrop open={loading} />
       <div className="mt-2">
         <Link
-          to={(role == 2 || role == 5) ? "/admin/news" : "/business/list-news"}
+          to={role == 2 || role == 5 ? "/admin/news" : "/business/list-news"}
         >
           <IoArrowBackOutline className="fs-3 mb-3" />
         </Link>

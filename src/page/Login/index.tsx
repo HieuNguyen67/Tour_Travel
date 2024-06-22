@@ -13,7 +13,7 @@ import {
 } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import Header from "@/components/layout/header";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { useAuth } from "@/context";
 import {
   FormControl,
@@ -44,13 +44,28 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL}/login`, {
+      const response = await axios.post(`${BASE_URL_USER}/login`, {
         usernameOrEmail,
         password,
       });
-      const { token, role, account_id, username, business_id, customer_id ,admin_id} =
-        response.data;
-      login(token, role, username, account_id, business_id, customer_id, admin_id);
+      const {
+        token,
+        role,
+        account_id,
+        username,
+        business_id,
+        customer_id,
+        admin_id,
+      } = response.data;
+      login(
+        token,
+        role,
+        username,
+        account_id,
+        business_id,
+        customer_id,
+        admin_id
+      );
       toast.success("Đăng nhập thành công !");
       if (role === 1) navigate("/");
       else if (role === 2) navigate("/admin/list-customer");

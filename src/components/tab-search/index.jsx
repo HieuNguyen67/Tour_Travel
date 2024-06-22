@@ -12,7 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
-import { BASE_URL, BORDER, RED_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER, BORDER, RED_COLOR } from "@/constants";
 import axios from "axios";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import searchimg from "@/assets/image/search.png";
@@ -31,7 +31,7 @@ const TabSearch = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/locations?location_type=nội địa`
+          `${BASE_URL_USER}/locations?location_type=nội địa`
         );
         setProvinces(response.data);
         setLoading(false);
@@ -48,7 +48,7 @@ const TabSearch = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/locations?location_type=nước ngoài`
+          `${BASE_URL_USER}/locations?location_type=nước ngoài`
         );
         setRegions(response.data);
         setLoading(false);

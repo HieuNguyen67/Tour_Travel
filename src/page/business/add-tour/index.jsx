@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_BUSINESS, BASE_URL_USER } from "@/constants";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -34,7 +34,7 @@ const AddTourForm = () => {
   const [error, setError] = useState(null);
   const [tourCategories, setTourCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-   const [loading1, setLoading1] = useState(false);
+  const [loading1, setLoading1] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -60,7 +60,7 @@ const AddTourForm = () => {
   useEffect(() => {
     const fetchTourCategories = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/tourcategories`);
+        const response = await axios.get(`${BASE_URL_BUSINESS}/tourcategories`);
         setTourCategories(response.data);
       } catch (error) {
         console.error("Error fetching tour categories:", error);
@@ -74,7 +74,7 @@ const AddTourForm = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/locations?location_type=nội địa`
+          `${BASE_URL_USER}/locations?location_type=nội địa`
         );
         setProvinces(response.data);
         setLoading(false);
@@ -90,7 +90,7 @@ const AddTourForm = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/locations?location_type=nước ngoài`
+          `${BASE_URL_USER}/locations?location_type=nước ngoài`
         );
         setRegions(response.data);
         setLoading(false);
@@ -107,7 +107,9 @@ const AddTourForm = () => {
     const fetchTourData = async () => {
       try {
         if (!isHomePage) {
-          const response = await axios.get(`${BASE_URL}/get-tour/${tour_id}`);
+          const response = await axios.get(
+            `${BASE_URL_USER}/get-tour/${tour_id}`
+          );
           const tour = response.data;
           setFormData({
             ...tour,
@@ -123,7 +125,7 @@ const AddTourForm = () => {
     };
 
     fetchTourData();
-  }, [isHomePage,tour_id]);
+  }, [isHomePage, tour_id]);
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -165,95 +167,93 @@ const AddTourForm = () => {
   };
   const navigate = useNavigate();
 
-    const handleSubmitAdd = async (e) => {
-      e.preventDefault();
-       setLoading1(true);
-      if (images.length < 4) {
-        alert("Vui lòng chọn từ 4 hình ảnh trở lên");
-        return;
-      }
+  const handleSubmitAdd = async (e) => {
+    e.preventDefault();
+    setLoading1(true);
+    if (images.length < 4) {
+      alert("Vui lòng chọn từ 4 hình ảnh trở lên");
+      return;
+    }
 
-      const formData1 = new FormData();
-      for (const key in formData) {
-        if (Array.isArray(formData[key])) {
-          formData[key].forEach((item, index) => {
-            formData1.append(`${key}[${index}]`, item);
-          });
-        } else {
-          formData1.append(key, formData[key]);
+    const formData1 = new FormData();
+    for (const key in formData) {
+      if (Array.isArray(formData[key])) {
+        formData[key].forEach((item, index) => {
+          formData1.append(`${key}[${index}]`, item);
+        });
+      } else {
+        formData1.append(key, formData[key]);
+      }
+    }
+    for (let i = 0; i < images.length; i++) {
+      formData1.append("images", images[i]);
+    }
+
+    try {
+      await axios.post(`${BASE_URL_BUSINESS}/add-tours/${businessId}`, formData1, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      toast.success("Thêm Tour thành công!");
+      navigate("/business/list-tour");
+      setLoading(false);
+    } catch (error) {
+      console.error("Error adding tour: ", error.response.data.error);
+      toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
+    }
+    setLoading1(false);
+  };
+
+  const handleSubmitUpdate = async (e) => {
+    e.preventDefault();
+    setLoading1(true);
+
+    try {
+      const response = await axios.put(
+        `${BASE_URL_BUSINESS}/update-tour/${formData.tour_id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }
-      for (let i = 0; i < images.length; i++) {
-        formData1.append("images", images[i]);
-      }
+      );
+      toast.success("Chỉnh sửa Tour thành công!");
+      navigate("/business/list-tour");
+      setLoading(false);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating tour:", error);
+      toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
+    }
 
-      try {
-        await axios.post(`${BASE_URL}/add-tours/${businessId}`, formData1, {
+    const data = new FormData();
+    for (let i = 0; i < images.length; i++) {
+      data.append("images", images[i]);
+    }
+
+    try {
+      const response = await axios.put(
+        `${BASE_URL_BUSINESS}/update-tour-images/${tour_id}`,
+        data,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
-        });
-        toast.success("Thêm Tour thành công!");
-        navigate("/business/list-tour");
-        setLoading(false);
-      } catch (error) {
-        console.error("Error adding tour: ", error.response.data.error);
-        toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
-      }
-                 setLoading1(false);
+        }
+      );
 
-    };
- 
-    const handleSubmitUpdate = async (e) => {
-      e.preventDefault();
-       setLoading1(true);
+      console.log("Tour images updated successfully:", response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error updating tour images:", error);
+    }
+    setLoading1(false);
+  };
 
-      try {
-        const response = await axios.put(
-          `${BASE_URL}/update-tour/${formData.tour_id}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        toast.success("Chỉnh sửa Tour thành công!");
-        navigate("/business/list-tour");
-        setLoading(false);
-        window.location.reload();
-      } catch (error) {
-        console.error("Error updating tour:", error);
-        toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
-      }
-
-      const data = new FormData();
-      for (let i = 0; i < images.length; i++) {
-        data.append("images", images[i]);
-      }
-
-      try {
-        const response = await axios.put(
-          `${BASE_URL}/update-tour-images/${tour_id}`,
-          data,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        console.log("Tour images updated successfully:", response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error updating tour images:", error);
-      }
-           setLoading1(false);
-
-    };
-  
   const formatDate = (dateString) => {
     return format(new Date(dateString), "yyyy-MM-dd");
   };
@@ -264,7 +264,7 @@ const AddTourForm = () => {
       try {
         if (!isHomePage) {
           const response = await axios.get(
-            `${BASE_URL}/get-all-tour-images/${tour_id}`
+            `${BASE_URL_USER}/get-all-tour-images/${tour_id}`
           );
           setImage(response.data);
           setLoading(false);
@@ -306,7 +306,10 @@ const AddTourForm = () => {
           </Row>
         </div>
 
-        <form onSubmit={isHomePage?handleSubmitAdd:handleSubmitUpdate} className="">
+        <form
+          onSubmit={isHomePage ? handleSubmitAdd : handleSubmitUpdate}
+          className=""
+        >
           <Row>
             <Col className="col-lg-6 col-12">
               {" "}

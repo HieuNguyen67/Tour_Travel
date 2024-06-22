@@ -9,7 +9,7 @@ import Logo from "@/assets/image/tải_xuống-removebg-preview.png";
 import defaultImage from "@/assets/image/6945124.png";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { BASE_URL, HEADER } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER, HEADER } from "@/constants";
 import { useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/context";
@@ -41,7 +41,7 @@ const Header = (props) => {
       try {
         if (isLoggedIn) {
           const response = await axios.get(
-            `${BASE_URL}/account/image/${accountId}`,
+            `${BASE_URL_USER}/account/image/${accountId}`,
             {
               responseType: "blob",
             }

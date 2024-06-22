@@ -1,13 +1,13 @@
 import { Container, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { BLUE_COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
+import { BASE_URL_BUSINESS, BLUE_COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
 import tourimg from "@/assets/image/tour.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
 import LoadingBackdrop from "@/components/backdrop";
@@ -32,7 +32,7 @@ const TourList = () => {
     const fetchTours = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/list-tours/${businessId}`
+          `${BASE_URL_BUSINESS}/list-tours/${businessId}`
         );
         const formattedTours = response.data.map((tour) => ({
           ...tour,

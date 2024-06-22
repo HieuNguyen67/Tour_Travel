@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BASE_URL, RED1_COLOR, GREY_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, RED1_COLOR, GREY_COLOR, BASE_URL_CUSTOMER } from "@/constants";
 
 const ContactModal = ({ accountId, tourId }) => {
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [contactData, setContactData] = useState({
     fullname: "",
     email: "",
@@ -25,10 +25,12 @@ const ContactModal = ({ accountId, tourId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${BASE_URL}/send-contact-business/${accountId}/${tourId}`, contactData);
+      await axios.post(
+        `${BASE_URL_CUSTOMER}/send-contact-business/${accountId}/${tourId}`,
+        contactData
+      );
       handleClose();
-              toast.success("Gửi tư vấn thành công !");
-
+      toast.success("Gửi tư vấn thành công !");
     } catch (error) {
       console.error("Error sending contact:", error);
       toast.error("Gửi tư vấn thất bại !");

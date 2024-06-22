@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import "@/page/customer/tour-detail/tour-detail.scss"
-import { BASE_URL } from "@/constants";
+import "@/page/customer/tour-detail/tour-detail.scss";
+import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 const TourImagesCarousel = ({ tourId }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const TourImagesCarousel = ({ tourId }) => {
       try {
         if (tourId) {
           const response = await axios.get(
-            `${BASE_URL}/get-all-tour-images/${tourId}`
+            `${BASE_URL_USER}/get-all-tour-images/${tourId}`
           );
           setImages(response.data);
         }

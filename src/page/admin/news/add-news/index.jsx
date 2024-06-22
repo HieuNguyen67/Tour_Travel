@@ -8,7 +8,7 @@ import { motion, useAnimation } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { ImNewspaper } from "react-icons/im";
 import { GiConfirmed } from "react-icons/gi";
 import { BLUE_COLOR } from "@/constants";
@@ -18,7 +18,7 @@ import { MdOutlineTitle } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 
 const AddNews = () => {
-  const { businessId,adminId, token, role } = useAuth();
+  const { businessId, adminId, token, role } = useAuth();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -30,7 +30,7 @@ const AddNews = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/news-categories`, {
+        const response = await axios.get(`${BASE_URL_USER}/news-categories`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,8 +68,8 @@ const AddNews = () => {
 
     try {
       if (role == 2 || role == 5) {
-       await axios.post(
-          `${BASE_URL}/add-news/${adminId}/${adminId}`,
+        await axios.post(
+          `${BASE_URL_ADMIN}/add-news/${adminId}/${adminId}`,
           formDataToSend,
           {
             headers: {
@@ -81,7 +81,7 @@ const AddNews = () => {
         );
       } else {
         await axios.post(
-          `${BASE_URL}/add-news/${businessId}`,
+          `${BASE_URL_ADMIN}/add-news/${businessId}`,
           formDataToSend,
           {
             headers: {
@@ -92,9 +92,9 @@ const AddNews = () => {
           }
         );
       }
-      
+
       toast.success("Thêm tin tức thành công!");
-      (role == 2 || role == 5)
+      role == 2 || role == 5
         ? navigate("/admin/news")
         : navigate("/business/list-news");
     } catch (error) {
@@ -114,7 +114,7 @@ const AddNews = () => {
           <div className="mt-2">
             <Link
               to={
-                (role == 2 || role == 5) ? "/admin/news" : "/business/list-news"
+                role == 2 || role == 5 ? "/admin/news" : "/business/list-news"
               }
             >
               <IoArrowBackOutline className="fs-3" />

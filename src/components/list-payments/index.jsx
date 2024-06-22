@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import { Container, CircularProgress, Alert } from "@mui/material";
-import { BASE_URL, BLUE_COLOR, GREEN_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, BLUE_COLOR, GREEN_COLOR } from "@/constants";
 import { Button } from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context";
 
-const PaymentsList = ({status}) => {
+const PaymentsList = ({ status }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,11 +20,14 @@ const PaymentsList = ({status}) => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/list-orders/${status}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${BASE_URL_ADMIN}/list-orders/${status}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setOrders(response.data);
       } catch (err) {
         setError(err.message);
@@ -117,7 +120,6 @@ const PaymentsList = ({status}) => {
   }
   return (
     <>
-    
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid
           rows={orders}

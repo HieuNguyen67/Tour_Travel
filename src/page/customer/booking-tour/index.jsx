@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {  Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context";
-import { BASE_URL, RED1_COLOR, TEXT_RED_COLOR } from "@/constants";
-import { Col, Container, Placeholder, Form, Button, Row, Table } from "react-bootstrap";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, BASE_URL_USER, RED1_COLOR, TEXT_RED_COLOR } from "@/constants";
+import {
+  Col,
+  Container,
+  Placeholder,
+  Form,
+  Button,
+  Row,
+  Table,
+} from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
 import { LuCalendarDays } from "react-icons/lu";
 import { MdLocationOn, MdOutlineBusinessCenter } from "react-icons/md";
@@ -22,19 +30,19 @@ import { IoMdAdd } from "react-icons/io";
 import { IoMdRemove } from "react-icons/io";
 
 const BookTour = () => {
-    const {tour_id}=useParams();
-    const { customerId, isLoggedIn , accountId, token} = useAuth();
+  const { tour_id } = useParams();
+  const { customerId, isLoggedIn, accountId, token } = useAuth();
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(0);
   const [infantQuantity, setInfantQuantity] = useState(0);
   const [note, setNote] = useState("");
   const [message, setMessage] = useState("");
- const [tour, setTour] = useState([]);
- const [totalPrice, setTotalPrice] = useState(0);
+  const [tour, setTour] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [image, setImage] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loading1, setLoading1] = useState(true);
-     const [loading2, setLoading2] = useState(false);
+  const [loading2, setLoading2] = useState(false);
 
   const [formData, setFormData] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("bank");
@@ -47,87 +55,91 @@ const BookTour = () => {
     }
   }, [isLoggedIn, navigate]);
 
-   useEffect(() => {
-     const fetchTourDetails = async () => {
-       try {
-         const response = await axios.get(`${BASE_URL}/get-tour/${tour_id}`);
-         setTour(response.data);
-         setLoading(false);
-       } catch (error) {
-         console.error("Failed to fetch tour details:", error);
-         setLoading(false);
-       }
-     };
+  useEffect(() => {
+    const fetchTourDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL_USER}/get-tour/${tour_id}`
+        );
+        setTour(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch tour details:", error);
+        setLoading(false);
+      }
+    };
 
-     fetchTourDetails();
-   }, [tour_id]);
+    fetchTourDetails();
+  }, [tour_id]);
 
-   useEffect(() => {
-     if (tour) {
-       const total =
-         tour.adult_price * adultQuantity +
-         tour.child_price * childQuantity +
-         tour.infant_price * infantQuantity;
-       setTotalPrice(total);
-     }
-   }, [tour, adultQuantity, childQuantity, infantQuantity]);
-
-   useEffect(() => {
-     const fetchTourImages = async () => {
-       try {
-         const response = await axios.get(
-           `${BASE_URL}/get-all-tour-images/${tour_id}`
-         );
-         setImage(response.data);
-         setLoading1(false);
-       } catch (error) {
-         console.error("Error fetching tour images:", error);
-         setLoading1(false);
-       }
-     };
-
-     fetchTourImages();
-   }, [tour_id]);
-
- useEffect(() => {
-   const fetchAccountData = async () => {
-     try {
-       var response = await axios.get(`${BASE_URL}/account/${accountId}`, {
-         params: { role: 1 },
-         headers: {
-           Authorization: `Bearer ${token}`,
-         },
-       });
-
-       
-       setFormData(response.data);
-       setLoading(false);
-     } catch (error) {
-       console.error("Failed to fetch account data:", error);
-     }
-   };
-
-   fetchAccountData();
- }, [accountId]);
-
-const handleQuantityChange = (type, value) => {
-  const totalQuantity =
-    (type === "adult" ? value : adultQuantity) +
-    (type === "child" ? value : childQuantity) +
-    (type === "infant" ? value : infantQuantity);
-
-  if (tour && totalQuantity > tour.quantity) {
-    alert(`Tổng số lượng không được vượt quá ${tour.quantity}`);
-  } else {
-    if (type === "adult") {
-      setAdultQuantity(value);
-    } else if (type === "child") {
-      setChildQuantity(value);
-    } else if (type === "infant") {
-      setInfantQuantity(value);
+  useEffect(() => {
+    if (tour) {
+      const total =
+        tour.adult_price * adultQuantity +
+        tour.child_price * childQuantity +
+        tour.infant_price * infantQuantity;
+      setTotalPrice(total);
     }
-  }
-};
+  }, [tour, adultQuantity, childQuantity, infantQuantity]);
+
+  useEffect(() => {
+    const fetchTourImages = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL_USER}/get-all-tour-images/${tour_id}`
+        );
+        setImage(response.data);
+        setLoading1(false);
+      } catch (error) {
+        console.error("Error fetching tour images:", error);
+        setLoading1(false);
+      }
+    };
+
+    fetchTourImages();
+  }, [tour_id]);
+
+  useEffect(() => {
+    const fetchAccountData = async () => {
+      try {
+        var response = await axios.get(
+          `${BASE_URL_USER}/account/${accountId}`,
+          {
+            params: { role: 1 },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setFormData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch account data:", error);
+      }
+    };
+
+    fetchAccountData();
+  }, [accountId]);
+
+  const handleQuantityChange = (type, value) => {
+    const totalQuantity =
+      (type === "adult" ? value : adultQuantity) +
+      (type === "child" ? value : childQuantity) +
+      (type === "infant" ? value : infantQuantity);
+
+    if (tour && totalQuantity > tour.quantity) {
+      alert(`Tổng số lượng không được vượt quá ${tour.quantity}`);
+    } else {
+      if (type === "adult") {
+        setAdultQuantity(value);
+      } else if (type === "child") {
+        setChildQuantity(value);
+      } else if (type === "infant") {
+        setInfantQuantity(value);
+      }
+    }
+  };
   const handleIncrement = (type) => {
     handleQuantityChange(
       type,
@@ -139,102 +151,98 @@ const handleQuantityChange = (type, value) => {
     );
   };
 
-   const handleDecrement = (type) => {
-     const currentQuantity =
-       type === "adult"
-         ? adultQuantity
-         : type === "child"
-         ? childQuantity
-         : infantQuantity;
-     if (currentQuantity > 0) {
-       handleQuantityChange(type, currentQuantity - 1);
-     }
-   };
-   const handleDecrement1 = (type) => {
-     const currentQuantity =
-       type === "adult"
-         ? adultQuantity
-         : type === "child"
-         ? childQuantity
-         : infantQuantity;
-     if (currentQuantity > 1) {
-       handleQuantityChange(type, currentQuantity - 1);
-     }
-   };
+  const handleDecrement = (type) => {
+    const currentQuantity =
+      type === "adult"
+        ? adultQuantity
+        : type === "child"
+        ? childQuantity
+        : infantQuantity;
+    if (currentQuantity > 0) {
+      handleQuantityChange(type, currentQuantity - 1);
+    }
+  };
+  const handleDecrement1 = (type) => {
+    const currentQuantity =
+      type === "adult"
+        ? adultQuantity
+        : type === "child"
+        ? childQuantity
+        : infantQuantity;
+    if (currentQuantity > 1) {
+      handleQuantityChange(type, currentQuantity - 1);
+    }
+  };
   const handleBookTour = async () => {
     setLoading2(true);
     try {
-         if (paymentMethod === "bank") {
-           const response = await axios.post(
-             `${BASE_URL}/book-tour/${tour_id}/${customerId}`,
-             {
-               adult_quantity: adultQuantity,
-               child_quantity: childQuantity,
-               infant_quantity: infantQuantity,
-               note,
-             },
-             {
-               headers: {
-                 Authorization: `Bearer ${token}`,
-               },
-             }
-           );
-
-           setMessage(response.data.message);
-            toast.success(response.data.message);
-            navigate(`/checkout/1/${response.data.order.code_order}`);
-         } else if(paymentMethod === "zalopay"){
-           const response = await axios.post(
-             `${BASE_URL}/book-tour-zalopay/${tour_id}/${customerId}`,
-             {
-               adult_quantity: adultQuantity,
-               child_quantity: childQuantity,
-               infant_quantity: infantQuantity,
-               note: note,
-             },
-             {
-               headers: {
-                 Authorization: `Bearer ${token}`,
-               },
-             }
-           );
-
-           if (response.data.payment_url) {
-             setPaymentUrl(response.data.payment_url);
-           }
-           setMessage(response.data.message);
-          
-         }else{
-          const response = await axios.post(
-            `${BASE_URL}/book-tour-momopay/${tour_id}/${customerId}`,
-            {
-              adult_quantity: adultQuantity,
-              child_quantity: childQuantity,
-              infant_quantity: infantQuantity,
-              note: note,
+      if (paymentMethod === "bank") {
+        const response = await axios.post(
+          `${BASE_URL_CUSTOMER}/book-tour/${tour_id}/${customerId}`,
+          {
+            adult_quantity: adultQuantity,
+            child_quantity: childQuantity,
+            infant_quantity: infantQuantity,
+            note,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-         
-
-          if (response.data.payment_url) {
-             window.location.href= response.data.payment_url;
-            setPaymentUrl(response.data.payment_url);
           }
-          setMessage(response.data.message);
-         }
+        );
+
+        setMessage(response.data.message);
+        toast.success(response.data.message);
+        navigate(`/checkout/1/${response.data.order.code_order}`);
+      } else if (paymentMethod === "zalopay") {
+        const response = await axios.post(
+          `${BASE_URL_CUSTOMER}/book-tour-zalopay/${tour_id}/${customerId}`,
+          {
+            adult_quantity: adultQuantity,
+            child_quantity: childQuantity,
+            infant_quantity: infantQuantity,
+            note: note,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.payment_url) {
+          setPaymentUrl(response.data.payment_url);
+        }
+        setMessage(response.data.message);
+      } else {
+        const response = await axios.post(
+          `${BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}`,
+          {
+            adult_quantity: adultQuantity,
+            child_quantity: childQuantity,
+            infant_quantity: infantQuantity,
+            note: note,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.payment_url) {
+          window.location.href = response.data.payment_url;
+          setPaymentUrl(response.data.payment_url);
+        }
+        setMessage(response.data.message);
+      }
     } catch (error) {
       console.error("Failed to book tour:", error);
       setMessage("Đặt tour không thành công. Vui lòng thử lại sau.");
-                  toast.error(error.response.data.message);
-
+      toast.error(error.response.data.message);
     }
-        setLoading2(false);
-
+    setLoading2(false);
   };
   const formatPrice = (price) => {
     if (typeof price !== "number") {
@@ -245,11 +253,11 @@ const handleQuantityChange = (type, value) => {
       currency: "VND",
     }).format(price);
   };
-   const formatDate = (dateString) => {
-     const date = new Date(dateString);
-     const options = { year: "numeric", month: "long", day: "numeric" };
-     return date.toLocaleDateString("vi-VN", options);
-   };
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("vi-VN", options);
+  };
 
   return (
     <>

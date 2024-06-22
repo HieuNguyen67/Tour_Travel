@@ -3,23 +3,26 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { format } from "date-fns";
 import { useAuth } from "@/context";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import logfileimg from "@/assets/image/logfile.png";
 
 const AdminActionsList = () => {
   const [actions, setActions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const {token}=useAuth();
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchAdminActions = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/list-admin-actions`, {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-          },
-        });
+        const response = await axios.get(
+          `${BASE_URL_ADMIN}/list-admin-actions`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setActions(response.data);
       } catch (error) {
         console.error("Failed to fetch admin actions:", error);
@@ -68,7 +71,7 @@ const AdminActionsList = () => {
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10]}
-          getRowId={(row) => row.admin_action_id} 
+          getRowId={(row) => row.admin_action_id}
         />
       </div>
     </>

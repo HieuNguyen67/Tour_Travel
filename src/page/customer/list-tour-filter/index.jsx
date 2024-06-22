@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { BASE_URL } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, BASE_URL_USER } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
@@ -55,11 +55,11 @@ const TourSearch = () => {
       try {
         if (location == 1) {
           var response = await axios.get(
-            `${BASE_URL}/list-tours-filter?tourcategory_name=Du lịch trong nước`
+            `${BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=Du lịch trong nước`
           );
         } else {
           var response = await axios.get(
-            `${BASE_URL}/list-tours-filter?tourcategory_name=Du lịch nước ngoài`
+            `${BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=Du lịch nước ngoài`
           );
         }
         setLoading1(false);
@@ -83,7 +83,7 @@ const TourSearch = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/locations?location_type=nội địa`
+          `${BASE_URL_USER}/locations?location_type=nội địa`
         );
         setProvinces(response.data);
         setLoading(false);
@@ -100,7 +100,7 @@ const TourSearch = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/locations?location_type=nước ngoài`
+          `${BASE_URL_USER}/locations?location_type=nước ngoài`
         );
         setRegions(response.data);
         setLoading(false);
@@ -157,10 +157,10 @@ const TourSearch = () => {
     });
     setFilteredTours(filtered);
     setCurrentPage(1);
-     window.scrollTo({
-       top: 0,
-       behavior: "smooth",
-     });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const handlePageClick = (event, value) => {
@@ -192,18 +192,18 @@ const TourSearch = () => {
   const offset = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredTours.slice(offset, offset + itemsPerPage);
   const today = new Date().toISOString().split("T")[0];
-    const getLocationNameById = (id, locations) => {
-      const location = locations.find(
-        (location) => location.location_id === parseInt(id)
-      );
-      return location ? location.location_name : "";
-    };
+  const getLocationNameById = (id, locations) => {
+    const location = locations.find(
+      (location) => location.location_id === parseInt(id)
+    );
+    return location ? location.location_name : "";
+  };
 
-    const destinationLocationName =
-      location == 1
-        ? getLocationNameById(destinationLocation, provinces)
-        : getLocationNameById(destinationLocation, regions);
-        
+  const destinationLocationName =
+    location == 1
+      ? getLocationNameById(destinationLocation, provinces)
+      : getLocationNameById(destinationLocation, regions);
+
   if (loading1) {
     return <LoadingBackdrop open={loading1} />;
   }
