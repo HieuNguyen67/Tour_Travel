@@ -1,6 +1,7 @@
 import { Button, Col, Container } from "react-bootstrap";
 import verifiedimg from "@/assets/image/verified.png";
 import { Link, useLocation, useParams } from "react-router-dom";
+import head from "@/assets/image/heading-border.png";
 
 const Checkout =()=>{
     const{code_order, page }=useParams();
@@ -24,28 +25,32 @@ const Checkout =()=>{
               }}
             />{" "}
             <h3 className="fw-bold mt-4">
-              {page == 1 ? <>ĐẶT TOUR THÀNH CÔNG</> : <>THANH TOÁN THÀNH CÔNG</>}
+              {page == 1 ? (
+                <>ĐẶT TOUR THÀNH CÔNG</>
+              ) : (
+                <>THANH TOÁN THÀNH CÔNG</>
+              )}
             </h3>
             <p>
               Mã Booking: <span className="fw-bold">{code_order}</span>
             </p>
-            <hr style={{ width: "40rem" }} />
+            <img src={head} className="col-lg-1 col-3 my-3" />
             <p className="fw-bold">Cảm ơn bạn đã đặt tour tại Tour Travel</p>
-            <Col className="col-6">
+            <Col className="col-lg-6 col-12">
               <p className="text-center">
                 Bạn đã đặt tour thành công. Để kiểm tra chi tiết về đơn đặt
                 tour. Vui lòng chọn "Theo dõi đơn đặt tour của bạn" hoặc Quay
                 lại trang chủ.
               </p>
             </Col>
-            <Col className="col-4 mt-4">
+            <Col className="col-lg-4 col-12 mt-4">
               <Link to="/information/list-order">
                 <Button variant="outline-dark" className="col-12 ">
                   THEO DÕI ĐƠN HÀNG
                 </Button>
               </Link>
             </Col>
-            <Col className="col-4 mt-3 mb-5 pb-5">
+            <Col className="col-lg-4 col-12 mt-3 mb-5 pb-5">
               <Link to="/">
                 <Button variant="dark" className="col-12 ">
                   TRANG CHỦ
