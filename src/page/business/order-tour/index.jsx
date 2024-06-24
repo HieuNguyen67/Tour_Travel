@@ -47,25 +47,22 @@ const OrderTour = () => {
               aria-label="full width tabs example"
             >
               <Tab label="TẤT CẢ" value="1" />
-              <Tab label="CHỜ XÁC NHẬN" value="2" />
-              <Tab label="ĐÃ XÁC NHẬN" value="3" />
-              <Tab label="ĐÃ HOÀN THÀNH" value="4" />
-              <Tab label="ĐÃ HUỶ" value="5" />
+         
+              <Tab label="ĐÃ XÁC NHẬN" value="2" />
+              <Tab label="ĐÃ HOÀN THÀNH" value="3" />
+              <Tab label="ĐÃ HUỶ" value="4" />
             </Tabs>
           </Box>
           <TabPanel value="1" sx={{ padding: "0px" }} className="mt-3">
             <OrdersList customerId={businessId} />
           </TabPanel>
           <TabPanel value="2" sx={{ padding: "0px" }} className="mt-3">
-            <OrdersList customerId={businessId} status={"Pending"} />
-          </TabPanel>
-          <TabPanel value="3" sx={{ padding: "0px" }} className="mt-3">
             <OrdersList customerId={businessId} status={"Confirm"} />
           </TabPanel>
-          <TabPanel value="4" sx={{ padding: "0px" }} className="mt-3">
+          <TabPanel value="3" sx={{ padding: "0px" }} className="mt-3">
             <OrdersList customerId={businessId} status={"Complete"} />
           </TabPanel>
-          <TabPanel value="5" sx={{ padding: "0px" }} className="mt-3">
+          <TabPanel value="4" sx={{ padding: "0px" }} className="mt-3">
             {" "}
             <OrdersList customerId={businessId} status={"Cancle"} />
           </TabPanel>

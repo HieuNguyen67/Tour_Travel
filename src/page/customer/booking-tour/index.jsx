@@ -28,10 +28,8 @@ import paymentimg from "@/assets/image/payment.png";
 import { FaChevronRight } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { IoMdRemove } from "react-icons/io";
-import momoimg from "@/assets/image/momo.png";
-import atmimg from "@/assets/image/atm.png";
-import visaimg from "@/assets/image/visa.png";
-import zalopayimg from "@/assets/image/zalopay.png";
+
+import PaymentMethod from "@/components/payment-method";
 
 const BookTour = () => {
   const { tour_id } = useParams();
@@ -49,7 +47,7 @@ const BookTour = () => {
   const [loading2, setLoading2] = useState(false);
 
   const [formData, setFormData] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState("bank");
+  const [paymentMethod, setPaymentMethod] = useState("captureWallet");
   const [paymentUrl, setPaymentUrl] = useState("");
 
   const navigate = useNavigate();
@@ -198,28 +196,10 @@ const BookTour = () => {
 
         setMessage(response.data.message);
         toast.success(response.data.message);
-        navigate(`/checkout/1/${response.data.order.code_order}`);
-      } else if (paymentMethod === "zalopay") {
-        const response = await axios.post(
-          `${BASE_URL_CUSTOMER}/book-tour-zalopay/${tour_id}/${customerId}`,
-          {
-            adult_quantity: adultQuantity,
-            child_quantity: childQuantity,
-            infant_quantity: infantQuantity,
-            note: note,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        navigate(
+          `/banking/${response.data.order.code_order}/${response.data.order.total_price}/${response.data.order.child_quantity}/${response.data.order.adult_quantity}/${response.data.order.infant_quantity}/*${response.data.order.note}`
         );
-
-        if (response.data.payment_url) {
-          setPaymentUrl(response.data.payment_url);
-        }
-        setMessage(response.data.message);
-      } else {
+      }  else {
         const response = await axios.post(
           `${BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}`,
           {
@@ -262,13 +242,7 @@ const BookTour = () => {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString("vi-VN", options);
-  };
-
-
-   const handleBoxClick = (value) => {
-     setPaymentMethod(value);
-   };
-    
+  };    
 
   return (
     <>
@@ -630,422 +604,10 @@ const BookTour = () => {
             />{" "}
             PHƯƠNG THỨC THANH TOÁN
           </h3>
-
-          <Form.Group controlId="paymentMethod">
-            <Row>
-              <Col className="col-12  mb-3">
-                <div
-                  style={{
-                    background: "rgba(247,249,250,1.00)",
-                    padding: "1rem",
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                  className="shadow-sm rounded-3"
-                  onClick={() => handleBoxClick("captureWallet")}
-                >
-                  <Row>
-                    <Col className="col-8">
-                      {" "}
-                      <Form.Check
-                        className="fs-5 fw-bold"
-                        type="radio"
-                        label="Quét mã MOMO"
-                        name="paymentMethod"
-                        id="captureWallet"
-                        value="captureWallet"
-                        checked={paymentMethod === "captureWallet"}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                      />
-                    </Col>{" "}
-                    <Col>
-                      {" "}
-                      <div style={{ display: "grid", placeItems: "end" }}>
-                        <img
-                          src={momoimg}
-                          style={{
-                            width: "3.5rem",
-                            height: "3.5rem",
-                            objectFit: "cover",
-                          }}
-                        />{" "}
-                      </div>
-                    </Col>
-                  </Row>
-                  {paymentMethod === "captureWallet" && (
-                    <>
-                      <div
-                        className="mt-3 rounded-3"
-                        style={{
-                          background: "rgb(236, 248, 255)",
-                          border: "2px solid rgb(1, 148, 243)",
-                          padding: "1rem",
-                          color: "black",
-                        }}
-                      >
-                        <p>
-                          Sau khi bấm Đặt Ngay chúng tôi sẽ chuyển bạn đến trang
-                          thanh toán của MOMO:
-                        </p>
-                        <ol>
-                          <li>
-                            <strong>Mở ứng dụng MoMo:</strong>
-                            <p>Mở ứng dụng MoMo trên điện thoại của bạn.</p>
-                          </li>
-                          <li>
-                            <strong>Chọn mục "Quét mã":</strong>
-                            <p>
-                              Trên giao diện chính của ứng dụng, chọn mục "Quét
-                              mã".
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Quét mã QR:</strong>
-                            <p>
-                              Di chuyển điện thoại của bạn sao cho mã QR nằm
-                              trong khung quét của camera. Ứng dụng sẽ tự động
-                              nhận diện và quét mã.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Kiểm tra thông tin thanh toán:</strong>
-                            <p>
-                              Sau khi quét mã, thông tin giao dịch sẽ hiển thị
-                              trên màn hình. Kiểm tra lại số tiền và thông tin
-                              người nhận.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Xác nhận thanh toán:</strong>
-                            <p>
-                              Nếu mọi thông tin đều chính xác, nhấn vào nút
-                              "Thanh toán" hoặc "Xác nhận".
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Nhập mã PIN:</strong>
-                            <p>
-                              Nhập mã PIN của bạn để xác nhận giao dịch. Sau khi
-                              nhập mã PIN, giao dịch sẽ được xử lý.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Hoàn tất:</strong>
-                            <p>
-                              Sau khi thanh toán thành công, bạn sẽ nhận được
-                              thông báo và biên nhận trên ứng dụng MoMo.
-                            </p>
-                          </li>
-                        </ol>
-                        <p>
-                          Vậy là bạn đã hoàn tất thanh toán bằng mã QR MoMo!
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </Col>
-              <Col className="col-12  mb-3">
-                <div
-                  style={{
-                    background: "rgba(247,249,250,1.00)",
-                    padding: "1rem",
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                  className="shadow-sm rounded-3"
-                  onClick={() => handleBoxClick("payWithATM")}
-                >
-                  <Row>
-                    <Col className="col-8">
-                      {" "}
-                      <Form.Check
-                        className="fs-5 fw-bold"
-                        type="radio"
-                        label="Thanh toán thẻ ATM nội địa"
-                        name="paymentMethod"
-                        id="payWithATM"
-                        value="payWithATM"
-                        checked={paymentMethod === "payWithATM"}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                      />
-                    </Col>{" "}
-                    <Col>
-                      {" "}
-                      <div style={{ display: "grid", placeItems: "end" }}>
-                        <img
-                          src={atmimg}
-                          style={{
-                            width: "3.5rem",
-                            height: "3.5rem",
-                            objectFit: "contain",
-                          }}
-                        />{" "}
-                      </div>
-                    </Col>
-                  </Row>
-                  {paymentMethod === "payWithATM" && (
-                    <>
-                      <div
-                        className="mt-3 rounded-3"
-                        style={{
-                          background: "rgb(236, 248, 255)",
-                          border: "2px solid rgb(1, 148, 243)",
-                          padding: "1rem",
-                          color: "black",
-                        }}
-                      >
-                        <p>
-                          Sau khi bấm Đặt Ngay chúng tôi sẽ chuyển bạn đến trang
-                          thanh toán:
-                        </p>
-                        <ol>
-                          <li>
-                            <strong>Nhập thông tin thẻ ATM:</strong>
-                            <p>
-                              Điền đầy đủ thông tin thẻ ATM của bạn, bao gồm số
-                              thẻ, tên chủ thẻ, ngày hết hạn .
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Xác nhận thông tin giao dịch:</strong>
-                            <p>
-                              Kiểm tra lại thông tin giao dịch, đảm bảo rằng tất
-                              cả thông tin đều chính xác.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Thực hiện thanh toán:</strong>
-                            <p>
-                              Nhấn vào nút "Thanh toán" để tiến hành giao dịch.
-                              Hệ thống sẽ chuyển bạn đến trang xác thực của ngân
-                              hàng.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Nhập mã OTP:</strong>
-                            <p>
-                              Ngân hàng sẽ gửi mã OTP (One-Time Password) đến số
-                              điện thoại của bạn. Nhập mã này để xác nhận giao
-                              dịch.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Hoàn tất giao dịch:</strong>
-                            <p>
-                              Sau khi nhập mã OTP và xác nhận, giao dịch sẽ được
-                              xử lý. Bạn sẽ nhận được thông báo giao dịch thành
-                              công.
-                            </p>
-                          </li>
-                        </ol>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </Col>
-              <Col className="col-12  mb-3">
-                <div
-                  style={{
-                    background: "rgba(247,249,250,1.00)",
-                    padding: "1rem",
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                  className="shadow-sm rounded-3"
-                  onClick={() => handleBoxClick("payWithCC")}
-                >
-                  <Row>
-                    <Col className="col-8">
-                      {" "}
-                      <Form.Check
-                        className="fs-5 fw-bold"
-                        type="radio"
-                        label="Thẻ Visa/Mastercard/JCB"
-                        name="paymentMethod"
-                        id="payWithCC"
-                        value="payWithCC"
-                        checked={paymentMethod === "payWithCC"}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                      />
-                    </Col>{" "}
-                    <Col>
-                      {" "}
-                      <div style={{ display: "grid", placeItems: "end" }}>
-                        <img
-                          src={visaimg}
-                          style={{
-                            width: "3.5rem",
-                            height: "3.5rem",
-                            objectFit: "contain",
-                          }}
-                        />{" "}
-                      </div>
-                    </Col>
-                  </Row>
-                  {paymentMethod === "payWithCC" && (
-                    <>
-                      <div
-                        className="mt-3 rounded-3"
-                        style={{
-                          background: "rgb(236, 248, 255)",
-                          border: "2px solid rgb(1, 148, 243)",
-                          padding: "1rem",
-                          color: "black",
-                        }}
-                      >
-                        <p>
-                          Sau khi bấm Đặt Ngay chúng tôi sẽ chuyển bạn đến trang
-                          thanh toán:
-                        </p>
-                        <ol>
-                          <li>
-                            <strong>Nhập thông tin thẻ quốc tế:</strong>
-                            <p>
-                              Điền đầy đủ thông tin thẻ quốc tế của bạn, bao gồm
-                              số thẻ, tên chủ thẻ, ngày hết hạn và mã CVV.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Xác nhận thông tin giao dịch:</strong>
-                            <p>
-                              Kiểm tra lại thông tin giao dịch, đảm bảo rằng tất
-                              cả thông tin đều chính xác.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Thực hiện thanh toán:</strong>
-                            <p>
-                              Nhấn vào nút "Thanh toán" để tiến hành giao dịch.
-                              Hệ thống sẽ xử lý thông tin và chuyển bạn đến
-                              trang xác thực của ngân hàng (nếu cần).
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Nhập mã OTP:</strong>
-                            <p>
-                              Nếu ngân hàng yêu cầu, mã OTP (One-Time Password)
-                              sẽ được gửi đến số điện thoại của bạn. Nhập mã này
-                              để xác nhận giao dịch.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Hoàn tất giao dịch:</strong>
-                            <p>
-                              Sau khi nhập mã OTP và xác nhận, giao dịch sẽ được
-                              xử lý. Bạn sẽ nhận được thông báo giao dịch thành
-                              công.
-                            </p>
-                          </li>
-                        </ol>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </Col>
-              <Col className="col-12  mb-3">
-                <div
-                  style={{
-                    background: "rgba(247,249,250,1.00)",
-                    padding: "1rem",
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                  className="shadow-sm rounded-3"
-                  onClick={() => handleBoxClick("zalopay")}
-                >
-                  <Row>
-                    <Col className="col-8">
-                      {" "}
-                      <Form.Check
-                        className="fs-5 fw-bold"
-                        type="radio"
-                        label="Quét mã ZALOPAY"
-                        name="paymentMethod"
-                        id="zalopay"
-                        value="zalopay"
-                        checked={paymentMethod === "zalopay"}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                      />
-                    </Col>{" "}
-                    <Col>
-                      {" "}
-                      <div style={{ display: "grid", placeItems: "end" }}>
-                        <img
-                          src={zalopayimg}
-                          style={{
-                            width: "3.5rem",
-                            height: "3.5rem",
-                            objectFit: "contain",
-                          }}
-                        />{" "}
-                      </div>
-                    </Col>
-                  </Row>
-                  {paymentMethod === "zalopay" && (
-                    <>
-                      <div
-                        className="mt-3 rounded-3"
-                        style={{
-                          background: "rgb(236, 248, 255)",
-                          border: "2px solid rgb(1, 148, 243)",
-                          padding: "1rem",
-                          color: "black",
-                        }}
-                      >
-                        <p>
-                          Sau khi bấm Đặt Ngay chúng tôi sẽ chuyển bạn đến trang
-                          thanh toán của ZaloPay:
-                        </p>
-                        <ol>
-                          <li>
-                            <strong>Quét mã QR:</strong>
-                            <p>
-                              Mã QR sẽ hiển thị trên màn hình. Mở ứng dụng
-                              ZaloPay trên điện thoại của bạn.
-                            </p>
-                            <ul>
-                              <li>
-                                Chọn mục "Quét mã" trong ứng dụng ZaloPay.
-                              </li>
-                              <li>
-                                Di chuyển điện thoại sao cho mã QR trên màn hình
-                                máy tính nằm trong khung quét của camera.
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <strong>Kiểm tra thông tin thanh toán:</strong>
-                            <p>
-                              Sau khi quét mã, thông tin giao dịch sẽ hiển thị
-                              trên màn hình điện thoại. Kiểm tra lại số tiền và
-                              thông tin người nhận.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Xác nhận thanh toán:</strong>
-                            <p>
-                              Nếu mọi thông tin đều chính xác, nhấn vào nút
-                              "Thanh toán" hoặc "Xác nhận" trên ứng dụng
-                              ZaloPay.
-                            </p>
-                          </li>
-                          <li>
-                            <strong>Hoàn tất giao dịch:</strong>
-                            <p>
-                              Sau khi thanh toán thành công, bạn sẽ nhận được
-                              thông báo và biên nhận trên ứng dụng ZaloPay cũng
-                              như trên trang Webpay của ZaloPay.
-                            </p>
-                          </li>
-                        </ol>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </Col>
-            </Row>
-          </Form.Group>
+          <PaymentMethod
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+          />
 
           {/* {message && <p>{message}</p>} */}
 
@@ -1059,13 +621,6 @@ const BookTour = () => {
               {loading2 ? <>Loading...</> : <>Đặt Ngay</>}
             </Button>
           </div>
-          {paymentUrl && (
-            <div>
-              <a href={paymentUrl} target="_blank" rel="noopener noreferrer">
-                Thanh toán
-              </a>
-            </div>
-          )}
         </div>
       </Container>
     </>

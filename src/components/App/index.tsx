@@ -19,6 +19,7 @@ import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import BookTour from "@/page/customer/booking-tour";
 import Checkout from "@/page/customer/checkout";
+import Banking from "@/page/customer/banking";
 
 
 const Apps: React.FC = () => {
@@ -55,7 +56,8 @@ const Apps: React.FC = () => {
         <Route path="/information/*" element={<Information />} />
         <Route path="/news/*" element={<NewsMain />} />
         <Route path="/confirm" element={<ConfirmationForm />} />
-        <Route path="/checkout/:page/:code_order" element={<Checkout />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/banking/:code_order/:total_price/:child_quantity/:adult_quantity/:infant_quantity/:note" element={<Banking />} />
         <Route path="/list-tour-vietnam/:location" element={<TourSearch />} />
         <Route path="/list-tour-foreign/:location" element={<TourSearch />} />
         <Route path="/tour-details/:tour_id" element={<TourDetail />} />

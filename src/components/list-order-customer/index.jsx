@@ -104,7 +104,14 @@ const OrdersList = ({ customerId, status }) => {
     };
   }
   const columns = [
-    { field: "code_order", headerName: "Mã Booking", width: 150 },
+    {
+      field: "code_order",
+      headerName: "Mã Booking",
+      width: 150,
+      renderCell: (params) => (
+        <span className="fw-bold">{params.value}</span>
+      ),
+    },
     {
       field: "status",
       headerName: "Trạng thái",
@@ -205,12 +212,13 @@ const OrdersList = ({ customerId, status }) => {
 
   return (
     <>
-      <div style={{ height: 500, width: "100%" }}>
+      <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           rows={orders}
           columns={columns}
           getRowId={(row) => row.code_order}
           onRowClick={handleRowClick}
+          
           getRowHeight={(params) => 100}
         />
       </div>

@@ -27,7 +27,6 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import TourImagesCarousel from "@/components/image-tour-multi-carousel";
 import HTMLContent from "@/components/HTMLContent";
 import PolicesTour from "@/components/policies-tour";
-import { BiLike } from "react-icons/bi";
 import TourReviews from "@/components/rating-tour";
 import { Box, Rating } from "@mui/material";
 import { MdOutlineBusinessCenter } from "react-icons/md";

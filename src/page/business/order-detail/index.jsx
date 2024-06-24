@@ -16,6 +16,7 @@ import { useAuth } from "@/context";
 import {
   BASE_URL_ADMIN,
   BASE_URL_BUSINESS,
+  BASE_URL_CUSTOMER,
   BASE_URL_USER,
   BLUE_COLOR,
   RED1_COLOR,
@@ -39,6 +40,7 @@ import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
 import LoadingBackdrop from "@/components/backdrop";
+import PaymentMethod from "@/components/payment-method";
 
 const steps = ["Chờ xác nhận", "Đã xác nhận", "Đã hoàn thành", "Đã huỷ"];
 
@@ -125,6 +127,9 @@ const OrderDetail = () => {
   const [status, setStatus] = useState("");
   const [statuspayments, setStatuspayments] = useState("");
   const [paymentDetail, setPaymentDetail] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("captureWallet");
+  const [loading2, setLoading2] = useState(false);
+  const [paymentUrl, setPaymentUrl] = useState("");
 
   useEffect(() => {
     const fetchOrderDetail = async () => {
@@ -222,6 +227,37 @@ const OrderDetail = () => {
       style: "currency",
       currency: "VND",
     }).format(price);
+  };
+  const handleBookTour = async () => {
+    setLoading2(true);
+    try {
+      if (paymentMethod === "bank") {
+       navigate(
+         `/banking/${orderDetail.code_order}/${orderDetail.total_price}/${orderDetail.child_quantity}/${orderDetail.adult_quantity}/${orderDetail.infant_quantity}/*${orderDetail.note}`
+       );
+      } else {
+        const response = await axios.post(
+          `${BASE_URL_CUSTOMER}/payment-tour-momopay/${orderDetail.code_order}/${orderDetail.total_price}`,
+          {
+            paymentMethod: paymentMethod,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.payment_url) {
+          window.location.href = response.data.payment_url;
+          setPaymentUrl(response.data.payment_url);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to payment:", error);
+      toast.error(error.response.data.message);
+    }
+    setLoading2(false);
   };
 
   if (loading) return <LoadingBackdrop open={loading} />;
@@ -333,7 +369,7 @@ const OrderDetail = () => {
                 </span>
               </Card.Text>
               <Card.Text>
-                <strong>Ngày đặt:</strong>{" "}
+                <strong>Ngày booking:</strong>{" "}
                 <span className="text-primary fw-bold">
                   {format(
                     new Date(orderDetail.booking_date_time),
@@ -343,6 +379,10 @@ const OrderDetail = () => {
               </Card.Text>
               <Card.Text>
                 <strong>Ghi chú:</strong> {orderDetail.note}
+              </Card.Text>
+              <Card.Text className="text-danger">
+                * Lưu ý đơn Booking sẽ tự động huỷ nếu không thanh toán trong 24
+                giờ được tính từ thời gian ngày đặt tour !
               </Card.Text>
             </Card.Body>
           </Card>
@@ -431,7 +471,6 @@ const OrderDetail = () => {
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
               >
-                <option value="Pending">Pending</option>
                 <option value="Confirm">Confirm</option>
                 <option value="Complete">Complete</option>
               </Form.Control>
@@ -448,14 +487,41 @@ const OrderDetail = () => {
         </>
       ) : role == 1 ? (
         <>
-          <div style={{ display: "grid", placeItems: "end" }}>
-            <Button
-              style={{ background: RED1_COLOR, border: "0px" }}
-              className="mt-3 mb-5 py-3 col-lg-3 col-12"
-            >
-              <GiCancel className="fs-4" /> Yêu cầu huỷ
-            </Button>
-          </div>
+          {orderDetail.status_payment === "Unpaid" ? (
+            <>
+              {" "}
+              <div className="my-4">
+                <PaymentMethod
+                  paymentMethod={paymentMethod}
+                  setPaymentMethod={setPaymentMethod}
+                />
+              </div>
+              <div
+                style={{ display: "grid", placeItems: "end" }}
+                className="my-4"
+              >
+                <Button
+                  style={{ border: "0px", background: RED1_COLOR }}
+                  onClick={handleBookTour}
+                  disabled={loading2}
+                  className="py-3 col-lg-3 col-12"
+                >
+                  {loading2 ? <>Loading...</> : <>Thanh toán</>}
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ display: "grid", placeItems: "end" }}>
+                <Button
+                  style={{ background: RED1_COLOR, border: "0px" }}
+                  className="mt-3 mb-5 py-3 col-lg-3 col-12"
+                >
+                  <GiCancel className="fs-4" /> Yêu cầu huỷ
+                </Button>
+              </div>
+            </>
+          )}
         </>
       ) : (
         <>
