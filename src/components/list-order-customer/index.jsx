@@ -131,11 +131,11 @@ const OrdersList = ({ customerId, status }) => {
 
             break;
           case "Complete":
-            buttonColor = BLUE_COLOR;
+            buttonColor = RED_COLOR;
             buttonColor1 = "white";
 
             break;
-          case "Cancle":
+          case "Cancel":
             buttonColor = RED1_COLOR;
             buttonColor1 = "white";
 

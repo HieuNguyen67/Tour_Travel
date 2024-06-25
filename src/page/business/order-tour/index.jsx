@@ -64,7 +64,7 @@ const OrderTour = () => {
           </TabPanel>
           <TabPanel value="4" sx={{ padding: "0px" }} className="mt-3">
             {" "}
-            <OrdersList customerId={businessId} status={"Cancle"} />
+            <OrdersList customerId={businessId} status={"Cancel"} />
           </TabPanel>
         </TabContext>
       </Box>

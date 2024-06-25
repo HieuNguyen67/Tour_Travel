@@ -59,7 +59,7 @@ const ListOrder=()=>{
               </TabPanel>
               <TabPanel value="4" sx={{ padding: "0px" }} className="mt-3">
                 {" "}
-                <OrdersList customerId={customerId} status={"Cancle"} />
+                <OrdersList customerId={customerId} status={"Cancel"} />
               </TabPanel>
             </TabContext>
           </Box>

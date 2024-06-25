@@ -41,6 +41,7 @@ import StepConnector, {
 } from "@mui/material/StepConnector";
 import LoadingBackdrop from "@/components/backdrop";
 import PaymentMethod from "@/components/payment-method";
+import RateTour from "@/components/rate-tour";
 
 const steps = ["Chờ xác nhận", "Đã xác nhận", "Đã hoàn thành", "Đã huỷ"];
 
@@ -52,7 +53,7 @@ const getStatusIndex = (status) => {
       return 1;
     case "Complete":
       return 2;
-    case "Cancle":
+    case "Cancel":
       return 3;
     default:
       return 0;
@@ -123,13 +124,17 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { order_id } = useParams();
-  const { token, role } = useAuth();
+  const { token, role, customerId } = useAuth();
   const [status, setStatus] = useState("");
   const [statuspayments, setStatuspayments] = useState("");
   const [paymentDetail, setPaymentDetail] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("captureWallet");
   const [loading2, setLoading2] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState("");
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   useEffect(() => {
     const fetchOrderDetail = async () => {
@@ -328,6 +333,45 @@ const OrderDetail = () => {
             : "ĐÃ THANH TOÁN"}
         </span>
       </h3>
+      {role == 1 ? (
+        <>
+          {orderDetail.status === "Complete" ? (
+            <>
+              {orderDetail.status_rating === "Not Rated" ? (
+                <>
+                  <Button
+                    style={{ background: RED1_COLOR, border: "0px" }}
+                    className="mt-5 py-3 col-lg-3 col-12"
+                    onClick={handleShow}
+                  >
+                    ĐÁNH GIÁ TOUR
+                  </Button>
+                  <RateTour
+                    customerId={customerId}
+                    tourId={orderDetail.tour_id}
+                    show={show}
+                    handleClose={handleClose}
+                    code_order={orderDetail.code_order}
+                  />
+                </>
+              ) : (
+                <>
+                  <Button
+                    style={{ background: RED1_COLOR, border: "0px" }}
+                    className="mt-5"
+                  >
+                    Bạn đã đánh giá chuyến đi
+                  </Button>
+                </>
+              )}{" "}
+            </>
+          ) : (
+            <></>
+          )}
+        </>
+      ) : (
+        <></>
+      )}
       <Row className="justify-content-md-center">
         <Col className="col-12">
           <Card className="my-4">
@@ -487,7 +531,8 @@ const OrderDetail = () => {
         </>
       ) : role == 1 ? (
         <>
-          {orderDetail.status_payment === "Unpaid" ? (
+          {orderDetail.status_payment === "Unpaid" &&
+          orderDetail.status === "Confirm" ? (
             <>
               {" "}
               <div className="my-4">
@@ -510,8 +555,13 @@ const OrderDetail = () => {
                 </Button>
               </div>
             </>
+          ) : orderDetail.status === "Complete" ? (
+            <></>
+          ) : orderDetail.status === "Cancel" ? (
+            <></>
           ) : (
             <>
+              {" "}
               <div style={{ display: "grid", placeItems: "end" }}>
                 <Button
                   style={{ background: RED1_COLOR, border: "0px" }}
