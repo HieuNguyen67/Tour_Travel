@@ -42,6 +42,7 @@ import StepConnector, {
 import LoadingBackdrop from "@/components/backdrop";
 import PaymentMethod from "@/components/payment-method";
 import RateTour from "@/components/rate-tour";
+import CancellationRequestModal from "@/components/request-cancellation";
 
 const steps = ["Chờ xác nhận", "Đã xác nhận", "Đã hoàn thành", "Đã huỷ"];
 
@@ -132,9 +133,12 @@ const OrderDetail = () => {
   const [loading2, setLoading2] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState("");
   const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   useEffect(() => {
     const fetchOrderDetail = async () => {
@@ -360,7 +364,7 @@ const OrderDetail = () => {
                     style={{ background: RED1_COLOR, border: "0px" }}
                     className="mt-5"
                   >
-                    Bạn đã đánh giá chuyến đi
+                    Cảm ơn Quý khách đã đánh giá chuyến đi!
                   </Button>
                 </>
               )}{" "}
@@ -561,15 +565,39 @@ const OrderDetail = () => {
             <></>
           ) : (
             <>
-              {" "}
-              <div style={{ display: "grid", placeItems: "end" }}>
-                <Button
-                  style={{ background: RED1_COLOR, border: "0px" }}
-                  className="mt-3 mb-5 py-3 col-lg-3 col-12"
-                >
-                  <GiCancel className="fs-4" /> Yêu cầu huỷ
-                </Button>
-              </div>
+              {orderDetail.status_request_cancel === "No" ? (
+                <>
+                  {" "}
+                  <div style={{ display: "grid", placeItems: "end" }}>
+                    <Button
+                      style={{ background: RED1_COLOR, border: "0px" }}
+                      className="mt-3 mb-5 py-3 col-lg-3 col-12"
+                      onClick={handleOpenModal}
+                    >
+                      <GiCancel className="fs-4" /> Yêu cầu huỷ
+                    </Button>
+                  </div>
+                  <CancellationRequestModal
+                    show={showModal}
+                    handleClose={handleCloseModal}
+                    orderId={orderDetail.order_id}
+                    businessId={orderDetail.business_id}
+                    customerId={orderDetail.customer_id}
+                  />
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <div style={{ display: "grid", placeItems: "end" }}>
+                    <Button
+                      style={{ background: RED1_COLOR, border: "0px" }}
+                      className="mt-3 mb-5 py-3col-12"
+                    >
+                      Bạn đã gửi yêu cầu huỷ tour
+                    </Button>
+                  </div>
+                </>
+              )}{" "}
             </>
           )}
         </>

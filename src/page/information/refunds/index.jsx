@@ -1,10 +1,15 @@
+import CancellationRequests from "@/components/list-request-cancellation";
+import { useAuth } from "@/context";
 import { Container } from "react-bootstrap";
 
 const Refunds=()=>{
+  const {customerId}=useAuth();
     return (
       <>
         <Container>
-          <h4>QUẢN LÝ HOÀN TIỀN</h4>
+          <CancellationRequests
+            customerId={customerId}
+          />
         </Container>
       </>
     );

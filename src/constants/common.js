@@ -25,6 +25,7 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import { RiRefund2Line } from "react-icons/ri";
 import { FaFilePen } from "react-icons/fa6";
 import { MdPayments } from "react-icons/md";
+import { ImCancelCircle } from "react-icons/im";
 
 const HEADER = [
   { id: 1, name: "TRANG CHỦ", link: "/" },
@@ -199,6 +200,17 @@ const BUSINESS = [
   },
   {
     id: 3,
+    name: "YÊU CẦU HUỶ",
+    icon: (
+      <PendingBadge
+        endpoint={`/pending-count-status-request-cancel`}
+        icon={<ImCancelCircle />}
+      />
+    ),
+    link: "/business/list-request-cancel",
+  },
+  {
+    id: 4,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-contact-business`}
@@ -209,13 +221,13 @@ const BUSINESS = [
     link: "/business/list-contact",
   },
   {
-    id: 4,
+    id: 5,
     icon: <BiSolidCommentDetail />,
     name: "PHẢN HỒI",
     link: "/business/list-rating",
   },
   {
-    id: 5,
+    id: 6,
     name: "QUY ĐỊNH",
     icon: <IoShieldCheckmark />,
     link: "/business/list-policies",
@@ -224,7 +236,7 @@ const BUSINESS = [
     link2: "/business/add-policies",
   },
   {
-    id: 6,
+    id: 7,
     icon: <RiRefund2Line />,
     name: "CHÍNH SÁCH HUỶ",
     link: "/business/list-policies-cancellation",
@@ -233,7 +245,7 @@ const BUSINESS = [
     link2: "/business/add-policies-cancellation",
   },
   {
-    id: 7,
+    id: 8,
     icon: <ImNewspaper />,
     name: "TIN TỨC",
     link: "/business/list-news",
