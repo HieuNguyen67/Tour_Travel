@@ -70,6 +70,17 @@ const ADMIN = [
     id: 5,
     icon: (
       <PendingBadge
+        endpoint={`/pending-count-status-refunds`}
+        icon={<RiRefund2Line />}
+      />
+    ),
+    name: "REFUNDS",
+    link: "/admin/list-refunds",
+  },
+  {
+    id: 6,
+    icon: (
+      <PendingBadge
         endpoint={`/pending-count-status-news`}
         icon={<ImNewspaper />}
       />
@@ -81,7 +92,7 @@ const ADMIN = [
     link2: "/admin/add-news",
   },
   {
-    id: 6,
+    id: 7,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-contact`}
@@ -92,7 +103,7 @@ const ADMIN = [
     link: "/admin/contact",
   },
   {
-    id: 7,
+    id: 8,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-report`}
@@ -103,7 +114,7 @@ const ADMIN = [
     link: "/admin/report",
   },
   {
-    id: 8,
+    id: 9,
     icon: <FaFilePen />,
     name: "AUDIT LOG",
     link: "/admin/admin-actions",

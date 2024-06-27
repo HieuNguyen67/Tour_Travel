@@ -9,7 +9,7 @@ import Header from "@/components/layout/header";
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, RED1_COLOR } from "@/constants";
 import infoimg from "@/assets/image/info.png";
 import contactimg from "@/assets/image/contact.png";
 
@@ -180,7 +180,11 @@ const Contact = () => {
                   </Col>
                 </Row>
 
-                <Button type="submit" variant="warning" className="shadow-sm">
+                <Button
+                  type="submit"
+                  style={{ background: RED1_COLOR, border: "0px" }}
+                  className="shadow-sm py-2"
+                >
                   <IoIosSend className="fs-4" />
                   GỬI THÔNG TIN LIÊN HỆ
                 </Button>

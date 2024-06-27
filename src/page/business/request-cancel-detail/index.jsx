@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
-import { BASE_URL_BUSINESS, BASE_URL_USER, BLUE_COLOR } from "@/constants";
+import { BASE_URL_BUSINESS, BASE_URL_USER, BLUE_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
 import { useAuth } from "@/context";
 import { MdCancel } from "react-icons/md";
 import { format } from "date-fns";
@@ -88,6 +88,7 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
               <p>
                 <strong>Mã booking:</strong> {requestDetail.code_order}
               </p>
+
               <p>
                 <strong>Trạng thái thanh toán:</strong>{" "}
                 <span className="fw-bold text-primary">
@@ -142,9 +143,25 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
               <p>
                 <strong>Trạng thái hoàn tiền:</strong>{" "}
                 {requestDetail.status_refund === "No" ? (
-                  <>Chưa hoàn tiền</>
+                  <>
+                    {" "}
+                    <Button
+                      style={{ background: BLUE_COLOR, border: "0px" }}
+                      className="mt-lg-0 mt-3"
+                    >
+                      Chưa hoàn tiền
+                    </Button>
+                  </>
                 ) : (
-                  <>Đã hoàn tiền</>
+                  <>
+                    {" "}
+                    <Button
+                      style={{ background: RED_COLOR, border: "0px" }}
+                      className="mt-lg-0 mt-3"
+                    >
+                      Đã hoàn tiền
+                    </Button>
+                  </>
                 )}
               </p>
               <p>
@@ -158,34 +175,51 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
             {role == 3 ? (
               <>
                 {" "}
-                <div>
-                  <Form>
-                    <Form.Group className="my-4">
-                      <Form.Label className="fw-bold">
-                        {" "}
-                        <RxUpdate className="fs-5" /> Trạng thái:
-                      </Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                      >
-                        <option value="Pending">Pending</option>
-                        <option value="Confirm">Confirm</option>
-                        <option value="Reject">Reject</option>
-                      </Form.Control>
-                    </Form.Group>
-
-                    <Button
-                      onClick={handleUpdate}
-                      disabled={loading}
-                      style={{ background: BLUE_COLOR, border: "0px" }}
-                      className="mb-3"
-                    >
-                      <FaSave /> Cập nhật
+                {status === "Confirm" ? (
+                  <>
+                    <Button style={{ background: RED1_COLOR, border: "0px" }}>
+                      Bạn đã gửi yêu cầu hoàn tiền của khách hàng đến hệ thống!
                     </Button>
-                  </Form>
-                </div>
+                  </>
+                ) : status === "Reject" ? (
+                  <>
+                    <Button style={{ background: RED1_COLOR, border: "0px" }}>
+                      Bạn đã từ chối yêu cầu huỷ của khách hàng!
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <div>
+                      <Form>
+                        <Form.Group className="my-4">
+                          <Form.Label className="fw-bold">
+                            {" "}
+                            <RxUpdate className="fs-5" /> Trạng thái:
+                          </Form.Label>
+                          <Form.Control
+                            as="select"
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                          >
+                            <option value="Pending">Pending</option>
+                            <option value="Confirm">Confirm</option>
+                            <option value="Reject">Reject</option>
+                          </Form.Control>
+                        </Form.Group>
+
+                        <Button
+                          onClick={handleUpdate}
+                          disabled={loading}
+                          style={{ background: BLUE_COLOR, border: "0px" }}
+                          className="mb-3"
+                        >
+                          <FaSave /> Cập nhật
+                        </Button>
+                      </Form>
+                    </div>
+                  </>
+                )}
               </>
             ) : (
               <></>

@@ -36,12 +36,14 @@ const Apps: React.FC = () => {
         {(role == 2 || role == 4 || role == 5 || role == 6) && (
           <>
             <Route path="/admin/*" element={<AdminRoutes />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/admin/list-customer" />} />
+            <Route path="/" element={<Navigate to="/admin/list-customer" />} />
           </>
         )}
         {role == 3 && (
           <>
             <Route path="/business/*" element={<BusinessRoutes />} />
+            <Route path="/" element={<Navigate to="/business/list-tour" />} />
             <Route path="*" element={<Navigate to="/business/list-tour" />} />
           </>
         )}
@@ -57,7 +59,10 @@ const Apps: React.FC = () => {
         <Route path="/news/*" element={<NewsMain />} />
         <Route path="/confirm" element={<ConfirmationForm />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/banking/:code_order/:total_price/:child_quantity/:adult_quantity/:infant_quantity/:note" element={<Banking />} />
+        <Route
+          path="/banking/:code_order/:total_price/:child_quantity/:adult_quantity/:infant_quantity/:note"
+          element={<Banking />}
+        />
         <Route path="/list-tour-vietnam/:location" element={<TourSearch />} />
         <Route path="/list-tour-foreign/:location" element={<TourSearch />} />
         <Route path="/tour-details/:tour_id" element={<TourDetail />} />

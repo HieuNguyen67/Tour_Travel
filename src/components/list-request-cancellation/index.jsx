@@ -117,7 +117,7 @@ const{token}=useAuth();
           <Button
             className="col-12 py-2"
             style={{
-              background: BLUE_COLOR,
+              background: RED_COLOR,
               border: "0px",
               color: "white",
             }}

@@ -13,7 +13,7 @@ import {
 } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import Header from "@/components/layout/header";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_USER, RED1_COLOR } from "@/constants";
 import { useAuth } from "@/context";
 import {
   FormControl,
@@ -154,7 +154,7 @@ const Login: React.FC = () => {
                   }
                 />
               </FormControl>
-              <Button variant="warning" type="submit" className="col-12 mt-4  ">
+              <Button style={{background:RED1_COLOR, border:'0px'}} type="submit" className="col-12 py-2 mt-4  ">
                 <span className=" ">
                   Đăng Nhập <IoLogInSharp className="fs-4" />
                 </span>

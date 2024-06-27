@@ -332,7 +332,7 @@ const Profile = () => {
                         >
                           <option value="">Chọn ngân hàng</option>
                           {banknames.map((item) => (
-                            <option key={item.id} value={item.name}>
+                            <option key={item.id} value={item.name+(item.code)}>
                               {item.name} - ({item.code})
                             </option>
                           ))}

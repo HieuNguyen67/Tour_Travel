@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { IoIosSend } from "react-icons/io";
 import Header from "@/components/layout/header";
 import himanimg from "@/assets/image/himan.png";
+import { RED1_COLOR } from "@/constants";
 
 const Introduce = () => {
   return (
@@ -66,7 +67,10 @@ const Introduce = () => {
           </p>
           <h4 className="fw-bold mt-5 ">5. Liên hệ chúng tôi</h4>
           <Link to="/contact">
-            <Button variant="warning" className="mt-3 fs-5 mb-5">
+            <Button
+              style={{ background: RED1_COLOR, border: "0px" }}
+              className="mt-3 fs-5 mb-5"
+            >
               <IoIosSend className="fs-4" />
               LIÊN HỆ NGAY
             </Button>

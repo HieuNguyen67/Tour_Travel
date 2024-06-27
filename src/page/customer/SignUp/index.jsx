@@ -16,7 +16,7 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, RED1_COLOR } from "@/constants";
 import registerimg from "@/assets/image/register.png";
 
 const SignUp = () => {
@@ -194,7 +194,11 @@ const SignUp = () => {
               />
             </Form.Group>
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <Button variant="warning" className="col-12 mt-4" type="submit">
+            <Button
+              style={{ background: RED1_COLOR, border: "0px" }}
+              className="col-12 py-2 mt-4"
+              type="submit"
+            >
               <span className=" ">
                 Đăng Ký <IoLogInSharp className="fs-4" />
               </span>
