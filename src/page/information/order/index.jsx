@@ -18,7 +18,6 @@ const ListOrder=()=>{
     return (
       <>
         <Container className="my-4">
-            
           <Box
             sx={{
               width: "100%",
@@ -43,21 +42,25 @@ const ListOrder=()=>{
                   aria-label="full width tabs example"
                 >
                   <Tab label="TẤT CẢ" value="1" />
-                  <Tab label="ĐÃ XÁC NHẬN" value="2" />
-                  <Tab label="ĐÃ HOÀN THÀNH" value="3" />
-                  <Tab label="ĐÃ HUỶ" value="4" />
+                  <Tab label="CHỜ XÁC NHẬN" value="2" />
+                  <Tab label="ĐÃ XÁC NHẬN" value="3" />
+                  <Tab label="ĐÃ HOÀN THÀNH" value="4" />
+                  <Tab label="ĐÃ HUỶ" value="5" />
                 </Tabs>
               </Box>
               <TabPanel value="1" sx={{ padding: "0px" }} className="mt-3">
                 <OrdersList customerId={customerId} />
               </TabPanel>
               <TabPanel value="2" sx={{ padding: "0px" }} className="mt-3">
-                <OrdersList customerId={customerId} status={"Confirm"} />
+                <OrdersList customerId={customerId} status={"Pending"} />
               </TabPanel>
               <TabPanel value="3" sx={{ padding: "0px" }} className="mt-3">
-                <OrdersList customerId={customerId} status={"Complete"} />
+                <OrdersList customerId={customerId} status={"Confirm"} />
               </TabPanel>
               <TabPanel value="4" sx={{ padding: "0px" }} className="mt-3">
+                <OrdersList customerId={customerId} status={"Complete"} />
+              </TabPanel>
+              <TabPanel value="5" sx={{ padding: "0px" }} className="mt-3">
                 {" "}
                 <OrdersList customerId={customerId} status={"Cancel"} />
               </TabPanel>

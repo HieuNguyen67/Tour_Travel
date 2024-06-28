@@ -160,18 +160,7 @@ const ContactList = () => {
           </span>
         ),
       },
-      {
-        field: "address",
-        headerName: "Địa chỉ",
-        width: 300,
-        renderCell: (params) => (
-          <div
-            style={{ cursor: "pointer" }}
-            dangerouslySetInnerHTML={{ __html: params.value }}
-            onClick={() => handleRowClick(params)}
-          />
-        ),
-      },
+     
     ];
   } else {
     var columns = [

@@ -92,8 +92,10 @@ const [showModal, setShowModal] = useState(false);
           >
             {params.value === "Pending" ? (
               <>Chờ xác nhận</>
+            ) : params.value === "Refunded" ? (
+              <>Đã hoàn tiền</>
             ) : (
-              params.value === "Refunded"?(<>Đã hoàn tiền</>):(<>Đã từ chối</>)
+              <>Đã từ chối</>
             )}
           </Button>
         );
@@ -134,12 +136,12 @@ const [showModal, setShowModal] = useState(false);
       ),
     },
     {
-      headerName: "Thao tác",
-      width: 150,
-      renderCell: (params) => {
-        return <p>Xem chi tiết...</p>;
-      },
+      field: "note",
+      headerName: "Ghi chú",
+      width: 300,
+      renderCell: (params) => <span className="fw-bold">{params.value}</span>,
     },
+    
   ];
 
   return (

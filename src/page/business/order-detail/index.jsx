@@ -35,6 +35,7 @@ import { GiConfirmed } from "react-icons/gi";
 import { MdIncompleteCircle } from "react-icons/md";
 import { MdCancel } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 import StepConnector, {
   stepConnectorClasses,
@@ -368,6 +369,17 @@ const OrderDetail = () => {
                   </Button>
                 </>
               )}{" "}
+              <div>
+                <Link
+                  to="/contact"
+                  className="text-decoration-none text-primary"
+                >
+                  <Button variant="dark" className=" mt-3">
+                    Nếu quý khách có thắc mắc/khiếu nại. Hãy liên hệ chúng tôi!{" "}
+                    <FaArrowCircleRight />
+                  </Button>
+                </Link>
+              </div>
             </>
           ) : (
             <></>
@@ -519,6 +531,7 @@ const OrderDetail = () => {
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
               >
+                <option value="Pending">Pending</option>
                 <option value="Confirm">Confirm</option>
                 <option value="Complete">Complete</option>
               </Form.Control>
@@ -536,7 +549,8 @@ const OrderDetail = () => {
       ) : role == 1 ? (
         <>
           {orderDetail.status_payment === "Unpaid" &&
-          orderDetail.status === "Confirm" ? (
+          (orderDetail.status === "Confirm" ||
+            orderDetail.status === "Pending") ? (
             <>
               {" "}
               <div className="my-4">
@@ -562,6 +576,8 @@ const OrderDetail = () => {
           ) : orderDetail.status === "Complete" ? (
             <></>
           ) : orderDetail.status === "Cancel" ? (
+            <></>
+          ) : orderDetail.status === "Pending" ? (
             <></>
           ) : (
             <>
@@ -603,30 +619,41 @@ const OrderDetail = () => {
         </>
       ) : (
         <>
-          <form>
-            <Form.Group className="my-3">
-              <Form.Label className="fw-bold">
-                {" "}
-                <RxUpdate className="fs-5" /> Trạng thái:
-              </Form.Label>
-              <Form.Control
-                as="select"
-                value={statuspayments}
-                onChange={(e) => setStatuspayments(e.target.value)}
-              >
-                <option value="Unpaid">Chưa thanh toán</option>
-                <option value="Paid">Đã thanh toán</option>
-              </Form.Control>
-            </Form.Group>
-            <Button
-              onClick={handleUpdate}
-              disabled={loading}
-              style={{ background: RED1_COLOR, border: "0px" }}
-              className="mb-3 py-3 col-lg-3 col-12"
-            >
-              <FaSave /> Cập nhật
-            </Button>
-          </form>
+          {orderDetail.status_payment === "Unpaid" ? (
+            <>
+              {" "}
+              <form>
+                <Form.Group className="my-3">
+                  <Form.Label className="fw-bold">
+                    {" "}
+                    <RxUpdate className="fs-5" /> Trạng thái:
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={statuspayments}
+                    onChange={(e) => setStatuspayments(e.target.value)}
+                  >
+                    <option value="Unpaid">Chưa thanh toán</option>
+                    <option value="Paid">Đã thanh toán</option>
+                  </Form.Control>
+                </Form.Group>
+                <Button
+                  onClick={handleUpdate}
+                  disabled={loading}
+                  style={{ background: RED1_COLOR, border: "0px" }}
+                  className="mb-3 py-3 col-lg-3 col-12"
+                >
+                  <FaSave /> Cập nhật
+                </Button>
+              </form>
+            </>
+          ) : (
+            <>
+              <Button style={{ background: RED1_COLOR, border: "0px" }}>
+                Khách hàng đã thanh toán !
+              </Button>
+            </>
+          )}
         </>
       )}
     </Container>

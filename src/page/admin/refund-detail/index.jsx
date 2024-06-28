@@ -81,102 +81,105 @@ const RefundDetailsModal = ({ show, handleClose, refundId }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-          <div>
-            <p>
-              <strong>Mã booking:</strong> {refundDetails.code_order}
-            </p>
-            <p>
-              <strong>Trạng thái khách hàng thanh toán:</strong>{" "}
-              <span className="fw-bold text-primary">
-                {refundDetails.status_payment === "Paid" ? (
-                  <>
-                    <Button
-                      style={{ background: GREEN_COLOR, border: "0px" }}
-                      className="text-dark mt-lg-0 mt-3"
-                    >
-                      Đã thanh toán
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      className="mt-lg-0 mt-3"
-                      style={{ background: BLUE_COLOR, border: "0px" }}
-                    >
-                      Chưa thanh toán
-                    </Button>
-                  </>
-                )}
-              </span>
-            </p>
-            <p>
-              <strong>Số tiền cần hoàn:</strong>{" "}
-              <span className="fw-bold fs-5" style={{ color: TEXT_RED_COLOR }}>
-                {formatPrice(refundDetails.refund_amount)}
-              </span>
-            </p>
-
-            <p>
-              <strong>Trạng thái:</strong>{" "}
-              {refundDetails.status === "Pending" ? (
-                <>Chờ xác nhận</>
-              ) : refundDetails.status === "Refunded" ? (
-                <>Đã hoàn tiền</>
+        <div>
+          <p>
+            <strong>Mã booking:</strong> {refundDetails.code_order}
+          </p>
+          <p>
+            <strong>Trạng thái khách hàng thanh toán:</strong>{" "}
+            <span className="fw-bold text-primary">
+              {refundDetails.status_payment === "Paid" ? (
+                <>
+                  <Button
+                    style={{ background: GREEN_COLOR, border: "0px" }}
+                    className="text-dark mt-lg-0 mt-3"
+                  >
+                    Đã thanh toán
+                  </Button>
+                </>
               ) : (
-                <>Từ chối</>
+                <>
+                  <Button
+                    className="mt-lg-0 mt-3"
+                    style={{ background: BLUE_COLOR, border: "0px" }}
+                  >
+                    Chưa thanh toán
+                  </Button>
+                </>
               )}
-            </p>
-            {dateRefund ? (
+            </span>
+          </p>
+          <p>
+            <strong>Số tiền cần hoàn:</strong>{" "}
+            <span className="fw-bold fs-5" style={{ color: TEXT_RED_COLOR }}>
+              {formatPrice(refundDetails.refund_amount)}
+            </span>
+          </p>
+
+          <p>
+            <strong>Trạng thái:</strong>{" "}
+            {refundDetails.status === "Pending" ? (
+              <>Chờ xác nhận</>
+            ) : refundDetails.status === "Refunded" ? (
+              <>Đã hoàn tiền</>
+            ) : (
+              <>Từ chối</>
+            )}
+          </p>
+          {dateRefund ? (
+            <>
+              <p>
+                <strong>Thời gian cập nhật:</strong>{" "}
+                {format(
+                  new Date(refundDetails.refund_date),
+                  "yyyy-MM-dd HH:mm:ss"
+                )}
+              </p>
+            </>
+          ) : (
+            <></>
+          )}
+          <p>
+            <strong>Trạng thái hệ thống hoàn tiền:</strong>{" "}
+            {refundDetails.status_refund === "No" ? (
               <>
-                <p>
-                  <strong>Thời gian cập nhật:</strong>{" "}
-                  {format(
-                    new Date(refundDetails.refund_date),
-                    "yyyy-MM-dd HH:mm:ss"
-                  )}
-                </p>
+                {" "}
+                <Button
+                  style={{ background: BLUE_COLOR, border: "0px" }}
+                  className="mt-lg-0 mt-3"
+                >
+                  Chưa hoàn tiền
+                </Button>
               </>
             ) : (
-              <></>
+              <>
+                {" "}
+                <Button
+                  style={{ background: RED_COLOR, border: "0px" }}
+                  className="mt-lg-0 mt-3"
+                >
+                  Đã hoàn tiền
+                </Button>
+              </>
             )}
-            <p>
-              <strong>Trạng thái hệ thống hoàn tiền:</strong>{" "}
-              {refundDetails.status_refund === "No" ? (
-                <>
-                  {" "}
-                  <Button
-                    style={{ background: BLUE_COLOR, border: "0px" }}
-                    className="mt-lg-0 mt-3"
-                  >
-                    Chưa hoàn tiền
-                  </Button>
-                </>
-              ) : (
-                <>
-                  {" "}
-                  <Button
-                    style={{ background: RED_COLOR, border: "0px" }}
-                    className="mt-lg-0 mt-3"
-                  >
-                    Đã hoàn tiền
-                  </Button>
-                </>
-              )}
-            </p>
+          </p>
+          <p>
+            <strong>Ghi chú:</strong> {refundDetails.note}
+          </p>
 
-            <hr />
-            <h5 className="mb-3 fw-bold">Thông tin hoàn tiền khách hàng</h5>
-            <p>
-              <strong>Ngân hàng:</strong> {refundDetails.bank_name}
-            </p>
-            <p>
-              <strong>Tên tài khoản:</strong> {refundDetails.bank_account_name}
-            </p>
-            <p>
-              <strong>Số tài khoản:</strong> {refundDetails.bank_account_number}
-            </p>
-          </div>
-       
+          <hr />
+          <h5 className="mb-3 fw-bold">Thông tin hoàn tiền khách hàng</h5>
+          <p>
+            <strong>Ngân hàng:</strong> {refundDetails.bank_name}
+          </p>
+          <p>
+            <strong>Tên tài khoản:</strong> {refundDetails.bank_account_name}
+          </p>
+          <p>
+            <strong>Số tài khoản:</strong> {refundDetails.bank_account_number}
+          </p>
+        </div>
+
         {refundDetails.status === "Pending" ? (
           <>
             <div>
