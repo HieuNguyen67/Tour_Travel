@@ -206,7 +206,6 @@ const OrdersList = ({ customerId, status }) => {
       ),
     },
 
-    { field: "status_rating", headerName: "Đánh giá", width: 150 },
     { field: "note", headerName: "Ghi chú", width: 200 },
   ];
 

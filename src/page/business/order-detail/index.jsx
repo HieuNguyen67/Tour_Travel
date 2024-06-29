@@ -403,6 +403,20 @@ const OrderDetail = () => {
                   {orderDetail.tour_name}
                 </span>
               </Card.Text>
+              <Card.Text>
+                <strong>Ngày bắt đầu:</strong>
+                <span className="fw-bold text-info">
+                  {" "}
+                  {format(new Date(orderDetail.start_date), "yyyy-MM-dd")}
+                </span>
+              </Card.Text>
+              <Card.Text>
+                <strong>Ngày kết thúc:</strong>
+                <span className="fw-bold text-info">
+                  {" "}
+                  {format(new Date(orderDetail.end_date), "yyyy-MM-dd")}
+                </span>
+              </Card.Text>
 
               <Card.Text>
                 <strong>Số lượng người lớn:</strong>{" "}

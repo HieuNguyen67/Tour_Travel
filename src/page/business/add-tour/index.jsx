@@ -23,6 +23,7 @@ import { MdOutlineStar } from "react-icons/md";
 import { MdTour } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
 import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import { BLUE_COLOR, RED_COLOR } from "@/constants";
 import "./add-tour.scss";
 import LoadingBackdrop from "@/components/backdrop";
@@ -51,6 +52,8 @@ const AddTourForm = () => {
     destination_locations: [],
   });
   const [provinces, setProvinces] = useState([]);
+  const [end_date, setEnd_date]= useState([]);
+  const [tourStatus, setTourStatus]= useState([]);
   const [regions, setRegions] = useState([]);
   const [images, setImages] = useState([]);
 
@@ -116,6 +119,8 @@ const AddTourForm = () => {
             start_date: formatDate(tour.start_date),
             end_date: formatDate(tour.end_date),
           });
+          setEnd_date(response.data.end_date);
+          setTourStatus(response.data.status);
           setLoading(false);
         }
       } catch (error) {
@@ -170,6 +175,8 @@ const AddTourForm = () => {
   const handleSubmitAdd = async (e) => {
     e.preventDefault();
     setLoading1(true);
+
+    
     if (images.length < 4) {
       alert("Vui lòng chọn từ 4 hình ảnh trở lên");
       return;
@@ -206,9 +213,19 @@ const AddTourForm = () => {
     setLoading1(false);
   };
 
+  const timeZone = "Asia/Ho_Chi_Minh";
+
+  const today = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
+
   const handleSubmitUpdate = async (e) => {
     e.preventDefault();
     setLoading1(true);
+
+    if (new Date(end_date) >= new Date(today) && tourStatus === "Inactive") {
+      alert("Không thể cập nhật tour đang diễn ra. Vui lòng cập nhật khi ngày kết thúc tour nhỏ hơn ngày hiện tại!");
+      setLoading1(false);
+      return;
+    }
 
     try {
       const response = await axios.put(
@@ -278,7 +295,7 @@ const AddTourForm = () => {
     fetchTourImages();
   }, [isHomePage, tour_id]);
 
-  const today = new Date().toISOString().split("T")[0];
+
 
   return (
     <>
