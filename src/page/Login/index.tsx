@@ -69,7 +69,7 @@ const Login: React.FC = () => {
       toast.success("Đăng nhập thành công !");
       if (role === 1) navigate("/");
       else if (role === 2) navigate("/admin/list-customer");
-      else if (role === 3) navigate("/business/home");
+      else if (role === 3) navigate("/business/dashboard");
       else if (role === 4) navigate("/admin/list-customer");
       else if (role === 5) navigate("/admin/news");
       else if (role === 6) navigate("/admin/contact");

@@ -15,3 +15,5 @@ export const YELLOW_COLOR =
 export const BORDER = "3px solid rgb(235, 236, 239)";
 export const GREY = "rgb(235, 236, 239)";
 export const BACKGROUND_RED = "#e01600";
+export const PURPLE_COLOR =
+  "radial-gradient( circle farthest-corner at 10% 20%,  rgba(151,41,247,1) 0%, rgba(24,22,39,1) 90% )";

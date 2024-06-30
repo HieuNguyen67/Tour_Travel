@@ -26,6 +26,7 @@ import { RiRefund2Line } from "react-icons/ri";
 import { FaFilePen } from "react-icons/fa6";
 import { MdPayments } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
+import { AiFillDashboard } from "react-icons/ai";
 
 const HEADER = [
   { id: 1, name: "TRANG CHỦ", link: "/" },
@@ -189,9 +190,19 @@ const SUPPORTMANAGEMENT = [
 const BUSINESS = [
   {
     id: 1,
+    name: "DASHBOARD",
+    icon: <AiFillDashboard />,
+    link: "/business/dashboard",
+  },
+  {
+    id: 2,
     name: "TOUR",
     icon: (
-      <PendingBadge endpoint={`/pending-count-status-tour`} icon={<MdTour />} />
+      <PendingBadge
+        endpoint={`/pending-count-status-tour`}
+        icon={<MdTour />}
+        business_id={"yes"}
+      />
     ),
     link: "/business/list-tour",
     icon2: <IoMdAddCircle />,
@@ -199,46 +210,49 @@ const BUSINESS = [
     link2: "/business/add-tour",
   },
   {
-    id: 2,
+    id: 3,
     name: "ORDER",
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-orders`}
         icon={<FaListAlt />}
+        business_id={"yes"}
       />
     ),
     link: "/business/order-tour",
   },
   {
-    id: 3,
+    id: 4,
     name: "YÊU CẦU HUỶ",
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-request-cancel`}
         icon={<ImCancelCircle />}
+        business_id={"yes"}
       />
     ),
     link: "/business/list-request-cancel",
   },
   {
-    id: 4,
+    id: 5,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-contact-business`}
         icon={<MdContactMail />}
+        business_id={"yes"}
       />
     ),
     name: "LIÊN HỆ TƯ VẤN",
     link: "/business/list-contact",
   },
   {
-    id: 5,
+    id: 6,
     icon: <BiSolidCommentDetail />,
     name: "PHẢN HỒI",
     link: "/business/list-rating",
   },
   {
-    id: 6,
+    id: 7,
     name: "QUY ĐỊNH",
     icon: <IoShieldCheckmark />,
     link: "/business/list-policies",
@@ -247,7 +261,7 @@ const BUSINESS = [
     link2: "/business/add-policies",
   },
   {
-    id: 7,
+    id: 8,
     icon: <RiRefund2Line />,
     name: "CHÍNH SÁCH HUỶ",
     link: "/business/list-policies-cancellation",
@@ -256,7 +270,7 @@ const BUSINESS = [
     link2: "/business/add-policies-cancellation",
   },
   {
-    id: 8,
+    id: 9,
     icon: <ImNewspaper />,
     name: "TIN TỨC",
     link: "/business/list-news",

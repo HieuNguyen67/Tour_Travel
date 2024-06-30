@@ -17,6 +17,7 @@ import TourReviewsDetail from "@/page/business/list-rating/rating-detail";
 import AddPolicyCancellation from "@/page/business/add-policies-cancellation";
 import OrderDetail from "@/page/business/order-detail";
 import ListRequestCancleBusiness from "@/page/business/list-request-cancel";
+import DashboardBusiness from "@/page/business/dashboard";
 
 const BusinessRoutes = () => {
   return (
@@ -64,6 +65,10 @@ const BusinessRoutes = () => {
           <Route
             path="/list-request-cancel"
             element={<ListRequestCancleBusiness />}
+          />
+          <Route
+            path="/dashboard"
+            element={<DashboardBusiness />}
           />
           <Route path="*" element={<Navigate to="/business/list-tour" />} />
         </Routes>
