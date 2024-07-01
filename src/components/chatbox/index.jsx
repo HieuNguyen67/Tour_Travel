@@ -40,7 +40,7 @@ const Chatbox = () => {
       method: "POST",
       url: "https://models3.p.rapidapi.com/",
       params: {
-        model_id: "21",
+        model_id: "27",
         prompt: modifiedInput,
       },
       headers: {

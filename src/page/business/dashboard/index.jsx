@@ -2,7 +2,10 @@ import CountTodo from "@/components/count-todo";
 import { useAuth } from "@/context";
 import { Col, Row } from "react-bootstrap";
 import dashboardimg from "@/assets/image/dashboard.png";
-import { BLUE_COLOR, BORDER, GREY_COLOR, PURPLE_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
+import { BASE_URL_BUSINESS, BLUE_COLOR, BORDER, DARKBLUE, GREY_COLOR, PURPLE_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import MonthlyRevenueChart from "@/components/monthly-revenue-chart";
 
 const TodoItem = ({ endpoint, businessId, label }) => (
   <Col className="border-end">
@@ -26,7 +29,17 @@ const SummaryBox = ({ backgroundColor, endpoint, businessId, label }) => (
         {label}
         <br />
         <span className="fs-1 fw-bold">
-          <CountTodo endpoint={endpoint} business_id={businessId} />
+          {label === "ĐIỂM RATING TRUNG BÌNH" ? (
+            <>
+              {" "}
+              <CountTodo endpoint={endpoint} business_id={businessId} />
+            </>
+          ) : (
+            <>
+              {" "}
+              <CountTodo endpoint={endpoint} business_id={businessId} />
+            </>
+          )}
         </span>
       </p>
     </div>
@@ -35,6 +48,38 @@ const SummaryBox = ({ backgroundColor, endpoint, businessId, label }) => (
 
 const DashboardBusiness = ()=>{
     const {businessId}= useAuth();
+    const [totalRevenue, setTotalRevenue] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+      const fetchTotalRevenue = async () => {
+        try {
+          const response = await axios.get(`${BASE_URL_BUSINESS}/total-revenue/${businessId}`);
+          setTotalRevenue(response.data.total_revenue);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchTotalRevenue();
+    }, [businessId]);
+        const totalPriceInt = parseInt(totalRevenue, 10);
+        const price = totalPriceInt - (totalPriceInt * 10) / 100;
+        const priceservice =(totalPriceInt * 10) / 100; 
+
+      const formatPrice = (price) => {
+        if (typeof price !== "number") {
+          return price;
+        }
+        return new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(price);
+      };
+
     return (
       <>
         <h3 className="fw-bold">
@@ -112,6 +157,66 @@ const DashboardBusiness = ()=>{
             />
           ))}
         </Row>
+        <Row>
+          <Col className="col-12 col-lg-4">
+            {" "}
+            <div
+              style={{ background: DARKBLUE, border: "0px" }}
+              className="shadow-sm rounded-2 p-3 mt-4"
+            >
+              <span className=" text-light fw-bold">
+                TỔNG DOANH THU: <br />
+                {totalRevenue === "NaN" ? (
+                  <>0</>
+                ) : (
+                  <>
+                    {" "}
+                    <span className="fs-2">{formatPrice(totalPriceInt)}</span>
+                  </>
+                )}
+              </span>
+            </div>
+          </Col>
+          <Col className="col-12 col-lg-4">
+            {" "}
+            <div
+              style={{ background: DARKBLUE, border: "0px" }}
+              className="shadow-sm rounded-2 p-3 mt-4"
+            >
+              <span className=" text-light fw-bold">
+                PHÍ DỊCH VỤ (10%): <br />
+                {totalRevenue === "NaN" ? (
+                  <>0</>
+                ) : (
+                  <>
+                    {" "}
+                    <span className="fs-2">{formatPrice(priceservice)}</span>
+                  </>
+                )}
+              </span>
+            </div>
+          </Col>
+          <Col className="col-12 col-lg-4">
+            {" "}
+            <div
+              style={{ background: DARKBLUE, border: "0px" }}
+              className="shadow-sm rounded-2 p-3 mt-4"
+            >
+              <span className="text-light fw-bold">
+                DOANH THU THỰC NHẬN: <br />
+                {totalRevenue === "NaN" ? (
+                  <>0</>
+                ) : (
+                  <>
+                    {" "}
+                    <span className="fs-2">{formatPrice(price)}</span>
+                  </>
+                )}
+              </span>
+            </div>
+          </Col>
+        </Row>
+        <MonthlyRevenueChart businessId={businessId} />
       </>
     );
 }

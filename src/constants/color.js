@@ -17,3 +17,5 @@ export const GREY = "rgb(235, 236, 239)";
 export const BACKGROUND_RED = "#e01600";
 export const PURPLE_COLOR =
   "radial-gradient( circle farthest-corner at 10% 20%,  rgba(151,41,247,1) 0%, rgba(24,22,39,1) 90% )";
+export const DARKBLUE =
+  "linear-gradient( 111.4deg,  rgba(7,7,9,1) 6.5%, rgba(27,24,113,1) 93.2% )";
