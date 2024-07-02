@@ -6,6 +6,12 @@ import { BASE_URL_BUSINESS, BLUE_COLOR, BORDER, DARKBLUE, GREY_COLOR, PURPLE_COL
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MonthlyRevenueChart from "@/components/monthly-revenue-chart";
+import { BiMoneyWithdraw } from "react-icons/bi";
+import { FaListAlt, FaStar } from "react-icons/fa";
+import { MdTour } from "react-icons/md";
+import { ImNewspaper } from "react-icons/im";
+import { FaClipboardList } from "react-icons/fa";
+import OrderStatusRatio from "@/components/chart-ratio-orders";
 
 const TodoItem = ({ endpoint, businessId, label }) => (
   <Col className="border-end">
@@ -19,14 +25,14 @@ const TodoItem = ({ endpoint, businessId, label }) => (
   </Col>
 );
 
-const SummaryBox = ({ backgroundColor, endpoint, businessId, label }) => (
+const SummaryBox = ({ backgroundColor, endpoint, businessId, label, icon }) => (
   <Col>
     <div
       style={{ background: backgroundColor, border: "0px" }}
       className="shadow-sm rounded-2 px-3 pt-3"
     >
       <p className="text-light">
-        {label}
+       {icon} {label}
         <br />
         <span className="fs-1 fw-bold">
           {label === "ĐIỂM RATING TRUNG BÌNH" ? (
@@ -98,7 +104,9 @@ const DashboardBusiness = ()=>{
           style={{ background: "white", border: BORDER }}
           className="rounded-2 shadow-sm p-3"
         >
-          <h5 className="fw-bold">Danh sách cần làm</h5>
+          <h5 className="fw-bold">
+            <FaClipboardList className="fs-4" /> Danh sách cần làm
+          </h5>
           <p style={{ fontSize: "0.8rem", color: " #999" }}>
             Những việc bạn sẽ phải làm
           </p>
@@ -131,29 +139,34 @@ const DashboardBusiness = ()=>{
               backgroundColor: BLUE_COLOR,
               endpoint: "/count-tour-business",
               label: "TỔNG SỐ LƯỢNG TOUR",
+              icon: <MdTour className="fs-4" />,
             },
             {
               backgroundColor: GREY_COLOR,
               endpoint: "/count-booking-business",
               label: "TỔNG SỐ BOOKING",
+              icon: <FaListAlt className="fs-4" />,
             },
             {
               backgroundColor: PURPLE_COLOR,
               endpoint: "/count-news-business",
               label: "TỔNG SỐ BÀI VIẾT",
+              icon: <ImNewspaper className="fs-4" />,
             },
             {
               backgroundColor: RED1_COLOR,
               endpoint: "/average-rating",
               label: "ĐIỂM RATING TRUNG BÌNH",
+              icon: <FaStar className="fs-4" />,
             },
-          ].map(({ backgroundColor, endpoint, label }) => (
+          ].map(({ backgroundColor, endpoint, label, icon }) => (
             <SummaryBox
               key={endpoint}
               backgroundColor={backgroundColor}
               endpoint={endpoint}
               businessId={businessId}
               label={label}
+              icon={icon}
             />
           ))}
         </Row>
@@ -165,7 +178,7 @@ const DashboardBusiness = ()=>{
               className="shadow-sm rounded-2 p-3 mt-4"
             >
               <span className=" text-light fw-bold">
-                TỔNG DOANH THU: <br />
+                <BiMoneyWithdraw className="fs-4" /> TỔNG DOANH THU: <br />
                 {totalRevenue === "NaN" ? (
                   <>0</>
                 ) : (
@@ -184,7 +197,7 @@ const DashboardBusiness = ()=>{
               className="shadow-sm rounded-2 p-3 mt-4"
             >
               <span className=" text-light fw-bold">
-                PHÍ DỊCH VỤ (10%): <br />
+                <BiMoneyWithdraw className="fs-4" /> PHÍ DỊCH VỤ (10%): <br />
                 {totalRevenue === "NaN" ? (
                   <>0</>
                 ) : (
@@ -203,7 +216,7 @@ const DashboardBusiness = ()=>{
               className="shadow-sm rounded-2 p-3 mt-4"
             >
               <span className="text-light fw-bold">
-                DOANH THU THỰC NHẬN: <br />
+                <BiMoneyWithdraw className="fs-4" /> DOANH THU THỰC NHẬN: <br />
                 {totalRevenue === "NaN" ? (
                   <>0</>
                 ) : (
@@ -216,7 +229,24 @@ const DashboardBusiness = ()=>{
             </div>
           </Col>
         </Row>
-        <MonthlyRevenueChart businessId={businessId} />
+        <Row className="mt-4">
+          <Col className="col-lg-6 col-12">
+            <div
+              style={{ background: "white", border: BORDER }}
+              className="rounded-2 shadow-sm p-3"
+            >
+              <MonthlyRevenueChart businessId={businessId} />
+            </div>
+          </Col>
+          <Col className="col-lg-6 col-12">
+            <div
+              style={{ background: "white", border: BORDER }}
+              className="rounded-2 shadow-sm p-3"
+            >
+              <OrderStatusRatio businessId={businessId} />
+            </div>
+          </Col>
+        </Row>
       </>
     );
 }

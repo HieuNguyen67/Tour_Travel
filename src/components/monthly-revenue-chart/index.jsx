@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
-  Container,
   Typography,
-  CircularProgress,
   TextField,
-  Button,
-  Box,
+
 } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { BASE_URL_BUSINESS } from "@/constants";
-import { axisClasses } from "@mui/x-charts/ChartsAxis";
 import { Alert } from "react-bootstrap";
-import { red } from "@mui/material/colors";
 
 const MonthlyRevenueChart = ({ businessId }) => {
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
@@ -39,7 +34,6 @@ const MonthlyRevenueChart = ({ businessId }) => {
   useEffect(() => {
     fetchMonthlyRevenue();
   }, [businessId, year]);
-  console.log(monthlyRevenue);
 
   const handleYearChange = (event) => {
     setYear(event.target.value);
@@ -51,19 +45,7 @@ const MonthlyRevenueChart = ({ businessId }) => {
    parseFloat(item.total_revenue - (item.total_revenue * 10) / 100)
  );
   }
-const chartSetting = {
-  yAxis: [
-    {
-      label: "rainfall (mm)",
-    },
-  ],
 
-  sx: {
-    [`.${axisClasses.left} .${axisClasses.label}`]: {
-      transform: "translate(-20px, 0)",
-    },
-  },
-};
  
 
   if (loading) return <p>Loading...</p>;
@@ -86,13 +68,13 @@ const chartSetting = {
       />
       {monthlyRevenue != null ? (
         <>
-          <div style={{ display: "grid", placeItems: "center" }}>
+          <div style={{ display: "grid", placeItems: "center", width: "100%" }}>
             <BarChart
               xAxis={[{ scaleType: "band", data: labels }]}
-              series={[{ data }]}
+              series={[{ data, color: ["rgb(46, 150, 255)"] }]}
               height={500}
               style={{ width: "100%" }}
-              margin={{ left: 140, right:140 }}
+              margin={{ left: 100 }}
             />
           </div>
         </>

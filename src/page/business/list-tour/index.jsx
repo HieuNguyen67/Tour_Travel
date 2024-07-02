@@ -208,28 +208,9 @@ const TourList = () => {
       width: 110,
       renderCell: renderStarIcon,
     },
-    {
-      field: "departure_location_name",
-      headerName: "Điểm đi",
-      width: 150,
-    },
-    {
-      field: "destination_locations",
-      headerName: "Điểm đến",
-      width: 200,
-      renderCell: (params) => <div>{params.value.join(", ")}</div>,
-    },
+ 
     { field: "tourcategory_name", headerName: "Category", width: 150 },
-    {
-      field: "created_at",
-      headerName: "Ngày tạo",
-      width: 110,
-      renderCell: (params) => (
-        <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
-          {format(new Date(params.value), "dd/MM/yyyy")}
-        </span>
-      ),
-    },
+   
   ];
 
   return (

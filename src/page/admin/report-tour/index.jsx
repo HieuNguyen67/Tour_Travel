@@ -88,7 +88,7 @@ const ReportList = () => {
     {
       field: "tour_name",
       headerName: "Tour",
-      width: 550,
+      width: 400,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -110,23 +110,11 @@ const ReportList = () => {
         />
       ),
     },
-    {
-      field: "account_name",
-      headerName: "Người tố cáo",
-      width: 150,
-      renderCell: (params) => (
-        <div
-          style={{ cursor: "pointer" }}
-          dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
-        />
-      ),
-    },
 
     {
       field: "reportdate",
       headerName: "Ngày tố cáo",
-      width: 200,
+      width: 120,
       renderCell: (params) => (
         <span
           className="fw-bold text-primary"
@@ -134,6 +122,18 @@ const ReportList = () => {
           onClick={() => handleRowClick(params)}
         >
           {format(new Date(params.value), "dd/MM/yyyy")}
+        </span>
+      ),
+    },
+    {
+      headerName: "Thao tác",
+      width: 150,
+      renderCell: (params) => (
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={() => handleRowClick(params)}
+        >
+          Xem chi tiết...
         </span>
       ),
     },

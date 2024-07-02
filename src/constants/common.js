@@ -39,12 +39,18 @@ const HEADER = [
 const ADMIN = [
   {
     id: 1,
+    name: "DASHBOARD",
+    icon: <AiFillDashboard />,
+    link: "/admin/dashboard",
+  },
+  {
+    id: 2,
     icon: <FaUser />,
     name: "KHÁCH HÀNG",
     link: "/admin/list-customer",
   },
   {
-    id: 2,
+    id: 3,
     icon: <MdBusinessCenter />,
     name: "DOANH NGHIỆP",
     link: "/admin/list-business",
@@ -53,7 +59,7 @@ const ADMIN = [
     link2: "/admin/register-user/3",
   },
   {
-    id: 3,
+    id: 4,
     icon: <MdAdminPanelSettings />,
     name: "ADMIN",
     link: "/admin/list-admin",
@@ -62,13 +68,13 @@ const ADMIN = [
     link2: "/admin/register-user/2",
   },
   {
-    id: 4,
+    id: 5,
     icon: <MdPayments />,
     name: "PAYMENTS",
     link: "/admin/list-payments",
   },
   {
-    id: 5,
+    id: 6,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-refunds`}
@@ -79,7 +85,7 @@ const ADMIN = [
     link: "/admin/list-refunds",
   },
   {
-    id: 6,
+    id: 7,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-news`}
@@ -93,7 +99,7 @@ const ADMIN = [
     link2: "/admin/add-news",
   },
   {
-    id: 7,
+    id: 8,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-contact`}
@@ -104,7 +110,7 @@ const ADMIN = [
     link: "/admin/contact",
   },
   {
-    id: 8,
+    id: 9,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-report`}
@@ -115,7 +121,7 @@ const ADMIN = [
     link: "/admin/report",
   },
   {
-    id: 9,
+    id: 10,
     icon: <FaFilePen />,
     name: "AUDIT LOG",
     link: "/admin/admin-actions",

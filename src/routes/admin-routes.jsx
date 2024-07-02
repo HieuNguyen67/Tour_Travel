@@ -18,6 +18,7 @@ import AdminActionsList from "@/page/admin/admin-actions";
 import Payments from "@/page/admin/list-payments";
 import OrderDetail from "@/page/business/order-detail";
 import RefundsList from "@/page/admin/list-refunds";
+import DashboardAdmin from "@/page/admin/dashboard";
 const AdminRoutes = () => {
   const { role } = useAuth();
 
@@ -54,6 +55,7 @@ const AdminRoutes = () => {
             <Route path="/list-payments" element={<Payments />} />
             <Route path="/list-refunds" element={<RefundsList />} />
             <Route path="/order-detail/:order_id" element={<OrderDetail />} />
+            <Route path="/dashboard" element={<DashboardAdmin />} />
 
             <Route path="*" element={<Navigate to="/admin/list-customer" />} />
           </Routes>
