@@ -24,8 +24,11 @@ const useQuery = () => {
 const TourSearch = () => {
   const query = useQuery();
   const initialDestinationLocation = query.get("destinationLocation") || "";
+    const initialDepartureLocation = query.get("departureLocation") || "";
   const initialTourName = query.get("tourName") || "";
-  const [departureLocation, setDepartureLocation] = useState("");
+  const [departureLocation, setDepartureLocation] = useState(
+    initialDepartureLocation
+  );
   const [destinationLocation, setDestinationLocation] = useState(
     initialDestinationLocation
   );
@@ -68,7 +71,12 @@ const TourSearch = () => {
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
         setTours(sortedTours);
-        filterTours(sortedTours, initialDestinationLocation, initialTourName);
+        filterTours(
+          sortedTours,
+          initialDestinationLocation,
+          initialDepartureLocation,
+          initialTourName
+        );
       } catch (err) {
         setLoading1(false);
         console.error("Error fetching tours", err);
@@ -77,7 +85,7 @@ const TourSearch = () => {
     };
 
     fetchTours();
-  }, [initialDestinationLocation, initialTourName]);
+  }, [initialDestinationLocation,initialDepartureLocation, initialTourName]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,11 +125,14 @@ const TourSearch = () => {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   };
 
-  const filterTours = (tours, destinationLocation, tourName) => {
+  const filterTours = (tours, destinationLocation,departureLocation, tourName) => {
     const filtered = tours.filter((tour) => {
       return (
         (destinationLocation
           ? tour.destination_locations.includes(parseInt(destinationLocation))
+          : true) &&
+        (departureLocation
+          ? tour.location_departure_id === parseInt(departureLocation)
           : true) &&
         (tourName
           ? removeDiacritics(tour.tour_name.toLowerCase()).includes(

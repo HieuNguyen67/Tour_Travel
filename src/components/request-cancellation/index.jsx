@@ -17,6 +17,7 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
   const [success, setSuccess] = useState('');
   const{token}= useAuth();
   const [policy_cancellation, setPolicyCancellation] = useState([]);
+  const [loading, setLoading] = useState(false);
 
 
   
@@ -38,6 +39,8 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
   }, [businessId]);
 
   const handleSubmit = async () => {
+        setLoading(true);
+
     try {
       const response = await axios.post(
         `${BASE_URL_CUSTOMER}/request-cancellation/${orderId}/${businessId}/${customerId}`,
@@ -64,6 +67,8 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
         err.response.data.message
       );
     }
+            setLoading(false);
+
   };
 
   return (
@@ -75,17 +80,13 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-
         <Accordion sx={{ background: "#f9f9f9" }} className="my-3">
           <AccordionSummary
             expandIcon={<FaCaretSquareDown className="fs-4" />}
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <span
-              className="fw-bold"
-              style={{ color: TEXT_MAIN_COLOR }}
-            >
+            <span className="fw-bold" style={{ color: TEXT_MAIN_COLOR }}>
               Chính sách huỷ tour của doanh nghiệp
             </span>
           </AccordionSummary>
@@ -128,8 +129,9 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
           style={{ background: RED1_COLOR, border: "0px" }}
           className="col-12 py-3"
           onClick={handleSubmit}
+          disabled={loading}
         >
-          Gửi yêu cầu
+          {loading ? <>Loading...</> : <>Gửi yêu cầu</>}
         </Button>
       </Modal.Footer>
     </Modal>

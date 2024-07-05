@@ -18,9 +18,11 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import searchimg from "@/assets/image/search.png";
 import "@/page/customer/Home/Home.scss";
 import "./tab-search.scss";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 const TabSearch = () => {
   const [destinationLocation, setDestinationLocation] = useState("");
+   const [departurenLocation, setDepartureLocation] = useState("");
   const [tourName, setTourName] = useState("");
   const [loading, setLoading] = useState(true);
   const [regions, setRegions] = useState([]);
@@ -63,13 +65,15 @@ const TabSearch = () => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    navigate(`/list-tour-vietnam/1?destinationLocation=${destinationLocation}`);
+    navigate(`/list-tour-vietnam/1?destinationLocation=${destinationLocation}&departureLocation=${departurenLocation}`);
   };
   const handleSearch1 = () => {
     navigate(`/list-tour-vietnam/1?tourName=${tourName}`);
   };
   const handleSearch3 = () => {
-    navigate(`/list-tour-foreign/2?destinationLocation=${destinationLocation}`);
+    navigate(
+      `/list-tour-foreign/2?destinationLocation=${destinationLocation}&departureLocation=${departurenLocation}`
+    );
   };
   const handleSearch4 = () => {
     navigate(`/list-tour-foreign/2?tourName=${tourName}`);
@@ -142,38 +146,88 @@ const TabSearch = () => {
                           <form onSubmit={handleSearch}>
                             <Row>
                               <Col className="col-lg-11 col-12 mb-3 mb-lg-0">
-                                <FormControl
-                                  fullWidth
-                                  className="shadow rounded"
-                                  color="warning"
-                                >
-                                  <InputLabel id="demo-simple-select-label">
-                                    Bạn muốn đi đến đâu ?
-                                  </InputLabel>
-                                  <Select
-                                    defaultValue=""
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    label="Bạn muốn đi đến đâu ?"
-                                    sx={{
-                                      background: "white",
-                                    }}
-                                    value={destinationLocation}
-                                    onChange={(e) =>
-                                      setDestinationLocation(e.target.value)
-                                    }
-                                    required
-                                  >
-                                    {provinces.map((province) => (
-                                      <MenuItem
-                                        key={province.location_id}
-                                        value={province.location_id}
+                                <Row className="">
+                                  <Col>
+                                    {" "}
+                                    <FormControl
+                                      fullWidth
+                                      className="shadow rounded"
+                                      color="warning"
+                                    >
+                                      <InputLabel id="demo-simple-select-label">
+                                        Nơi khởi hành
+                                      </InputLabel>
+                                      <Select
+                                        defaultValue=""
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Nơi khởi hành"
+                                        sx={{
+                                          background: "white",
+                                        }}
+                                        value={departurenLocation}
+                                        onChange={(e) =>
+                                          setDepartureLocation(e.target.value)
+                                        }
+                                        required
                                       >
-                                        {province.location_name}
-                                      </MenuItem>
-                                    ))}
-                                  </Select>
-                                </FormControl>
+                                        {provinces.map((province) => (
+                                          <MenuItem
+                                            key={province.location_id}
+                                            value={province.location_id}
+                                          >
+                                            {province.location_name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Col>
+                                  <Col className="col-lg-1 col-12">
+                                    <div
+                                      style={{
+                                        display: "grid",
+                                        placeItems: "center",
+                                      }}
+                                      className="my-3 my-lg-2"
+                                    >
+                                      <FaArrowRightArrowLeft className="fs-2" />
+                                    </div>
+                                  </Col>
+                                  <Col>
+                                    <FormControl
+                                      fullWidth
+                                      className="shadow rounded"
+                                      color="warning"
+                                    >
+                                      <InputLabel id="demo-simple-select-label">
+                                        Hãy chọn điểm đến
+                                      </InputLabel>
+                                      <Select
+                                        defaultValue=""
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label=" Hãy chọn điểm đến"
+                                        sx={{
+                                          background: "white",
+                                        }}
+                                        value={destinationLocation}
+                                        onChange={(e) =>
+                                          setDestinationLocation(e.target.value)
+                                        }
+                                        required
+                                      >
+                                        {provinces.map((province) => (
+                                          <MenuItem
+                                            key={province.location_id}
+                                            value={province.location_id}
+                                          >
+                                            {province.location_name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Col>
+                                </Row>
                               </Col>
                               <Col className="col-lg-1 col-12">
                                 <Button
@@ -248,38 +302,89 @@ const TabSearch = () => {
                           <form onSubmit={handleSearch3}>
                             <Row>
                               <Col className="col-lg-11 col-12 mb-3 mb-lg-0">
-                                <FormControl
-                                  fullWidth
-                                  className="shadow rounded"
-                                  color="warning"
-                                >
-                                  <InputLabel id="demo-simple-select-label">
-                                    Bạn muốn đi đến đâu ?
-                                  </InputLabel>
-                                  <Select
-                                    defaultValue=""
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    label="Bạn muốn đi đến đâu ?"
-                                    sx={{
-                                      background: "white",
-                                    }}
-                                    value={destinationLocation}
-                                    onChange={(e) =>
-                                      setDestinationLocation(e.target.value)
-                                    }
-                                    required
-                                  >
-                                    {regions.map((region) => (
-                                      <MenuItem
-                                        key={region.location_id}
-                                        value={region.location_id}
+                                <Row>
+                                  <Col>
+                                    {" "}
+                                    <FormControl
+                                      fullWidth
+                                      className="shadow rounded"
+                                      color="warning"
+                                    >
+                                      <InputLabel id="demo-simple-select-label">
+                                        Nơi khởi hành
+                                      </InputLabel>
+                                      <Select
+                                        defaultValue=""
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Nơi khởi hành"
+                                        sx={{
+                                          background: "white",
+                                        }}
+                                        value={departurenLocation}
+                                        onChange={(e) =>
+                                          setDepartureLocation(e.target.value)
+                                        }
+                                        required
                                       >
-                                        {region.location_name}
-                                      </MenuItem>
-                                    ))}
-                                  </Select>
-                                </FormControl>
+                                        {provinces.map((province) => (
+                                          <MenuItem
+                                            key={province.location_id}
+                                            value={province.location_id}
+                                          >
+                                            {province.location_name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Col>
+                                  <Col className="col-lg-1 col-12">
+                                    <div
+                                      style={{
+                                        display: "grid",
+                                        placeItems: "center",
+                                      }}
+                                      className="my-3 my-lg-2"
+                                    >
+                                      <FaArrowRightArrowLeft className="fs-2" />
+                                    </div>
+                                  </Col>
+                                  <Col>
+                                    {" "}
+                                    <FormControl
+                                      fullWidth
+                                      className="shadow rounded"
+                                      color="warning"
+                                    >
+                                      <InputLabel id="demo-simple-select-label">
+                                        Hãy chọn điểm đến
+                                      </InputLabel>
+                                      <Select
+                                        defaultValue=""
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Hãy chọn điểm đến"
+                                        sx={{
+                                          background: "white",
+                                        }}
+                                        value={destinationLocation}
+                                        onChange={(e) =>
+                                          setDestinationLocation(e.target.value)
+                                        }
+                                        required
+                                      >
+                                        {regions.map((region) => (
+                                          <MenuItem
+                                            key={region.location_id}
+                                            value={region.location_id}
+                                          >
+                                            {region.location_name}
+                                          </MenuItem>
+                                        ))}
+                                      </Select>
+                                    </FormControl>
+                                  </Col>
+                                </Row>
                               </Col>
                               <Col className="col-lg-1 col-12">
                                 <Button

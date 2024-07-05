@@ -20,8 +20,7 @@ const RefundDetailsModal = ({ show, handleClose, refundId }) => {
     const {token}= useAuth();
   useEffect(() => {
     if (refundId) {
-      axios
-        .get(`${BASE_URL_ADMIN}/refunds-detail/${refundId}`, {
+      axios.get(`${BASE_URL_ADMIN}/refunds-detail/${refundId}`, {
           headers: {
             Authorization: `Bearer ${token}`, 
           },
@@ -177,6 +176,9 @@ const RefundDetailsModal = ({ show, handleClose, refundId }) => {
           </p>
           <p>
             <strong>Số tài khoản:</strong> {refundDetails.bank_account_number}
+          </p>
+          <p>
+            <strong>Email:</strong> {refundDetails.email}
           </p>
         </div>
 

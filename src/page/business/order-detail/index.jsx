@@ -44,6 +44,7 @@ import LoadingBackdrop from "@/components/backdrop";
 import PaymentMethod from "@/components/payment-method";
 import RateTour from "@/components/rate-tour";
 import CancellationRequestModal from "@/components/request-cancellation";
+import PassengersList from "@/components/list-passenger-order";
 
 const steps = ["Chờ xác nhận", "Đã xác nhận", "Đã hoàn thành", "Đã huỷ"];
 
@@ -465,7 +466,7 @@ const OrderDetail = () => {
       <Row className="justify-content-md-center">
         <Col className="col-12">
           <Card className="my-2">
-            <Card.Header>Thông tin khách hàng</Card.Header>
+            <Card.Header>Thông tin liên hệ</Card.Header>
             <Card.Body style={{ color: TEXT_MAIN_COLOR }}>
               <Card.Text>
                 <strong>Tên khách hàng:</strong> {orderDetail.customer_name}
@@ -532,6 +533,8 @@ const OrderDetail = () => {
           </Col>
         </Row>
       )}
+      <h5 className="fw-bold ">DANH SÁCH HÀNH KHÁCH</h5>
+      <PassengersList orderId={orderDetail.order_id} />
       {role == 3 ? (
         <>
           <form>

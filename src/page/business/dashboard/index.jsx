@@ -93,8 +93,8 @@ const DashboardBusiness = ()=>{
           <img
             src={dashboardimg}
             style={{
-              width: "3.5rem",
-              height: "3.5rem",
+              width: "4rem",
+              height: "4rem",
               objectFit: "cover",
             }}
           />{" "}

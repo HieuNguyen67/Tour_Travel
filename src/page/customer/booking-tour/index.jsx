@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, BASE_URL_USER, RED1_COLOR, TEXT_RED_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, BASE_URL_USER, BORDER, RED1_COLOR, TEXT_RED_COLOR } from "@/constants";
 import {
   Col,
   Container,
@@ -25,9 +25,11 @@ import pricetagimg from "@/assets/image/pricetag.png";
 import infocontactimg from "@/assets/image/infocontact.png";
 import customerimg from "@/assets/image/customer.png";
 import paymentimg from "@/assets/image/payment.png";
+import listimg from "@/assets/image/list.png";
 import { FaChevronRight } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { IoMdRemove } from "react-icons/io";
+import { FaUser } from "react-icons/fa6";
 
 import PaymentMethod from "@/components/payment-method";
 
@@ -38,6 +40,7 @@ const BookTour = () => {
   const [childQuantity, setChildQuantity] = useState(0);
   const [infantQuantity, setInfantQuantity] = useState(0);
   const [note, setNote] = useState("");
+  const [passengers, setPassengers] = useState([]);
   const [message, setMessage] = useState("");
   const [tour, setTour] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -45,7 +48,6 @@ const BookTour = () => {
   const [loading, setLoading] = useState(true);
   const [loading1, setLoading1] = useState(true);
   const [loading2, setLoading2] = useState(false);
-
   const [formData, setFormData] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("captureWallet");
   const [paymentUrl, setPaymentUrl] = useState("");
@@ -131,7 +133,7 @@ const BookTour = () => {
       (type === "infant" ? value : infantQuantity);
 
     if (tour && totalQuantity > tour.quantity) {
-      alert(`Tổng số lượng không được vượt quá ${tour.quantity}`);
+       toast.error(`Tổng số lượng không được vượt quá ${tour.quantity}`);
     } else {
       if (type === "adult") {
         setAdultQuantity(value);
@@ -175,7 +177,53 @@ const BookTour = () => {
       handleQuantityChange(type, currentQuantity - 1);
     }
   };
-  const handleBookTour = async () => {
+
+  useEffect(() => {
+
+    const updatedPassengers = [];
+
+    for (let i = 0; i < adultQuantity; i++) {
+      updatedPassengers.push({
+        name: "",
+        birthdate: "",
+        gender: "",
+        passport_number: "",
+        type: "Người lớn",
+      });
+    }
+    for (let i = 0; i < childQuantity; i++) {
+      updatedPassengers.push({
+        name: "",
+        birthdate: "",
+        gender: "",
+        passport_number: "",
+        type: "Trẻ em",
+      });
+    }
+    for (let i = 0; i < infantQuantity; i++) {
+      updatedPassengers.push({
+        name: "",
+        birthdate: "",
+        gender: "",
+        passport_number: "",
+        type: "Trẻ nhỏ",
+      });
+    }
+
+    setPassengers(updatedPassengers);
+  }, [adultQuantity, childQuantity, infantQuantity]);
+
+  const handlePassengerChange = (index, e) => {
+    const { name, value } = e.target;
+    setPassengers((prevPassengers) => {
+      const updatedPassengers = [...prevPassengers];
+      updatedPassengers[index][name] = value;
+      return updatedPassengers;
+    });
+  };
+
+  const handleBookTour = async (e) => {
+    e.preventDefault();
     setLoading2(true);
     try {
       if (paymentMethod === "bank") {
@@ -185,7 +233,8 @@ const BookTour = () => {
             adult_quantity: adultQuantity,
             child_quantity: childQuantity,
             infant_quantity: infantQuantity,
-            note,
+            note: note,
+            passengers: passengers,
           },
           {
             headers: {
@@ -208,6 +257,7 @@ const BookTour = () => {
             infant_quantity: infantQuantity,
             note: note,
             paymentMethod: paymentMethod,
+            passengers: passengers,
           },
           {
             headers: {
@@ -243,6 +293,8 @@ const BookTour = () => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString("vi-VN", options);
   };    
+
+    const today = new Date().toISOString().split("T")[0];
 
   return (
     <>
@@ -427,200 +479,298 @@ const BookTour = () => {
             />{" "}
             HÀNH KHÁCH
           </h3>
-          <Row>
-            <Col className="col-lg-9 col-5">
-              <h5>Người lớn</h5>
-              <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
-                {" "}
-                {formatPrice(tour.adult_price)}
-              </h3>
-              <p>Trên 11 tuổi</p>
-            </Col>
-            <Col className="col-lg-3 col-7 mt-4">
-              <Row>
-                <Col>
+          <form onSubmit={handleBookTour}>
+            <Row>
+              <Col className="col-lg-9 col-5">
+                <h5>Người lớn</h5>
+                <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
                   {" "}
-                  <div style={{ display: "grid", placeItems: "end" }}>
+                  {formatPrice(tour.adult_price)}
+                </h3>
+                <p>Trên 11 tuổi</p>
+              </Col>
+              <Col className="col-lg-3 col-7 mt-4">
+                <Row>
+                  <Col>
+                    {" "}
+                    <div style={{ display: "grid", placeItems: "end" }}>
+                      <Button
+                        style={{ border: "0px", background: RED1_COLOR }}
+                        onClick={() => handleDecrement1("adult")}
+                        className="col-lg-7 col-md-7 col-12"
+                      >
+                        <IoMdRemove className="fs-4" />
+                      </Button>
+                    </div>
+                  </Col>
+                  <Col>
+                    {" "}
+                    <Form.Control
+                      type="number"
+                      value={adultQuantity}
+                      onChange={(e) =>
+                        handleQuantityChange("adult", parseInt(e.target.value))
+                      }
+                      min={1}
+                      className=" col-12"
+                    />
+                  </Col>
+                  <Col>
                     <Button
                       style={{ border: "0px", background: RED1_COLOR }}
-                      onClick={() => handleDecrement1("adult")}
+                      onClick={() => handleIncrement("adult")}
                       className="col-lg-7 col-md-7 col-12"
                     >
-                      <IoMdRemove className="fs-4" />
+                      <IoMdAdd className="fs-4" />
                     </Button>
-                  </div>
-                </Col>
-                <Col>
-                  {" "}
-                  <Form.Control
-                    type="number"
-                    value={adultQuantity}
-                    onChange={(e) =>
-                      handleQuantityChange("adult", parseInt(e.target.value))
-                    }
-                    min={1}
-                    className=" col-12"
-                  />
-                </Col>
-                <Col>
-                  <Button
-                    style={{ border: "0px", background: RED1_COLOR }}
-                    onClick={() => handleIncrement("adult")}
-                    className="col-lg-7 col-md-7 col-12"
-                  >
-                    <IoMdAdd className="fs-4" />
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-          <hr />
-          <Row>
-            <Col className="col-lg-9 col-5">
-              <h5>Trẻ em</h5>
-              <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
-                {" "}
-                {formatPrice(tour.child_price)}
-              </h3>
-              <p>Từ 5 - 11 tuổi</p>
-            </Col>
-            <Col className="col-lg-3 mt-4 col-7">
-              <Row>
-                <Col>
-                  {" "}
-                  <div style={{ display: "grid", placeItems: "end" }}>
-                    <Button
-                      style={{ border: "0px", background: RED1_COLOR }}
-                      onClick={() => handleDecrement("child")}
-                      className="col-lg-7 col-md-7 col-12"
-                    >
-                      <IoMdRemove className="fs-4" />
-                    </Button>
-                  </div>
-                </Col>
-                <Col>
-                  {" "}
-                  <Form.Control
-                    type="number"
-                    value={childQuantity}
-                    onChange={(e) =>
-                      handleQuantityChange("child", parseInt(e.target.value))
-                    }
-                    min={0}
-                    className="col-12"
-                  />
-                </Col>
-                <Col>
-                  <Button
-                    style={{ border: "0px", background: RED1_COLOR }}
-                    onClick={() => handleIncrement("child")}
-                    className="col-lg-7 col-md-7 col-12"
-                  >
-                    <IoMdAdd className="fs-4" />
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-          <hr />
-          <Row>
-            <Col className="col-lg-9 col-5">
-              <h5>Trẻ nhỏ</h5>
-              <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
-                {" "}
-                {formatPrice(tour.infant_price)}
-              </h3>
-              <p>{"<"} 5 tuổi</p>
-            </Col>
-            <Col className="col-lg-3 mt-4 col-7">
-              <Row>
-                <Col>
-                  {" "}
-                  <div style={{ display: "grid", placeItems: "end" }}>
-                    <Button
-                      style={{ border: "0px", background: RED1_COLOR }}
-                      onClick={() => handleDecrement("infant")}
-                      className="col-lg-7 col-md-7 col-12"
-                    >
-                      <IoMdRemove className="fs-4" />
-                    </Button>
-                  </div>
-                </Col>
-                <Col>
-                  {" "}
-                  <Form.Control
-                    type="number"
-                    value={infantQuantity}
-                    onChange={(e) =>
-                      handleQuantityChange("infant", parseInt(e.target.value))
-                    }
-                    min={0}
-                    className="col-12"
-                  />
-                </Col>
-                <Col>
-                  <Button
-                    style={{ border: "0px", background: RED1_COLOR }}
-                    onClick={() => handleIncrement("infant")}
-                    className="col-lg-7 col-md-7 col-12"
-                  >
-                    <IoMdAdd className="fs-4" />
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-          <hr />
-          <h4 className="text-end">
-            TỔNG TIỀN: &nbsp;
-            <span className="fw-bold fs-2" style={{ color: TEXT_RED_COLOR }}>
-              {formatPrice(totalPrice)}
-            </span>
-          </h4>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <hr />
 
-          <Form.Group className="mt-4">
-            <Form.Label>
+            <Row>
+              <Col className="col-lg-9 col-5">
+                <h5>Trẻ em</h5>
+                <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
+                  {" "}
+                  {formatPrice(tour.child_price)}
+                </h3>
+                <p>Từ 5 - 11 tuổi</p>
+              </Col>
+              <Col className="col-lg-3 mt-4 col-7">
+                <Row>
+                  <Col>
+                    {" "}
+                    <div style={{ display: "grid", placeItems: "end" }}>
+                      <Button
+                        style={{ border: "0px", background: RED1_COLOR }}
+                        onClick={() => handleDecrement("child")}
+                        className="col-lg-7 col-md-7 col-12"
+                      >
+                        <IoMdRemove className="fs-4" />
+                      </Button>
+                    </div>
+                  </Col>
+                  <Col>
+                    {" "}
+                    <Form.Control
+                      type="number"
+                      value={childQuantity}
+                      onChange={(e) =>
+                        handleQuantityChange("child", parseInt(e.target.value))
+                      }
+                      min={0}
+                      className="col-12"
+                    />
+                  </Col>
+                  <Col>
+                    <Button
+                      style={{ border: "0px", background: RED1_COLOR }}
+                      onClick={() => handleIncrement("child")}
+                      className="col-lg-7 col-md-7 col-12"
+                    >
+                      <IoMdAdd className="fs-4" />
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <hr />
+            <Row>
+              <Col className="col-lg-9 col-5">
+                <h5>Trẻ nhỏ</h5>
+                <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
+                  {" "}
+                  {formatPrice(tour.infant_price)}
+                </h3>
+                <p>{"<"} 5 tuổi</p>
+              </Col>
+              <Col className="col-lg-3 mt-4 col-7">
+                <Row>
+                  <Col>
+                    {" "}
+                    <div style={{ display: "grid", placeItems: "end" }}>
+                      <Button
+                        style={{ border: "0px", background: RED1_COLOR }}
+                        onClick={() => handleDecrement("infant")}
+                        className="col-lg-7 col-md-7 col-12"
+                      >
+                        <IoMdRemove className="fs-4" />
+                      </Button>
+                    </div>
+                  </Col>
+                  <Col>
+                    {" "}
+                    <Form.Control
+                      type="number"
+                      value={infantQuantity}
+                      onChange={(e) =>
+                        handleQuantityChange("infant", parseInt(e.target.value))
+                      }
+                      min={0}
+                      className="col-12"
+                    />
+                  </Col>
+                  <Col>
+                    <Button
+                      style={{ border: "0px", background: RED1_COLOR }}
+                      onClick={() => handleIncrement("infant")}
+                      className="col-lg-7 col-md-7 col-12"
+                    >
+                      <IoMdAdd className="fs-4" />
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <hr />
+            <h4 className="text-end">
+              TỔNG TIỀN: &nbsp;
+              <span className="fw-bold fs-2" style={{ color: TEXT_RED_COLOR }}>
+                {formatPrice(totalPrice)}
+              </span>
+            </h4>
+
+            <h3 className="text-center fw-bold my-5">
               {" "}
-              Ghi chú/ Nhập danh sách người đi cùng (Họ tên - Giới tính - Ngày
-              sinh):
-            </Form.Label>
+              <img
+                src={listimg}
+                style={{
+                  width: "3.5rem",
+                  height: "3.5rem",
+                  objectFit: "cover",
+                }}
+              />{" "}
+              DANH SÁCH KHÁCH HÀNG ĐI TOUR
+            </h3>
+            {passengers.map((passenger, index) => (
+              <div
+                key={index}
+                style={{ border: "2px solid black" , background:'white'}}
+                className="rounded-4 shadow-sm p-3 mb-3"
+              >
+                <h5>
+                  <FaUser /> Khách hàng {index + 1} (
+                  {passenger.type.charAt(0).toUpperCase() +
+                    passenger.type.slice(1)}{" "}
+                  )
+                </h5>
+                <Row className="row-cols-lg-4 row-cols-1">
+                  <Col>
+                    {" "}
+                    <Form.Group className="my-lg-3 mb-2">
+                      <Form.Label className="fw-bold">
+                        Họ tên:<span className="text-danger">*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="name"
+                        value={passenger.name}
+                        onChange={(e) => handlePassengerChange(index, e)}
+                        required
+                        placeholder="Nhập họ tên hành khách"
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group className="my-lg-3 mb-2">
+                      <Form.Label className="fw-bold">
+                        Ngày sinh:<span className="text-danger">*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="date"
+                        name="birthdate"
+                        value={passenger.birthdate}
+                        onChange={(e) => handlePassengerChange(index, e)}
+                        required
+                        max={today}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    {" "}
+                    <Form.Group className="my-lg-3 mb-2">
+                      <Form.Label className="fw-bold">
+                        Giới tính:<span className="text-danger">*</span>
+                      </Form.Label>
+                      <Form.Select
+                        name="gender"
+                        value={passenger.gender}
+                        onChange={(e) => handlePassengerChange(index, e)}
+                        required
+                      >
+                        <option value="">Giới tính</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    {" "}
+                    <Form.Group className="my-lg-3 mb-2 ">
+                      <Form.Label className="fw-bold">
+                        Số CCCD/Passport (Nếu có):
+                        <span className="text-danger"></span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="passport_number"
+                        value={passenger.passport_number}
+                        onChange={(e) => handlePassengerChange(index, e)}
+                        
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
+            ))}
+            <Form.Group className="mt-4">
+              <Form.Label className="fw-bold">
+                {" "}
+                Quý khách có ghi chú lưu ý gì, hãy nói với chúng tôi ! :
+              </Form.Label>
 
-            <Form.Control
-              as="textarea"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              style={{ height: "8rem" }}
+              <Form.Control
+                as="textarea"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                style={{ height: "8rem" }}
+              />
+            </Form.Group>
+            <h3 className="text-center fw-bold my-5">
+              {" "}
+              <img
+                src={paymentimg}
+                style={{
+                  width: "3.5rem",
+                  height: "3.5rem",
+                  objectFit: "cover",
+                }}
+              />{" "}
+              PHƯƠNG THỨC THANH TOÁN
+            </h3>
+            <PaymentMethod
+              paymentMethod={paymentMethod}
+              setPaymentMethod={setPaymentMethod}
             />
-          </Form.Group>
-          <h3 className="text-center fw-bold my-5">
-            {" "}
-            <img
-              src={paymentimg}
-              style={{
-                width: "3.5rem",
-                height: "3.5rem",
-                objectFit: "cover",
-              }}
-            />{" "}
-            PHƯƠNG THỨC THANH TOÁN
-          </h3>
-          <PaymentMethod
-            paymentMethod={paymentMethod}
-            setPaymentMethod={setPaymentMethod}
-          />
 
-          {/* {message && <p>{message}</p>} */}
+            {/* {message && <p>{message}</p>} */}
 
-          <div style={{ display: "grid", placeItems: "end" }} className="my-4">
-            <Button
-              style={{ border: "0px", background: RED1_COLOR }}
-              onClick={handleBookTour}
-              disabled={loading2}
-              className="py-3 col-lg-3 col-12"
+            <div
+              style={{ display: "grid", placeItems: "end" }}
+              className="my-4"
             >
-              {loading2 ? <>Loading...</> : <>Đặt Ngay</>}
-            </Button>
-          </div>
+              <Button
+                style={{ border: "0px", background: RED1_COLOR }}
+                disabled={loading2}
+                className="py-3 col-lg-3 col-12"
+                type="submit"
+              >
+                {loading2 ? <>Loading...</> : <>Đặt Ngay</>}
+              </Button>
+            </div>
+          </form>
         </div>
       </Container>
     </>

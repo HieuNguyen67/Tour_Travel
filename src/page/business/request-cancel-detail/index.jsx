@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
-import { BASE_URL_BUSINESS, BASE_URL_USER, BLUE_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
+import { BASE_URL_BUSINESS, BASE_URL_USER, BLUE_COLOR, GREEN_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
 import { useAuth } from "@/context";
 import { MdCancel } from "react-icons/md";
 import { format } from "date-fns";
@@ -14,6 +14,7 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
     const [status, setStatus] = useState("");
+    const [statusold, setStatusold] = useState("");
   const {token, role}= useAuth();
   useEffect(() => {
     const fetchRequestDetail = async () => {
@@ -28,6 +29,8 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
         );
         setRequestDetail(response.data);
         setStatus(response.data.status);
+                setStatusold(response.data.status);
+
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -92,10 +95,22 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
               <p>
                 <strong>Trạng thái thanh toán:</strong>{" "}
                 <span className="fw-bold text-primary">
-                  {requestDetail.status_payment === "Paid" ? (
-                    <>Đã thanh toán</>
+              
+                  {requestDetail.status_payment === "Unpaid" ? (
+                    <>
+                      <Button
+                        style={{ background: BLUE_COLOR, border: "0px" }}
+                      >
+                        Chưa thanh toán
+                      </Button>
+                    </>
                   ) : (
-                    <>Chưa thanh toán</>
+                    <Button
+                      style={{ background: GREEN_COLOR, border: "0px" }}
+                      className=" text-dark"
+                    >
+                      Đã thanh toán
+                    </Button>
                   )}
                 </span>
               </p>
@@ -175,13 +190,13 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
             {role == 3 ? (
               <>
                 {" "}
-                {status === "Confirm" ? (
+                {statusold === "Confirm" ? (
                   <>
                     <Button style={{ background: RED1_COLOR, border: "0px" }}>
                       Bạn đã gửi yêu cầu hoàn tiền của khách hàng đến hệ thống!
                     </Button>
                   </>
-                ) : status === "Reject" ? (
+                ) : statusold === "Reject" ? (
                   <>
                     <Button style={{ background: RED1_COLOR, border: "0px" }}>
                       Bạn đã từ chối yêu cầu huỷ của khách hàng!
