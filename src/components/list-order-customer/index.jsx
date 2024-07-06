@@ -107,7 +107,7 @@ const OrdersList = ({ customerId, status }) => {
     {
       field: "code_order",
       headerName: "Mã Booking",
-      width: 150,
+      width: 120,
       renderCell: (params) => (
         <span className="fw-bold">{params.value}</span>
       ),
@@ -157,7 +157,7 @@ const OrdersList = ({ customerId, status }) => {
         );
       },
     },
-    { field: "tour_name", headerName: "Tour Name", width: 200 },
+    { field: "tour_name", headerName: "Tour", width: 200 },
     { field: "adult_quantity", headerName: "Người lớn", width: 100 },
     { field: "child_quantity", headerName: "Trẻ em", width: 100 },
     { field: "infant_quantity", headerName: "Trẻ nhỏ", width: 100 },
@@ -198,7 +198,7 @@ const OrdersList = ({ customerId, status }) => {
     {
       field: "booking_date_time",
       headerName: "Ngày đặt",
-      width: 200,
+      width: 160,
       renderCell: (params) => (
         <span className="fw-bold text-primary">
           {format(new Date(params.value), "dd/MM/yyyy HH:mm:ss")}
@@ -206,7 +206,6 @@ const OrdersList = ({ customerId, status }) => {
       ),
     },
 
-    { field: "note", headerName: "Ghi chú", width: 200 },
   ];
 
   return (
@@ -218,7 +217,7 @@ const OrdersList = ({ customerId, status }) => {
           getRowId={(row) => row.code_order}
           onRowClick={handleRowClick}
           
-          getRowHeight={(params) => 100}
+          getRowHeight={(params) => 80}
         />
       </div>
     </>

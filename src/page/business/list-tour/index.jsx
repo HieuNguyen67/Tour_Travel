@@ -68,17 +68,7 @@ const TourList = () => {
   };
 
   const columns = [
-    {
-      field: "tour_id",
-      headerName: "ID",
-      width: 90,
-      renderCell: (params) => (
-        <div
-          style={{ cursor: "pointer" }}
-          dangerouslySetInnerHTML={{ __html: params.value }}
-        />
-      ),
-    },
+    
     {
       field: "image",
       headerName: "Hình ảnh",
@@ -136,7 +126,7 @@ const TourList = () => {
     {
       field: "tour_name",
       headerName: "Tour",
-      width: 330,
+      width: 300,
       renderCell: (params) => (
         <div
           className="fw-bold"
@@ -158,28 +148,6 @@ const TourList = () => {
       ),
     },
     {
-      field: "formattedPrice_child",
-      headerName: "Giá trẻ em",
-      width: 150,
-      renderCell: (params) => (
-        <div
-          className="fw-bold text-danger"
-          dangerouslySetInnerHTML={{ __html: params.value }}
-        />
-      ),
-    },
-    {
-      field: "formattedPrice_infant",
-      headerName: "Giá trẻ nhỏ",
-      width: 110,
-      renderCell: (params) => (
-        <div
-          className="fw-bold text-danger"
-          dangerouslySetInnerHTML={{ __html: params.value }}
-        />
-      ),
-    },
-    {
       field: "start_date",
       headerName: "Ngày bắt đầu",
       width: 110,
@@ -189,28 +157,17 @@ const TourList = () => {
         </span>
       ),
     },
+
+    { field: "quantity", headerName: "Số lượng còn", width: 100 },
     {
-      field: "end_date",
-      headerName: "Ngày kết thúc",
-      width: 110,
+      headerName: "Thao tác",
+      width: 200,
       renderCell: (params) => (
         <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
-          {format(new Date(params.value), "dd/MM/yyyy")}
+          <Button variant="dark">Xem DS Hành Khách</Button>
         </span>
       ),
     },
-    { field: "quantity", headerName: "Số lượng", width: 110 },
-
-    { field: "vehicle", headerName: "Phương tiện", width: 110 },
-    {
-      field: "hotel",
-      headerName: "Khách sạn",
-      width: 110,
-      renderCell: renderStarIcon,
-    },
- 
-    { field: "tourcategory_name", headerName: "Category", width: 150 },
-   
   ];
 
   return (

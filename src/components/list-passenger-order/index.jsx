@@ -66,6 +66,7 @@ const PassengersList = ({ orderId }) => {
           pageSize={5}
           rowsPerPageOptions={[5]}
           getRowId={(row) => row.passenger_id}
+          style={{background:'white'}}
         />
       </div>
     </div>

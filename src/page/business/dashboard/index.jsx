@@ -1,6 +1,6 @@
 import CountTodo from "@/components/count-todo";
 import { useAuth } from "@/context";
-import { Col, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import dashboardimg from "@/assets/image/dashboard.png";
 import { BASE_URL_BUSINESS, BLUE_COLOR, BORDER, DARKBLUE, GREY_COLOR, PURPLE_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
 import { useEffect, useState } from "react";
@@ -12,6 +12,11 @@ import { MdTour } from "react-icons/md";
 import { ImNewspaper } from "react-icons/im";
 import { FaClipboardList } from "react-icons/fa";
 import OrderStatusRatio from "@/components/chart-ratio-orders";
+import { subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, format } from 'date-fns';
+import { formatInTimeZone } from "date-fns-tz";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+
+const timeZone = 'Asia/Ho_Chi_Minh';
 
 const TodoItem = ({ endpoint, businessId, label }) => (
   <Col className="border-end">
@@ -57,21 +62,59 @@ const DashboardBusiness = ()=>{
     const [totalRevenue, setTotalRevenue] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [dateRange, setDateRange] = useState("thisWeek");
+      const today = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
 
-    useEffect(() => {
-      const fetchTotalRevenue = async () => {
-        try {
-          const response = await axios.get(`${BASE_URL_BUSINESS}/total-revenue/${businessId}`);
-          setTotalRevenue(response.data.total_revenue);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
+    const [startDate, setStartDate] = useState(
+      format(startOfWeek(today, { weekStartsOn: 1 }), "yyyy-MM-dd")
+    );
+    const [endDate, setEndDate] = useState(
+      format(endOfWeek(today, { weekStartsOn: 1 }), "yyyy-MM-dd")
+    );
 
-      fetchTotalRevenue();
-    }, [businessId]);
+    const handleDateRangeChange = (event) => {
+      const value = event.target.value;
+      setDateRange(value);
+
+
+      if (value === "thisWeek") {
+        setStartDate(
+          format(startOfWeek(today, { weekStartsOn: 1 }), "yyyy-MM-dd")
+        );
+        setEndDate(format(endOfWeek(today, { weekStartsOn: 1 }), "yyyy-MM-dd"));
+      } else if (value === "thisMonth") {
+        setStartDate(format(startOfMonth(today), "yyyy-MM-dd"));
+        setEndDate(format(endOfMonth(today), "yyyy-MM-dd"));
+      } else if (value === "last3Months") {
+        setStartDate(format(startOfMonth(subMonths(today, 3)), "yyyy-MM-dd"));
+        setEndDate(format(endOfMonth(today), "yyyy-MM-dd"));
+      } else {
+        setStartDate("");
+        setEndDate("");
+      }
+    };
+     useEffect(() => {
+       const fetchTotalRevenue = async () => {
+         if (businessId && startDate && endDate) {
+           setError(null);
+           setTotalRevenue(null);
+
+           try {
+             const response = await axios.get(
+               `${BASE_URL_BUSINESS}/total-revenue/${businessId}?startDate=${startDate}&endDate=${endDate}`
+             );
+                      setTotalRevenue(response.data.total_revenue);
+                      console.log(response.data.total_revenue);                      
+
+           } catch (error) {
+             setError("Có lỗi xảy ra. Vui lòng thử lại sau.");
+           }
+         }
+       };
+
+       fetchTotalRevenue();
+     }, [businessId, startDate, endDate]);
+
         const totalPriceInt = parseInt(totalRevenue, 10);
         const price = totalPriceInt - (totalPriceInt * 10) / 100;
         const priceservice =(totalPriceInt * 10) / 100; 
@@ -170,6 +213,57 @@ const DashboardBusiness = ()=>{
             />
           ))}
         </Row>
+        <div style={{ display: "grid", placeItems: "end" }} className="mt-3">
+          <div className="col-lg-2">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Thời gian</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Thời gian"
+                value={dateRange}
+                onChange={handleDateRangeChange}
+              >
+                <MenuItem value="thisWeek">Trong Tuần Này</MenuItem>
+                <MenuItem value="thisMonth">Trong Tháng Này</MenuItem>
+                <MenuItem value="last3Months">
+                  Trong Vòng 3 Tháng Trước
+                </MenuItem>
+                <MenuItem value="custom">Chọn Theo Ngày</MenuItem>
+              </Select>
+            </FormControl>
+          
+          </div>
+        </div>
+        {dateRange === "custom" && (
+          <>
+            <Row className="mt-3">
+              <p className="fw-bold">Chọn ngày bắt đầu - kết thúc: </p>
+              <Col>
+                <div>
+                  <Form.Control
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    required
+                  />
+                </div>
+              </Col>
+              <Col className="col-lg-1 col-12 text-center"> - </Col>
+              <Col>
+                {" "}
+                <div>
+                  <Form.Control
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    required
+                  />
+                </div>
+              </Col>
+            </Row>
+          </>
+        )}
         <Row>
           <Col className="col-12 col-lg-4">
             {" "}
@@ -180,7 +274,10 @@ const DashboardBusiness = ()=>{
               <span className=" text-light fw-bold">
                 <BiMoneyWithdraw className="fs-4" /> TỔNG DOANH THU: <br />
                 {totalRevenue === "NaN" ? (
-                  <>0</>
+                  <>
+                    {" "}
+                    <span className="fs-2">0 VNĐ</span>
+                  </>
                 ) : (
                   <>
                     {" "}
@@ -199,7 +296,10 @@ const DashboardBusiness = ()=>{
               <span className=" text-light fw-bold">
                 <BiMoneyWithdraw className="fs-4" /> PHÍ DỊCH VỤ (10%): <br />
                 {totalRevenue === "NaN" ? (
-                  <>0</>
+                  <>
+                    {" "}
+                    <span className="fs-2">0 VNĐ</span>
+                  </>
                 ) : (
                   <>
                     {" "}
@@ -218,7 +318,10 @@ const DashboardBusiness = ()=>{
               <span className="text-light fw-bold">
                 <BiMoneyWithdraw className="fs-4" /> DOANH THU THỰC NHẬN: <br />
                 {totalRevenue === "NaN" ? (
-                  <>0</>
+                  <>
+                    {" "}
+                    <span className="fs-2">0 VNĐ</span>
+                  </>
                 ) : (
                   <>
                     {" "}

@@ -117,15 +117,17 @@ const SidebarLayout = ({ children }) => {
                   ADMIN
                 </div>
               ) : role == 3 ? (
-                <div className="text-dark fw-bold fs-3">
-                  <img
-                    src={businessimg}
-                    style={{
-                      width: "3.5rem",
-                      height: "3.5rem",
-                      objectFit: "cover",
-                    }}
-                  />{" "}
+                <div className="text-dark fw-bold fs-4">
+                  <span style={{display:'grid', placeItems:'center'}}>
+                    <img
+                      src={businessimg}
+                      style={{
+                        width: "3.5rem",
+                        height: "3.5rem",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </span>{" "}
                   DOANH NGHIỆP
                 </div>
               ) : (

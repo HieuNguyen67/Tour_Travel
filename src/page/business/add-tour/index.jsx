@@ -53,6 +53,7 @@ const AddTourForm = () => {
   });
   const [provinces, setProvinces] = useState([]);
   const [end_date, setEnd_date]= useState([]);
+  const [start_date, setStart_date] = useState([]);
   const [tourStatus, setTourStatus]= useState([]);
   const [regions, setRegions] = useState([]);
   const [images, setImages] = useState([]);
@@ -120,6 +121,7 @@ const AddTourForm = () => {
             end_date: formatDate(tour.end_date),
           });
           setEnd_date(response.data.end_date);
+          setStart_date(response.data.start_date);
           setTourStatus(response.data.status);
           setLoading(false);
         }
@@ -221,8 +223,8 @@ const AddTourForm = () => {
     e.preventDefault();
     setLoading1(true);
 
-    if (new Date(end_date) >= new Date(today) && tourStatus === "Inactive") {
-      alert("Không thể cập nhật tour đang diễn ra. Vui lòng cập nhật khi ngày kết thúc tour nhỏ hơn ngày hiện tại!");
+    if (new Date(start_date) <= new Date(today) && tourStatus === "Inactive") {
+      toast.error("Không thể cập nhật tour đã diễn ra!");
       setLoading1(false);
       return;
     }

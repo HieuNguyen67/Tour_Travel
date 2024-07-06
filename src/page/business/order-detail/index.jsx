@@ -19,6 +19,7 @@ import {
   BASE_URL_CUSTOMER,
   BASE_URL_USER,
   BLUE_COLOR,
+  GREY_COLOR,
   RED1_COLOR,
   RED_COLOR,
   TEXT_MAIN_COLOR,
@@ -192,6 +193,29 @@ const OrderDetail = () => {
 
   const navigate = useNavigate();
 
+  const handleCancel= async()=>{
+    try{
+      const cancel= "Cancel";
+      await axios.put(
+        `${BASE_URL_BUSINESS}/update-status-orders/${order_id}`,
+        {
+          status: cancel,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+        toast.success("Huỷ Booking thành công!");
+        navigate("/information/list-order");
+    }catch{
+       toast.success("Lỗi!. Huỷ không thành công!");
+          console.error("Failed to update orders status :", error);
+      setError("Failed to update order status ");
+    }
+  };
+
   const handleUpdate = async () => {
     try {
       if (role == 3) {
@@ -210,10 +234,11 @@ const OrderDetail = () => {
         navigate("/business/order-tour");
         window.location.reload();
       } else {
+        const paid = "Paid";
         await axios.put(
           `${BASE_URL_ADMIN}/update-status-payment-orders/${order_id}`,
           {
-            statuspayments,
+            statuspayments: paid,
           },
           {
             headers: {
@@ -223,7 +248,6 @@ const OrderDetail = () => {
         );
         toast.success("Cập nhật thành công!");
         navigate("/admin/list-payments");
-        window.location.reload();
       }
     } catch (error) {
       console.error("Failed to update orders status :", error);
@@ -537,31 +561,38 @@ const OrderDetail = () => {
       <PassengersList orderId={orderDetail.order_id} />
       {role == 3 ? (
         <>
-          <form>
-            <Form.Group className="my-3">
-              <Form.Label className="fw-bold">
-                {" "}
-                <RxUpdate className="fs-5" /> Trạng thái:
-              </Form.Label>
-              <Form.Control
-                as="select"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                <option value="Pending">Pending</option>
-                <option value="Confirm">Confirm</option>
-                <option value="Complete">Complete</option>
-              </Form.Control>
-            </Form.Group>
-            <Button
-              onClick={handleUpdate}
-              disabled={loading}
-              style={{ background: RED1_COLOR, border: "0px" }}
-              className="mb-3 py-3 col-lg-3 col-12"
-            >
-              <FaSave /> Cập nhật
-            </Button>
-          </form>
+          {orderDetail.status === "Cancel" ? (
+            <></>
+          ) : (
+            <>
+              {" "}
+              <form>
+                <Form.Group className="my-3">
+                  <Form.Label className="fw-bold">
+                    {" "}
+                    <RxUpdate className="fs-5" /> Trạng thái:
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Confirm">Confirm</option>
+                    <option value="Complete">Complete</option>
+                  </Form.Control>
+                </Form.Group>
+                <Button
+                  onClick={handleUpdate}
+                  disabled={loading}
+                  style={{ background: RED1_COLOR, border: "0px" }}
+                  className="mb-3 py-3 col-lg-3 col-12"
+                >
+                  <FaSave /> Cập nhật
+                </Button>
+              </form>
+            </>
+          )}
         </>
       ) : role == 1 ? (
         <>
@@ -589,16 +620,30 @@ const OrderDetail = () => {
                   {loading2 ? <>Loading...</> : <>Thanh toán</>}
                 </Button>
               </div>
+              <hr />
+              <div
+                style={{ display: "grid", placeItems: "end" }}
+                className="my-4"
+              >
+                <Button
+                  style={{ border: "0px", background: GREY_COLOR }}
+                  onClick={handleCancel}
+                  className="py-3 col-lg-3 col-12"
+                >
+                  HUỶ BOOKING
+                </Button>
+              </div>
             </>
           ) : orderDetail.status === "Complete" ? (
             <></>
           ) : orderDetail.status === "Cancel" ? (
             <></>
-          ) : orderDetail.status === "Pending" ? (
-            <></>
           ) : (
             <>
-              {orderDetail.status_request_cancel === "No" ? (
+              {(orderDetail.status === "Confirm" &&
+                orderDetail.status_request_cancel === "No") ||
+              (orderDetail.status === "Pending" &&
+                orderDetail.status_request_cancel === "No") ? (
                 <>
                   {" "}
                   <div style={{ display: "grid", placeItems: "end" }}>
@@ -616,6 +661,7 @@ const OrderDetail = () => {
                     orderId={orderDetail.order_id}
                     businessId={orderDetail.business_id}
                     customerId={orderDetail.customer_id}
+                    status={orderDetail.status}
                   />
                 </>
               ) : (
@@ -636,33 +682,23 @@ const OrderDetail = () => {
         </>
       ) : (
         <>
-          {orderDetail.status_payment === "Unpaid" ? (
+          {orderDetail.status === "Complete" ? (
+            <></>
+          ) : orderDetail.status === "Cancel" ? (
+            <></>
+          ) : orderDetail.status_payment === "Unpaid" ? (
             <>
               {" "}
-              <form>
-                <Form.Group className="my-3">
-                  <Form.Label className="fw-bold">
-                    {" "}
-                    <RxUpdate className="fs-5" /> Trạng thái:
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={statuspayments}
-                    onChange={(e) => setStatuspayments(e.target.value)}
-                  >
-                    <option value="Unpaid">Chưa thanh toán</option>
-                    <option value="Paid">Đã thanh toán</option>
-                  </Form.Control>
-                </Form.Group>
+              <div style={{ display: "grid", placeItems: "end" }}>
                 <Button
                   onClick={handleUpdate}
                   disabled={loading}
                   style={{ background: RED1_COLOR, border: "0px" }}
                   className="mb-3 py-3 col-lg-3 col-12"
                 >
-                  <FaSave /> Cập nhật
+                  XÁC NHẬN ĐÃ THANH TOÁN
                 </Button>
-              </form>
+              </div>
             </>
           ) : (
             <>
