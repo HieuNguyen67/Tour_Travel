@@ -10,8 +10,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { FaCaretSquareDown } from 'react-icons/fa';
 import { toast } from "react-toastify";
+import { formatInTimeZone } from "date-fns-tz";
+import { format } from "date-fns";
 
-const CancellationRequestModal = ({ show, handleClose, orderId, businessId, customerId, status }) => {
+const CancellationRequestModal = ({ show, handleClose, orderId, businessId, customerId, status , start_date, category}) => {
   const [reason, setReason] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -25,8 +27,13 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
     const fetchPolicies = async () => {
       try {
         if (businessId) {
+          if(category ==="Du lịch trong nước"){
+            var type='Trong nước';
+          }else{
+            var type = "Nước ngoài";
+          }
           const response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}`
+            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}?type=${type}`
           );
           setPolicyCancellation(response.data);
         }
@@ -38,19 +45,29 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
     fetchPolicies();
   }, [businessId]);
 
+   const timeZone = "Asia/Ho_Chi_Minh";
+
+   const today = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
+
   const handleSubmit = async () => {
         setLoading(true);
 
     try {
+       if (new Date(start_date) <= new Date(today)) {
+         toast.error("Không thể huỷ tour đang hoặc đã diễn ra!");
+          setLoading(false);
+         return;
+       }
+
       const response = await axios.post(
         `${BASE_URL_CUSTOMER}/request-cancellation/${orderId}/${businessId}/${customerId}`,
         { reason,
-          status: status
-         },
+           statusOrder: status
+           },
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -81,80 +98,89 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
           &nbsp;YÊU CẦU HUỶ BOOKING
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {status === "Confirm" ? (
-          <>
-            <Accordion sx={{ background: "#f9f9f9" }} className="my-3">
-              <AccordionSummary
-                expandIcon={<FaCaretSquareDown className="fs-4" />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                <span className="fw-bold" style={{ color: TEXT_MAIN_COLOR }}>
-                  Chính sách huỷ tour của doanh nghiệp
-                </span>
-              </AccordionSummary>
-              <AccordionDetails style={{ color: TEXT_MAIN_COLOR }}>
-                {policy_cancellation.map((item, index) => (
-                  <>
-                    <div key={item.index}>
-                      <p>
-                        - Nếu huỷ chuyến du lịch trong vòng{" "}
-                        <span className="fw-bold">
-                          {item.days_before_departure}
-                        </span>{" "}
-                        ngày trước khởi hành: Hoàn{" "}
-                        <span className="fw-bold">
-                          {item.refund_percentage}%
-                        </span>{" "}
-                        giá vé
-                      </p>
-                    </div>
-                  </>
-                ))}
-              </AccordionDetails>
-            </Accordion>
-          </>
-        ) : (
-          <>
-            <p className="fw-bold">
-              Bạn sẽ được hoàn 100% vì doanh nghiệp chưa xác nhận đơn này. Sau khi huỷ chờ chúng tôi hoàn tiền, để xem chi tiết vui lòng truy cập mục REFUNDS.
-            </p>
-          </>
-        )}
-        {status === "Confirm" ? (
-          <>
-            {" "}
-            <Form>
-              <Form.Group controlId="formReason">
-                <Form.Label className="fw-bold">
-                  <MdRateReview className="fs-4" /> Lý do hủy:
-                </Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  value={reason}
-                  onChange={(e) => setReason(e.target.value)}
-                />
-              </Form.Group>
-              {error && <p className="text-danger">{error}</p>}
-              {success && <p className="text-success">{success}</p>}
-            </Form>
-          </>
-        ) : (
-          <></>
-        )}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          style={{ background: RED1_COLOR, border: "0px" }}
-          className="col-12 py-3"
-          onClick={handleSubmit}
-          disabled={loading}
-        >
-          {loading ? <>Loading...</> : <>Gửi yêu cầu</>}
-        </Button>
-      </Modal.Footer>
+      <form onSubmit={handleSubmit}>
+        <Modal.Body>
+          {status === "Confirm" ? (
+            <>
+              <Accordion sx={{ background: "#f9f9f9" }} className="my-3">
+                <AccordionSummary
+                  expandIcon={<FaCaretSquareDown className="fs-4" />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                >
+                  <span className="fw-bold" style={{ color: TEXT_MAIN_COLOR }}>
+                    Chính sách huỷ tour của doanh nghiệp (
+                    {category === "Du lịch trong nước" ? (
+                      <> Áp Dụng Tour Trong Nước </>
+                    ) : (
+                      <> Áp Dụng Tour Nước Ngoài </>
+                    )}
+                    )
+                  </span>
+                </AccordionSummary>
+                <AccordionDetails style={{ color: TEXT_MAIN_COLOR }}>
+                  {policy_cancellation.map((item, index) => (
+                    <>
+                      <div key={item.index}>
+                        <p>
+                          - Nếu huỷ chuyến du lịch trong vòng{" "}
+                          <span className="fw-bold">
+                            {item.days_before_departure}
+                          </span>{" "}
+                          ngày trước khởi hành: Hoàn{" "}
+                          <span className="fw-bold">
+                            {item.refund_percentage}%
+                          </span>{" "}
+                          giá vé
+                        </p>
+                      </div>
+                    </>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+            </>
+          ) : (
+            <>
+              <p className="fw-bold">
+                Bạn sẽ được hoàn 100% vì doanh nghiệp chưa xác nhận đơn này. Sau
+                khi huỷ chờ chúng tôi hoàn tiền, để xem chi tiết vui lòng truy
+                cập mục REFUNDS.
+              </p>
+            </>
+          )}
+          {status === "Confirm" ? (
+            <>
+              {" "}
+                <Form.Group controlId="formReason">
+                  <Form.Label className="fw-bold">
+                    <MdRateReview className="fs-4" /> Lý do hủy:
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                {error && <p className="text-danger">{error}</p>}
+                {success && <p className="text-success">{success}</p>}
+            </>
+          ) : (
+            <></>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            style={{ background: RED1_COLOR, border: "0px" }}
+            className="col-12 py-3"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? <>Loading...</> : <>Gửi yêu cầu</>}
+          </Button>
+        </Modal.Footer>
+      </form>
     </Modal>
   );
 };

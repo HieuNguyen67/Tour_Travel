@@ -14,6 +14,7 @@ interface PolicyCancellation {
   policy_id: number;
   days_before_departure: number;
   refund_percentage: number;
+  type: string
 }
 
 const AddPolicyCancellation: React.FC = () => {
@@ -23,6 +24,7 @@ const AddPolicyCancellation: React.FC = () => {
     policy_id: 0,
     days_before_departure: 0,
     refund_percentage: 0,
+    type: ""
   });
   const [message, setMessage] = useState<string>("");
   const location = useLocation();
@@ -56,6 +58,15 @@ const AddPolicyCancellation: React.FC = () => {
       [name]: Number(value),
     }));
   };
+  const handleChange1 = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+    setPolicy((prevPolicy) => ({
+      ...prevPolicy,
+      [name]:  value ,
+    }));
+  };
   const navigate = useNavigate();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -67,6 +78,7 @@ const AddPolicyCancellation: React.FC = () => {
           {
             days_before_departure: policy.days_before_departure,
             refund_percentage: policy.refund_percentage,
+            type: policy.type,
           }
         );
         setMessage(
@@ -87,6 +99,7 @@ const AddPolicyCancellation: React.FC = () => {
           {
             days_before_departure: policy.days_before_departure,
             refund_percentage: policy.refund_percentage,
+            type: policy.type,
           }
         );
         toast.success("Cập nhật thành công!");
@@ -116,6 +129,21 @@ const AddPolicyCancellation: React.FC = () => {
       <br />
       <div className="container">
         <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-4 col-lg-2 col-12">
+            <Form.Label className="fw-bold">Áp dụng đối với Tour:</Form.Label>
+        
+            <Form.Select
+              required
+              name="type"
+              value={policy.type}
+              onChange={handleChange1}
+            >
+              <option value="">Chọn loại áp dụng</option>
+              <option value="Trong nước">Trong nước</option>
+              <option value="Nước ngoài">Nước ngoài</option>
+            </Form.Select>
+          </Form.Group>
+
           <Form.Group
             controlId="daysBeforeDeparture"
             className="mb-4 col-lg-2 col-12"

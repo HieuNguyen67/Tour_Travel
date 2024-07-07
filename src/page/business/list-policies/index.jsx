@@ -11,6 +11,9 @@ import policyimg from "@/assets/image/policy.png";
 import addimg from "@/assets/image/add.png";
 import deleteimg from "@/assets/image/delete.png";
 import refundimg from "@/assets/image/refund.png";
+import { Box, Tab, Tabs } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import ListPoliciesCancel from "@/components/list-policies-cancel";
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -27,10 +30,6 @@ const PoliciesList = () => {
         if (isHomePage) {
           var response = await axios.get(
             `${BASE_URL_BUSINESS}/list-policies/${businessId}`
-          );
-        } else {
-          var response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}`
           );
         }
 
@@ -58,30 +57,11 @@ const PoliciesList = () => {
   };
   const handleDeleteSelected = async () => {
     try {
-      if (!isHomePage) {
+      
         await Promise.all(
           selectedRows.map(async (row) => {
             await axios.delete(
               `${BASE_URL_BUSINESS}/delete-policy/${row.policy_id}`,
-              {
-                params: { role: 2 },
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-            setPolicies(
-              policies.filter((item) => item.policy_id !== row.policy_id)
-            );
-            toast.success("Xoá thành công!");
-            window.location.reload();
-          })
-        );
-      } else {
-        await Promise.all(
-          selectedRows.map(async (row) => {
-            await axios.delete(
-              `${BASE_URL_ADMIN}/delete-policy/${row.policy_id}`,
               {
                 params: { role: 3 },
                 headers: {
@@ -96,7 +76,6 @@ const PoliciesList = () => {
             window.location.reload();
           })
         );
-      }
 
       setSelectedRows([]);
     } catch (error) {
@@ -115,7 +94,6 @@ const PoliciesList = () => {
       navigate(`/business/edit-policy-cancellation/${params.row.policy_id}`);
     }
   };
-  if (isHomePage) {
     var columns = [
       {
         field: "checkbox",
@@ -167,57 +145,14 @@ const PoliciesList = () => {
         ),
       },
     ];
-  } else {
-    var columns = [
-      {
-        field: "checkbox",
-        headerName: "",
-        width: 50,
-        renderCell: (params) => (
-          <input
-            type="checkbox"
-            onChange={(event) => handleCheckboxChange(event, params.row)}
-            style={{ width: "18px", height: "18px" }}
-          />
-        ),
-      },
-      {
-        field: "policy_id",
-        headerName: "ID",
-        width: 60,
-        renderCell: (params) => (
-          <div
-            style={{ cursor: "pointer" }}
-            dangerouslySetInnerHTML={{ __html: params.value }}
-            onClick={() => handleRowClick(params)}
-          />
-        ),
-      },
-      {
-        field: "days_before_departure",
-        headerName: "Ngày trước khi khởi hành",
-        width: 350,
-        renderCell: (params) => (
-          <div className="fw-bold" onClick={() => handleRowClick(params)}>
-            trong vòng {params.value} ngày trước khởi hành
-          </div>
-        ),
-      },
-      {
-        field: "refund_percentage",
-        headerName: "% Hoàn tiền",
-        width: 800,
-        renderCell: (params) => (
-          <div
-            style={{ cursor: "pointer" }}
-            onClick={() => handleRowClick(params)}
-          >
-            Hoàn {params.value}%
-          </div>
-        ),
-      },
-    ];
-  }
+
+      const [value, setValue] = React.useState("1");
+
+      const handleChange = (event, newValue) => {
+        setValue(newValue);
+      };
+
+  
 
   return (
     <>
@@ -297,54 +232,55 @@ const PoliciesList = () => {
           </Row>
         </>
       ) : (
+        <> </>
+      )}
+      {isHomePage ? (
         <>
           {" "}
-          <Row>
-            <Col>
-              {" "}
-              <div className="text-end mb-2">
-                <img
-                  onClick={handleDeleteSelected}
-                  src={deleteimg}
-                  className=" me-2"
-                  style={{
-                    width: "3.5rem",
-                    height: "3.5rem",
-                    objectFit: "cover",
-                    cursor: "pointer",
-                  }}
-                />{" "}
-                <Link
-                  to="/business/add-policies-cancellation"
-                  className="text-decoration-none"
+          <div style={{ height: 400, width: "100%" }}>
+            <DataGrid
+              rows={policies}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              loading={loading}
+              getRowId={(row) => row.policy_id}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <Box sx={{ width: "100%", typography: "body1" }}>
+            <TabContext value={value}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <TabList
+                  onChange={handleChange}
+                  aria-label="lab API tabs example"
+                  variant="fullWidth"
+                  indicatorColor="primary"
+                  textColor="primary"
                 >
-                  {" "}
-                  <img
-                    src={addimg}
-                    className=""
-                    style={{
-                      width: "3.5rem",
-                      height: "3.5rem",
-                      objectFit: "cover",
-                      cursor: "pointer",
-                    }}
-                  />
-                </Link>
-              </div>
-            </Col>
-          </Row>
+                  <Tab label="TOUR TRONG NƯỚC" value="1" />
+                  <Tab label="TOUR NƯỚC NGOÀI" value="2" />
+                </TabList>
+              </Box>
+              <TabPanel value="1">
+                <ListPoliciesCancel
+                  businessId={businessId}
+                  type={"Trong nước"}
+                />
+              </TabPanel>
+              <TabPanel value="2">
+                {" "}
+                <ListPoliciesCancel
+                  businessId={businessId}
+                  type={"Nước ngoài"}
+                />
+              </TabPanel>
+            </TabContext>
+          </Box>
         </>
       )}
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={policies}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          loading={loading}
-          getRowId={(row) => row.policy_id}
-        />
-      </div>
     </>
   );
 };

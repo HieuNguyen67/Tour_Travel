@@ -224,7 +224,7 @@ const AddTourForm = () => {
     setLoading1(true);
 
     if (new Date(start_date) <= new Date(today) && tourStatus === "Inactive") {
-      toast.error("Không thể cập nhật tour đã diễn ra!");
+      toast.error("Không thể cập nhật tour đang hoặc đã diễn ra!");
       setLoading1(false);
       return;
     }

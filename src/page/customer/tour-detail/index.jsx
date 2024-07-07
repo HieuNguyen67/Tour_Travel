@@ -440,7 +440,10 @@ const TourDetail = () => {
             />{" "}
             CHÍNH SÁCH/ QUY ĐỊNH TOUR
           </h2>
-          <PolicesTour businessId={tour.business_id} />
+          <PolicesTour
+            businessId={tour.business_id}
+            category={tour.category_name}
+          />
           <h4 className=" fw-bold mt-5 sizetextrate">
             <img
               src={ratingimg}

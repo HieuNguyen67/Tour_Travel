@@ -146,18 +146,7 @@ const ListUser = () => {
         );
       },
     },
-    {
-      field: "username",
-      headerName: "Username",
-      width: 120,
-      renderCell: (params) => (
-        <div
-          style={{ cursor: "pointer" }}
-          dangerouslySetInnerHTML={{ __html: params.value }}
-          onClick={() => handleRowClick(params)}
-        />
-      ),
-    },
+
     {
       field: "name",
       headerName: "Tên",

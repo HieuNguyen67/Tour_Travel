@@ -10,7 +10,7 @@ import { TEXT_MAIN_COLOR } from "@/constants";
 import HTMLContent from "../HTMLContent";
 import "@/page/customer/tour-detail/tour-detail.scss";
 
-const PolicesTour = ({ businessId }) => {
+const PolicesTour = ({ businessId , category}) => {
   const [policies, setPolicies] = useState([]);
   const [policy_cancellation, setPolicyCancellation] = useState([]);
 
@@ -35,8 +35,13 @@ const PolicesTour = ({ businessId }) => {
     const fetchPolicies = async () => {
       try {
         if (businessId) {
+            if (category === "Du lịch trong nước") {
+              var type = "Trong nước";
+            } else {
+              var type = "Nước ngoài";
+            }
           const response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}`
+            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}?type=${type}`
           );
           setPolicyCancellation(response.data);
         }
@@ -63,7 +68,13 @@ const PolicesTour = ({ businessId }) => {
                   className="fw-bold sizetext"
                   style={{ color: TEXT_MAIN_COLOR }}
                 >
-                  Lưu ý khi huỷ tour
+                  Lưu ý khi huỷ tour (
+                  {category === "Du lịch trong nước" ? (
+                    <>Tour Trong Nước</>
+                  ) : (
+                    <>Tour Nước Ngoài</>
+                  )}
+                  )
                 </span>
               </AccordionSummary>
               <AccordionDetails style={{ color: TEXT_MAIN_COLOR }}>

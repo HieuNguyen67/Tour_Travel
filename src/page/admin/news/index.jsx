@@ -131,7 +131,6 @@ const News = () => {
         />
       ),
     },
-    { field: "news_id", headerName: "ID", width: 85 },
     {
       field: "image",
       headerName: "Hình ảnh",
@@ -248,7 +247,6 @@ const News = () => {
       ),
     },
 
-    { field: "note", headerName: "Ghi chú", width: 150 },
   ];
 
   if (error) return <div>Error: {error}</div>;

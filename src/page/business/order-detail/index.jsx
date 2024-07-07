@@ -37,7 +37,6 @@ import { MdIncompleteCircle } from "react-icons/md";
 import { MdCancel } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
 import { FaArrowCircleRight } from "react-icons/fa";
-
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
@@ -193,8 +192,10 @@ const OrderDetail = () => {
 
   const navigate = useNavigate();
 
+
   const handleCancel= async()=>{
     try{
+   
       const cancel= "Cancel";
       await axios.put(
         `${BASE_URL_BUSINESS}/update-status-orders/${order_id}`,
@@ -425,9 +426,10 @@ const OrderDetail = () => {
                 <strong>Tour:</strong>
                 <span className="fw-bold text-dark">
                   {" "}
-                  {orderDetail.tour_name}
+                  {orderDetail.tour_name} ({orderDetail.category_name})
                 </span>
               </Card.Text>
+
               <Card.Text>
                 <strong>Ngày bắt đầu:</strong>
                 <span className="fw-bold text-info">
@@ -662,6 +664,8 @@ const OrderDetail = () => {
                     businessId={orderDetail.business_id}
                     customerId={orderDetail.customer_id}
                     status={orderDetail.status}
+                    start_date={orderDetail.start_date}
+                    category={orderDetail.category_name}
                   />
                 </>
               ) : (

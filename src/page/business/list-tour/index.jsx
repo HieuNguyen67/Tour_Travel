@@ -66,9 +66,11 @@ const TourList = () => {
   const handleRowClick = (params) => {
     navigate(`/business/update-tour/${params.row.tour_id}`);
   };
+  const handleRowClick1 = (params) => {
+    navigate(`/business/list-passenger-tour/${params.row.tour_id}`);
+  };
 
   const columns = [
-    
     {
       field: "image",
       headerName: "Hình ảnh",
@@ -85,6 +87,7 @@ const TourList = () => {
               objectFit: "cover",
             }}
             className="rounded"
+            onClick={() => handleRowClick(params)}
           />
         ) : null,
     },
@@ -117,6 +120,7 @@ const TourList = () => {
               border: "0px",
               color: buttonColor1,
             }}
+            onClick={() => handleRowClick(params)}
           >
             {params.value}
           </Button>
@@ -132,6 +136,7 @@ const TourList = () => {
           className="fw-bold"
           style={{ cursor: "pointer" }}
           dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -144,6 +149,7 @@ const TourList = () => {
         <div
           className="ms-2 fw-bold text-danger"
           dangerouslySetInnerHTML={{ __html: params.value }}
+          onClick={() => handleRowClick(params)}
         />
       ),
     },
@@ -152,7 +158,11 @@ const TourList = () => {
       headerName: "Ngày bắt đầu",
       width: 110,
       renderCell: (params) => (
-        <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
+        <span
+          className="fw-bold text-primary"
+          style={{ cursor: "pointer" }}
+          onClick={() => handleRowClick(params)}
+        >
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
       ),
@@ -164,7 +174,9 @@ const TourList = () => {
       width: 200,
       renderCell: (params) => (
         <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
-          <Button variant="dark">Xem DS Hành Khách</Button>
+          <Button variant="dark" onClick={() => handleRowClick1(params)}>
+            Xem DS Hành Khách
+          </Button>
         </span>
       ),
     },
@@ -204,7 +216,6 @@ const TourList = () => {
           pageSize={10}
           getRowId={(row) => row.tour_id}
           getRowHeight={(params) => 100}
-          onRowClick={handleRowClick}
         />
       </Box>
     </>
