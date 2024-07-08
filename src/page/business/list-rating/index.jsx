@@ -52,6 +52,7 @@ const ToursList = () => {
               objectFit: "cover",
             }}
             className="rounded"
+            loading="lazy"
           />
         ) : null,
     },
@@ -100,6 +101,7 @@ const ToursList = () => {
             height: "3.5rem",
             objectFit: "cover",
           }}
+          loading="lazy"
         />{" "}
         PHẢN HỒI KHÁCH HÀNG
       </h3>

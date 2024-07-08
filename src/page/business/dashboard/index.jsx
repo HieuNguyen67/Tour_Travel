@@ -140,6 +140,7 @@ const DashboardBusiness = ()=>{
               height: "4rem",
               objectFit: "cover",
             }}
+            loading="lazy"
           />{" "}
           TỔNG QUAN
         </h3>
@@ -232,7 +233,6 @@ const DashboardBusiness = ()=>{
                 <MenuItem value="custom">Chọn Theo Ngày</MenuItem>
               </Select>
             </FormControl>
-          
           </div>
         </div>
         {dateRange === "custom" && (

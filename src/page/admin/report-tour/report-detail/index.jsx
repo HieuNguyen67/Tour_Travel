@@ -89,6 +89,7 @@ const ReportDetails = () => {
               height: "3rem",
               objectFit: "cover",
             }}
+            loading="lazy"
           />{" "}
           CHI TIẾT TỐ CÁO
         </h3>

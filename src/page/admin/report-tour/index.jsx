@@ -151,6 +151,7 @@ const ReportList = () => {
             height: "3rem",
             objectFit: "cover",
           }}
+          loading="lazy"
         />{" "}
         TỐ CÁO
       </h3>

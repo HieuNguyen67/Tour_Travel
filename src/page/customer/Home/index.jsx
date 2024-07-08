@@ -3,52 +3,29 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Home.scss";
 import Footer from "@/components/layout/footer";
 import { Backdrop } from "@mui/material";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import  { useState, useEffect, useRef, useMemo } from "react";
 import Header from "@/components/layout/header";
 import { Link, useNavigate } from "react-router-dom";
 import TabSearch from "@/components/tab-search";
-import ListTourVietnam from "@/components/list-tour-vietnam";
 import { GREY_COLOR, RED1_COLOR } from "@/constants";
 import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import DestinationFavourite from "@/components/destination-favourite";
-import ListNewsHome from "@/components/list-news-home";
 import locationmanimg from "@/assets/image/locationman.png";
 import newsimg from "@/assets/image/news.png";
 import mantravelimg from "@/assets/image/vlogger.png";
 import travelmanimg from "@/assets/image/travelman.png";
 import video from "@/assets/video/video.mp4";
-
+import React, { Suspense, lazy } from "react";
 import { helix } from "ldrs";
 
 helix.register();
+
+const ListTourVietnam = lazy(() => import("@/components/list-tour-vietnam"));
+const ListNewsHome = lazy(() => import("@/components/list-news-home"));
 const Home = () => {
- const videoRef = useRef(null);
  const [isLoading, setIsLoading] = useState(false);
 
- const handleVideoLoad = () => {
-   setIsLoading(false);
- };
-
- const optimizedVideoElement = useMemo(
-   () => (
-     <video
-       ref={videoRef}
-       autoPlay
-       muted
-       loop
-       className="myVideo"
-       onLoadStart={() => setIsLoading(true)}
-       onLoadedData={handleVideoLoad}
-     >
-       <source src={video} type="video/mp4" />
-     </video>
-   ),
-   [video]
- );
-
-
-  
   return (
     <>
       {isLoading && (
@@ -74,7 +51,11 @@ const Home = () => {
       )}
       <Header />
 
-      {optimizedVideoElement}
+      
+          <video autoPlay muted loop playsinline className="myVideo" src={video}>
+          </video>
+      
+     
       <div>
         <Container className="">
           <div className="pt-lg-5 zindex">
@@ -129,7 +110,9 @@ const Home = () => {
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
 
           <div className=" my-3">
-            <ListTourVietnam tour_category={"Du lịch trong nước"} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <ListTourVietnam tour_category={"Du lịch trong nước"} />
+            </Suspense>
           </div>
           <div className="text-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
@@ -167,7 +150,9 @@ const Home = () => {
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
 
           <div className=" my-3">
-            <ListTourVietnam tour_category={"Du lịch nước ngoài"} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <ListTourVietnam tour_category={"Du lịch nước ngoài"} />
+            </Suspense>
           </div>
           <div className="text-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
@@ -211,10 +196,12 @@ const Home = () => {
               className="mb-2"
               style={{ width: "3rem", height: "3rem", objectFit: "cover" }}
             />{" "}
-            BLOG
+            BLOG MỚI NHẤT
           </h3>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
-          <ListNewsHome />
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <ListNewsHome />
+          </Suspense>
           <div className="text-center mb-5 pb-lg-5">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
               <Link

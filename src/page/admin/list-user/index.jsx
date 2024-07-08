@@ -249,6 +249,7 @@ const ListUser = () => {
                     height: "3.5rem",
                     objectFit: "cover",
                   }}
+                  loading="lazy"
                 />{" "}
                 KHÁCH HÀNG
               </>
@@ -261,6 +262,7 @@ const ListUser = () => {
                     height: "3.5rem",
                     objectFit: "cover",
                   }}
+                  loading="lazy"
                 />{" "}
                 DOANH NGHIỆP
               </>
@@ -273,6 +275,7 @@ const ListUser = () => {
                     height: "3.5rem",
                     objectFit: "cover",
                   }}
+                  loading="lazy"
                 />{" "}
                 ADMIN
               </>
@@ -296,6 +299,7 @@ const ListUser = () => {
                       height: "3.5rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />
                 </Link>
               </>
@@ -315,6 +319,7 @@ const ListUser = () => {
                       height: "3.5rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />
                 </Link>
               </>

@@ -61,6 +61,7 @@ const CheckIn: React.FC = () => {
                       height: "5rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />
                 </span>
                 <br />

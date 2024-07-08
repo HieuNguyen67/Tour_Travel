@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import { TEXT_RED_COLOR } from "@/constants";
 import { Col } from "react-bootstrap";
 
-const TourReviews = ({ tour_id }) => {
+const TourReviews = ({ tour_code }) => {
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
@@ -25,9 +25,9 @@ const TourReviews = ({ tour_id }) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        if (tour_id) {
+        if (tour_code) {
           const response = await axios.get(
-            `${BASE_URL_USER}/get-ratings-tour/${tour_id}`
+            `${BASE_URL_USER}/get-ratings-tour/${tour_code}`
           );
           setReviews(response.data.reviews);
           setAverageRating(response.data.averageRating);
@@ -41,7 +41,7 @@ const TourReviews = ({ tour_id }) => {
     };
 
     fetchReviews();
-  }, [tour_id]);
+  }, [tour_code]);
 
   const handleChangePage = (event, value) => {
     setPage(value);

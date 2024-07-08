@@ -13,13 +13,17 @@ const NotFound = () => (
               src="https://www.pngitem.com/pimgs/m/561-5616833_image-not-found-png-not-found-404-png.png"
               alt="not-found"
               className="w-100"
+              loading="lazy"
             />
           </p>{" "}
         </Col>
         <Col>
           <p className="text-center">
             <Button variant="dark">
-              <Link to="/" className="link-home text-decoration-none text-light">
+              <Link
+                to="/"
+                className="link-home text-decoration-none text-light"
+              >
                 Go Home
               </Link>
             </Button>

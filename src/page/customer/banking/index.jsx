@@ -49,6 +49,7 @@ const Banking=()=>{
                             height: "2rem",
                             objectFit: "contain",
                           }}
+                          loading="lazy"
                         />{" "}
                       </div>
                     </Col>

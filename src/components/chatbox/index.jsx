@@ -89,7 +89,12 @@ const Chatbox = () => {
             animate={{ scale: 0.8 }}
             transition={{ repeat: Infinity, duration: 1 }}
           >
-            <img src={bot} className="bot" onClick={handleShow} />
+            <img
+              src={bot}
+              className="bot"
+              onClick={handleShow}
+              loading="lazy"
+            />
           </motion.div>
         </div>
       </OverlayTrigger>

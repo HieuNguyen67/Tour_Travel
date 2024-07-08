@@ -34,6 +34,7 @@ const ListNewsHome = () => {
 
     fetchTours();
   }, []);
+
   const navigate = useNavigate();
 
   const handleClick = (newsId) => {
@@ -46,6 +47,7 @@ const ListNewsHome = () => {
     }
     return str.substring(0, maxLength) + "...";
   };
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -100,7 +102,7 @@ const ListNewsHome = () => {
             autoPlay={true}
             autoPlaySpeed={4000}
           >
-            {news.map((item) => (
+            {news.slice(0, 3).map((item) => (
               <Col
                 key={item.news_id}
                 className=" my-lg-4 p-3"
@@ -112,13 +114,14 @@ const ListNewsHome = () => {
                 >
                   <div
                     style={{ border: "3px solid #ebecef", cursor: "pointer" }}
-                    className="rounded-5 px-lg-4 p-3  shadow-sm"
+                    className="rounded-5 px-lg-4 p-3 shadow-sm"
                   >
                     {item.image && (
                       <img
                         src={`data:image/png;base64,${item.image}`}
                         alt="News Image"
                         className="rounded-5 col-12 sizei shadow mb-4"
+                        loading="lazy"
                       />
                     )}
                     <p
@@ -155,4 +158,5 @@ const ListNewsHome = () => {
     </>
   );
 };
+
 export default ListNewsHome;

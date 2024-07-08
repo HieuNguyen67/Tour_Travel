@@ -90,7 +90,8 @@ const TabSearch = () => {
       >
         <Container className="my-4">
           <h2 className=" fw-bold">
-            <img src={searchimg} className="mb-2 location" /> Tìm kiếm Tour :
+            <img src={searchimg} className="mb-2 location" loading="lazy" /> Tìm
+            kiếm Tour :
           </h2>
           <hr />
           <Tab.Container id="left-tabs-example" defaultActiveKey="first">

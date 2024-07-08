@@ -21,7 +21,7 @@ const OrderTour = () => {
     <>
       <h3 className="fw-bold">
         {" "}
-        <img src={listorderimg} className="mb-2 location" />
+        <img src={listorderimg} className="mb-2 location" loading="lazy" />
         DANH SÁCH BOOKING
       </h3>
       <Box

@@ -110,7 +110,7 @@ const ListTourVietnam = ({ tour_category }) => {
             autoPlay={true}
             autoPlaySpeed={4000}
           >
-            {tours.map((tour) => (
+            {tours.slice(0, 3).map((tour) => (
               <div key={tour.tour_id} className="py-3 p-2">
                 <Link
                   to={`/tour-details/${tour.tour_id}`}
@@ -132,6 +132,7 @@ const ListTourVietnam = ({ tour_category }) => {
                           src={`data:image/jpeg;base64,${tour.image}`}
                           alt="Tour"
                           className="rounded-4 col-12 sizei shadow mb-4"
+                          loading="lazy"
                         />
                       )}
                       <div

@@ -43,6 +43,7 @@ const DisplayImage: React.FC = () => {
           alt="Hình ảnh của tài khoản"
           className="col-lg-9 col-12 sizeimga rounded-circle shadow"
           style={{ objectFit: "cover" }}
+          loading="lazy"
         />
       </Col>
       {error && <div style={{ color: "red" }}>{error}</div>}

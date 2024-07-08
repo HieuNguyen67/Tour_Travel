@@ -157,6 +157,7 @@ const [showModal, setShowModal] = useState(false);
             height: "3.5rem",
             objectFit: "cover",
           }}
+          loading="lazy"
         />{" "}
         REFUNDS
       </h3>

@@ -27,7 +27,7 @@ const BusinessRoutes = () => {
         <Routes>
           <Route path="/list-tour" element={<ListTour />} />
           <Route path="/order-tour" element={<OrderTour />} />
-          <Route path="/add-tour" element={<AddTourForm />} />
+          <Route path="/add-tour/:add_tour" element={<AddTourForm />} />
           <Route path="/update-tour/:tour_id" element={<AddTourForm />} />
           <Route
             path="/edit-profile/:account_id/:role_id"
@@ -71,6 +71,10 @@ const BusinessRoutes = () => {
           <Route
             path="/list-passenger-tour/:tour_id"
             element={<PassengersListByTour />}
+          />
+          <Route
+            path="/add-tour/:add_tour/:tour_id/duplicate"
+            element={<AddTourForm />}
           />
           <Route path="*" element={<Navigate to="/business/list-tour" />} />
         </Routes>

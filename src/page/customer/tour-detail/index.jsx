@@ -86,11 +86,13 @@ const TourDetail = () => {
     fetchTourImages();
   }, [tour_id]);
 
+  const tourCode = tour.tour_code;
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/get-ratings-tour/${tour_id}`
+          `${BASE_URL_USER}/get-ratings-tour/${tourCode}`
         );
         setAverageRating(response.data.averageRating);
         setTotalRatings(response.data.totalRatings);
@@ -102,7 +104,7 @@ const TourDetail = () => {
     };
 
     fetchReviews();
-  }, [tour_id]);
+  }, [tourCode]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -223,6 +225,7 @@ const TourDetail = () => {
                       src={`data:image/jpeg;base64,${image[0].image}`}
                       alt={`Tour ${tour_id} Image 1`}
                       className="rounded-3 shadow sizeimg1 col-12 mb-3 mb-lg-0"
+                      loading="lazy"
                     />
                   )
                 )}
@@ -242,6 +245,7 @@ const TourDetail = () => {
                               src={`data:image/jpeg;base64,${image[1].image}`}
                               alt={`Tour ${tour_id} Image 1`}
                               className="rounded-3 shadow sizeimg2 col-12 mb-3 mb-lg-0"
+                              loading="lazy"
                             />
                           )
                         )}
@@ -257,6 +261,7 @@ const TourDetail = () => {
                               src={`data:image/jpeg;base64,${image[2].image}`}
                               alt={`Tour ${tour_id} Image 1`}
                               className="rounded-2 shadow sizeimg2 col-12 mb-3 mb-lg-0"
+                              loading="lazy"
                             />
                           )
                         )}
@@ -274,6 +279,7 @@ const TourDetail = () => {
                           src={`data:image/jpeg;base64,${image[3].image}`}
                           alt={`Tour ${tour_id} Image 1`}
                           className="rounded-3 shadow sizeimg3 col-12 mb-3 mb-lg-0"
+                          loading="lazy"
                         />
                       )
                     )}
@@ -401,6 +407,7 @@ const TourDetail = () => {
                 height: "3.5rem",
                 objectFit: "cover",
               }}
+              loading="lazy"
             />{" "}
             HÌNH ẢNH TOUR
           </h2>
@@ -457,7 +464,7 @@ const TourDetail = () => {
             ĐÁNH GIÁ TỪ KHÁCH HÀNG
           </h4>
           <div>
-            <TourReviews tour_id={tour_id} />
+            <TourReviews tour_code={tour.tour_code} />
           </div>
           <h4 className=" fw-bold mt-5  sizetextrate">
             <img

@@ -64,12 +64,14 @@ const BusinessLink = () => {
                     src={`data:image/jpeg;base64,${account.image}`}
                     alt={account.name}
                     className="rounded-5 col-12 mb-4 sizei shadow"
+                    loading="lazy"
                   />
                 ) : (
                   <img
                     src={imgdefault}
                     alt={account.name}
                     className="rounded-5 col-12 mb-4 sizei shadow"
+                    loading="lazy"
                   />
                 )}
                 <h5 className="fw-bold text-center mt-3">{account.name}</h5>

@@ -72,6 +72,20 @@ const TourList = () => {
 
   const columns = [
     {
+      field: "tour_code",
+      headerName: "Mã Tour",
+      width: 120,
+      renderCell: (params) => (
+        <span
+          className="fw-bold"
+          style={{ cursor: "pointer" }}
+          onClick={() => handleRowClick(params)}
+        >
+          {params.value}
+        </span>
+      ),
+    },
+    {
       field: "image",
       headerName: "Hình ảnh",
       width: 150,
@@ -88,6 +102,7 @@ const TourList = () => {
             }}
             className="rounded"
             onClick={() => handleRowClick(params)}
+            loading="lazy"
           />
         ) : null,
     },
@@ -130,7 +145,7 @@ const TourList = () => {
     {
       field: "tour_name",
       headerName: "Tour",
-      width: 300,
+      width: 250,
       renderCell: (params) => (
         <div
           className="fw-bold"
@@ -194,7 +209,7 @@ const TourList = () => {
         </Col>
         <Col>
           <p className="text-end">
-            <Link to="/business/add-tour" className="text-decoration-none">
+            <Link to="/business/add-tour/1" className="text-decoration-none">
               <img
                 src={addimg}
                 className="mb-2"
@@ -203,6 +218,7 @@ const TourList = () => {
                   height: "3.5rem",
                   objectFit: "cover",
                 }}
+                loading="lazy"
               />
             </Link>
           </p>

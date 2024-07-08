@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS, BASE_URL_USER } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_BUSINESS, BASE_URL_USER, DARKBLUE, GREY_COLOR, RED1_COLOR } from "@/constants";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -20,7 +20,7 @@ import ReactQuill from "react-quill";
 import { FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { MdOutlineStar } from "react-icons/md";
-import { MdTour } from "react-icons/md";
+import duplicateimg from "@/assets/image/duplicate.png";
 import { GiConfirmed } from "react-icons/gi";
 import { format } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
@@ -28,10 +28,11 @@ import { BLUE_COLOR, RED_COLOR } from "@/constants";
 import "./add-tour.scss";
 import LoadingBackdrop from "@/components/backdrop";
 import tourimg from "@/assets/image/tour.png";
+import { AiOutlineBarcode } from "react-icons/ai";
 
 const AddTourForm = () => {
   const { businessId, token } = useAuth();
-  const { tour_id } = useParams();
+  const { tour_id , add_tour} = useParams();
   const [error, setError] = useState(null);
   const [tourCategories, setTourCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,6 +48,7 @@ const AddTourForm = () => {
     quantity: "",
     vehicle: "",
     hotel: "",
+    tour_code:"",
     tourcategory_id: "",
     location_departure_id: "",
     destination_locations: [],
@@ -59,7 +61,7 @@ const AddTourForm = () => {
   const [images, setImages] = useState([]);
 
   const location = useLocation();
-  const isHomePage = location.pathname === "/business/add-tour";
+  const isHomePage = location.pathname === "/business/add-tour/1";
 
   useEffect(() => {
     const fetchTourCategories = async () => {
@@ -110,7 +112,7 @@ const AddTourForm = () => {
   useEffect(() => {
     const fetchTourData = async () => {
       try {
-        if (!isHomePage) {
+        if (add_tour != 1) {
           const response = await axios.get(
             `${BASE_URL_USER}/get-tour/${tour_id}`
           );
@@ -132,7 +134,7 @@ const AddTourForm = () => {
     };
 
     fetchTourData();
-  }, [isHomePage, tour_id]);
+  }, [add_tour, tour_id]);
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -297,6 +299,14 @@ const AddTourForm = () => {
     fetchTourImages();
   }, [isHomePage, tour_id]);
 
+    const handleDuplicateTour = () => {
+      const duplicatedTour = { ...formData };
+
+      navigate(`/business/add-tour/2/${tour_id}/duplicate`, {
+        state: { formData: duplicatedTour },
+      });
+    };
+
 
 
   return (
@@ -308,9 +318,46 @@ const AddTourForm = () => {
           <IoArrowBackOutline className="fs-3" />
         </Link>
         <h3 className="fw-bold my-3">
-          <img src={tourimg} className="mb-2 location" />{" "}
-          {isHomePage ? <>THÊM TOUR</> : <>CHỈNH SỬA TOUR</>}
+          <img src={tourimg} className="mb-2 location" loading="lazy" />{" "}
+          {add_tour == 2 || add_tour == 1 ? (
+            <>THÊM TOUR</>
+          ) : (
+            <>CHỈNH SỬA TOUR</>
+          )}
         </h3>
+        {add_tour == 1 ? (
+          <></>
+        ) : add_tour == 2 ? (
+          <></>
+        ) : (
+          <>
+            {" "}
+            <div
+              style={{ display: "grid", placeItems: "end" }}
+              className="mb-2"
+            >
+              <Row>
+                <Col>
+                  <img
+                    src={duplicateimg}
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      objectFit: "cover",
+                    }}
+                    loading="lazy"
+                  />
+                  <Button
+                    style={{ background: DARKBLUE, border: "0px" }}
+                    onClick={handleDuplicateTour}
+                  >
+                    NHÂN BẢN TOUR
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          </>
+        )}
         <div>
           <Row className="mb-lg-4">
             {image.map((image, index) => (
@@ -318,6 +365,7 @@ const AddTourForm = () => {
                 <img
                   src={`data:image/jpeg;base64,${image.image}`}
                   alt={`Tour ${tour_id} Image ${index + 1}`}
+                  loading="lazy"
                   className="rounded-3 sizeimgg col-12 mb-3 mb-lg-0"
                 />
               </Col>
@@ -326,11 +374,15 @@ const AddTourForm = () => {
         </div>
 
         <form
-          onSubmit={isHomePage ? handleSubmitAdd : handleSubmitUpdate}
+          onSubmit={
+            add_tour == 2 || add_tour == 1
+              ? handleSubmitAdd
+              : handleSubmitUpdate
+          }
           className=""
         >
           <Row>
-            <Col className="col-lg-6 col-12">
+            <Col className="col-12">
               {" "}
               <Form.Group className="mb-4">
                 <Form.Label className="  fw-bold">
@@ -356,8 +408,25 @@ const AddTourForm = () => {
                 </Form.Select>
               </Form.Group>
             </Col>
+            <Col className=" col-lg-6 col-12">
+              <Form.Group className="mb-4">
+                <Form.Label className="  fw-bold">
+                  <AiOutlineBarcode className="fs-4" /> Mã Tour{" "}
+                  <span className="text-danger">(*) </span>:
+                </Form.Label>
+                <Form.Control
+                  placeholder="Mã Tour"
+                  type="text"
+                  name="tour_code"
+                  value={formData.tour_code}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
+
             <Col className="col-lg-6 col-12">
-              {isHomePage ? (
+              {add_tour == 2 || add_tour == 1 ? (
                 <>
                   {" "}
                   <Form.Group className="mb-4">

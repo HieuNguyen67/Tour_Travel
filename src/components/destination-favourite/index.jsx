@@ -50,7 +50,7 @@ const DestinationFavourite = () => {
         <Link className="text-decoration-none" to={item.link}>
           <Col className="">
             <div className="py-3">
-              <img src={item.image} className="imgdestination px-2  rounded-4" />
+              <img src={item.image} loading="lazy" className="imgdestination px-2  rounded-4" />
             </div>
           </Col>
         </Link>

@@ -146,6 +146,7 @@ const ListPoliciesCancel = ({ businessId , type}) => {
                 objectFit: "cover",
                 cursor: "pointer",
               }}
+              loading="lazy"
             />{" "}
             <Link
               to="/business/add-policies-cancellation"
@@ -161,6 +162,7 @@ const ListPoliciesCancel = ({ businessId , type}) => {
                   objectFit: "cover",
                   cursor: "pointer",
                 }}
+                loading="lazy"
               />
             </Link>
           </div>

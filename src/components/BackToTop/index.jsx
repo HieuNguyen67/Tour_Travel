@@ -67,6 +67,7 @@ export default function BackToTop(props) {
               objectFit: "cover",
               cursor: "pointer",
             }}
+            loading="lazy"
           />
         </motion.div>
       </ScrollTop>

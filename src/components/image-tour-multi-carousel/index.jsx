@@ -77,6 +77,7 @@ const TourImagesCarousel = ({ tourId }) => {
           <img
             src={`data:image/jpeg;base64,${img.image}`}
             alt={`Tour Image ${index + 1}`}
+            loading="lazy"
           />
         </div>
       ))}

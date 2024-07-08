@@ -45,6 +45,7 @@ const PaymentMethod = ({ paymentMethod, setPaymentMethod }) => {
                       height: "3.5rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />
                 </div>
               </Col>
@@ -151,6 +152,7 @@ const PaymentMethod = ({ paymentMethod, setPaymentMethod }) => {
                       height: "3.5rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />
                 </div>
               </Col>
@@ -230,6 +232,7 @@ const PaymentMethod = ({ paymentMethod, setPaymentMethod }) => {
                       height: "3.5rem",
                       objectFit: "contain",
                     }}
+                    loading="lazy"
                   />
                 </div>
               </Col>
@@ -324,6 +327,7 @@ const PaymentMethod = ({ paymentMethod, setPaymentMethod }) => {
                       height: "3.5rem",
                       objectFit: "contain",
                     }}
+                    loading="lazy"
                   />
                 </div>
               </Col>

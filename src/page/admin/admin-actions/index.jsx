@@ -62,6 +62,7 @@ const AdminActionsList = () => {
             height: "3.5rem",
             objectFit: "cover",
           }}
+          loading="lazy"
         />{" "}
         LOG GIÁM SÁT
       </h3>

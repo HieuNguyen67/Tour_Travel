@@ -170,6 +170,7 @@ const PoliciesList = () => {
                 objectFit: "cover",
                 cursor: "pointer",
               }}
+              loading="lazy"
             />{" "}
             CHÍNH SÁCH/ QUY ĐỊNH TOUR
           </>
@@ -184,6 +185,7 @@ const PoliciesList = () => {
                 height: "4rem",
                 objectFit: "cover",
               }}
+              loading="lazy"
             />{" "}
             CHÍNH SÁCH HOÀN TRẢ
           </>
@@ -210,6 +212,7 @@ const PoliciesList = () => {
                     objectFit: "cover",
                     cursor: "pointer",
                   }}
+                  loading="lazy"
                 />{" "}
                 <Link
                   to="/business/add-policies"
@@ -225,6 +228,7 @@ const PoliciesList = () => {
                       objectFit: "cover",
                       cursor: "pointer",
                     }}
+                    loading="lazy"
                   />
                 </Link>
               </p>

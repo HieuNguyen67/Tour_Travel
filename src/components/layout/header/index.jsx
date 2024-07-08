@@ -82,6 +82,7 @@ const Header = (props) => {
                       <img
                         alt=""
                         src={Logo}
+                        loading="lazy"
                         className="d-inline-block justify-content-center  align-items-center logoo mb-2"
                       />
                       <Link
@@ -169,6 +170,7 @@ const Header = (props) => {
                                   src={imageSrc || defaultImage}
                                   alt="Hình ảnh của tài khoản"
                                   className="sizeimggg rounded-circle shadow me-2"
+                                  loading="lazy"
                                 />{" "}
                               </div>
                             </NavLink>

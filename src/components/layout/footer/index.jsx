@@ -33,8 +33,9 @@ const Footer = () => {
                 <br />
                 <br />{" "}
                 <span className="lh-lg">
-                  <img src={dcma} className="sizeimg " />
-                  <br /> <img src={congthuong} className="sizeimg" />
+                  <img src={dcma} className="sizeimg " loading="lazy" />
+                  <br />{" "}
+                  <img src={congthuong} className="sizeimg" loading="lazy" />
                 </span>
               </p>
             </Col>

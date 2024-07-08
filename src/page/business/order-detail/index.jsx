@@ -336,6 +336,7 @@ const OrderDetail = () => {
             height: "3.5rem",
             objectFit: "cover",
           }}
+          loading="lazy"
         />{" "}
         CHI TIẾT BOOKING
       </h3>

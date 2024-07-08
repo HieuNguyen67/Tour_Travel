@@ -147,6 +147,7 @@ const News = () => {
             objectFit: "cover",
           }}
           className="rounded"
+          loading="lazy"
         />
       ),
     },
@@ -246,7 +247,6 @@ const News = () => {
         />
       ),
     },
-
   ];
 
   if (error) return <div>Error: {error}</div>;
@@ -266,6 +266,7 @@ const News = () => {
                 height: "3rem",
                 objectFit: "cover",
               }}
+              loading="lazy"
             />{" "}
             TIN TỨC
           </h3>
@@ -283,6 +284,7 @@ const News = () => {
                 objectFit: "cover",
                 cursor: "pointer",
               }}
+              loading="lazy"
             />{" "}
             <Link
               to={
@@ -300,6 +302,7 @@ const News = () => {
                   objectFit: "cover",
                   cursor: "pointer",
                 }}
+                loading="lazy"
               />
             </Link>
           </p>

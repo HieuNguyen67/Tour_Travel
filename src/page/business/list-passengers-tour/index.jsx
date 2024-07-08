@@ -2,6 +2,7 @@ import PassengersListTour from "@/components/list-passenger-tour";
 import { Link, useParams } from "react-router-dom";
 import groupimg from "@/assets/image/group.png";
 import { IoArrowBackOutline } from "react-icons/io5";
+import ExportPassengers from "@/components/export-excel";
 
 const PassengersListByTour = ()=>{
     const {tour_id}= useParams();
@@ -19,9 +20,12 @@ const PassengersListByTour = ()=>{
               height: "3rem",
               objectFit: "cover",
             }}
+            loading="lazy"
           />{" "}
           DANH SÁCH HÀNH KHÁCH ĐI TOUR
         </h3>
+        <ExportPassengers tourId={tour_id} />
+
         <PassengersListTour tourId={tour_id} />
       </>
     );

@@ -250,6 +250,7 @@ const ContactList = () => {
             height: "3rem",
             objectFit: "cover",
           }}
+          loading="lazy"
         />{" "}
         LIÊN HỆ
       </h3>

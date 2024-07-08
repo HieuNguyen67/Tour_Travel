@@ -119,6 +119,7 @@ const RegisterUser = () => {
                       height: "3rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />{" "}
                   ĐĂNG KÝ DOANH NGHIỆP
                 </>
@@ -131,6 +132,7 @@ const RegisterUser = () => {
                       height: "3rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />{" "}
                   ĐĂNG KÝ ADMIN
                 </>

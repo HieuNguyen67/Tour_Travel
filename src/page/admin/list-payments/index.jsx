@@ -24,6 +24,7 @@ const Payments = () => {
             height: "3.5rem",
             objectFit: "cover",
           }}
+          loading="lazy"
         />{" "}
         PAYMENTS
       </h3>

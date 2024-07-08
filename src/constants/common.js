@@ -213,7 +213,7 @@ const BUSINESS = [
     link: "/business/list-tour",
     icon2: <IoMdAddCircle />,
     name2: "THÊM TOUR",
-    link2: "/business/add-tour",
+    link2: "/business/add-tour/1",
   },
   {
     id: 3,

@@ -12,6 +12,7 @@ const DashboardAdmin = () => {
             height: "4rem",
             objectFit: "cover",
           }}
+          loading="lazy"
         />{" "}
         TỔNG QUAN
       </h3>

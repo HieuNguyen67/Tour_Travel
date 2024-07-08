@@ -86,6 +86,7 @@ const CouponsList: React.FC = () => {
               height: "7rem",
               objectFit: "cover",
             }}
+            loading="lazy"
           />
         </Col>
         <Col>
@@ -120,6 +121,7 @@ const CouponsList: React.FC = () => {
                       height: "5rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />
                 </Col>
                 <Col className="col-lg-8 col-12">

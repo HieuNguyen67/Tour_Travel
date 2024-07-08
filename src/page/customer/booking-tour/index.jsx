@@ -395,6 +395,7 @@ const BookTour = () => {
                 height: "3.5rem",
                 objectFit: "cover",
               }}
+              loading="lazy"
             />{" "}
             THÔNG TIN LIÊN HỆ
           </h3>
@@ -476,6 +477,7 @@ const BookTour = () => {
                 height: "3rem",
                 objectFit: "cover",
               }}
+              loading="lazy"
             />{" "}
             HÀNH KHÁCH
           </h3>
@@ -641,13 +643,14 @@ const BookTour = () => {
                   height: "3.5rem",
                   objectFit: "cover",
                 }}
+                loading="lazy"
               />{" "}
               DANH SÁCH KHÁCH HÀNG ĐI TOUR
             </h3>
             {passengers.map((passenger, index) => (
               <div
                 key={index}
-                style={{ border: "2px solid black" , background:'white'}}
+                style={{ border: "2px solid black", background: "white" }}
                 className="rounded-4 shadow-sm p-3 mb-3"
               >
                 <h5>
@@ -718,7 +721,6 @@ const BookTour = () => {
                         name="passport_number"
                         value={passenger.passport_number}
                         onChange={(e) => handlePassengerChange(index, e)}
-                        
                       />
                     </Form.Group>
                   </Col>
@@ -747,6 +749,7 @@ const BookTour = () => {
                   height: "3.5rem",
                   objectFit: "cover",
                 }}
+                loading="lazy"
               />{" "}
               PHƯƠNG THỨC THANH TOÁN
             </h3>

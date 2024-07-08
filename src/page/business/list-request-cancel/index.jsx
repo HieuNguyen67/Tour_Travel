@@ -16,11 +16,11 @@ const ListRequestCancleBusiness = ()=>{
               height: "3.5rem",
               objectFit: "cover",
             }}
+            loading="lazy"
           />{" "}
           YÊU CẦU HUỶ BOOKING
         </h3>
         <CancellationRequests businessId={businessId} />
-        
       </>
     );
 }

@@ -83,7 +83,7 @@ const TourListBusiness = ({ accountId }) => {
         autoPlay={true}
         autoPlaySpeed={4000}
       >
-        {tours.map((tour) => (
+        {tours.slice(0, 3).map((tour) => (
           <div key={tour.tour_id} className="p-2 py-3">
             <Link
               to={`/tour-details/${tour.tour_id}`}
@@ -105,6 +105,7 @@ const TourListBusiness = ({ accountId }) => {
                       src={`data:image/jpeg;base64,${tour.image}`}
                       alt="Tour"
                       className="rounded-4 col-12 sizei shadow mb-4"
+                      loading="lazy"
                     />
                   )}
                   <div

@@ -185,7 +185,11 @@ const NewsDetail = () => {
               </p>
             </Col>
           </Row>
-          <img src={head} className="col-lg-1 col-3  mb-lg-5 mb-4 mt-2" />
+          <img
+            src={head}
+            className="col-lg-1 col-3  mb-lg-5 mb-4 mt-2"
+            loading="lazy"
+          />
 
           <HTMLContent htmlContent={item.content} />
         </div>

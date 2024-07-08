@@ -113,12 +113,13 @@ const SidebarLayout = ({ children }) => {
                       height: "3.5rem",
                       objectFit: "cover",
                     }}
+                    loading="lazy"
                   />{" "}
                   ADMIN
                 </div>
               ) : role == 3 ? (
                 <div className="text-dark fw-bold fs-5">
-                  <span style={{display:'grid', placeItems:'center'}}>
+                  <span style={{ display: "grid", placeItems: "center" }}>
                     <img
                       src={businessimg}
                       style={{
@@ -126,6 +127,7 @@ const SidebarLayout = ({ children }) => {
                         height: "3.5rem",
                         objectFit: "cover",
                       }}
+                      loading="lazy"
                     />
                   </span>{" "}
                   DOANH NGHIỆP
@@ -154,6 +156,7 @@ const SidebarLayout = ({ children }) => {
                 src={menuimg}
                 className="ms-2"
                 style={{ width: "3rem", height: "3rem" }}
+                loading="lazy"
               />
             </Button>
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
