@@ -11,7 +11,7 @@ import { IoAirplaneSharp } from "react-icons/io5";
 import { TEXT_MAIN_COLOR } from "@/constants";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
+import "@/page/customer/business-link/business-link.scss";
 const ListTourVietnam = ({ tour_category }) => {
   const [tours, setTours] = useState([]);
   const [error, setError] = useState("");

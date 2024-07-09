@@ -35,7 +35,6 @@ const ToursList = () => {
     navigate(`/business/review-detail/${params.row.tour_id}`);
   };
   const columns = [
-    { field: "tour_id", headerName: "ID", width: 60 },
     {
       field: "image",
       headerName: "Hình ảnh",

@@ -3,14 +3,12 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Home.scss";
 import Footer from "@/components/layout/footer";
 import { Backdrop } from "@mui/material";
-import  { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Header from "@/components/layout/header";
 import { Link, useNavigate } from "react-router-dom";
-import TabSearch from "@/components/tab-search";
 import { GREY_COLOR, RED1_COLOR } from "@/constants";
 import head from "@/assets/image/heading-border.png";
 import { FaCircleArrowRight } from "react-icons/fa6";
-import DestinationFavourite from "@/components/destination-favourite";
 import locationmanimg from "@/assets/image/locationman.png";
 import newsimg from "@/assets/image/news.png";
 import mantravelimg from "@/assets/image/vlogger.png";
@@ -18,13 +16,19 @@ import travelmanimg from "@/assets/image/travelman.png";
 import video from "@/assets/video/video.mp4";
 import React, { Suspense, lazy } from "react";
 import { helix } from "ldrs";
+import LoadingBackdrop from "@/components/backdrop";
 
 helix.register();
 
 const ListTourVietnam = lazy(() => import("@/components/list-tour-vietnam"));
 const ListNewsHome = lazy(() => import("@/components/list-news-home"));
+const TabSearch = lazy(() => import("@/components/tab-search"));
+const DestinationFavourite = lazy(() =>
+  import("@/components/destination-favourite")
+);
+
 const Home = () => {
- const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -51,11 +55,15 @@ const Home = () => {
       )}
       <Header />
 
-      
-          <video autoPlay muted loop playsinline className="myVideo" src={video}>
-          </video>
-      
-     
+      <video
+        autoPlay
+        muted
+        loop
+        playsinline
+        className="myVideo"
+        src={video}
+      ></video>
+
       <div>
         <Container className="">
           <div className="pt-lg-5 zindex">
@@ -82,9 +90,12 @@ const Home = () => {
           </div>
         </Container>{" "}
       </div>
-      <div className="col-12 boxhome ">
+      <div className="col-12 boxhome rounded-4">
         <Container>
-          <TabSearch />
+          <Suspense fallback={<div>Loading...</div>}>
+            <TabSearch />
+          </Suspense>
+
           <Row className="fw-bold mt-5 px-2 ">
             <Col className="col-lg-1 col-3">
               {" "}
@@ -111,6 +122,7 @@ const Home = () => {
 
           <div className=" my-3">
             <Suspense fallback={<div>Loading...</div>}>
+              {" "}
               <ListTourVietnam tour_category={"Du lịch trong nước"} />
             </Suspense>
           </div>
@@ -151,6 +163,7 @@ const Home = () => {
 
           <div className=" my-3">
             <Suspense fallback={<div>Loading...</div>}>
+              {" "}
               <ListTourVietnam tour_category={"Du lịch nước ngoài"} />
             </Suspense>
           </div>
@@ -188,7 +201,9 @@ const Home = () => {
             </Col>
           </Row>
           <img src={head} className="col-lg-1 col-3 px-2  mt-2" />
-          <DestinationFavourite />
+          <Suspense fallback={<div>Loading...</div>}>
+            <DestinationFavourite />
+          </Suspense>
 
           <h3 className="fw-bold mt-5 px-2">
             <img

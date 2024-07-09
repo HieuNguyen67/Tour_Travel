@@ -13,7 +13,8 @@ import deleteimg from "@/assets/image/delete.png";
 import refundimg from "@/assets/image/refund.png";
 import { Box, Tab, Tabs } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import ListPoliciesCancel from "@/components/list-policies-cancel";
+import { Suspense, lazy } from "react";
+const ListPoliciesCancel = lazy(() => import("@/components/list-policies-cancel"));
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -269,17 +270,21 @@ const PoliciesList = () => {
                 </TabList>
               </Box>
               <TabPanel value="1">
-                <ListPoliciesCancel
-                  businessId={businessId}
-                  type={"Trong nước"}
-                />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <ListPoliciesCancel
+                    businessId={businessId}
+                    type={"Trong nước"}
+                  />{" "}
+                </Suspense>
               </TabPanel>
               <TabPanel value="2">
                 {" "}
-                <ListPoliciesCancel
-                  businessId={businessId}
-                  type={"Nước ngoài"}
-                />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <ListPoliciesCancel
+                    businessId={businessId}
+                    type={"Nước ngoài"}
+                  />
+                </Suspense>
               </TabPanel>
             </TabContext>
           </Box>

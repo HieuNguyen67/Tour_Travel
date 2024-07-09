@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, BASE_URL_USER, BORDER, RED1_COLOR, TEXT_RED_COLOR } from "@/constants";
+import {
+  BASE_URL_ADMIN,
+  BASE_URL_CUSTOMER,
+  BASE_URL_USER,
+  BORDER,
+  RED1_COLOR,
+  TEXT_RED_COLOR,
+} from "@/constants";
 import {
   Col,
   Container,
@@ -30,8 +37,9 @@ import { FaChevronRight } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { IoMdRemove } from "react-icons/io";
 import { FaUser } from "react-icons/fa6";
+import { Suspense, lazy } from "react";
 
-import PaymentMethod from "@/components/payment-method";
+const PaymentMethod = lazy(() => import("@/components/payment-method"));
 
 const BookTour = () => {
   const { tour_id } = useParams();
@@ -133,7 +141,7 @@ const BookTour = () => {
       (type === "infant" ? value : infantQuantity);
 
     if (tour && totalQuantity > tour.quantity) {
-       toast.error(`Tổng số lượng không được vượt quá ${tour.quantity}`);
+      toast.error(`Tổng số lượng không được vượt quá ${tour.quantity}`);
     } else {
       if (type === "adult") {
         setAdultQuantity(value);
@@ -179,7 +187,6 @@ const BookTour = () => {
   };
 
   useEffect(() => {
-
     const updatedPassengers = [];
 
     for (let i = 0; i < adultQuantity; i++) {
@@ -248,7 +255,7 @@ const BookTour = () => {
         navigate(
           `/banking/${response.data.order.code_order}/${response.data.order.total_price}/${response.data.order.child_quantity}/${response.data.order.adult_quantity}/${response.data.order.infant_quantity}/*${response.data.order.note}`
         );
-      }  else {
+      } else {
         const response = await axios.post(
           `${BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}`,
           {
@@ -292,9 +299,9 @@ const BookTour = () => {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString("vi-VN", options);
-  };    
+  };
 
-    const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <>
@@ -753,10 +760,13 @@ const BookTour = () => {
               />{" "}
               PHƯƠNG THỨC THANH TOÁN
             </h3>
-            <PaymentMethod
-              paymentMethod={paymentMethod}
-              setPaymentMethod={setPaymentMethod}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              {" "}
+              <PaymentMethod
+                paymentMethod={paymentMethod}
+                setPaymentMethod={setPaymentMethod}
+              />
+            </Suspense>
 
             {/* {message && <p>{message}</p>} */}
 

@@ -146,7 +146,7 @@ const{token}=useAuth();
     <>
       <LoadingBackdrop open={loading} />
 
-      <div style={{ height: 400, width: "100%" }} className="my-4">
+      <div style={{ height: 500, width: "100%" }} className="my-4">
         <DataGrid
           rows={requests}
           columns={columns}

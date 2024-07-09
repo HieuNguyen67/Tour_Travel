@@ -19,6 +19,7 @@ import OrderDetail from "@/page/business/order-detail";
 import ListRequestCancleBusiness from "@/page/business/list-request-cancel";
 import DashboardBusiness from "@/page/business/dashboard";
 import PassengersListByTour from "@/page/business/list-passengers-tour";
+import ListOrderTour from "@/page/business/list-orders-by-tour";
 
 const BusinessRoutes = () => {
   return (
@@ -71,6 +72,10 @@ const BusinessRoutes = () => {
           <Route
             path="/list-passenger-tour/:tour_id"
             element={<PassengersListByTour />}
+          />
+          <Route
+            path="/list-orders-by-tour/:tour_id"
+            element={<ListOrderTour />}
           />
           <Route
             path="/add-tour/:add_tour/:tour_id/duplicate"

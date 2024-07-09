@@ -1,13 +1,12 @@
 import { Container, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_URL_BUSINESS, BLUE_COLOR, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
+import { BASE_URL_BUSINESS, BLUE_COLOR, DARKBLUE, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
 import tourimg from "@/assets/image/tour.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN } from "@/constants";
 import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
 import LoadingBackdrop from "@/components/backdrop";
@@ -67,7 +66,7 @@ const TourList = () => {
     navigate(`/business/update-tour/${params.row.tour_id}`);
   };
   const handleRowClick1 = (params) => {
-    navigate(`/business/list-passenger-tour/${params.row.tour_id}`);
+    navigate(`/business/list-orders-by-tour/${params.row.tour_id}`);
   };
 
   const columns = [
@@ -159,7 +158,7 @@ const TourList = () => {
     {
       field: "formattedPrice_adult",
       headerName: "Giá người lớn",
-      width: 150,
+      width: 140,
       renderCell: (params) => (
         <div
           className="ms-2 fw-bold text-danger"
@@ -189,8 +188,8 @@ const TourList = () => {
       width: 200,
       renderCell: (params) => (
         <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
-          <Button variant="dark" onClick={() => handleRowClick1(params)}>
-            Xem DS Hành Khách
+          <Button style={{background:DARKBLUE, border:'0px'}} onClick={() => handleRowClick1(params)}>
+            Xem DS Booking
           </Button>
         </span>
       ),
@@ -204,7 +203,16 @@ const TourList = () => {
         <Col className="col-8">
           <h3 className="fw-bold">
             {" "}
-            <img src={tourimg} className="mb-2 location" /> LIST TOUR
+            <img
+              src={tourimg}
+              className="mb-2 "
+              style={{
+                width: "3.5rem",
+                height: "3.5rem",
+                objectFit: "cover",
+              }}
+            />{" "}
+            LIST TOUR
           </h3>
         </Col>
         <Col>

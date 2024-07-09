@@ -5,8 +5,9 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import { Tabs } from "@mui/material";
-import PaymentsList from "@/components/list-payments";
+import { Suspense, lazy } from "react";
 
+const PaymentsList = lazy(() => import("@/components/list-payments"));
 const Payments = () => {
     const [value, setValue] = React.useState("1");
 
@@ -56,10 +57,15 @@ const Payments = () => {
             </Tabs>
           </Box>
           <TabPanel value="1" sx={{ padding: "0px" }} className="mt-3">
+            <Suspense fallback={<div>Loading...</div>}>
+              <PaymentsList status={"Unpaid"} />
+            </Suspense>
             <PaymentsList status={"Paid"} />
           </TabPanel>
           <TabPanel value="2" sx={{ padding: "0px" }} className="mt-3">
-            <PaymentsList status={"Unpaid"} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <PaymentsList status={"Unpaid"} />
+            </Suspense>
           </TabPanel>
         </TabContext>
       </Box>

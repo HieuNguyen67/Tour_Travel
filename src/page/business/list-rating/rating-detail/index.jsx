@@ -1,7 +1,9 @@
 import { Link, useParams } from "react-router-dom";
-import TourReviews from "@/components/rating-tour";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { BiSolidCommentDetail } from "react-icons/bi";
+import React, { Suspense, lazy } from "react";
+
+const TourReviews = lazy(() => import("@/components/rating-tour"));
 
 const TourReviewsDetail = () => {
   const { tour_id } = useParams();
@@ -14,7 +16,9 @@ const TourReviewsDetail = () => {
         <h3 className="fw-bold mb-4">
           <BiSolidCommentDetail className="fs-2" /> PHẢN HỒI KHÁCH HÀNG
         </h3>
-        <TourReviews tour_id={tour_id} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <TourReviews tour_id={tour_id} />
+        </Suspense>
       </div>
     </>
   );

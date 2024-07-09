@@ -1,20 +1,21 @@
-import CountTodo from "@/components/count-todo";
 import { useAuth } from "@/context";
 import { Col, Form, Row } from "react-bootstrap";
 import dashboardimg from "@/assets/image/dashboard.png";
 import { BASE_URL_BUSINESS, BLUE_COLOR, BORDER, DARKBLUE, GREY_COLOR, PURPLE_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import MonthlyRevenueChart from "@/components/monthly-revenue-chart";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { FaListAlt, FaStar } from "react-icons/fa";
 import { MdTour } from "react-icons/md";
 import { ImNewspaper } from "react-icons/im";
 import { FaClipboardList } from "react-icons/fa";
-import OrderStatusRatio from "@/components/chart-ratio-orders";
 import { subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, format } from 'date-fns';
 import { formatInTimeZone } from "date-fns-tz";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import React, { Suspense, lazy } from "react";
+const OrderStatusRatio = lazy(() => import("@/components/chart-ratio-orders"));
+const MonthlyRevenueChart = lazy(() => import("@/components/monthly-revenue-chart"));
+const CountTodo = lazy(() => import("@/components/count-todo"));
 
 const timeZone = 'Asia/Ho_Chi_Minh';
 
@@ -22,7 +23,9 @@ const TodoItem = ({ endpoint, businessId, label }) => (
   <Col className="border-end">
     <p className="text-center">
       <span className="fs-5 fw-bold text-primary">
-        <CountTodo endpoint={endpoint} business_id={businessId} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <CountTodo endpoint={endpoint} business_id={businessId} />
+        </Suspense>
       </span>
       <br />
       {label}
@@ -37,18 +40,21 @@ const SummaryBox = ({ backgroundColor, endpoint, businessId, label, icon }) => (
       className="shadow-sm rounded-2 px-3 pt-3"
     >
       <p className="text-light">
-       {icon} {label}
+        {icon} {label}
         <br />
         <span className="fs-1 fw-bold">
           {label === "ĐIỂM RATING TRUNG BÌNH" ? (
             <>
               {" "}
-              <CountTodo endpoint={endpoint} business_id={businessId} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <CountTodo endpoint={endpoint} business_id={businessId} />
+              </Suspense>
             </>
           ) : (
             <>
-              {" "}
-              <CountTodo endpoint={endpoint} business_id={businessId} />
+              {" "} <Suspense fallback={<div>Loading...</div>}>
+                <CountTodo endpoint={endpoint} business_id={businessId} />
+              </Suspense>
             </>
           )}
         </span>
@@ -168,7 +174,7 @@ const DashboardBusiness = ()=>{
             <TodoItem
               endpoint={`/pending-count-status-tour`}
               businessId={businessId}
-              label="Tour đang diễn ra"
+              label="Tour đã diễn ra"
             />
             <TodoItem
               endpoint={`/pending-count-status-contact-business`}
@@ -338,7 +344,9 @@ const DashboardBusiness = ()=>{
               style={{ background: "white", border: BORDER }}
               className="rounded-2 shadow-sm p-3"
             >
-              <MonthlyRevenueChart businessId={businessId} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <MonthlyRevenueChart businessId={businessId} />
+              </Suspense>
             </div>
           </Col>
           <Col className="col-lg-6 col-12">
@@ -346,7 +354,9 @@ const DashboardBusiness = ()=>{
               style={{ background: "white", border: BORDER }}
               className="rounded-2 shadow-sm p-3"
             >
-              <OrderStatusRatio businessId={businessId} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <OrderStatusRatio businessId={businessId} />{" "}
+              </Suspense>
             </div>
           </Col>
         </Row>

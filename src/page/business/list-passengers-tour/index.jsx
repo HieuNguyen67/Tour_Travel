@@ -1,32 +1,46 @@
-import PassengersListTour from "@/components/list-passenger-tour";
 import { Link, useParams } from "react-router-dom";
 import groupimg from "@/assets/image/group.png";
 import { IoArrowBackOutline } from "react-icons/io5";
-import ExportPassengers from "@/components/export-excel";
+import React, { Suspense, lazy } from "react";
+import { Col, Row } from "react-bootstrap";
+const ExportPassengers = lazy(() => import("@/components/export-excel"));
+const PassengersListTour = lazy(() => import("@/components/list-passenger-tour"));
 
 const PassengersListByTour = ()=>{
     const {tour_id}= useParams();
     return (
       <>
-        <Link to="/business/list-tour">
+        <Link to={`/business/list-orders-by-tour/${tour_id}`}>
           <IoArrowBackOutline className="fs-3 mb-3" />
         </Link>
-        <h3 className="mb-3 fw-bold">
-          <img
-            src={groupimg}
-            className=""
-            style={{
-              width: "3rem",
-              height: "3rem",
-              objectFit: "cover",
-            }}
-            loading="lazy"
-          />{" "}
-          DANH SÁCH HÀNH KHÁCH ĐI TOUR
-        </h3>
-        <ExportPassengers tourId={tour_id} />
+        <Row>
+          <Col className="col-lg-6 col-12">
+            {" "}
+            <h3 className=" fw-bold">
+              <img
+                src={groupimg}
+                className=""
+                style={{
+                  width: "3rem",
+                  height: "3rem",
+                  objectFit: "cover",
+                }}
+                loading="lazy"
+              />{" "}
+              DANH SÁCH HÀNH KHÁCH ĐI TOUR
+            </h3>
+          </Col>
+          <Col className="col-lg-6 col-12">
+            {" "}
+            <Suspense fallback={<div>Loading...</div>}>
+              <ExportPassengers tourId={tour_id} />
+            </Suspense>
+          </Col>
+        </Row>
 
-        <PassengersListTour tourId={tour_id} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <PassengersListTour tourId={tour_id} />
+        </Suspense>
       </>
     );
 }

@@ -6,12 +6,12 @@ import { Button, Col, Row } from "react-bootstrap";
 import excelimg from "@/assets/image/excel.png";
 import { IoMdDownload } from "react-icons/io";
 
-const ExportPassengers = ({ tourId }) => {
-    const {token}= useAuth();
+const ExportOrdersTour = ({ tourId }) => {
+  const { token } = useAuth();
   const handleExport = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL_BUSINESS}/export-list-passengers-tour/${tourId}`,
+        `${BASE_URL_BUSINESS}/export-list-orders-tour/${tourId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -23,21 +23,19 @@ const ExportPassengers = ({ tourId }) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "Danh_sách_hành_khách.xlsx"); 
+      link.setAttribute("download", "Danh_sách_đơn_booking.xlsx");
       document.body.appendChild(link);
       link.click();
       link.remove();
     } catch (error) {
       console.error("Lỗi khi lấy danh sách:", error);
-      alert("Không tìm thấy hành khách nào!");
+      alert("Không tìm thấy đơn booking nào!");
     }
   };
 
   return (
     <>
-      <div style={{ display: "grid", placeItems: "end" }}>
-        <Row>
-          <Col>
+        
             <img
               src={excelimg}
               style={{
@@ -53,11 +51,9 @@ const ExportPassengers = ({ tourId }) => {
             >
               <IoMdDownload /> Tải về
             </Button>
-          </Col>
-        </Row>
-      </div>
+      
     </>
   );
 };
 
-export default ExportPassengers;
+export default ExportOrdersTour;

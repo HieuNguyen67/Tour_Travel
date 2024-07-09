@@ -24,21 +24,28 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import { GiPriceTag } from "react-icons/gi";
 import { IoManSharp } from "react-icons/io5";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
-import TourImagesCarousel from "@/components/image-tour-multi-carousel";
 import HTMLContent from "@/components/HTMLContent";
-import PolicesTour from "@/components/policies-tour";
-import TourReviews from "@/components/rating-tour";
 import { Box, Rating } from "@mui/material";
 import { MdOutlineBusinessCenter } from "react-icons/md";
-import TourListBusiness from "@/components/list-tour-by-business";
-import ReportTour from "@/components/report-tour";
 import { useAuth } from "@/context";
-import ContactModal from "@/components/contact-business";
 import picturetourimg from "@/assets/image/picturetour.png";
 import scheduleimg from "@/assets/image/schedule.png";
 import ratingimg from "@/assets/image/feedback.png";
 import policyimg from "@/assets/image/policy.png";
 import tourimg from "@/assets/image/tour.png";
+import React, { Suspense, lazy } from "react";
+import "@/page/customer/news/news-detail/news-detail.scss";
+
+const ReportTour = lazy(() => import("@/components/report-tour"));
+const PolicesTour = lazy(() => import("@/components/policies-tour"));
+const ContactModal = lazy(() => import("@/components/contact-business"));
+const TourListBusiness = lazy(() =>
+  import("@/components/list-tour-by-business")
+);
+const TourImagesCarousel = lazy(() =>
+  import("@/components/image-tour-multi-carousel")
+);
+const TourReviews = lazy(() => import("@/components/rating-tour"));
 
 const TourDetail = () => {
   const { tour_id } = useParams();
@@ -72,6 +79,7 @@ const TourDetail = () => {
   useEffect(() => {
     const fetchTourImages = async () => {
       try {
+        setLoading1(true);
         const response = await axios.get(
           `${BASE_URL_USER}/get-all-tour-images/${tour_id}`
         );
@@ -187,7 +195,15 @@ const TourDetail = () => {
                   </Box>
                 </Col>
                 <Col>
-                  <ReportTour accountId={customerId} tourId={tour_id} />
+                  <Suspense
+                    fallback={
+                      <div>
+                        <LoadingBackdrop open={true} />
+                      </div>
+                    }
+                  >
+                    <ReportTour accountId={customerId} tourId={tour_id} />
+                  </Suspense>
                 </Col>
               </Row>
               <p className="">
@@ -208,8 +224,9 @@ const TourDetail = () => {
               >
                 <MdOutlineShoppingCartCheckout className="fs-4" /> Đặt ngay
               </Button>
-
-              <ContactModal accountId={tour.business_id} tourId={tour_id} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <ContactModal accountId={tour.business_id} tourId={tour_id} />
+              </Suspense>
             </Col>
           </Row>
           <div>
@@ -412,7 +429,10 @@ const TourDetail = () => {
             HÌNH ẢNH TOUR
           </h2>
           <div className=" my-4">
-            <TourImagesCarousel tourId={tour_id} />
+            <Suspense fallback={<div>Loading...</div>}>
+              {" "}
+              <TourImagesCarousel tourId={tour_id} />
+            </Suspense>
           </div>
           <h2 className="text-center fw-bold mt-5">
             <img
@@ -447,10 +467,13 @@ const TourDetail = () => {
             />{" "}
             CHÍNH SÁCH/ QUY ĐỊNH TOUR
           </h2>
-          <PolicesTour
-            businessId={tour.business_id}
-            category={tour.category_name}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <PolicesTour
+              businessId={tour.business_id}
+              category={tour.category_name}
+            />
+          </Suspense>
+
           <h4 className=" fw-bold mt-5 sizetextrate">
             <img
               src={ratingimg}
@@ -464,7 +487,10 @@ const TourDetail = () => {
             ĐÁNH GIÁ TỪ KHÁCH HÀNG
           </h4>
           <div>
-            <TourReviews tour_code={tour.tour_code} />
+            <Suspense fallback={<div>Loading...</div>}>
+              {" "}
+              <TourReviews tour_code={tour.tour_code} />
+            </Suspense>
           </div>
           <h4 className=" fw-bold mt-5  sizetextrate">
             <img
@@ -479,7 +505,10 @@ const TourDetail = () => {
             CÁC TOUR KHÁC CỦA {tour.account_name}
           </h4>
           <div className="mb-5">
-            <TourListBusiness accountId={tour.business_id} />
+            <Suspense fallback={<div>Loading...</div>}>
+              {" "}
+              <TourListBusiness accountId={tour.business_id} />
+            </Suspense>
           </div>
         </div>
       </Container>

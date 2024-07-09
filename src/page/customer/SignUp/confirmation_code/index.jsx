@@ -4,7 +4,6 @@ import { Button, Col, Container, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { BASE_URL_CUSTOMER, BLUE_COLOR } from "@/constants";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_URL_ADMIN } from "@/constants";
 
 const ConfirmationForm = () => {
   const [confirmationCode, setConfirmationCode] = useState("");

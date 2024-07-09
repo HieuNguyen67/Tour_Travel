@@ -11,6 +11,7 @@ import { FaCar } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import "@/page/customer/business-link/business-link.scss";
 
 const TourListBusiness = ({ accountId }) => {
   const [tours, setTours] = useState([]);

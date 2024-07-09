@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 import NewsLayout from "./layout";
+import LoadingBackdrop from "@/components/backdrop";
 
 const NewsTravel = lazy(() => import("./news-travel"));
 const NewsDetailCustomer = lazy(() => import("./news-detail"));
 const NewsMain = () => {
-
   return (
     <>
       <NewsLayout>
@@ -14,7 +14,7 @@ const NewsMain = () => {
           <Route
             path="/1/:news_travel"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<div><LoadingBackdrop open={true} /></div>}>
                 <NewsTravel />
               </Suspense>
             }
@@ -23,7 +23,7 @@ const NewsMain = () => {
           <Route
             path="/news-detail/:news_id"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<div><LoadingBackdrop open={true} /></div>}>
                 <NewsDetailCustomer />
               </Suspense>
             }

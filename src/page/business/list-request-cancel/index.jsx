@@ -1,6 +1,10 @@
-import CancellationRequests from "@/components/list-request-cancellation";
+
 import { useAuth } from "@/context";
 import cancelimg from "@/assets/image/cancle.png";
+import React, { Suspense, lazy } from "react";
+const CancellationRequests = lazy(() =>
+  import("@/components/list-request-cancellation")
+);
 
 const ListRequestCancleBusiness = ()=>{
     const{businessId}=useAuth();
@@ -20,7 +24,10 @@ const ListRequestCancleBusiness = ()=>{
           />{" "}
           YÊU CẦU HUỶ BOOKING
         </h3>
-        <CancellationRequests businessId={businessId} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <CancellationRequests businessId={businessId} />
+        </Suspense>
+        
       </>
     );
 }

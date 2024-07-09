@@ -106,6 +106,7 @@ const Login: React.FC = () => {
                   height: "4rem",
                   objectFit: "cover",
                 }}
+                loading="lazy"
               />{" "}
               ĐĂNG NHẬP
             </h1>

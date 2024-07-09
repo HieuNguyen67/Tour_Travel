@@ -9,6 +9,7 @@ import { LuClock8 } from "react-icons/lu";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import HTMLContent from "../HTMLContent";
+import "@/page/customer/news/news.scss";
 
 const ListNewsHome = () => {
   const [news, setNews] = useState([]);
