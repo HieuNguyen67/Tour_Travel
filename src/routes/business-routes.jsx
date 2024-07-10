@@ -81,6 +81,7 @@ const BusinessRoutes = () => {
             path="/add-tour/:add_tour/:tour_id/duplicate"
             element={<AddTourForm />}
           />
+          
           <Route path="*" element={<Navigate to="/business/list-tour" />} />
         </Routes>
       </SidebarLayout>

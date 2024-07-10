@@ -13,11 +13,20 @@ const CountTodo = ({ endpoint, business_id }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-          const response = await axios.get(
-            `${BASE_URL_ADMIN}${endpoint}/${business_id}`
-          );
-          setPendingCount(response.data.count);
-                  setLoading(false);
+        if(business_id){
+           const response = await axios.get(
+             `${BASE_URL_ADMIN}${endpoint}/${business_id}`
+           );
+           setPendingCount(response.data.count);
+           setLoading(false);
+        }else{
+           const response = await axios.get(
+             `${BASE_URL_ADMIN}${endpoint}`
+           );
+           setPendingCount(response.data.count);
+           setLoading(false);
+        }
+         
 
       } catch (error) {
         console.error("Error fetching pending count:", error);

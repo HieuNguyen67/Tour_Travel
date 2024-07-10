@@ -58,9 +58,8 @@ const Payments = () => {
           </Box>
           <TabPanel value="1" sx={{ padding: "0px" }} className="mt-3">
             <Suspense fallback={<div>Loading...</div>}>
-              <PaymentsList status={"Unpaid"} />
+              <PaymentsList status={"Paid"} />
             </Suspense>
-            <PaymentsList status={"Paid"} />
           </TabPanel>
           <TabPanel value="2" sx={{ padding: "0px" }} className="mt-3">
             <Suspense fallback={<div>Loading...</div>}>

@@ -68,14 +68,14 @@ const DashboardBusiness = ()=>{
     const [totalRevenue, setTotalRevenue] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [dateRange, setDateRange] = useState("thisWeek");
+    const [dateRange, setDateRange] = useState("thisMonth");
       const today = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
 
     const [startDate, setStartDate] = useState(
-      format(startOfWeek(today, { weekStartsOn: 1 }), "yyyy-MM-dd")
+      format(startOfMonth(today), "yyyy-MM-dd")
     );
     const [endDate, setEndDate] = useState(
-      format(endOfWeek(today, { weekStartsOn: 1 }), "yyyy-MM-dd")
+      format(endOfMonth(today), "yyyy-MM-dd")
     );
 
     const handleDateRangeChange = (event) => {
@@ -110,7 +110,6 @@ const DashboardBusiness = ()=>{
                `${BASE_URL_BUSINESS}/total-revenue/${businessId}?startDate=${startDate}&endDate=${endDate}`
              );
                       setTotalRevenue(response.data.total_revenue);
-                      console.log(response.data.total_revenue);                      
 
            } catch (error) {
              setError("Có lỗi xảy ra. Vui lòng thử lại sau.");

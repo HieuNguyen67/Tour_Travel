@@ -27,6 +27,7 @@ import { FaFilePen } from "react-icons/fa6";
 import { MdPayments } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
 import { AiFillDashboard } from "react-icons/ai";
+import { MdPayment } from "react-icons/md";
 
 const HEADER = [
   { id: 1, name: "TRANG CHỦ", link: "/" },
@@ -81,11 +82,17 @@ const ADMIN = [
         icon={<RiRefund2Line />}
       />
     ),
-    name: "REFUNDS",
+    name: "HOÀN TIỀN",
     link: "/admin/list-refunds",
   },
   {
     id: 7,
+    icon: <MdPayment />,
+    name: "THANH TOÁN DOANH NGHIỆP",
+    link: "/admin/list-revenue-business",
+  },
+  {
+    id: 8,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-news`}
@@ -99,7 +106,7 @@ const ADMIN = [
     link2: "/admin/add-news",
   },
   {
-    id: 8,
+    id: 9,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-contact`}
@@ -110,7 +117,7 @@ const ADMIN = [
     link: "/admin/contact",
   },
   {
-    id: 9,
+    id: 10,
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-report`}
@@ -121,7 +128,7 @@ const ADMIN = [
     link: "/admin/report",
   },
   {
-    id: 10,
+    id: 11,
     icon: <FaFilePen />,
     name: "AUDIT LOG",
     link: "/admin/admin-actions",

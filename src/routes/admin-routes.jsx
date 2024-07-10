@@ -11,14 +11,14 @@ import NewsDetail from "@/page/admin/news/news-details";
 import RegisterUser from "@/page/admin/register-user";
 import ReportList from "@/page/admin/report-tour";
 import ReportDetails from "@/page/admin/report-tour/report-detail";
-import PoliciesList from "@/page/business/list-policies";
-import AddPolicyCancellation from "@/page/business/add-policies-cancellation";
 import { useAuth } from "@/context";
 import AdminActionsList from "@/page/admin/admin-actions";
 import Payments from "@/page/admin/list-payments";
 import OrderDetail from "@/page/business/order-detail";
 import RefundsList from "@/page/admin/list-refunds";
 import DashboardAdmin from "@/page/admin/dashboard";
+import ListRevenueBusiness from "@/page/admin/list-revenue-business";
+import DetailRevenueBusiness from "@/page/admin/detail-revenue-business";
 const AdminRoutes = () => {
   const { role } = useAuth();
 
@@ -56,7 +56,10 @@ const AdminRoutes = () => {
             <Route path="/list-refunds" element={<RefundsList />} />
             <Route path="/order-detail/:order_id" element={<OrderDetail />} />
             <Route path="/dashboard" element={<DashboardAdmin />} />
-
+            <Route
+              path="/list-revenue-business"
+              element={<ListRevenueBusiness />}
+            />
             <Route path="*" element={<Navigate to="/admin/list-customer" />} />
           </Routes>
         </SidebarLayout>
