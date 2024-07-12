@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { BiSolidCommentDetail } from "react-icons/bi";
 import React, { Suspense, lazy } from "react";
@@ -6,8 +6,9 @@ import React, { Suspense, lazy } from "react";
 const TourReviews = lazy(() => import("@/components/rating-tour"));
 
 const TourReviewsDetail = () => {
-  const { tour_id } = useParams();
-  return (
+  const location= useLocation();
+  const {tour_id}= location.state || {};
+    return (
     <>
       <div className=" ">
         <Link to="/business/list-rating">

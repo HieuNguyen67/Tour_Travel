@@ -47,8 +47,11 @@
     
         height: 22rem;
        position: fixed;        
-               background: linear-gradient(to top, #000000, #111111);
-
+ background-image: url(../../../assets/image/dark.jpg);            background-repeat: no-repeat;
+    
+            background-size: cover;
+    
+            background-attachment: fixed;        
            
         }
 .zindex {
@@ -111,8 +114,11 @@
     .myVideo {
         width: 100%;
         height: auto;
-                background: linear-gradient(to top, #000000, #111111);
-
+ background-image: url(../../../assets/image/dark.jpg);            background-repeat: no-repeat;
+    
+            background-size: cover;
+    
+            background-attachment: fixed;        
 
     }
 
@@ -165,8 +171,11 @@
          
                 width: 100%;
                 height: auto;
-                background: linear-gradient(to top, #000000, #111111);
-            
+ background-image: url(../../../assets/image/dark.jpg);            background-repeat: no-repeat;
+    
+            background-size: cover;
+    
+            background-attachment: fixed;            
              
     
          }

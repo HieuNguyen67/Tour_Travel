@@ -49,7 +49,9 @@ const PaymentsList = ({ status }) => {
     }).format(price);
   };
   var handleRowClick = (params) => {
-    navigate(`/admin/order-detail/${params.row.order_id}`);
+        const data = { order_id: params.row.order_id };
+
+    navigate(`/admin/order-detail`, { state: data });
   };
 
   const columns = [

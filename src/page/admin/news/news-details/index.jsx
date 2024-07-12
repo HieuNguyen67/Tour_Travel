@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import HTMLContent from "@/components/HTMLContent";
 import "./news-details.scss";
 import head from "@/assets/image/heading-border.png";
@@ -19,10 +19,11 @@ import { BASE_URL_USER, BLUE_COLOR } from "@/constants";
 import { BASE_URL_ADMIN } from "@/constants";
 
 const NewsDetail = () => {
+  const location= useLocation();
+  const {news_id} = location.state || {};
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { news_id } = useParams();
   const [details, setDetails] = useState({});
   const [status, setStatus] = useState("");
   const [note, setNote] = useState("");

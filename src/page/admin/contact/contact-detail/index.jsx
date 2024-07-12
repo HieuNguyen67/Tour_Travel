@@ -13,13 +13,13 @@ import { MdOutlineContactMail } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 
 const ContactDetail = () => {
-  const { contact_id } = useParams();
   const [contact, setContact] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
   const { token, role, adminId } = useAuth();
   const location = useLocation();
+  const {contact_id}= location.state || {};
 
   useEffect(() => {
     const fetchContact = async () => {

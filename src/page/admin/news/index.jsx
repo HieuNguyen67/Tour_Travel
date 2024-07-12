@@ -60,17 +60,21 @@ const News = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
+    const data= {news_id: params.row.news_id};
     {
       role == 2 || role == 5
-        ? navigate(`/admin/news-detail/${params.row.news_id}`)
-        : navigate(`/business/news-detail/${params.row.news_id}`);
+        ? navigate(`/admin/news-detail`, {state: data})
+        : navigate(`/business/news-detail`, {state: data});
     }
   };
   const handleRowClick1 = (params) => {
+    const data= {news_id: params.row.news_id}
     {
       role == 2 || role == 5
-        ? navigate(`/admin/edit-news/${params.row.news_id}`)
-        : navigate(`/business/edit-news/${params.row.news_id}`);
+        ? navigate(`/admin/edit-news`, { state: data })
+        : navigate(`/business/edit-news`, {
+            state: data,
+          });
     }
   };
   const handleCheckboxChange = (event, row) => {

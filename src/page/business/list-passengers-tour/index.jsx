@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import groupimg from "@/assets/image/group.png";
 import { IoArrowBackOutline } from "react-icons/io5";
 import React, { Suspense, lazy } from "react";
@@ -7,7 +7,8 @@ const ExportPassengers = lazy(() => import("@/components/export-excel"));
 const PassengersListTour = lazy(() => import("@/components/list-passenger-tour"));
 
 const PassengersListByTour = ()=>{
-    const {tour_id}= useParams();
+    const location= useLocation();
+    const {tour_id}= location.state || {};
     return (
       <>
         <Link to={`/business/list-orders-by-tour/${tour_id}`}>

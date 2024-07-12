@@ -31,8 +31,10 @@ import tourimg from "@/assets/image/tour.png";
 import { AiOutlineBarcode } from "react-icons/ai";
 
 const AddTourForm = () => {
+  const location = useLocation();
+  const { tour_id } = location.state || {};
   const { businessId, token } = useAuth();
-  const { tour_id , add_tour} = useParams();
+  const {   add_tour} = useParams();
   const [error, setError] = useState(null);
   const [tourCategories, setTourCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,7 +62,6 @@ const AddTourForm = () => {
   const [regions, setRegions] = useState([]);
   const [images, setImages] = useState([]);
 
-  const location = useLocation();
   const isHomePage = location.pathname === "/business/add-tour/1";
 
   useEffect(() => {
@@ -283,7 +284,7 @@ const AddTourForm = () => {
   useEffect(() => {
     const fetchTourImages = async () => {
       try {
-        if (!isHomePage) {
+        if (add_tour != 1) {
           const response = await axios.get(
             `${BASE_URL_USER}/get-all-tour-images/${tour_id}`
           );
@@ -301,8 +302,7 @@ const AddTourForm = () => {
 
     const handleDuplicateTour = () => {
       const duplicatedTour = { ...formData };
-
-      navigate(`/business/add-tour/2/${tour_id}/duplicate`, {
+      navigate(`/business/add-tour/1/duplicate`, {
         state: { formData: duplicatedTour },
       });
     };

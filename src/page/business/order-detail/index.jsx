@@ -11,7 +11,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { format } from "date-fns";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context";
 import {
   BASE_URL_ADMIN,
@@ -126,7 +126,6 @@ const OrderDetail = () => {
   const [orderDetail, setOrderDetail] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { order_id } = useParams();
   const { token, role, customerId } = useAuth();
   const [status, setStatus] = useState("");
   const [statuspayments, setStatuspayments] = useState("");
@@ -136,11 +135,12 @@ const OrderDetail = () => {
   const [paymentUrl, setPaymentUrl] = useState("");
   const [show, setShow] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+  const location= useLocation();
+  const {order_id}= location.state || {};
 
   useEffect(() => {
     const fetchOrderDetail = async () => {

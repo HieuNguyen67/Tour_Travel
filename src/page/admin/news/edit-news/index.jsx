@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -13,11 +13,12 @@ import { useAuth } from "@/context";
 import { BASE_URL_ADMIN } from "@/constants";
 
 const UpdateNews = () => {
+  const location = useLocation();
+  const {news_id}= location.state || {};
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { news_id } = useParams();
   const { token, role } = useAuth();
 
   useEffect(() => {

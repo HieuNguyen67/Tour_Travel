@@ -61,12 +61,15 @@ const TourList = () => {
     );
   };
   const navigate = useNavigate();
+  
 
   const handleRowClick = (params) => {
-    navigate(`/business/update-tour/${params.row.tour_id}`);
+      const data = { tour_id: params.row.tour_id };
+      navigate("/business/update-tour", { state: data });
   };
   const handleRowClick1 = (params) => {
-    navigate(`/business/list-orders-by-tour/${params.row.tour_id}`);
+          const data = { tour_id: params.row.tour_id };
+    navigate(`/business/list-orders-by-tour`, { state: data });
   };
 
   const columns = [

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Box, Typography } from "@mui/material";
 import { BASE_URL_ADMIN } from "@/constants";
@@ -15,12 +15,13 @@ import { FaSave } from "react-icons/fa";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 const ReportDetails = () => {
-  const { report_id } = useParams();
   const { token, adminId } = useAuth();
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
+  const location = useLocation();
+  const {report_id}= location.state || {};
 
   useEffect(() => {
     const fetchReportDetails = async () => {

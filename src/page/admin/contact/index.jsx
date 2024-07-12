@@ -51,11 +51,14 @@ const ContactList = () => {
   const navigate = useNavigate();
   if (isHomePage) {
     var handleRowClick = (params) => {
-      navigate(`/admin/contact-detail/${params.row.contact_id}`);
+      const data = {contact_id: params.row.contact_id};
+      navigate(`/admin/contact-detail`,{state: data});
     };
   } else {
     var handleRowClick = (params) => {
-      navigate(`/business/contact-detail/${params.row.contact_id}`);
+            const data = { contact_id: params.row.contact_id };
+
+      navigate(`/business/contact-detail`,{state: data});
     };
   }
 

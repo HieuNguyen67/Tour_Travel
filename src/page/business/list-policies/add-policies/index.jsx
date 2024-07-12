@@ -14,13 +14,13 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { MdDescription } from "react-icons/md";
 
 const AddPolicyForm = () => {
-  const { policy_id } = useParams();
   const { role } = useAuth();
   const { businessId, token } = useAuth();
   const [policytype, setPolicytype] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
+  const {policy_id}= location.state || {};
   const isHomePage = location.pathname === "/business/add-policies";
 
   const navigate = useNavigate();

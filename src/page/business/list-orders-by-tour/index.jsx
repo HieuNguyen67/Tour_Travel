@@ -1,5 +1,5 @@
 import { IoArrowBackOutline } from "react-icons/io5";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import listimg from "@/assets/image/list.png";
 import React, { Suspense, lazy } from "react";
 import { Button, Col, Row } from "react-bootstrap";
@@ -15,7 +15,13 @@ const ListOrdersByTour = lazy(() =>
 );
 
 const ListOrderTour = ()=>{
-    const {tour_id} = useParams();
+  const location= useLocation();
+  const {tour_id}= location.state ||{};
+  const navigate= useNavigate();
+  const handleClick=()=>{
+    const data= {tour_id: tour_id};
+    navigate(`/business/list-passenger-tour`, { state: data });
+  }
     return (
       <>
         <Link to="/business/list-tour">
@@ -51,11 +57,9 @@ const ListOrderTour = ()=>{
                     }}
                     loading="lazy"
                   />
-                  <Link to={`/business/list-passenger-tour/${tour_id}`}>
-                    <Button style={{ background: DARKBLUE, border: "0px" }}>
+                    <Button onClick={handleClick} style={{ background: DARKBLUE, border: "0px" }}>
                       Xem DS Hành Khách
                     </Button>
-                  </Link>
                   <ExportOrdersTour tourId={tour_id} />
                 </Col>
               </Row>

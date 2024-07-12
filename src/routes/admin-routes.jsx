@@ -33,28 +33,28 @@ const AdminRoutes = () => {
             <Route path="/list-admin" element={<ListUser />} />
 
             <Route
-              path="/edit-profile/:account_id/:role_id"
+              path="/edit-profile/:role_id"
               element={<EditProfile />}
             />
             <Route
-              path="/contact-detail/:contact_id"
+              path="/contact-detail"
               element={<ContactDetail />}
             />
             <Route path="/add-news" element={<AddNews />} />
-            <Route path="/news-detail/:news_id" element={<NewsDetail />} />
-            <Route path="/edit-news/:news_id" element={<UpdateNews />} />
+            <Route path="/news-detail" element={<NewsDetail />} />
+            <Route path="/edit-news" element={<UpdateNews />} />
             <Route path="/news" element={<News />} />
             <Route path="/contact" element={<ContactList />} />
 
             <Route path="/report" element={<ReportList />} />
             <Route
-              path="/report-detail/:report_id"
+              path="/report-detail"
               element={<ReportDetails />}
             />
             <Route path="/admin-actions" element={<AdminActionsList />} />
             <Route path="/list-payments" element={<Payments />} />
             <Route path="/list-refunds" element={<RefundsList />} />
-            <Route path="/order-detail/:order_id" element={<OrderDetail />} />
+            <Route path="/order-detail" element={<OrderDetail />} />
             <Route path="/dashboard" element={<DashboardAdmin />} />
             <Route
               path="/list-revenue-business"

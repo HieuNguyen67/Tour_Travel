@@ -31,7 +31,9 @@ const ReportList = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    navigate(`/admin/report-detail/${params.row.report_id}`);
+        const data = { report_id: params.row.report_id };
+
+    navigate(`/admin/report-detail`,{state: data});
   };
 
   const columns = [

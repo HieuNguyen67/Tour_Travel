@@ -27,61 +27,50 @@ const BusinessRoutes = () => {
       <SidebarLayout>
         <Routes>
           <Route path="/list-tour" element={<ListTour />} />
-          <Route path="/order-tour" element={<OrderTour />} />
           <Route path="/add-tour/:add_tour" element={<AddTourForm />} />
-          <Route path="/update-tour/:tour_id" element={<AddTourForm />} />
           <Route
-            path="/edit-profile/:account_id/:role_id"
-            element={<EditProfile />}
+            path="/add-tour/:add_tour/duplicate"
+            element={<AddTourForm />}
           />
+          <Route path="/update-tour" element={<AddTourForm />} />
           <Route path="/list-news" element={<News />} />
           <Route path="/add-news" element={<AddNews />} />
-          <Route path="/news-detail/:news_id" element={<NewsDetail />} />
-          <Route path="/edit-news/:news_id" element={<UpdateNews />} />
+          <Route path="/news-detail" element={<NewsDetail />} />
+          <Route path="/edit-news" element={<UpdateNews />} />
           <Route path="/list-policies" element={<PoliciesList />} />
           <Route path="/add-policies" element={<AddPolicyForm />} />
-          <Route path="/edit-policy/:policy_id" element={<AddPolicyForm />} />
+          <Route path="/edit-policy" element={<AddPolicyForm />} />
           <Route path="/list-contact" element={<ContactList />} />
-          <Route
-            path="/contact-detail/:contact_id"
-            element={<ContactDetail />}
-          />
+          <Route path="/contact-detail" element={<ContactDetail />} />
           <Route path="/list-rating" element={<RatingsList />} />
-          <Route
-            path="/review-detail/:tour_id"
-            element={<TourReviewsDetail />}
-          />
+          <Route path="/review-detail" element={<TourReviewsDetail />} />
           <Route
             path="/add-policies-cancellation"
             element={<AddPolicyCancellation />}
           />
           <Route
-            path="/edit-policy-cancellation/:policy_id"
+            path="/edit-policy-cancellation"
             element={<AddPolicyCancellation />}
           />
           <Route
             path="/list-policies-cancellation"
             element={<PoliciesList />}
           />
-          <Route path="/order-detail/:order_id" element={<OrderDetail />} />{" "}
+          <Route path="/order-tour" element={<OrderTour />} />
+          <Route
+            path="/order-detail"
+            element={<OrderDetail />}
+          />{" "}
           <Route
             path="/list-request-cancel"
             element={<ListRequestCancleBusiness />}
           />
           <Route path="/dashboard" element={<DashboardBusiness />} />
           <Route
-            path="/list-passenger-tour/:tour_id"
+            path="/list-passenger-tour"
             element={<PassengersListByTour />}
           />
-          <Route
-            path="/list-orders-by-tour/:tour_id"
-            element={<ListOrderTour />}
-          />
-          <Route
-            path="/add-tour/:add_tour/:tour_id/duplicate"
-            element={<AddTourForm />}
-          />
-          
+          <Route path="/list-orders-by-tour" element={<ListOrderTour />} />
           <Route path="*" element={<Navigate to="/business/list-tour" />} />
         </Routes>
       </SidebarLayout>

@@ -77,7 +77,8 @@ const ListPoliciesCancel = ({ businessId , type}) => {
    };
    const navigate = useNavigate();
    const handleRowClick = (params) => {
-       navigate(`/business/edit-policy-cancellation/${params.row.policy_id}`);
+    const data = {policy_id: params.row.policy_id};
+       navigate(`/business/edit-policy-cancellation`,{state: data});
      
    };
      const columns = [

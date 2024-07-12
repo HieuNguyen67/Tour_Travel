@@ -30,7 +30,7 @@ const Information = () => {
           <Route path="/list-order" element={<ListOrder />} />
           <Route path="/coupons" element={<Coupons />} />
           <Route path="/refunds" element={<Refunds />} />
-          <Route path="/order-detail/:order_id" element={<OrderDetail />} />
+          <Route path="/order-detail" element={<OrderDetail />} />
           <Route path="*" element={<Navigate to="/information/profile" />} />
         </Routes>
       </InformationLayout>

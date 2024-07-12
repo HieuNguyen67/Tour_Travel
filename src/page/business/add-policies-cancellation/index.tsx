@@ -18,8 +18,8 @@ interface PolicyCancellation {
 }
 
 const AddPolicyCancellation: React.FC = () => {
-  const { policy_id } = useParams();
-
+  const location= useLocation();
+  const {policy_id}= location.state || {};
   const [policy, setPolicy] = useState<PolicyCancellation>({
     policy_id: 0,
     days_before_departure: 0,
@@ -27,7 +27,6 @@ const AddPolicyCancellation: React.FC = () => {
     type: ""
   });
   const [message, setMessage] = useState<string>("");
-  const location = useLocation();
   const { businessId } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const isHomePage =

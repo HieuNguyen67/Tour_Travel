@@ -89,10 +89,12 @@ const PoliciesList = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
+    const data = {policy_id : params.row.policy_id};
+
     if (isHomePage) {
-      navigate(`/business/edit-policy/${params.row.policy_id}`);
+      navigate(`/business/edit-policy`,{state: data});
     } else {
-      navigate(`/business/edit-policy-cancellation/${params.row.policy_id}`);
+      navigate(`/business/edit-policy-cancellation`, { state: data });
     }
   };
     var columns = [

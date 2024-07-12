@@ -38,6 +38,7 @@ import { IoMdAdd } from "react-icons/io";
 import { IoMdRemove } from "react-icons/io";
 import { FaUser } from "react-icons/fa6";
 import { Suspense, lazy } from "react";
+import DownloadExcelTemplate from "@/components/form-excel-passengers";
 
 const PaymentMethod = lazy(() => import("@/components/payment-method"));
 
@@ -59,6 +60,7 @@ const BookTour = () => {
   const [formData, setFormData] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("captureWallet");
   const [paymentUrl, setPaymentUrl] = useState("");
+  const [file, setFile] = useState(null);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -228,24 +230,30 @@ const BookTour = () => {
       return updatedPassengers;
     });
   };
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   const handleBookTour = async (e) => {
     e.preventDefault();
     setLoading2(true);
     try {
       if (paymentMethod === "bank") {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("adult_quantity", adultQuantity);
+          formData.append("child_quantity", childQuantity);
+          formData.append("infant_quantity", infantQuantity);
+          formData.append("note", note);
+          formData.append("passengers", JSON.stringify(passengers));
+
         const response = await axios.post(
           `${BASE_URL_CUSTOMER}/book-tour/${tour_id}/${customerId}`,
-          {
-            adult_quantity: adultQuantity,
-            child_quantity: childQuantity,
-            infant_quantity: infantQuantity,
-            note: note,
-            passengers: passengers,
-          },
+            formData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
             },
           }
         );
@@ -283,6 +291,7 @@ const BookTour = () => {
       console.error("Failed to book tour:", error);
       setMessage("Đặt tour không thành công. Vui lòng thử lại sau.");
       toast.error(error.response.data.message);
+
     }
     setLoading2(false);
   };
@@ -654,86 +663,104 @@ const BookTour = () => {
               />{" "}
               DANH SÁCH KHÁCH HÀNG ĐI TOUR
             </h3>
-            {passengers.map((passenger, index) => (
-              <div
-                key={index}
-                style={{ border: "2px solid black", background: "white" }}
-                className="rounded-4 shadow-sm p-3 mb-3"
-              >
-                <h5>
-                  <FaUser /> Khách hàng {index + 1} (
-                  {passenger.type.charAt(0).toUpperCase() +
-                    passenger.type.slice(1)}{" "}
-                  )
-                </h5>
-                <Row className="row-cols-lg-4 row-cols-1">
-                  <Col>
-                    {" "}
-                    <Form.Group className="my-lg-3 mb-2">
-                      <Form.Label className="fw-bold">
-                        Họ tên:<span className="text-danger">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="name"
-                        value={passenger.name}
-                        onChange={(e) => handlePassengerChange(index, e)}
-                        required
-                        placeholder="Nhập họ tên hành khách"
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group className="my-lg-3 mb-2">
-                      <Form.Label className="fw-bold">
-                        Ngày sinh:<span className="text-danger">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="date"
-                        name="birthdate"
-                        value={passenger.birthdate}
-                        onChange={(e) => handlePassengerChange(index, e)}
-                        required
-                        max={today}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    {" "}
-                    <Form.Group className="my-lg-3 mb-2">
-                      <Form.Label className="fw-bold">
-                        Giới tính:<span className="text-danger">*</span>
-                      </Form.Label>
-                      <Form.Select
-                        name="gender"
-                        value={passenger.gender}
-                        onChange={(e) => handlePassengerChange(index, e)}
-                        required
-                      >
-                        <option value="">Giới tính</option>
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
-                      </Form.Select>
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    {" "}
-                    <Form.Group className="my-lg-3 mb-2 ">
-                      <Form.Label className="fw-bold">
-                        Số CCCD/Passport (Nếu có):
-                        <span className="text-danger"></span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="passport_number"
-                        value={passenger.passport_number}
-                        onChange={(e) => handlePassengerChange(index, e)}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
+            <DownloadExcelTemplate />
+            {adultQuantity + childQuantity + infantQuantity <= 4 && (
+              <>
+                {passengers.map((passenger, index) => (
+                  <div
+                    key={index}
+                    style={{ border: "2px solid black", background: "white" }}
+                    className="rounded-4 shadow-sm p-3 mb-3"
+                  >
+                    <h5>
+                      <FaUser /> Khách hàng {index + 1} (
+                      {passenger.type.charAt(0).toUpperCase() +
+                        passenger.type.slice(1)}{" "}
+                      )
+                    </h5>
+                    <Row className="row-cols-lg-4 row-cols-1">
+                      <Col>
+                        {" "}
+                        <Form.Group className="my-lg-3 mb-2">
+                          <Form.Label className="fw-bold">
+                            Họ tên:<span className="text-danger">*</span>
+                          </Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="name"
+                            value={passenger.name}
+                            onChange={(e) => handlePassengerChange(index, e)}
+                            required
+                            placeholder="Nhập họ tên hành khách"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group className="my-lg-3 mb-2">
+                          <Form.Label className="fw-bold">
+                            Ngày sinh:<span className="text-danger">*</span>
+                          </Form.Label>
+                          <Form.Control
+                            type="date"
+                            name="birthdate"
+                            value={passenger.birthdate}
+                            onChange={(e) => handlePassengerChange(index, e)}
+                            required
+                            max={today}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        {" "}
+                        <Form.Group className="my-lg-3 mb-2">
+                          <Form.Label className="fw-bold">
+                            Giới tính:<span className="text-danger">*</span>
+                          </Form.Label>
+                          <Form.Select
+                            name="gender"
+                            value={passenger.gender}
+                            onChange={(e) => handlePassengerChange(index, e)}
+                            required
+                          >
+                            <option value="">Giới tính</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                          </Form.Select>
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        {" "}
+                        <Form.Group className="my-lg-3 mb-2 ">
+                          <Form.Label className="fw-bold">
+                            Số CCCD/Passport (Nếu có):
+                            <span className="text-danger"></span>
+                          </Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="passport_number"
+                            value={passenger.passport_number}
+                            onChange={(e) => handlePassengerChange(index, e)}
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                  </div>
+                ))}
+              </>
+            )}
+            {adultQuantity + childQuantity + infantQuantity > 4 && (
+              <div>
+                <label>
+                  Upload Excel File:
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    accept=".xlsx,.xls"
+                    required
+                  />
+                </label>
               </div>
-            ))}
+            )}
             <Form.Group className="mt-4">
               <Form.Label className="fw-bold">
                 {" "}

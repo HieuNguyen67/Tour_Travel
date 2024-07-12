@@ -81,9 +81,9 @@ const ListUser = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    navigate(
-      `/admin/edit-profile/${params.row.account_id}/${params.row.role_id}`
-    );
+        const data = { account_id: params.row.account_id };
+
+    navigate(`/admin/edit-profile/${params.row.role_id}`, { state: data });
   };
   const columns = [
     {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import { useAuth } from "@/context";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
@@ -22,9 +22,11 @@ import { FaAddressCard } from "react-icons/fa6";
 import { BASE_URL_ADMIN } from "@/constants";
 
 const EditProfile = () => {
-  const { account_id, role_id } = useParams();
+  const {  role_id } = useParams();
   const { isLoggedIn, token, accountId, adminId } = useAuth();
   const [loading, setLoading] = useState(true);
+  const location= useLocation();
+  const {account_id}= location.state || {};
 
   const navigate = useNavigate();
   useEffect(() => {

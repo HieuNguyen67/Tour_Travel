@@ -96,11 +96,13 @@ const OrdersList = ({ customerId, status }) => {
 
   if (role == 3) {
     var handleRowClick = (params) => {
-      navigate(`/business/order-detail/${params.row.order_id}`);
+      const data = { order_id: params.row.order_id };
+      navigate(`/business/order-detail`, {state: data});
     };
   } else {
     var handleRowClick = (params) => {
-      navigate(`/information/order-detail/${params.row.order_id}`);
+       const data = { order_id: params.row.order_id };
+      navigate(`/information/order-detail`, { state: data });
     };
   }
   const columns = [

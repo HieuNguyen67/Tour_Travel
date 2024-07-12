@@ -32,7 +32,8 @@ const ToursList = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    navigate(`/business/review-detail/${params.row.tour_id}`);
+    const data = { tour_id: params.row.tour_id };
+    navigate(`/business/review-detail`, {state: data});
   };
   const columns = [
     {

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Col } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import defaultImage from "@/assets/image/6945124.png";
 import { useAuth } from "@/context";
 import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 
 const LoadImage = () => {
-  const { account_id } = useParams();
+   const location = useLocation();
+   const { account_id } = location.state || {};
 
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
