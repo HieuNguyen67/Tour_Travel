@@ -3,7 +3,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Home.scss";
 import Footer from "@/components/layout/footer";
 import { Backdrop } from "@mui/material";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState} from "react";
 import Header from "@/components/layout/header";
 import { Link, useNavigate } from "react-router-dom";
 import { GREY_COLOR, RED1_COLOR } from "@/constants";
@@ -13,10 +13,8 @@ import locationmanimg from "@/assets/image/locationman.png";
 import newsimg from "@/assets/image/news.png";
 import mantravelimg from "@/assets/image/vlogger.png";
 import travelmanimg from "@/assets/image/travelman.png";
-import video from "@/assets/video/video.mp4";
 import React, { Suspense, lazy } from "react";
 import { helix } from "ldrs";
-import LoadingBackdrop from "@/components/backdrop";
 
 helix.register();
 
@@ -55,18 +53,9 @@ const Home = () => {
       )}
       <Header />
 
-      <video
-        autoPlay
-        muted
-        loop
-        playsinline
-        className="myVideo"
-        src={video}
-      ></video>
-
-      <div>
+      <div className="myVideo">
         <Container className="">
-          <div className="pt-lg-5 zindex">
+          <div className="pt-lg-5 zindex ">
             <div className="pt-5 me-lg-5">
               <Row className="d-flex flex-column mt-5">
                 <Col className="pt-lg-5 pt-4 pt-md-5 mt-lg-5">

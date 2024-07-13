@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
-import { BASE_URL_CUSTOMER } from "@/constants";
+import { BASE_URL_CUSTOMER, DARKBLUE } from "@/constants";
 import { Button } from "react-bootstrap";
+import { IoMdDownload } from "react-icons/io";
+import excelimg from "@/assets/image/excel.png";
 
 const DownloadExcelTemplate = () => {
   const downloadTemplate = async () => {
@@ -13,7 +15,7 @@ const DownloadExcelTemplate = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "passenger_template.xlsx");
+      link.setAttribute("download", "Form_nhap_ds_kh.xlsx");
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -24,7 +26,22 @@ const DownloadExcelTemplate = () => {
 
   return (
     <div>
-      <Button variant="dark" onClick={downloadTemplate}>Tải xuống mẫu Excel</Button>
+      <img
+        src={excelimg}
+        style={{
+          width: "3.5rem",
+          height: "3.5rem",
+          objectFit: "cover",
+        }}
+        loading="lazy"
+      />
+      <Button
+        style={{ background: DARKBLUE, border: "0px" }}
+        onClick={downloadTemplate}
+      >
+        {" "}
+        <IoMdDownload /> Tải về
+      </Button>
     </div>
   );
 };

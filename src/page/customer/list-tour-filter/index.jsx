@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, BASE_URL_USER } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, BASE_URL_USER, TEXT_RED_COLOR } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
@@ -41,13 +41,13 @@ const TourSearch = () => {
   const [start_date, setStartdate] = useState("");
   const [tours, setTours] = useState([]);
   const [filteredTours, setFilteredTours] = useState([]);
+    const [filteredSuggestTours, setFilteredSuggestTours] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [loading1, setLoading1] = useState(true);
-
   const [regions, setRegions] = useState([]);
   const [provinces, setProvinces] = useState([]);
-
+  const [message, setMessage]= useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
@@ -128,11 +128,11 @@ const TourSearch = () => {
   const filterTours = (tours, destinationLocation,departureLocation, tourName) => {
     const filtered = tours.filter((tour) => {
       return (
-        (destinationLocation
-          ? tour.destination_locations.includes(parseInt(destinationLocation))
-          : true) &&
         (departureLocation
           ? tour.location_departure_id === parseInt(departureLocation)
+          : true) &&
+        (destinationLocation
+          ? tour.destination_locations.includes(parseInt(destinationLocation))
           : true) &&
         (tourName
           ? removeDiacritics(tour.tour_name.toLowerCase()).includes(
@@ -144,36 +144,89 @@ const TourSearch = () => {
     setFilteredTours(filtered);
   };
 
-  const handleSearch = () => {
-    setTourName("");
-    const filtered = tours.filter((tour) => {
-      const meetsMinPriceCriteria =
-        !minAdultPrice || tour.adult_price >= parseFloat(minAdultPrice);
-      const meetsMaxPriceCriteria =
-        !maxAdultPrice || tour.adult_price <= parseFloat(maxAdultPrice);
+  
+const handleSearch = () => {
+  setTourName("");
+   setMessage("");
+  const filtered = tours.filter((tour) => {
+    const meetsMinPriceCriteria =
+      !minAdultPrice || tour.adult_price >= parseFloat(minAdultPrice);
+    const meetsMaxPriceCriteria =
+      !maxAdultPrice || tour.adult_price <= parseFloat(maxAdultPrice);
+    const matchesDepartureLocation = departureLocation
+      ? tour.location_departure_id === parseInt(departureLocation)
+      : true;
+    const matchesDestinationLocation = destinationLocation
+      ? tour.destination_locations.includes(parseInt(destinationLocation))
+      : true;
+    const matchesHotel = hotel ? tour.hotel === parseInt(hotel) : true;
+    const matchesVehicle = vehicle ? tour.vehicle.includes(vehicle) : true;
+    const matchesStartDate = start_date
+      ? new Date(tour.start_date) >= new Date(start_date)
+      : true;
+
+    return (
+      matchesDepartureLocation &&
+      matchesDestinationLocation &&
+      meetsMinPriceCriteria &&
+      meetsMaxPriceCriteria &&
+      matchesHotel &&
+      matchesVehicle &&
+      matchesStartDate
+    );
+  });
+
+  if (filtered.length === 0) {
+    setMessage(
+      <>
+        <p
+          style={{ background: "#f2dede", color: TEXT_RED_COLOR }}
+          className="text-center py-5 fw-bold shadow-sm"
+        >
+          Không tìm thấy du lịch{" "}
+          <span className="fs-5">{destinationLocationName}</span> khởi hành từ{" "}
+          <span className="fs-5">{departureLocationName}</span> mà bạn yêu cầu!
+        </p>
+        <hr />
+        <p className="fw-bold fs-3">GỢI Ý TOUR LIÊN QUAN</p>
+      </>
+    );
+    const related = tours.filter((tour) => {
+          const meetsMinPriceCriteria =
+            !minAdultPrice || tour.adult_price >= parseFloat(minAdultPrice);
+          const meetsMaxPriceCriteria =
+            !maxAdultPrice || tour.adult_price <= parseFloat(maxAdultPrice);
+      const matchesHotel = hotel ? tour.hotel === parseInt(hotel) : true;
+      const matchesVehicle = vehicle ? tour.vehicle.includes(vehicle) : true;
+      const matchesStartDate = start_date
+        ? new Date(tour.start_date) >= new Date(start_date)
+        : true;
 
       return (
         (departureLocation
-          ? tour.location_departure_id === parseInt(departureLocation)
+          ? tour.destination_locations.includes(parseInt(departureLocation))
           : true) &&
         (destinationLocation
           ? tour.destination_locations.includes(parseInt(destinationLocation))
           : true) &&
         meetsMinPriceCriteria &&
         meetsMaxPriceCriteria &&
-        (hotel ? tour.hotel === parseInt(hotel) : true) &&
-        (vehicle ? tour.vehicle.includes(vehicle) : true) &&
-        (start_date ? new Date(tour.start_date) >= new Date(start_date) : true)
+        matchesHotel &&
+        matchesVehicle &&
+        matchesStartDate
       );
     });
+    setFilteredTours(related);
+  } else {
     setFilteredTours(filtered);
-    setCurrentPage(1);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  }
 
+  setCurrentPage(1);
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
   const handlePageClick = (event, value) => {
     setCurrentPage(value);
     window.scrollTo({
@@ -214,7 +267,9 @@ const TourSearch = () => {
     location == 1
       ? getLocationNameById(destinationLocation, provinces)
       : getLocationNameById(destinationLocation, regions);
-
+      
+  const departureLocationName =getLocationNameById(departureLocation, provinces);
+      
   if (loading1) {
     return <LoadingBackdrop open={loading1} />;
   }
@@ -396,9 +451,50 @@ const TourSearch = () => {
             </div>
           </Col>
           <Col className="col-lg-9 col-12 mt-3 mt-lg-0">
+            {filteredTours.length === 0 ? (
+              <p
+                style={{ background: "#f2dede", color: TEXT_RED_COLOR }}
+                className="text-center py-5 fw-bold shadow-sm"
+              >
+                Không tìm thấy du lịch{" "}
+                <span className="fs-5">{destinationLocationName}</span> khởi
+                hành từ <span className="fs-5">{departureLocationName}</span> mà
+                bạn yêu cầu. Vui lòng tìm kiếm tour khác!
+              </p>
+            ) : (
+              <></>
+            )}
             <div className="">
               {currentItems.length > 0 ? (
                 <>
+                  <p className="fw-bold fs-2 text-center">
+                    {destinationLocationName && departureLocationName ? (
+                      <>
+                        {" "}
+                        Du lịch {destinationLocationName} khởi hành từ{" "}
+                        {departureLocationName}
+                      </>
+                    ) : destinationLocationName ? (
+                      <>Du lịch {destinationLocationName}</>
+                    ) : (
+                      <>
+                        {" "}
+                        {location == 1 ? (
+                          <>DU LỊCH TRONG NƯỚC</>
+                        ) : (
+                          <>DU LỊCH NƯỚC NGOÀI</>
+                        )}
+                      </>
+                    )}
+                  </p>
+                  {message}{" "}
+                  <p className="fw-bold">
+                    Chúng tôi tìm thấy{" "}
+                    <span style={{ color: TEXT_RED_COLOR }} className="fs-5">
+                      {filteredTours.length}
+                    </span>{" "}
+                    tours cho Quý khách.
+                  </p>
                   <Row className="row-cols-3">
                     {currentItems.map((tour) => (
                       <Col
@@ -515,15 +611,43 @@ const TourSearch = () => {
                   />
                 </>
               ) : (
-                <p
-                  style={{ background: "#f2dede" }}
-                  className="text-center text-danger py-5 fw-bold shadow-sm"
-                >
-                  Không tìm thấy tour bạn yêu cầu. Thử tour khác !
-                </p>
+                <></>
               )}
             </div>
           </Col>
+          {/* <div>
+            <h2>Tour Results</h2>
+            {filteredTours.length === 0 ? (
+              <p>No tours found. Showing related tours:</p>
+            ) : (
+              <p>Found {filteredTours.length} tours:</p>
+            )}
+            <ul>
+              <p>{message}</p>
+              {currentItems.map((tour) => (
+                <li key={tour.id}>
+                  <h3>{tour.tour_name}</h3>
+                  <p>{truncateString(tour.description, 100)}</p>
+                  <p>{formatPrice(tour.adult_price)}</p>
+                  <p>
+                    Departure:{" "}
+                    {getLocationNameById(tour.location_departure_id, provinces)}
+                  </p>
+                  <p>
+                    Destination:{" "}
+                    {tour.destination_locations
+                      .map((id) => getLocationNameById(id, regions))
+                      .join(", ")}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <Pagination
+              count={pageCount}
+              page={currentPage}
+              onChange={handlePageClick}
+            />
+          </div> */}
         </Row>
       </Container>
     </>

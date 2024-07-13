@@ -264,19 +264,22 @@ const BookTour = () => {
           `/banking/${response.data.order.code_order}/${response.data.order.total_price}/${response.data.order.child_quantity}/${response.data.order.adult_quantity}/${response.data.order.infant_quantity}/*${response.data.order.note}`
         );
       } else {
+         const formData = new FormData();
+         formData.append("file", file);
+         formData.append("adult_quantity", adultQuantity);
+         formData.append("child_quantity", childQuantity);
+         formData.append("infant_quantity", infantQuantity);
+         formData.append("note", note);
+           formData.append("paymentMethod", paymentMethod);
+         formData.append("passengers", JSON.stringify(passengers));
+
         const response = await axios.post(
           `${BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}`,
-          {
-            adult_quantity: adultQuantity,
-            child_quantity: childQuantity,
-            infant_quantity: infantQuantity,
-            note: note,
-            paymentMethod: paymentMethod,
-            passengers: passengers,
-          },
+          formData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
             },
           }
         );
@@ -663,7 +666,7 @@ const BookTour = () => {
               />{" "}
               DANH SÁCH KHÁCH HÀNG ĐI TOUR
             </h3>
-            <DownloadExcelTemplate />
+
             {adultQuantity + childQuantity + infantQuantity <= 4 && (
               <>
                 {passengers.map((passenger, index) => (
@@ -749,17 +752,27 @@ const BookTour = () => {
               </>
             )}
             {adultQuantity + childQuantity + infantQuantity > 4 && (
-              <div>
-                <label>
-                  Upload Excel File:
-                  <input
-                    type="file"
-                    onChange={handleFileChange}
-                    accept=".xlsx,.xls"
-                    required
-                  />
-                </label>
-              </div>
+              <>
+                {" "}
+                <div style={{ display: "grid", placeItems: "end" }}>
+                  <DownloadExcelTemplate />
+                </div>
+                <p className="fw-bold text-danger">
+                  * Quý khách vui lòng tải về form Excel của chúng tôi và nhập danh sách hành
+                  khách đi cùng và bấm nút up file Excel lên trang web !{" "}
+                </p>
+                <div>
+                  <Form.Group controlId="formFile" className="mb-3">
+                    <p className="fw-bold">Tải file Excel lên :</p>
+                    <Form.Control
+                      type="file"
+                      onChange={handleFileChange}
+                      accept=".xlsx,.xls"
+                      required
+                    />
+                  </Form.Group>
+                </div>
+              </>
             )}
             <Form.Group className="mt-4">
               <Form.Label className="fw-bold">
