@@ -15,6 +15,7 @@ import mantravelimg from "@/assets/image/vlogger.png";
 import travelmanimg from "@/assets/image/travelman.png";
 import React, { Suspense, lazy } from "react";
 import { helix } from "ldrs";
+import video from "@/assets/video/video.mp4";
 
 helix.register();
 
@@ -52,8 +53,15 @@ const Home = () => {
         </Backdrop>
       )}
       <Header />
-
-      <div className="myVideo">
+      <video
+        autoPlay
+        muted
+        loop
+        playsinline
+        className="myVideo"
+        src={video}
+      ></video>
+      <div >
         <Container className="">
           <div className="pt-lg-5 zindex ">
             <div className="pt-5 me-lg-5">

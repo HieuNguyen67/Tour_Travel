@@ -14,6 +14,7 @@ import { BASE_URL_ADMIN } from "@/constants";
 import newsimg from "@/assets/image/news.png";
 import addimg from "@/assets/image/add.png";
 import deleteimg from "@/assets/image/delete.png";
+import LazyLoad from "react-lazyload";
 
 const News = () => {
   const [news, setNews] = useState([]);
@@ -312,17 +313,18 @@ const News = () => {
           </p>
         </Col>
       </Row>
-
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={news}
-          columns={columns}
-          pagination
-          autoPageSize
-          getRowId={(row) => row.news_id}
-          getRowHeight={(params) => 100}
-        />
-      </div>
+      <LazyLoad>
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={news}
+            columns={columns}
+            pagination
+            autoPageSize
+            getRowId={(row) => row.news_id}
+            getRowHeight={(params) => 100}
+          />
+        </div>{" "}
+      </LazyLoad>
     </>
   );
 };

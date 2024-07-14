@@ -29,7 +29,7 @@ const ListOrderTour = ()=>{
         </Link>
         <Row>
           <Col className="col-lg-6 col-12">
-            <h3 className=" fw-bold">
+            <h4 className=" fw-bold">
               <img
                 src={listimg}
                 className=""
@@ -41,13 +41,13 @@ const ListOrderTour = ()=>{
                 loading="lazy"
               />{" "}
               DANH SÁCH ĐƠN BOOKING{" "}
-            </h3>
+            </h4>
           </Col>
           <Col className="col-lg-6 col-12">
             {" "}
             <div style={{ display: "grid", placeItems: "end" }}>
               <Row>
-                <Col>
+                <Col className="">
                   <img
                     src={groupimg}
                     style={{
@@ -57,8 +57,8 @@ const ListOrderTour = ()=>{
                     }}
                     loading="lazy"
                   />
-                    <Button onClick={handleClick} style={{ background: DARKBLUE, border: "0px" }}>
-                      Xem DS Hành Khách
+                    <Button onClick={handleClick} className="" style={{ background: DARKBLUE, border: "0px" }}>
+                      DS Hành Khách
                     </Button>
                   <ExportOrdersTour tourId={tour_id} />
                 </Col>

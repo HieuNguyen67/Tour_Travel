@@ -7,6 +7,7 @@ import { useAuth } from "@/context";
 import LoadingBackdrop from "@/components/backdrop";
 import { useNavigate } from "react-router-dom";
 import feedbackimg from "@/assets/image/feedback.png";
+import LazyLoad from "react-lazyload";
 
 const ToursList = () => {
   const { businessId } = useAuth();
@@ -105,17 +106,18 @@ const ToursList = () => {
         />{" "}
         PHẢN HỒI KHÁCH HÀNG
       </h3>
-
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={tours}
-          columns={columns}
-          pageSize={10}
-          getRowId={(row) => row.tour_id}
-          getRowHeight={(params) => 100}
-          onRowClick={handleRowClick}
-        />
-      </div>
+      <LazyLoad>
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={tours}
+            columns={columns}
+            pageSize={10}
+            getRowId={(row) => row.tour_id}
+            getRowHeight={(params) => 100}
+            onRowClick={handleRowClick}
+          />
+        </div>{" "}
+      </LazyLoad>
     </>
   );
 };

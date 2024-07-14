@@ -11,6 +11,7 @@ import axios from "axios";
 import { BASE_URL_ADMIN } from "@/constants";
 import imgdefault from "@/assets/image/6945124.png";
 import businessimg from "@/assets/image/business.png";
+import LazyLoad from "react-lazyload";
 
 const BusinessLink = () => {
   const [loading, setLoading] = useState(true);
@@ -54,28 +55,27 @@ const BusinessLink = () => {
         <br />
         <Row className="row-cols-3">
           {accounts.map((account) => (
-            <Col
-              className="col-lg-4  col-12 mb-lg-0 mb-3"
-              key={account.account_id}
-            >
-              <div className="boxborderr rounded-5 p-3 shadow-sm px-lg-4 p-3 ">
-                {account.image ? (
-                  <img
-                    src={`data:image/jpeg;base64,${account.image}`}
-                    alt={account.name}
-                    className="rounded-5 col-12 mb-4 sizei shadow"
-                    loading="lazy"
-                  />
-                ) : (
-                  <img
-                    src={imgdefault}
-                    alt={account.name}
-                    className="rounded-5 col-12 mb-4 sizei shadow"
-                    loading="lazy"
-                  />
-                )}
-                <h5 className="fw-bold text-center mt-3">{account.name}</h5>
-              </div>
+            <Col className="col-lg-4  col-12 mb-lg-0 mb-3">
+              <LazyLoad key={account.account_id}>
+                <div className="boxborderr rounded-5 p-3 shadow-sm px-lg-4 p-3 ">
+                  {account.image ? (
+                    <img
+                      src={`data:image/jpeg;base64,${account.image}`}
+                      alt={account.name}
+                      className="rounded-5 col-12 mb-4 sizei shadow"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <img
+                      src={imgdefault}
+                      alt={account.name}
+                      className="rounded-5 col-12 mb-4 sizei shadow"
+                      loading="lazy"
+                    />
+                  )}
+                  <h5 className="fw-bold text-center mt-3">{account.name}</h5>
+                </div>
+              </LazyLoad>
             </Col>
           ))}
         </Row>

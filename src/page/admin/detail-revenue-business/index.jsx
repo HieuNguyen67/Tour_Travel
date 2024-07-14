@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import {
@@ -14,16 +13,12 @@ import {
   TEXT_RED_COLOR,
 } from "@/constants";
 import { useAuth } from "@/context";
-import { format } from "date-fns";
-import { RiRefund2Line } from "react-icons/ri";
 import { toast } from "react-toastify";
-import { RxUpdate } from "react-icons/rx";
 import { FaSave } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { FaCheck } from "react-icons/fa";
 
 const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, month, year, revenue, statusPayment }) => {
   const [business, setBusiness] = useState([]);
-  const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
     const [loading1, setLoading1] = useState(false);
 
@@ -142,7 +137,6 @@ const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, mon
         </div>
 
         <div>
-       
           {statusPayment === "Unpaid" ? (
             <>
               {" "}
@@ -156,7 +150,7 @@ const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, mon
                   <>Loading...</>
                 ) : (
                   <>
-                    <FaSave /> XÁC NHẬN ĐÃ THANH TOÁN CHO DOANH NGHIỆP
+                    <FaCheck className="fs-4" /> XÁC NHẬN ĐÃ THANH TOÁN CHO DOANH NGHIỆP
                   </>
                 )}
               </Button>

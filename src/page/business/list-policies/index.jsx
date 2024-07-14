@@ -14,6 +14,8 @@ import refundimg from "@/assets/image/refund.png";
 import { Box, Tab, Tabs } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Suspense, lazy } from "react";
+import LazyLoad from "react-lazyload";
+
 const ListPoliciesCancel = lazy(() => import("@/components/list-policies-cancel"));
 
 const PoliciesList = () => {
@@ -244,16 +246,18 @@ const PoliciesList = () => {
       {isHomePage ? (
         <>
           {" "}
-          <div style={{ height: 400, width: "100%" }}>
-            <DataGrid
-              rows={policies}
-              columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              loading={loading}
-              getRowId={(row) => row.policy_id}
-            />
-          </div>
+          <LazyLoad>
+            <div style={{ height: 400, width: "100%" }}>
+              <DataGrid
+                rows={policies}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                loading={loading}
+                getRowId={(row) => row.policy_id}
+              />
+            </div>
+          </LazyLoad>
         </>
       ) : (
         <>

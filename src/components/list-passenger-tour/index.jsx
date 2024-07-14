@@ -6,6 +6,7 @@ import { BASE_URL_BUSINESS, BLUE_COLOR, GREEN_COLOR } from "@/constants";
 import { useAuth } from "@/context";
 import LoadingBackdrop from "../backdrop";
 import { format } from "date-fns";
+import LazyLoad from "react-lazyload";
 
 const PassengersListTour =({tourId})=> {
   const [passengers, setPassengers] = useState([]);
@@ -75,23 +76,25 @@ const PassengersListTour =({tourId})=> {
      );
   return (
     <>
-    <h5 className="fw-bold my-3">{tour}</h5>
+      <h5 className="fw-bold my-3">{tour}</h5>
       {messages && (
         <>
           <Alert variant="filled" severity="error" className="my-2">
             {messages}
           </Alert>
         </>
-      )}
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={passengers}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          getRowId={(row) => row.passenger_id}
-        />
-      </div>
+      )}{" "}
+      <LazyLoad>
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={passengers}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            getRowId={(row) => row.passenger_id}
+          />
+        </div>
+      </LazyLoad>
     </>
   );
 }

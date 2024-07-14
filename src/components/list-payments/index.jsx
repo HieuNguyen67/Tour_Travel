@@ -9,6 +9,7 @@ import LoadingBackdrop from "@/components/backdrop";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context";
+import LazyLoad from "react-lazyload";
 
 const PaymentsList = ({ status }) => {
   const [orders, setOrders] = useState([]);
@@ -122,15 +123,18 @@ const PaymentsList = ({ status }) => {
   }
   return (
     <>
-      <div style={{ height: 500, width: "100%" }}>
-        <DataGrid
-          rows={orders}
-          columns={columns}
-          pageSize={10}
-          getRowId={(row) => row.order_id}
-          onRowClick={handleRowClick}
-        />
-      </div>
+      {" "}
+      <LazyLoad>
+        <div style={{ height: 500, width: "100%" }}>
+          <DataGrid
+            rows={orders}
+            columns={columns}
+            pageSize={10}
+            getRowId={(row) => row.order_id}
+            onRowClick={handleRowClick}
+          />
+        </div>
+      </LazyLoad>
     </>
   );
 };

@@ -8,6 +8,8 @@ import addimg from "@/assets/image/add.png";
 import deleteimg from "@/assets/image/delete.png";
 import { Col, Row } from "react-bootstrap";
 import { DataGrid } from "@mui/x-data-grid";
+import LazyLoad from "react-lazyload";
+
 const ListPoliciesCancel = ({ businessId , type}) => {
       const [policies, setPolicies] = useState([]);
       const [loading, setLoading] = useState(true);
@@ -168,17 +170,19 @@ const ListPoliciesCancel = ({ businessId , type}) => {
             </Link>
           </div>
         </Col>
-      </Row>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={policies}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          loading={loading}
-          getRowId={(row) => row.policy_id}
-        />
-      </div>
+      </Row>{" "}
+      <LazyLoad>
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={policies}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            loading={loading}
+            getRowId={(row) => row.policy_id}
+          />
+        </div>{" "}
+      </LazyLoad>
     </>
   );
 };

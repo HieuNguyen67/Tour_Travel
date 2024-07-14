@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import LoadingBackdrop from "../backdrop";
 import CancellationRequestDetail from "@/page/business/request-cancel-detail";
 import { useAuth } from "@/context";
+import LazyLoad from "react-lazyload";
 
 const CancellationRequests = ({ customerId, businessId }) => {
   const [requests, setRequests] = useState([]);
@@ -61,21 +62,26 @@ const{token}=useAuth();
       renderCell: (params) => {
         let buttonColor;
         let buttonColor1;
+                let status_order;
+
         switch (params.value) {
           case "Pending":
             buttonColor = YELLOW_COLOR;
             buttonColor1 = "black";
+status_order = "Chờ xác nhận";
 
             break;
           case "Confirm":
             buttonColor = GREEN_COLOR;
             buttonColor1 = "black";
+status_order = "Đã xác nhận";
 
             break;
 
           case "Reject":
             buttonColor = RED1_COLOR;
             buttonColor1 = "white";
+status_order = "Đã từ chối";
 
             break;
           default:
@@ -90,7 +96,7 @@ const{token}=useAuth();
               color: buttonColor1,
             }}
           >
-            {params.value}
+            {status_order}
           </Button>
         );
       },
@@ -145,17 +151,18 @@ const{token}=useAuth();
   return (
     <>
       <LoadingBackdrop open={loading} />
-
-      <div style={{ height: 500, width: "100%" }} className="my-4">
-        <DataGrid
-          rows={requests}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          getRowId={(row) => row.request_id}
-          onRowClick={handleRowClick}
-        />
-      </div>
+      <LazyLoad>
+        <div style={{ height: 500, width: "100%" }} className="my-4">
+          <DataGrid
+            rows={requests}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            getRowId={(row) => row.request_id}
+            onRowClick={handleRowClick}
+          />
+        </div>{" "}
+      </LazyLoad>
       {selectedRequestId && (
         <CancellationRequestDetail
           requestId={selectedRequestId}

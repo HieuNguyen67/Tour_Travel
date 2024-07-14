@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
 import LoadingBackdrop from "@/components/backdrop";
 import addimg from "@/assets/image/add.png";
+import LazyLoad from "react-lazyload";
 
 const TourList = () => {
   const { businessId } = useAuth();
@@ -38,6 +39,7 @@ const TourList = () => {
           formattedPrice_adult: formatPrice(tour.adult_price),
           formattedPrice_child: formatPrice(tour.child_price),
           formattedPrice_infant: formatPrice(tour.infant_price),
+          code: `${tour.tour_code}-${tour.tour_id}`,
         }));
         setTours(formattedTours);
         setLoading(false);
@@ -74,7 +76,7 @@ const TourList = () => {
 
   const columns = [
     {
-      field: "tour_code",
+      field: "code",
       headerName: "Mã Tour",
       width: 120,
       renderCell: (params) => (
@@ -191,7 +193,10 @@ const TourList = () => {
       width: 200,
       renderCell: (params) => (
         <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
-          <Button style={{background:DARKBLUE, border:'0px'}} onClick={() => handleRowClick1(params)}>
+          <Button
+            style={{ background: DARKBLUE, border: "0px" }}
+            onClick={() => handleRowClick1(params)}
+          >
             Xem DS Booking
           </Button>
         </span>
@@ -235,16 +240,17 @@ const TourList = () => {
           </p>
         </Col>
       </Row>
-
-      <Box sx={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={tours}
-          columns={columns}
-          pageSize={10}
-          getRowId={(row) => row.tour_id}
-          getRowHeight={(params) => 100}
-        />
-      </Box>
+      <LazyLoad>
+        <Box sx={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={tours}
+            columns={columns}
+            pageSize={10}
+            getRowId={(row) => row.tour_id}
+            getRowHeight={(params) => 100}
+          />
+        </Box>
+      </LazyLoad>
     </>
   );
 };

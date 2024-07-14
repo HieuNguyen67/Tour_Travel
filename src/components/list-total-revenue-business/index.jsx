@@ -12,13 +12,15 @@ import {
   setYear,
   subYears,
 } from "date-fns";
-import { BASE_URL_ADMIN, BLUE_COLOR, GREEN_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, BLUE_COLOR, DARKBLUE, GREEN_COLOR, RED1_COLOR } from "@/constants";
 import LoadingBackdrop from "../backdrop";
 import { useAuth } from "@/context";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import DetailRevenueBusiness from "@/page/admin/detail-revenue-business";
 import { formatInTimeZone } from "date-fns-tz";
+import LazyLoad from "react-lazyload";
+import { BiMoneyWithdraw } from "react-icons/bi";
 
 const timeZone = "Asia/Ho_Chi_Minh";
 
@@ -27,47 +29,61 @@ const Revenue = () => {
   const [month, setMonthState] = useState(format(new Date(), "MM"));
   const [year, setYearState] = useState(format(new Date(), "yyyy"));
   const [loading, setLoading] = useState(true);
-  const { token } = useAuth();
+  const { token, role , businessId} = useAuth();
 const [showModal, setShowModal] = useState(false);
 const [selectedAccountId, setSelectedAccountId] = useState(null);
 const [selectedBusinessId, setSelectedBusinessId] = useState(null);
 const [selectedRevenue, setSelectedRevenue] = useState(null);
 const [selectedStatus, setSelectedStatus] = useState(null);
+  const [paidRevenue, setPaidRevenue] = useState([]);
+  const [unPaidRevenue, setUnPaidRevenue] = useState([]);
 
+const currentDate = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
+const selectedMonth = parseInt(month, 10) - 1;
+const selectedYear = parseInt(year, 10);
+const startDate = format(
+  startOfMonth(setYear(setMonth(currentDate, selectedMonth), selectedYear)),
+  "yyyy-MM-dd"
+);
+const endDate = format(
+  endOfMonth(setYear(setMonth(currentDate, selectedMonth), selectedYear)),
+  "yyyy-MM-dd"
+);
 
   const fetchRevenues = async () => {
     try {
-            const currentDate = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
-      const selectedMonth = parseInt(month, 10) - 1;
-      const selectedYear = parseInt(year, 10);
-
-      const startDate = format(
-        startOfMonth(
-          setYear(setMonth(currentDate, selectedMonth), selectedYear)
-        ),
-        "yyyy-MM-dd"
-      );
-      const endDate = format(
-        endOfMonth(setYear(setMonth(currentDate, selectedMonth), selectedYear)),
-        "yyyy-MM-dd"
-      );
-
-      const response = await axios.get(
-        `${BASE_URL_ADMIN}/list-total-revenue-business`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            startDate,
-            endDate,
-          },
-        }
-      );
-
-      setRevenues(response.data.total_revenue);
-
-                 setLoading(false);
+      
+      if(role ==2 ){
+        const response = await axios.get(
+          `${BASE_URL_ADMIN}/list-total-revenue-business`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              startDate,
+              endDate,
+            },
+          }
+        );
+        setRevenues(response.data.total_revenue);
+      }else{
+        const response = await axios.get(
+          `${BASE_URL_ADMIN}/total-revenue-business/${businessId}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              startDate,
+              endDate,
+              status_payment_business : "Paid",
+            },
+          }
+        );
+        setPaidRevenue(response.data.total_revenue);
+      } 
+               setLoading(false);
 
     } catch (error) {
       console.error("Error fetching revenues:", error);
@@ -75,11 +91,35 @@ const [selectedStatus, setSelectedStatus] = useState(null);
 
     }
   };
-
-
   useEffect(() => {
     fetchRevenues();
   }, [month, year]);
+
+   const fetchRevenuesUnpaid = async () => {
+     try {
+         const response = await axios.get(
+           `${BASE_URL_ADMIN}/total-revenue-business/${businessId}/`,
+           {
+             headers: {
+               Authorization: `Bearer ${token}`,
+             },
+             params: {
+               startDate,
+               endDate,
+               status_payment_business: "Unpaid",
+             },
+           }
+         );
+         setUnPaidRevenue(response.data.total_revenue);
+       setLoading(false);
+     } catch (error) {
+       console.error("Error fetching revenues:", error);
+       setLoading(false);
+     }
+   };
+   useEffect(() => {
+     fetchRevenuesUnpaid();
+   }, [month, year]);
 
 
   const handleMonthChange = (event) => {
@@ -199,7 +239,7 @@ const [selectedStatus, setSelectedStatus] = useState(null);
 
   return (
     <>
-      <div className="mb-3">
+      <div className="">
         <Row>
           <Col className=" col-lg-10 col-6">
             <div style={{ display: "grid", placeItems: "end" }}>
@@ -243,25 +283,76 @@ const [selectedStatus, setSelectedStatus] = useState(null);
           </Col>
         </Row>
       </div>
-      <Box sx={{ height: 500, width: "100%" }}>
-        <DataGrid
-          rows={revenues}
-          columns={columns}
-          pageSize={5}
-          getRowId={(row) => row.business_id}
-          onRowClick={handleRowClick}
-        />
-      </Box>
-      <DetailRevenueBusiness
-        show={showModal}
-        handleClose={() => setShowModal(false)}
-        account_id={selectedAccountId}
-        business_id={selectedBusinessId}
-        month={month}
-        year={year}
-        revenue={selectedRevenue}
-        statusPayment={selectedStatus}
-      />
+      {role == 2 ? (
+        <>
+          {" "}
+          <LazyLoad>
+            <Box sx={{ height: 500, width: "100%" }}>
+              <DataGrid
+                rows={revenues}
+                columns={columns}
+                pageSize={5}
+                getRowId={(row) => row.business_id}
+                onRowClick={handleRowClick}
+              />
+            </Box>
+          </LazyLoad>
+          <DetailRevenueBusiness
+            show={showModal}
+            handleClose={() => setShowModal(false)}
+            account_id={selectedAccountId}
+            business_id={selectedBusinessId}
+            month={month}
+            year={year}
+            revenue={selectedRevenue}
+            statusPayment={selectedStatus}
+          />
+        </>
+      ) : (
+        <>
+          
+          <Row>
+            <Col className="col-12 col-lg-6">
+              {" "}
+              <div
+                style={{ background: RED1_COLOR, border: "0px" }}
+                className="shadow-sm rounded-2 p-3 mt-3"
+              >
+                <span className="text-light fw-bold">
+                  <BiMoneyWithdraw className="fs-4" /> CHƯA THANH TOÁN: <br />
+                  {unPaidRevenue.map((item, index) => (
+                    <>
+                      {" "}
+                      <span className="fs-2" key={index}>
+                        {formatPrice(item.net_revenue)}
+                      </span>
+                    </>
+                  ))}{" "}
+                </span>
+              </div>
+            </Col>
+            <Col className="col-12 col-lg-6">
+              {" "}
+              <div
+                style={{ background: RED1_COLOR, border: "0px" }}
+                className="shadow-sm rounded-2 p-3 mt-3"
+              >
+                <span className="text-light fw-bold">
+                  <BiMoneyWithdraw className="fs-4" /> ĐÃ THANH TOÁN: <br />
+                  {paidRevenue.map((item, index) => (
+                    <>
+                      {" "}
+                      <span className="fs-2" key={index}>
+                        {formatPrice(item.net_revenue)}
+                      </span>
+                    </>
+                  ))}{" "}
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </>
+      )}
     </>
   );
 };

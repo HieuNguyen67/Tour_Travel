@@ -29,7 +29,7 @@ import { RxUpdate } from "react-icons/rx";
 import { FaSave } from "react-icons/fa";
 import { IoArrowBackOutline } from "react-icons/io5";
 import detailimg from "@/assets/image/detail.png";
-import { Stepper, Step, StepLabel, Box } from "@mui/material";
+import { Stepper, Step, StepLabel, Box, FormControl, InputLabel, Select, MenuItem, Tab } from "@mui/material";
 import { styled } from "@mui/system";
 import { MdPending } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
@@ -45,6 +45,8 @@ import PaymentMethod from "@/components/payment-method";
 import RateTour from "@/components/rate-tour";
 import CancellationRequestModal from "@/components/request-cancellation";
 import PassengersList from "@/components/list-passenger-order";
+import ChangeOrderTour from "@/components/change-order-tour";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 const steps = ["Chờ xác nhận", "Đã xác nhận", "Đã hoàn thành", "Đã huỷ"];
 
@@ -126,7 +128,7 @@ const OrderDetail = () => {
   const [orderDetail, setOrderDetail] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { token, role, customerId } = useAuth();
+  const { token, role, customerId, businessId } = useAuth();
   const [status, setStatus] = useState("");
   const [statuspayments, setStatuspayments] = useState("");
   const [paymentDetail, setPaymentDetail] = useState(null);
@@ -135,12 +137,17 @@ const OrderDetail = () => {
   const [paymentUrl, setPaymentUrl] = useState("");
   const [show, setShow] = useState(false);
   const [showModal, setShowModal] = useState(false);
+    const [showModal1, setShowModal1] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+   const handleOpenModal1 = () => setShowModal1(true);
+   const handleCloseModal1 = () => setShowModal1(false);
+
   const location= useLocation();
   const {order_id}= location.state || {};
+ const[tourCode, setTourCode]= useState("");
 
   useEffect(() => {
     const fetchOrderDetail = async () => {
@@ -153,6 +160,7 @@ const OrderDetail = () => {
             },
           }
         );
+       setTourCode(response.data.tour_id);
         setOrderDetail(response.data);
         setStatus(response.data.status);
         setStatuspayments(response.data.status_payment);
@@ -165,6 +173,9 @@ const OrderDetail = () => {
 
     fetchOrderDetail();
   }, [order_id]);
+
+  
+
 
   useEffect(() => {
     const fetchPaymentDetail = async () => {
@@ -218,6 +229,7 @@ const OrderDetail = () => {
   };
 
   const handleUpdate = async () => {
+     setLoading2(true);
     try {
       if (role == 3) {
         await axios.put(
@@ -254,7 +266,11 @@ const OrderDetail = () => {
       console.error("Failed to update orders status :", error);
       setError("Failed to update order status ");
     }
+     setLoading2(false);
   };
+
+  
+
   const formatPrice = (price) => {
     if (typeof price !== "number") {
       return price;
@@ -264,6 +280,7 @@ const OrderDetail = () => {
       currency: "VND",
     }).format(price);
   };
+
   const handleBookTour = async () => {
     setLoading2(true);
     try {
@@ -295,6 +312,11 @@ const OrderDetail = () => {
     }
     setLoading2(false);
   };
+    const [value, setValue] = React.useState("1");
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
 
   if (loading) return <LoadingBackdrop open={loading} />;
   if (error) return <Alert variant="danger">{error}</Alert>;
@@ -422,6 +444,13 @@ const OrderDetail = () => {
             <Card.Body style={{ color: TEXT_MAIN_COLOR }}>
               <Card.Text>
                 <strong>Mã Booking:</strong> {orderDetail.code_order}
+              </Card.Text>
+              <Card.Text>
+                <strong>Mã tour:</strong>
+                <span className="fw-bold text-dark">
+                  {" "}
+                  {orderDetail.tour_code}-{orderDetail.tour_id}
+                </span>
               </Card.Text>
               <Card.Text>
                 <strong>Tour:</strong>
@@ -569,31 +598,90 @@ const OrderDetail = () => {
           ) : (
             <>
               {" "}
-              <form>
-                <Form.Group className="my-3">
-                  <Form.Label className="fw-bold">
+              <Box sx={{ width: "100%", typography: "body1" }}>
+                <TabContext value={value}>
+                  <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <TabList
+                      variant="fullWidth"
+                      onChange={handleChange}
+                      aria-label="lab API tabs example"
+                    >
+                      <Tab label="Xác Nhận Booking" value="1" />
+                      <Tab label="Ghép Tour Khác" value="2" />
+                      <Tab label="Huỷ Hoàn Tiền" value="3" />
+                    </TabList>
+                  </Box>
+                  <TabPanel value="1" sx={{ padding: "0px" }}>
+                    <form>
+                      <Form.Group className="my-3">
+                        <Form.Label className="fw-bold">
+                          {" "}
+                          <RxUpdate className="fs-5" /> Trạng thái:
+                        </Form.Label>
+                        <Form.Control
+                          as="select"
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Confirm">Confirm</option>
+                          <option value="Complete">Complete</option>
+                        </Form.Control>
+                      </Form.Group>
+                      <Button
+                        onClick={handleUpdate}
+                        disabled={loading}
+                        style={{ background: RED1_COLOR, border: "0px" }}
+                        className="mb-3 py-3 col-lg-3 col-12"
+                      >
+                        <FaSave /> Cập nhật
+                      </Button>
+                    </form>
+                  </TabPanel>
+                  <TabPanel value="2" sx={{ padding: "0px" }}>
                     {" "}
-                    <RxUpdate className="fs-5" /> Trạng thái:
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                  >
-                    <option value="Pending">Pending</option>
-                    <option value="Confirm">Confirm</option>
-                    <option value="Complete">Complete</option>
-                  </Form.Control>
-                </Form.Group>
-                <Button
-                  onClick={handleUpdate}
-                  disabled={loading}
-                  style={{ background: RED1_COLOR, border: "0px" }}
-                  className="mb-3 py-3 col-lg-3 col-12"
-                >
-                  <FaSave /> Cập nhật
-                </Button>
-              </form>
+                    <ChangeOrderTour tourId={tourCode} order_id={order_id} />
+                  </TabPanel>
+                  <TabPanel value="3" sx={{ padding: "0px" }}>
+                    {" "}
+                    {orderDetail.status_request_cancel === "No" ? (
+                      <>
+                        <div style={{ display: "grid", placeItems: "end" }}>
+                          <Button
+                            style={{ background: RED1_COLOR, border: "0px" }}
+                            className="mt-3 mb-5 py-3 col-lg-3 col-12"
+                            onClick={handleOpenModal1}
+                          >
+                            <GiCancel className="fs-4" /> Yêu cầu huỷ
+                          </Button>
+                        </div>
+                        <CancellationRequestModal
+                          show={showModal1}
+                          handleClose={handleCloseModal1}
+                          orderId={orderDetail.order_id}
+                          businessId={orderDetail.business_id}
+                          customerId={orderDetail.customer_id}
+                          status={"Cancel"}
+                          start_date={orderDetail.start_date}
+                          category={orderDetail.category_name}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        {" "}
+                        <div style={{ display: "grid", placeItems: "end" }}>
+                          <Button
+                            style={{ background: RED1_COLOR, border: "0px" }}
+                            className="mt-3 mb-5 py-3col-12"
+                          >
+                            Đã có yêu cầu huỷ đơn booking!
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                  </TabPanel>
+                </TabContext>
+              </Box>
             </>
           )}
         </>
@@ -697,11 +785,11 @@ const OrderDetail = () => {
               <div style={{ display: "grid", placeItems: "end" }}>
                 <Button
                   onClick={handleUpdate}
-                  disabled={loading}
+                  disabled={loading2}
                   style={{ background: RED1_COLOR, border: "0px" }}
                   className="mb-3 py-3 col-lg-3 col-12"
                 >
-                  XÁC NHẬN ĐÃ THANH TOÁN
+                  {loading2 ? <>Loading...</> : <>XÁC NHẬN ĐÃ THANH TOÁN</>}
                 </Button>
               </div>
             </>

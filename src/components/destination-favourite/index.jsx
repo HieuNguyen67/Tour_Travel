@@ -13,6 +13,7 @@ import {
   DESTINATION_FAVOURITE,
   DESTINATION_FAVOURITE_FOREIGN,
 } from "@/constants";
+import LazyLoad from "react-lazyload";
 
 const DestinationFavourite = () => {
   const [value, setValue] = useState("1");
@@ -42,19 +43,21 @@ const DestinationFavourite = () => {
 
   const renderCarouselItems = (items) => {
     return items.map((item) => (
-      <motion.div
-        key={item.id}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.8 }}
-      >
-        <Link className="text-decoration-none" to={item.link}>
-          <Col className="">
-            <div className="py-3">
-              <img src={item.image} loading="lazy" className="imgdestination px-2  rounded-4" />
-            </div>
-          </Col>
-        </Link>
-      </motion.div>
+      <LazyLoad key={item.id}>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
+          <Link className="text-decoration-none" to={item.link}>
+            <Col className="">
+              <div className="py-3">
+                <img
+                  src={item.image}
+                  loading="lazy"
+                  className="imgdestination px-2  rounded-4"
+                />
+              </div>
+            </Col>
+          </Link>
+        </motion.div>
+      </LazyLoad>
     ));
   };
 

@@ -14,7 +14,7 @@ import {
 import { Button } from "react-bootstrap";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-
+import LazyLoad from "react-lazyload";
 const ListOrdersByTour = ({tourId}) => {
   const [orders, setOrders] = useState([]);
     const [messages, setMessages] = useState(null);
@@ -64,25 +64,31 @@ const ListOrdersByTour = ({tourId}) => {
      renderCell: (params) => {
        let buttonColor;
        let buttonColor1;
+               let status_order;
+
        switch (params.value) {
          case "Pending":
            buttonColor = YELLOW_COLOR;
            buttonColor1 = "black";
+status_order = "Chờ xác nhận";
 
            break;
          case "Confirm":
            buttonColor = GREEN_COLOR;
            buttonColor1 = "black";
+status_order = "Đã xác nhận";
 
            break;
          case "Complete":
            buttonColor = RED_COLOR;
            buttonColor1 = "white";
+status_order = "Đã hoàn thành";
 
            break;
          case "Cancel":
            buttonColor = RED1_COLOR;
            buttonColor1 = "white";
+status_order = "Đã huỷ";
 
            break;
          default:
@@ -97,7 +103,7 @@ const ListOrdersByTour = ({tourId}) => {
              color: buttonColor1,
            }}
          >
-           {params.value}
+           {status_order}
          </Button>
        );
      },
@@ -154,7 +160,8 @@ const ListOrdersByTour = ({tourId}) => {
    const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    navigate(`/business/order-detail/${params.row.order_id}`);
+    const data = { order_id: params.row.order_id };
+    navigate(`/business/order-detail`, {state: data});
   };
 
    if (loading)
@@ -173,17 +180,19 @@ const ListOrdersByTour = ({tourId}) => {
             {messages}
           </Alert>
         </>
-      )}
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={orders}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[5, 10, 20]}
-          getRowId={(row) => row.order_id}
-          onRowClick={handleRowClick}
-        />
-      </div>
+      )}{" "}
+      <LazyLoad>
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={orders}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[5, 10, 20]}
+            getRowId={(row) => row.order_id}
+            onRowClick={handleRowClick}
+          />
+        </div>
+      </LazyLoad>
     </>
   );
 };

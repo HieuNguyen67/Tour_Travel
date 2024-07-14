@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
 import contactimg from "@/assets/image/contact.png";
+import LazyLoad from "react-lazyload";
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
@@ -67,19 +68,23 @@ const ContactList = () => {
       {
         field: "status",
         headerName: "Trạng thái",
-        width: 135,
+        width: 145,
         renderCell: (params) => {
           let buttonColor;
           let buttonColor1;
+                  let status_order;
+
           switch (params.value) {
             case "Pending":
               buttonColor = YELLOW_COLOR;
               buttonColor1 = "black";
+status_order = "Chờ xác nhận";
 
               break;
             case "Confirm":
               buttonColor = GREEN_COLOR;
               buttonColor1 = "black";
+status_order = "Đã xác nhận";
 
               break;
             default:
@@ -95,7 +100,7 @@ const ContactList = () => {
               }}
               onClick={() => handleRowClick(params)}
             >
-              {params.value}
+              {status_order}
             </Button>
           );
         },
@@ -170,19 +175,23 @@ const ContactList = () => {
       {
         field: "status",
         headerName: "Trạng thái",
-        width: 135,
+        width: 145,
         renderCell: (params) => {
           let buttonColor;
           let buttonColor1;
+          let status_order;
+
           switch (params.value) {
             case "Pending":
               buttonColor = YELLOW_COLOR;
               buttonColor1 = "black";
+status_order = "Chờ xác nhận";
 
               break;
             case "Confirm":
               buttonColor = GREEN_COLOR;
               buttonColor1 = "black";
+status_order = "Đã xác nhận";
 
               break;
             default:
@@ -197,7 +206,7 @@ const ContactList = () => {
                 color: buttonColor1,
               }}
             >
-              {params.value}
+              {status_order}
             </Button>
           );
         },
@@ -256,16 +265,18 @@ const ContactList = () => {
           loading="lazy"
         />{" "}
         LIÊN HỆ
-      </h3>
-      <div style={{ height: 500, width: "100%" }}>
-        <DataGrid
-          rows={contacts}
-          columns={columns}
-          pageSize={10}
-          getRowId={(row) => row.contact_id}
-          onRowClick={handleRowClick}
-        />
-      </div>
+      </h3>{" "}
+      <LazyLoad>
+        <div style={{ height: 500, width: "100%" }}>
+          <DataGrid
+            rows={contacts}
+            columns={columns}
+            pageSize={10}
+            getRowId={(row) => row.contact_id}
+            onRowClick={handleRowClick}
+          />
+        </div>
+      </LazyLoad>
     </>
   );
 };

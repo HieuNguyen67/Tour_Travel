@@ -12,6 +12,9 @@ import { TEXT_MAIN_COLOR } from "@/constants";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "@/page/customer/business-link/business-link.scss";
+import LazyLoad from "react-lazyload";
+
+
 const ListTourVietnam = ({ tour_category }) => {
   const [tours, setTours] = useState([]);
   const [error, setError] = useState("");
@@ -111,92 +114,97 @@ const ListTourVietnam = ({ tour_category }) => {
             autoPlaySpeed={4000}
           >
             {tours.slice(0, 3).map((tour) => (
-              <div key={tour.tour_id} className="py-3 p-2">
-                <Link
-                  to={`/tour-details/${tour.tour_id}`}
-                  className="text-decoration-none"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.8 }}
+              <div className="py-3 p-2">
+                <LazyLoad key={tour.tour_id}>
+                  <Link
+                    to={`/tour-details/${tour.tour_id}`}
+                    className="text-decoration-none"
                   >
-                    <div
-                      style={{
-                        border: "3px solid #ebecef",
-                        cursor: "pointer",
-                      }}
-                      className="rounded-4 shadow-sm p-3"
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.8 }}
                     >
-                      {tour.image && (
-                        <img
-                          src={`data:image/jpeg;base64,${tour.image}`}
-                          alt="Tour"
-                          className="rounded-4 col-12 sizei shadow mb-4"
-                          loading="lazy"
-                        />
-                      )}
                       <div
-                        style={{ fontSize: "14px", color: "#2d4271" }}
-                        className="mb-2"
+                        style={{
+                          border: "3px solid #ebecef",
+                          cursor: "pointer",
+                        }}
+                        className="rounded-4 shadow-sm p-3"
                       >
-                        {format(new Date(tour.start_date), "dd/MM/yyyy")} -{" "}
-                        {format(new Date(tour.end_date), "dd/MM/yyyy")}
-                      </div>
-
-                      <div
-                        className="fw-bold mb-3 sizepp"
-                        style={{ color: "#475467", fontSize: "18px" }}
-                      >
-                        {truncateString(tour.tour_name, 55)}
-                      </div>
-
-                      <div className="mb-2">
-                        <RiHotelFill className="fs-4 text-dark" />:{" "}
-                        {[...Array(tour.hotel)].map((_, index) => (
-                          <FaStar key={index} className="text-warning" />
-                        ))}
-                        <span className="ms-4">
-                          {tour.vehicle === "Máy bay" ? (
-                            <>
-                              <IoAirplaneSharp className="text-dark" />
-                            </>
-                          ) : (
-                            <>
-                              <FaCar className="text-dark" />
-                            </>
-                          )}
-                        </span>
-                      </div>
-                      <div style={{ color: TEXT_MAIN_COLOR }} className="mb-2">
-                        Nơi khởi hành:{" "}
-                        <span className="fw-bold">
-                          {tour.departure_location_name}
-                        </span>
-                      </div>
-                      <div
-                        className="fs-5 fw-bold mb-2"
-                        style={{ color: "#e01600" }}
-                      >
-                        {formatPrice(tour.adult_price)}
-                      </div>
-
-                      <div className="text-end fw-bold">
-                        <span
-                          style={{
-                            fontSize: "13px",
-                            color: TEXT_MAIN_COLOR,
-                          }}
-                          className="fw-bold text-decoration-underline"
+                        {tour.image && (
+                          <img
+                            src={`data:image/jpeg;base64,${tour.image}`}
+                            alt="Tour"
+                            className="rounded-4 col-12 sizei shadow mb-4"
+                            loading="lazy"
+                          />
+                        )}
+                        <div
+                          style={{ fontSize: "14px", color: "#2d4271" }}
+                          className="mb-2"
                         >
-                          Số chỗ còn nhận:{" "}
-                        </span>
-                        <span style={{ color: "#e01600", fontSize: "19px" }}>
-                          {tour.quantity}
-                        </span>
+                          {format(new Date(tour.start_date), "dd/MM/yyyy")} -{" "}
+                          {format(new Date(tour.end_date), "dd/MM/yyyy")}
+                        </div>
+
+                        <div
+                          className="fw-bold mb-3 sizepp"
+                          style={{ color: "#475467", fontSize: "18px" }}
+                        >
+                          {truncateString(tour.tour_name, 55)}
+                        </div>
+
+                        <div className="mb-2">
+                          <RiHotelFill className="fs-4 text-dark" />:{" "}
+                          {[...Array(tour.hotel)].map((_, index) => (
+                            <FaStar key={index} className="text-warning" />
+                          ))}
+                          <span className="ms-4">
+                            {tour.vehicle === "Máy bay" ? (
+                              <>
+                                <IoAirplaneSharp className="text-dark" />
+                              </>
+                            ) : (
+                              <>
+                                <FaCar className="text-dark" />
+                              </>
+                            )}
+                          </span>
+                        </div>
+                        <div
+                          style={{ color: TEXT_MAIN_COLOR }}
+                          className="mb-2"
+                        >
+                          Nơi khởi hành:{" "}
+                          <span className="fw-bold">
+                            {tour.departure_location_name}
+                          </span>
+                        </div>
+                        <div
+                          className="fs-5 fw-bold mb-2"
+                          style={{ color: "#e01600" }}
+                        >
+                          {formatPrice(tour.adult_price)}
+                        </div>
+
+                        <div className="text-end fw-bold">
+                          <span
+                            style={{
+                              fontSize: "13px",
+                              color: TEXT_MAIN_COLOR,
+                            }}
+                            className="fw-bold text-decoration-underline"
+                          >
+                            Số chỗ còn nhận:{" "}
+                          </span>
+                          <span style={{ color: "#e01600", fontSize: "19px" }}>
+                            {tour.quantity}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                </Link>
+                    </motion.div>
+                  </Link>
+                </LazyLoad>
               </div>
             ))}
           </Carousel>

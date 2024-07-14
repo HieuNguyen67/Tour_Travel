@@ -13,6 +13,9 @@ import { subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, format } f
 import { formatInTimeZone } from "date-fns-tz";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { Suspense, lazy } from "react";
+import Revenue from "@/components/list-total-revenue-business";
+import payrevenue from "@/assets/image/payrevenue.png";
+
 const OrderStatusRatio = lazy(() => import("@/components/chart-ratio-orders"));
 const MonthlyRevenueChart = lazy(() => import("@/components/monthly-revenue-chart"));
 const CountTodo = lazy(() => import("@/components/count-todo"));
@@ -278,17 +281,10 @@ const DashboardBusiness = ()=>{
             >
               <span className=" text-light fw-bold">
                 <BiMoneyWithdraw className="fs-4" /> TỔNG DOANH THU: <br />
-                {totalRevenue === "NaN" ? (
-                  <>
-                    {" "}
-                    <span className="fs-2">0 VNĐ</span>
-                  </>
-                ) : (
-                  <>
+             
                     {" "}
                     <span className="fs-2">{formatPrice(totalPriceInt)}</span>
-                  </>
-                )}
+               
               </span>
             </div>
           </Col>
@@ -300,17 +296,9 @@ const DashboardBusiness = ()=>{
             >
               <span className=" text-light fw-bold">
                 <BiMoneyWithdraw className="fs-4" /> PHÍ DỊCH VỤ (10%): <br />
-                {totalRevenue === "NaN" ? (
-                  <>
-                    {" "}
-                    <span className="fs-2">0 VNĐ</span>
-                  </>
-                ) : (
-                  <>
-                    {" "}
+               
                     <span className="fs-2">{formatPrice(priceservice)}</span>
-                  </>
-                )}
+              
               </span>
             </div>
           </Col>
@@ -321,22 +309,31 @@ const DashboardBusiness = ()=>{
               className="shadow-sm rounded-2 p-3 mt-4"
             >
               <span className="text-light fw-bold">
-                <BiMoneyWithdraw className="fs-4" /> DOANH THU THỰC NHẬN: <br />
-                {totalRevenue === "NaN" ? (
-                  <>
-                    {" "}
-                    <span className="fs-2">0 VNĐ</span>
-                  </>
-                ) : (
-                  <>
+                <BiMoneyWithdraw className="fs-4" /> DOANH THU THỰC NHẬN: <br /> 
                     {" "}
                     <span className="fs-2">{formatPrice(price)}</span>
-                  </>
-                )}
               </span>
             </div>
           </Col>
         </Row>
+        <hr />
+        <h5 className="fw-bold mb-lg-0 mb-3">
+          {" "}
+          <img
+            src={payrevenue}
+            style={{
+              width: "3.5rem",
+              height: "3.5rem",
+              objectFit: "cover",
+            }}
+            loading="lazy"
+          />{" "}
+          THANH TOÁN HÀNG THÁNG
+        </h5>
+        <div className="mb-4">
+          <Revenue />
+        </div>
+
         <Row className="mt-4">
           <Col className="col-lg-6 col-12">
             <div

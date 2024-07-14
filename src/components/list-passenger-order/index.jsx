@@ -5,6 +5,7 @@ import { TextField, Button } from "@mui/material";
 import { BASE_URL_CUSTOMER } from "@/constants";
 import { useAuth } from "@/context";
 import { format } from "date-fns";
+import LazyLoad from "react-lazyload";
 
 const PassengersList = ({ orderId }) => {
   const [passengers, setPassengers] = useState([]);
@@ -58,17 +59,18 @@ const PassengersList = ({ orderId }) => {
 
   return (
     <div>
-    
-      <div style={{ height: 300, width: "100%" }} className="my-3">
-        <DataGrid
-          rows={passengers}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          getRowId={(row) => row.passenger_id}
-          style={{background:'white'}}
-        />
-      </div>
+      <LazyLoad>
+        <div style={{ height: 300, width: "100%" }} className="my-3">
+          <DataGrid
+            rows={passengers}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            getRowId={(row) => row.passenger_id}
+            style={{ background: "white" }}
+          />
+        </div>{" "}
+      </LazyLoad>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import refundimg from "@/assets/image/refund.png";
 import { Button } from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
 import RefundDetailsModal from "../refund-detail";
+import LazyLoad from "react-lazyload";
 
 const RefundsList = () => {
   const [refunds, setRefunds] = useState([]);
@@ -147,7 +148,6 @@ const [showModal, setShowModal] = useState(false);
   return (
     <>
       <LoadingBackdrop open={loading} />
-
       <h3 className="fw-bold">
         {" "}
         <img
@@ -160,17 +160,19 @@ const [showModal, setShowModal] = useState(false);
           loading="lazy"
         />{" "}
         REFUNDS
-      </h3>
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={refunds}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          getRowId={(row) => row.refund_id}
-          onRowClick={handleRowClick}
-        />
-      </div>
+      </h3>{" "}
+      <LazyLoad>
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={refunds}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            getRowId={(row) => row.refund_id}
+            onRowClick={handleRowClick}
+          />
+        </div>
+      </LazyLoad>
       <RefundDetailsModal
         show={showModal}
         handleClose={() => setShowModal(false)}

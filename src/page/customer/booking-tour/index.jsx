@@ -667,7 +667,7 @@ const BookTour = () => {
               DANH SÁCH KHÁCH HÀNG ĐI TOUR
             </h3>
 
-            {adultQuantity + childQuantity + infantQuantity <= 4 && (
+            {adultQuantity + childQuantity + infantQuantity <= 10 && (
               <>
                 {passengers.map((passenger, index) => (
                   <div
@@ -751,7 +751,7 @@ const BookTour = () => {
                 ))}
               </>
             )}
-            {adultQuantity + childQuantity + infantQuantity > 4 && (
+            {adultQuantity + childQuantity + infantQuantity > 10 && (
               <>
                 {" "}
                 <div style={{ display: "grid", placeItems: "end" }}>

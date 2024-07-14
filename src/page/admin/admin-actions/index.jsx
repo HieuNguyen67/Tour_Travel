@@ -6,6 +6,7 @@ import { useAuth } from "@/context";
 import { BASE_URL_ADMIN } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import logfileimg from "@/assets/image/logfile.png";
+import LazyLoad from "react-lazyload";
 
 const AdminActionsList = () => {
   const [actions, setActions] = useState([]);
@@ -53,7 +54,6 @@ const AdminActionsList = () => {
   return (
     <>
       <LoadingBackdrop open={loading} />
-
       <h3 className="fw-bold mb-3">
         <img
           src={logfileimg}
@@ -65,16 +65,18 @@ const AdminActionsList = () => {
           loading="lazy"
         />{" "}
         LOG GIÁM SÁT
-      </h3>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={actions}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          getRowId={(row) => row.admin_action_id}
-        />
-      </div>
+      </h3>{" "}
+      <LazyLoad>
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={actions}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            getRowId={(row) => row.admin_action_id}
+          />
+        </div>
+      </LazyLoad>
     </>
   );
 };

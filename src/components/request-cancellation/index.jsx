@@ -12,12 +12,13 @@ import { FaCaretSquareDown } from 'react-icons/fa';
 import { toast } from "react-toastify";
 import { formatInTimeZone } from "date-fns-tz";
 import { format } from "date-fns";
+import { useNavigate } from 'react-router-dom';
 
 const CancellationRequestModal = ({ show, handleClose, orderId, businessId, customerId, status , start_date, category}) => {
   const [reason, setReason] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const{token}= useAuth();
+  const{token, role}= useAuth();
   const [policy_cancellation, setPolicyCancellation] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -48,8 +49,9 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
    const timeZone = "Asia/Ho_Chi_Minh";
 
    const today = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
-
-  const handleSubmit = async () => {
+  const Navigate= useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
         setLoading(true);
 
     try {
@@ -70,15 +72,15 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
           },
         }
       );
-
-      setSuccess(response.data.message);
-      setReason('');
-      setError('');
+ if (role == 1) {
+   Navigate("/information/refunds");
+ } else {
+   Navigate("/business/list-request-cancel");
+ }
+      toast.success(response.data.message);
      
-        setSuccess('');
-        handleClose();
-        toast.success(response.data.message);
-        window.location.reload();
+
+      
       
     } catch (err) {
       setError(err.response.data.message);
@@ -139,6 +141,8 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
                 </AccordionDetails>
               </Accordion>
             </>
+          ) : status === "Cancel" ? (
+            <> Xác Nhận Huỷ Booking Hoàn Tiền 100% Lại Cho Khách Hàng !</>
           ) : (
             <>
               <p className="fw-bold">
@@ -151,20 +155,20 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
           {status === "Confirm" ? (
             <>
               {" "}
-                <Form.Group controlId="formReason">
-                  <Form.Label className="fw-bold">
-                    <MdRateReview className="fs-4" /> Lý do hủy:
-                  </Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={reason}
-                    onChange={(e) => setReason(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                {error && <p className="text-danger">{error}</p>}
-                {success && <p className="text-success">{success}</p>}
+              <Form.Group controlId="formReason">
+                <Form.Label className="fw-bold">
+                  <MdRateReview className="fs-4" /> Lý do hủy:
+                </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              {error && <p className="text-danger">{error}</p>}
+              {success && <p className="text-success">{success}</p>}
             </>
           ) : (
             <></>

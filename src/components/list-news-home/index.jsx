@@ -10,6 +10,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import HTMLContent from "../HTMLContent";
 import "@/page/customer/news/news.scss";
+import LazyLoad from "react-lazyload";
 
 const ListNewsHome = () => {
   const [news, setNews] = useState([]);
@@ -105,52 +106,53 @@ const ListNewsHome = () => {
           >
             {news.slice(0, 3).map((item) => (
               <Col
-                key={item.news_id}
                 className=" my-lg-4 p-3"
                 onClick={() => handleClick(item.news_id)}
               >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.8 }}
-                >
-                  <div
-                    style={{ border: "3px solid #ebecef", cursor: "pointer" }}
-                    className="rounded-5 px-lg-4 p-3 shadow-sm"
+                <LazyLoad key={item.news_id}>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.8 }}
                   >
-                    {item.image && (
-                      <img
-                        src={`data:image/png;base64,${item.image}`}
-                        alt="News Image"
-                        className="rounded-5 col-12 sizei shadow mb-4"
-                        loading="lazy"
-                      />
-                    )}
-                    <p
-                      className="fw-bold sizep"
-                      style={{ color: "#475467", fontSize: "18px" }}
+                    <div
+                      style={{ border: "3px solid #ebecef", cursor: "pointer" }}
+                      className="rounded-5 px-lg-4 p-3 shadow-sm"
                     >
-                      {item.title}
-                    </p>
+                      {item.image && (
+                        <img
+                          src={`data:image/png;base64,${item.image}`}
+                          alt="News Image"
+                          className="rounded-5 col-12 sizei shadow mb-4"
+                          loading="lazy"
+                        />
+                      )}
+                      <p
+                        className="fw-bold sizep"
+                        style={{ color: "#475467", fontSize: "18px" }}
+                      >
+                        {item.title}
+                      </p>
 
-                    <HTMLContent
-                      htmlContent={truncateString(item.content, 80)}
-                      style={{ fontSize: "14px" }}
-                      className="sizep1"
-                    />
+                      <HTMLContent
+                        htmlContent={truncateString(item.content, 80)}
+                        style={{ fontSize: "14px" }}
+                        className="sizep1"
+                      />
 
-                    <Row>
-                      <Col className="col-6">
-                        <p
-                          style={{ background: "#f2f4f7", fontSize: "16px" }}
-                          className="text-center rounded-3 fw-bold"
-                        >
-                          <LuClock8 />{" "}
-                          {format(new Date(item.created_at), "dd/MM/yyyy")}
-                        </p>
-                      </Col>
-                    </Row>
-                  </div>
-                </motion.div>
+                      <Row>
+                        <Col className="col-6">
+                          <p
+                            style={{ background: "#f2f4f7", fontSize: "16px" }}
+                            className="text-center rounded-3 fw-bold"
+                          >
+                            <LuClock8 />{" "}
+                            {format(new Date(item.created_at), "dd/MM/yyyy")}
+                          </p>
+                        </Col>
+                      </Row>
+                    </div>
+                  </motion.div>
+                </LazyLoad>
               </Col>
             ))}
           </Carousel>

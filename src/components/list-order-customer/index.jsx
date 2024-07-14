@@ -18,6 +18,7 @@ import { Button } from "react-bootstrap";
 import { useAuth } from "@/context";
 import LoadingBackdrop from "../backdrop";
 import { useNavigate } from "react-router-dom";
+import LazyLoad from "react-lazyload";
 
 const OrdersList = ({ customerId, status }) => {
   const [orders, setOrders] = useState([]);
@@ -117,29 +118,33 @@ const OrdersList = ({ customerId, status }) => {
     {
       field: "status",
       headerName: "Trạng thái",
-      width: 135,
+      width: 140,
       renderCell: (params) => {
         let buttonColor;
         let buttonColor1;
+        let status_order;
         switch (params.value) {
           case "Pending":
             buttonColor = YELLOW_COLOR;
             buttonColor1 = "black";
-
+status_order= "Chờ xác nhận";
             break;
           case "Confirm":
             buttonColor = GREEN_COLOR;
             buttonColor1 = "black";
+status_order = "Đã xác nhận";
 
             break;
           case "Complete":
             buttonColor = RED_COLOR;
             buttonColor1 = "white";
+status_order = "Đã hoàn thành";
 
             break;
           case "Cancel":
             buttonColor = RED1_COLOR;
             buttonColor1 = "white";
+status_order = "Đã huỷ";
 
             break;
           default:
@@ -154,7 +159,7 @@ const OrdersList = ({ customerId, status }) => {
               color: buttonColor1,
             }}
           >
-            {params.value}
+            {status_order}
           </Button>
         );
       },
@@ -212,16 +217,18 @@ const OrdersList = ({ customerId, status }) => {
 
   return (
     <>
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={orders}
-          columns={columns}
-          getRowId={(row) => row.code_order}
-          onRowClick={handleRowClick}
-          
-          getRowHeight={(params) => 80}
-        />
-      </div>
+      {" "}
+      <LazyLoad>
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={orders}
+            columns={columns}
+            getRowId={(row) => row.code_order}
+            onRowClick={handleRowClick}
+            getRowHeight={(params) => 80}
+          />
+        </div>
+      </LazyLoad>
     </>
   );
 };

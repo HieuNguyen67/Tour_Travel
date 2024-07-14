@@ -8,6 +8,7 @@ import { Button } from "react-bootstrap";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import reportimg from "@/assets/image/report.png";
+import LazyLoad from "react-lazyload";
 
 const ReportList = () => {
   const [reports, setReports] = useState([]);
@@ -156,15 +157,17 @@ const ReportList = () => {
           loading="lazy"
         />{" "}
         TỐ CÁO
-      </h3>
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={reports}
-          columns={columns}
-          pageSize={10}
-          getRowId={(row) => row.report_id}
-        />
-      </div>
+      </h3>{" "}
+      <LazyLoad>
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={reports}
+            columns={columns}
+            pageSize={10}
+            getRowId={(row) => row.report_id}
+          />
+        </div>{" "}
+      </LazyLoad>
     </>
   );
 };

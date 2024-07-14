@@ -13,6 +13,7 @@ import businessimg from "@/assets/image/business1.png";
 import adminimg from "@/assets/image/admin.png";
 import addimg from "@/assets/image/add.png";
 import "./list-user.scss";
+import LazyLoad from "react-lazyload";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
@@ -327,16 +328,17 @@ const ListUser = () => {
           </p>
         </Col>
       </Row>
-
-      <div style={{ height: 520, width: "100%" }}>
-        <DataGrid
-          rows={users}
-          columns={columns}
-          pagination
-          autoPageSize
-          getRowId={(row) => row.account_id}
-        />
-      </div>
+      <LazyLoad>
+        <div style={{ height: 520, width: "100%" }}>
+          <DataGrid
+            rows={users}
+            columns={columns}
+            pagination
+            autoPageSize
+            getRowId={(row) => row.account_id}
+          />
+        </div>
+      </LazyLoad>
     </>
   );
 };
