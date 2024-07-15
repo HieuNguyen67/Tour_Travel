@@ -39,6 +39,7 @@ import { IoMdRemove } from "react-icons/io";
 import { FaUser } from "react-icons/fa6";
 import { Suspense, lazy } from "react";
 import DownloadExcelTemplate from "@/components/form-excel-passengers";
+import uploadimg from "@/assets/image/upload.png";
 
 const PaymentMethod = lazy(() => import("@/components/payment-method"));
 
@@ -758,12 +759,25 @@ const BookTour = () => {
                   <DownloadExcelTemplate />
                 </div>
                 <p className="fw-bold text-danger">
-                  * Quý khách vui lòng tải về form Excel của chúng tôi và nhập danh sách hành
-                  khách đi cùng và bấm nút up file Excel lên trang web !{" "}
+                  * Quý khách vui lòng tải về form Excel của chúng tôi và nhập
+                  danh sách hành khách đi cùng và bấm nút up file Excel lên
+                  trang web !{" "}
                 </p>
                 <div>
                   <Form.Group controlId="formFile" className="mb-3">
-                    <p className="fw-bold">Tải file Excel lên :</p>
+                    <p className="fw-bold">
+                      {" "}
+                      <img
+                        src={uploadimg}
+                        style={{
+                          width: "3.5rem",
+                          height: "3.5rem",
+                          objectFit: "cover",
+                        }}
+                        loading="lazy"
+                      />{" "}
+                      Vui lòng tải file Excel lên :
+                    </p>
                     <Form.Control
                       type="file"
                       onChange={handleFileChange}

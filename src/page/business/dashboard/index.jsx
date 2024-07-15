@@ -15,6 +15,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { Suspense, lazy } from "react";
 import Revenue from "@/components/list-total-revenue-business";
 import payrevenue from "@/assets/image/payrevenue.png";
+import revenueimg from "@/assets/image/revenue.png";
 
 const OrderStatusRatio = lazy(() => import("@/components/chart-ratio-orders"));
 const MonthlyRevenueChart = lazy(() => import("@/components/monthly-revenue-chart"));
@@ -222,27 +223,43 @@ const DashboardBusiness = ()=>{
             />
           ))}
         </Row>
-        <div style={{ display: "grid", placeItems: "end" }} className="mt-3">
-          <div className="col-lg-2">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Thời gian</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Thời gian"
-                value={dateRange}
-                onChange={handleDateRangeChange}
-              >
-                <MenuItem value="thisWeek">Trong Tuần Này</MenuItem>
-                <MenuItem value="thisMonth">Trong Tháng Này</MenuItem>
-                <MenuItem value="last3Months">
-                  Trong Vòng 3 Tháng Trước
-                </MenuItem>
-                <MenuItem value="custom">Chọn Theo Ngày</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-        </div>
+        <Row className="mt-3">
+          <Col className="col-lg-8 col-12">
+            <h4 className="fw-bold ">
+              <img
+                src={revenueimg}
+                style={{
+                  width: "4rem",
+                  height: "4rem",
+                  objectFit: "cover",
+                }}
+                loading="lazy"
+              />{" "}
+              TỔNG DOANH THU
+            </h4>
+          </Col>
+          <Col className="col-lg-4 col-12">
+            <div style={{ display: "grid", placeItems: "end" }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Thời gian</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Thời gian"
+                  value={dateRange}
+                  onChange={handleDateRangeChange}
+                >
+                  <MenuItem value="thisWeek">Trong Tuần Này</MenuItem>
+                  <MenuItem value="thisMonth">Trong Tháng Này</MenuItem>
+                  <MenuItem value="last3Months">
+                    Trong Vòng 3 Tháng Trước
+                  </MenuItem>
+                  <MenuItem value="custom">Chọn Theo Ngày</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </Col>
+        </Row>
         {dateRange === "custom" && (
           <>
             <Row className="mt-3">
@@ -280,11 +297,8 @@ const DashboardBusiness = ()=>{
               className="shadow-sm rounded-2 p-3 mt-4"
             >
               <span className=" text-light fw-bold">
-                <BiMoneyWithdraw className="fs-4" /> TỔNG DOANH THU: <br />
-             
-                    {" "}
-                    <span className="fs-2">{formatPrice(totalPriceInt)}</span>
-               
+                <BiMoneyWithdraw className="fs-4" /> TỔNG DOANH THU: <br />{" "}
+                <span className="fs-2">{formatPrice(totalPriceInt)}</span>
               </span>
             </div>
           </Col>
@@ -296,9 +310,7 @@ const DashboardBusiness = ()=>{
             >
               <span className=" text-light fw-bold">
                 <BiMoneyWithdraw className="fs-4" /> PHÍ DỊCH VỤ (10%): <br />
-               
-                    <span className="fs-2">{formatPrice(priceservice)}</span>
-              
+                <span className="fs-2">{formatPrice(priceservice)}</span>
               </span>
             </div>
           </Col>
@@ -309,33 +321,20 @@ const DashboardBusiness = ()=>{
               className="shadow-sm rounded-2 p-3 mt-4"
             >
               <span className="text-light fw-bold">
-                <BiMoneyWithdraw className="fs-4" /> DOANH THU THỰC NHẬN: <br /> 
-                    {" "}
-                    <span className="fs-2">{formatPrice(price)}</span>
+                <BiMoneyWithdraw className="fs-4" /> DOANH THU THỰC NHẬN: <br />{" "}
+                <span className="fs-2">{formatPrice(price)}</span>
               </span>
             </div>
           </Col>
         </Row>
         <hr />
-        <h5 className="fw-bold mb-lg-0 mb-3">
-          {" "}
-          <img
-            src={payrevenue}
-            style={{
-              width: "3.5rem",
-              height: "3.5rem",
-              objectFit: "cover",
-            }}
-            loading="lazy"
-          />{" "}
-          THANH TOÁN HÀNG THÁNG
-        </h5>
+       
         <div className="mb-4">
           <Revenue />
         </div>
 
         <Row className="mt-4">
-          <Col className="col-lg-6 col-12">
+          <Col className="col-lg-6 col-12 mb-lg-0 mb-3">
             <div
               style={{ background: "white", border: BORDER }}
               className="rounded-2 shadow-sm p-3"

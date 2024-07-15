@@ -8,21 +8,41 @@ import {
 import { BarChart } from "@mui/x-charts/BarChart";
 import { BASE_URL_BUSINESS } from "@/constants";
 import { Alert } from "react-bootstrap";
+import { useAuth } from "@/context";
+import chartbarimg from "@/assets/image/chartbar.png";
+
 
 const MonthlyRevenueChart = ({ businessId }) => {
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
-
+  const {token, role}= useAuth();
+  
   const fetchMonthlyRevenue = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await axios.get(
-        `${BASE_URL_BUSINESS}/revenue-by-month/${businessId}/${year}`
-      );
+      if (businessId) {
+        var response = await axios.get(
+          `${BASE_URL_BUSINESS}/revenue-by-month/${year}/${businessId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } else {
+        var response = await axios.get(
+          `${BASE_URL_BUSINESS}/revenue-by-month/${year}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }
       setMonthlyRevenue(response.data);
     } catch (err) {
       setError(err.message);
@@ -41,9 +61,16 @@ const MonthlyRevenueChart = ({ businessId }) => {
 
   if(monthlyRevenue !== null){
  var labels = monthlyRevenue.map((item) => `Tháng ${item.month}`);
- var data = monthlyRevenue.map((item) =>
-   parseFloat(item.total_revenue - (item.total_revenue * 10) / 100)
- );
+ if (businessId) {
+   var data = monthlyRevenue.map((item) =>
+     parseFloat(item.total_revenue - (item.total_revenue * 10) / 100)
+   );
+ } else {
+   var data = monthlyRevenue.map((item) =>
+     parseFloat((item.total_revenue * 10) / 100)
+   );
+ }
+
   }
 
  
@@ -58,7 +85,23 @@ const MonthlyRevenueChart = ({ businessId }) => {
 
   return (
     <>
-      <h5 className="fw-bold mt-4">THỐNG KÊ DOANH THU TRONG NĂM</h5>
+      {" "}
+      <h5 className="fw-bold mt-4">
+        <img
+          src={chartbarimg}
+          style={{
+            width: "4rem",
+            height: "4rem",
+            objectFit: "cover",
+          }}
+          loading="lazy"
+        />{" "}
+        {businessId ? (
+          <> DOANH THU THỰC NHẬN TRONG NĂM</>
+        ) : (
+          <> THỐNG KÊ LỢI NHUẬN TRONG NĂM</>
+        )}
+      </h5>
       <TextField
         label="Năm"
         type="number"
@@ -69,6 +112,7 @@ const MonthlyRevenueChart = ({ businessId }) => {
       {monthlyRevenue != null ? (
         <>
           <div style={{ display: "grid", placeItems: "center", width: "100%" }}>
+            {" "}
             <BarChart
               xAxis={[{ scaleType: "band", data: labels }]}
               series={[{ data, color: ["rgb(46, 150, 255)"] }]}

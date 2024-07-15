@@ -12,7 +12,7 @@ import {
   setYear,
   subYears,
 } from "date-fns";
-import { BASE_URL_ADMIN, BLUE_COLOR, DARKBLUE, GREEN_COLOR, RED1_COLOR } from "@/constants";
+import { BASE_URL_ADMIN, BASE_URL_BUSINESS, BLUE_COLOR, DARKBLUE, GREEN_COLOR, RED1_COLOR } from "@/constants";
 import LoadingBackdrop from "../backdrop";
 import { useAuth } from "@/context";
 import { Col, Row } from "react-bootstrap";
@@ -21,6 +21,7 @@ import DetailRevenueBusiness from "@/page/admin/detail-revenue-business";
 import { formatInTimeZone } from "date-fns-tz";
 import LazyLoad from "react-lazyload";
 import { BiMoneyWithdraw } from "react-icons/bi";
+import payrevenue from "@/assets/image/payrevenue.png";
 
 const timeZone = "Asia/Ho_Chi_Minh";
 
@@ -69,7 +70,7 @@ const endDate = format(
         setRevenues(response.data.total_revenue);
       }else{
         const response = await axios.get(
-          `${BASE_URL_ADMIN}/total-revenue-business/${businessId}/`,
+          `${BASE_URL_BUSINESS}/total-revenue-business/${businessId}/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -98,7 +99,7 @@ const endDate = format(
    const fetchRevenuesUnpaid = async () => {
      try {
          const response = await axios.get(
-           `${BASE_URL_ADMIN}/total-revenue-business/${businessId}/`,
+           `${BASE_URL_BUSINESS}/total-revenue-business/${businessId}/`,
            {
              headers: {
                Authorization: `Bearer ${token}`,
@@ -241,45 +242,65 @@ const endDate = format(
     <>
       <div className="">
         <Row>
-          <Col className=" col-lg-10 col-6">
-            <div style={{ display: "grid", placeItems: "end" }}>
-              <TextField
-                select
-                label="Tháng"
-                value={month}
-                onChange={handleMonthChange}
-                className="col-lg-2 col-12"
-                style={{ background: "white" }}
-              >
-                {Months.map((m, index) => (
-                  <MenuItem
-                    key={index + 1}
-                    value={String(index + 1).padStart(2, "0")}
-                  >
-                    {m}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
+          <Col className="col-lg-8 col-12">
+            {" "}
+            <h4 className="fw-bold mb-lg-0 mb-3">
+              {" "}
+              <img
+                src={payrevenue}
+                style={{
+                  width: "3.5rem",
+                  height: "3.5rem",
+                  objectFit: "cover",
+                }}
+                loading="lazy"
+              />{" "}
+              THANH TOÁN HÀNG THÁNG
+            </h4>
           </Col>
-          <Col className=" col-lg-2 col-6">
-            <TextField
-              select
-              label="Năm"
-              value={year}
-              onChange={handleYearChange}
-              className="col-12"
-              style={{ background: "white" }}
-            >
-              {[...Array(10).keys()].map((y) => (
-                <MenuItem
-                  key={y}
-                  value={String(getYear(subYears(new Date(), y)))}
+          <Col className="col-lg-4 col-12">
+            <Row>
+              <Col className=" ">
+                <div style={{ display: "grid", placeItems: "end" }}>
+                  <TextField
+                    select
+                    label="Tháng"
+                    value={month}
+                    onChange={handleMonthChange}
+                    className=" col-12"
+                    style={{ background: "white" }}
+                  >
+                    {Months.map((m, index) => (
+                      <MenuItem
+                        key={index + 1}
+                        value={String(index + 1).padStart(2, "0")}
+                      >
+                        {m}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </div>
+              </Col>
+              <Col className="">
+                <TextField
+                  select
+                  label="Năm"
+                  value={year}
+                  onChange={handleYearChange}
+                  className="col-12"
+                  style={{ background: "white" }}
                 >
-                  {getYear(subYears(new Date(), y))}
-                </MenuItem>
-              ))}
-            </TextField>
+                  {[...Array(10).keys()].map((y) => (
+                    <MenuItem
+                      key={y}
+                      value={String(getYear(subYears(new Date(), y)))}
+                    >
+                      {getYear(subYears(new Date(), y))}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>
@@ -310,7 +331,6 @@ const endDate = format(
         </>
       ) : (
         <>
-          
           <Row>
             <Col className="col-12 col-lg-6">
               {" "}

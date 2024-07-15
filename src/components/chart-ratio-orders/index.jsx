@@ -3,6 +3,7 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import axios from "axios";
 import { TextField, Button } from "@mui/material";
 import { BASE_URL_BUSINESS } from "@/constants";
+import chartpieimg from "@/assets/image/chartpie.png";
 
 const OrderStatusRatio=({businessId})=> {
   const [data, setData] = useState([]);
@@ -32,7 +33,19 @@ const OrderStatusRatio=({businessId})=> {
   return (
     <>
       {" "}
-      <h5 className="fw-bold mt-4">TỶ LỆ ĐƠN HÀNG</h5>
+      <h5 className="fw-bold mt-4">
+        {" "}
+        <img
+          src={chartpieimg}
+          style={{
+            width: "4rem",
+            height: "4rem",
+            objectFit: "cover",
+          }}
+          loading="lazy"
+        />{" "}
+        TỶ LỆ ĐƠN HÀNG
+      </h5>
       <div>
         <PieChart
           series={[

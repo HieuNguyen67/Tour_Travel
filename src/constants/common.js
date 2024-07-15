@@ -40,7 +40,7 @@ const HEADER = [
 const ADMIN = [
   {
     id: 1,
-    name: "DASHBOARD",
+    name: "TỔNG QUAN",
     icon: <AiFillDashboard />,
     link: "/admin/dashboard",
   },
@@ -71,7 +71,7 @@ const ADMIN = [
   {
     id: 5,
     icon: <MdPayments />,
-    name: "PAYMENTS",
+    name: "THANH TOÁN",
     link: "/admin/list-payments",
   },
   {
@@ -130,7 +130,7 @@ const ADMIN = [
   {
     id: 11,
     icon: <FaFilePen />,
-    name: "AUDIT LOG",
+    name: "GHI NHẬN LOG",
     link: "/admin/admin-actions",
   },
 ];
@@ -203,7 +203,7 @@ const SUPPORTMANAGEMENT = [
 const BUSINESS = [
   {
     id: 1,
-    name: "DASHBOARD",
+    name: "TỔNG QUAN",
     icon: <AiFillDashboard />,
     link: "/business/dashboard",
   },
@@ -224,7 +224,7 @@ const BUSINESS = [
   },
   {
     id: 3,
-    name: "ORDER",
+    name: "ĐƠN BOOKING",
     icon: (
       <PendingBadge
         endpoint={`/pending-count-status-orders`}
