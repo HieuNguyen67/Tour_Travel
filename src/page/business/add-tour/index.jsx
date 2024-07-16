@@ -29,6 +29,7 @@ import "./add-tour.scss";
 import LoadingBackdrop from "@/components/backdrop";
 import tourimg from "@/assets/image/tour.png";
 import { AiOutlineBarcode } from "react-icons/ai";
+import LazyLoad from "react-lazyload";
 
 const AddTourForm = () => {
   const location = useLocation();
@@ -362,12 +363,14 @@ const AddTourForm = () => {
           <Row className="mb-lg-4">
             {image.map((image, index) => (
               <Col key={index} className="col-lg-3 col-12">
-                <img
-                  src={`data:image/jpeg;base64,${image.image}`}
-                  alt={`Tour ${tour_id} Image ${index + 1}`}
-                  loading="lazy"
-                  className="rounded-3 sizeimgg col-12 mb-3 mb-lg-0"
-                />
+                <LazyLoad>
+                  <img
+                    src={`data:image/jpeg;base64,${image.image}`}
+                    alt={`Tour ${tour_id} Image ${index + 1}`}
+                    loading="lazy"
+                    className="rounded-3 sizeimgg col-12 mb-3 mb-lg-0"
+                  />
+                </LazyLoad>
               </Col>
             ))}
           </Row>
@@ -432,7 +435,8 @@ const AddTourForm = () => {
                   <Form.Group className="mb-4">
                     <Form.Label className="  fw-bold">
                       <LuImagePlus className="fs-4" /> Chọn hình ảnh tour ({">"}
-                      = 4 ảnh) <span className="text-danger">(*) </span>:
+                      = 4 ảnh){" "}
+                      <span className="text-danger">(*) ({"< 1MB"})</span>:
                     </Form.Label>
                     <Form.Control
                       type="file"
@@ -449,7 +453,7 @@ const AddTourForm = () => {
                   <Form.Group className="mb-4">
                     <Form.Label className="  fw-bold">
                       <LuImagePlus className="fs-4" /> Thay đổi ảnh tour ({">"}=
-                      4 ảnh) :
+                      4 ảnh) {"< 1MB"}:
                     </Form.Label>
                     <Form.Control
                       type="file"

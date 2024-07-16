@@ -4,6 +4,8 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "@/page/customer/tour-detail/tour-detail.scss";
 import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
+import LazyLoad from "react-lazyload";
+
 const TourImagesCarousel = ({ tourId }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,11 +76,13 @@ const TourImagesCarousel = ({ tourId }) => {
     >
       {images.map((img, index) => (
         <div key={index} className="image-container">
-          <img
-            src={`data:image/jpeg;base64,${img.image}`}
-            alt={`Tour Image ${index + 1}`}
-            loading="lazy"
-          />
+          <LazyLoad>
+            <img
+              src={`data:image/jpeg;base64,${img.image}`}
+              alt={`Tour Image ${index + 1}`}
+              loading="lazy"
+            />{" "}
+          </LazyLoad>
         </div>
       ))}
     </Carousel>

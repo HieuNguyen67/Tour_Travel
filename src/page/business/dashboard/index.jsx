@@ -14,8 +14,8 @@ import { formatInTimeZone } from "date-fns-tz";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { Suspense, lazy } from "react";
 import Revenue from "@/components/list-total-revenue-business";
-import payrevenue from "@/assets/image/payrevenue.png";
 import revenueimg from "@/assets/image/revenue.png";
+import LazyLoad from "react-lazyload";
 
 const OrderStatusRatio = lazy(() => import("@/components/chart-ratio-orders"));
 const MonthlyRevenueChart = lazy(() => import("@/components/monthly-revenue-chart"));
@@ -213,14 +213,16 @@ const DashboardBusiness = ()=>{
               icon: <FaStar className="fs-4" />,
             },
           ].map(({ backgroundColor, endpoint, label, icon }) => (
-            <SummaryBox
-              key={endpoint}
-              backgroundColor={backgroundColor}
-              endpoint={endpoint}
-              businessId={businessId}
-              label={label}
-              icon={icon}
-            />
+            <LazyLoad>
+              <SummaryBox
+                key={endpoint}
+                backgroundColor={backgroundColor}
+                endpoint={endpoint}
+                businessId={businessId}
+                label={label}
+                icon={icon}
+              />{" "}
+            </LazyLoad>
           ))}
         </Row>
         <Row className="mt-3">
@@ -328,7 +330,7 @@ const DashboardBusiness = ()=>{
           </Col>
         </Row>
         <hr />
-       
+
         <div className="mb-4">
           <Revenue />
         </div>

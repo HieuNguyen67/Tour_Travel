@@ -13,6 +13,7 @@ import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { format } from "date-fns";
 import { TEXT_RED_COLOR } from "@/constants";
 import { Col } from "react-bootstrap";
+import LazyLoad from "react-lazyload";
 
 const TourReviews = ({ tour_code }) => {
   const [reviews, setReviews] = useState([]);
@@ -97,25 +98,27 @@ const TourReviews = ({ tour_code }) => {
           <Col>
             {currentReviews.map((review, index) => (
               <div key={index} alignItems="flex-start">
-                <ListItemText
-                  primary={review.name}
-                  secondary={
-                    <>
-                      <Rating
-                        value={review.rating}
-                        readOnly
-                        style={{ color: TEXT_RED_COLOR }}
-                      />
-                      <p>
-                        {format(new Date(review.date_rating), "dd/MM/yyyy")}
-                      </p>
-                      <Typography variant="body2" color="textSecondary">
-                        {review.review}
-                      </Typography>
-                      <hr />
-                    </>
-                  }
-                />
+                <LazyLoad>
+                  <ListItemText
+                    primary={review.name}
+                    secondary={
+                      <>
+                        <Rating
+                          value={review.rating}
+                          readOnly
+                          style={{ color: TEXT_RED_COLOR }}
+                        />
+                        <p>
+                          {format(new Date(review.date_rating), "dd/MM/yyyy")}
+                        </p>
+                        <Typography variant="body2" color="textSecondary">
+                          {review.review}
+                        </Typography>
+                        <hr />
+                      </>
+                    }
+                  />
+                </LazyLoad>
               </div>
             ))}
           </Col>

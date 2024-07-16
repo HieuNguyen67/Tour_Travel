@@ -17,7 +17,7 @@ import { RxUpdate } from "react-icons/rx";
 import { PiNotePencilFill } from "react-icons/pi";
 import { BASE_URL_USER, BLUE_COLOR } from "@/constants";
 import { BASE_URL_ADMIN } from "@/constants";
-
+import LazyLoad from "react-lazyload";
 const NewsDetail = () => {
   const location= useLocation();
   const {news_id} = location.state || {};
@@ -163,36 +163,38 @@ const NewsDetail = () => {
       {error && <div>Error: {error}</div>}
       {news.map((item, index) => (
         <div className="imgg" key={item.index}>
-          <p>Danh mục: {item.newscategory_name}</p>
+          <LazyLoad>
+            <p>Danh mục: {item.newscategory_name}</p>
 
-          <h1 className="fw-bold">{item.title}</h1>
-          <Row>
-            <Col className="col-lg-2 col-6 my-3 ">
-              {" "}
-              <p
-                style={{ background: "#f2f4f7", fontSize: "16px" }}
-                className="text-center rounded-3 fw-bold "
-              >
-                <LuClock8 /> {format(new Date(item.created_at), "dd/MM/yyyy")}
-              </p>
-            </Col>
-            <Col className=" col-6 my-3 ">
-              {" "}
-              <p
-                style={{ fontSize: "16px" }}
-                className="text-start rounded-3 fw-bold"
-              >
-                <FiEdit /> {item.profile_name}
-              </p>
-            </Col>
-          </Row>
-          <img
-            src={head}
-            className="col-lg-1 col-3  mb-lg-5 mb-4 mt-2"
-            loading="lazy"
-          />
+            <h1 className="fw-bold">{item.title}</h1>
+            <Row>
+              <Col className="col-lg-2 col-6 my-3 ">
+                {" "}
+                <p
+                  style={{ background: "#f2f4f7", fontSize: "16px" }}
+                  className="text-center rounded-3 fw-bold "
+                >
+                  <LuClock8 /> {format(new Date(item.created_at), "dd/MM/yyyy")}
+                </p>
+              </Col>
+              <Col className=" col-6 my-3 ">
+                {" "}
+                <p
+                  style={{ fontSize: "16px" }}
+                  className="text-start rounded-3 fw-bold"
+                >
+                  <FiEdit /> {item.profile_name}
+                </p>
+              </Col>
+            </Row>
+            <img
+              src={head}
+              className="col-lg-1 col-3  mb-lg-5 mb-4 mt-2"
+              loading="lazy"
+            />
 
-          <HTMLContent htmlContent={item.content} />
+            <HTMLContent htmlContent={item.content} />
+          </LazyLoad>
         </div>
       ))}
     </>

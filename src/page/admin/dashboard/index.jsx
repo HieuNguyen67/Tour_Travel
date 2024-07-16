@@ -18,6 +18,7 @@ import { FaUserGroup } from "react-icons/fa6";
 import { MdBusinessCenter } from "react-icons/md";
 import RevenueAll from "@/components/revenue-all";
 import MonthlyRevenueChart from "@/components/monthly-revenue-chart";
+import LazyLoad from "react-lazyload";
 
 const CountTodo = lazy(() => import("@/components/count-todo"));
 
@@ -139,17 +140,19 @@ const DashboardAdmin = () => {
             icon: <MdTour className="fs-4" />,
           },
         ].map(({ backgroundColor, endpoint, label, icon }) => (
-          <SummaryBox
-            key={endpoint}
-            backgroundColor={backgroundColor}
-            endpoint={endpoint}
-            label={label}
-            icon={icon}
-          />
+          <LazyLoad>
+            <SummaryBox
+              key={endpoint}
+              backgroundColor={backgroundColor}
+              endpoint={endpoint}
+              label={label}
+              icon={icon}
+            />
+          </LazyLoad>
         ))}
       </Row>
       <RevenueAll />
-      <div className="rounded-3 " style={{background:'white'}}>
+      <div className="rounded-3 " style={{ background: "white" }}>
         <MonthlyRevenueChart />
       </div>
     </>

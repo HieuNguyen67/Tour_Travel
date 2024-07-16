@@ -621,39 +621,7 @@ const handleSearch = () => {
               )}
             </div>
           </Col>
-          {/* <div>
-            <h2>Tour Results</h2>
-            {filteredTours.length === 0 ? (
-              <p>No tours found. Showing related tours:</p>
-            ) : (
-              <p>Found {filteredTours.length} tours:</p>
-            )}
-            <ul>
-              <p>{message}</p>
-              {currentItems.map((tour) => (
-                <li key={tour.id}>
-                  <h3>{tour.tour_name}</h3>
-                  <p>{truncateString(tour.description, 100)}</p>
-                  <p>{formatPrice(tour.adult_price)}</p>
-                  <p>
-                    Departure:{" "}
-                    {getLocationNameById(tour.location_departure_id, provinces)}
-                  </p>
-                  <p>
-                    Destination:{" "}
-                    {tour.destination_locations
-                      .map((id) => getLocationNameById(id, regions))
-                      .join(", ")}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            <Pagination
-              count={pageCount}
-              page={currentPage}
-              onChange={handlePageClick}
-            />
-          </div> */}
+        
         </Row>
       </Container>
     </>
