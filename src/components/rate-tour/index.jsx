@@ -12,7 +12,7 @@ const RateTour = ({ customerId, tourId,code_order, show, handleClose }) => {
   const [review, setReview] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-const{token}= useAuth();
+  const{token}= useAuth();
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
   };

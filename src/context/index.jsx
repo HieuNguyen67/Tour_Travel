@@ -4,27 +4,26 @@ import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-      const navigate = useNavigate();
-   
+  const navigate = useNavigate();
+
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [username, setUsername] = useState(localStorage.getItem("username"));
   const [accountId, setAccountId] = useState(
     localStorage.getItem("account_id")
   );
-   const [businessId, setBusinessId] = useState(
-     localStorage.getItem("business_id")
-   );
-    const [customerId, setCustomerId] = useState(
-      localStorage.getItem("customer_id")
-    );
-     const [adminId, setAdminId] = useState(
-       localStorage.getItem("admin_id")
-     );
+  const [businessId, setBusinessId] = useState(
+    localStorage.getItem("business_id")
+  );
+  const [customerId, setCustomerId] = useState(
+    localStorage.getItem("customer_id")
+  );
+  const [adminId, setAdminId] = useState(localStorage.getItem("admin_id"));
+  const [shareToken, setShareToken] = useState(
+    localStorage.getItem("share_token")
+  );
 
-  
   const isLoggedIn = !!token;
-
 
   const login = (
     token,
@@ -56,9 +55,11 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("role");
     localStorage.removeItem("username");
     localStorage.removeItem("account_id");
-     localStorage.removeItem("business_id");
-      localStorage.removeItem("customer_id");
-        localStorage.removeItem("admin_id");
+    localStorage.removeItem("business_id");
+    localStorage.removeItem("customer_id");
+    localStorage.removeItem("admin_id");
+    localStorage.removeItem("share_token");
+    localStorage.removeItem("tour_id");
     setToken(null);
     setRole(null);
     setUsername(null);
@@ -66,8 +67,14 @@ export const AuthProvider = ({ children }) => {
     setBusinessId(null);
     setCustomerId(null);
     setAdminId(null);
-     navigate("/login");
-    
+    setShareToken(null);
+    navigate("/login");
+  };
+
+  const saveShareData = (shareToken, tourId) => {
+    localStorage.setItem("share_token", shareToken);
+    localStorage.setItem("tour_id", tourId);
+    setShareToken(shareToken);
   };
 
   return (
@@ -80,9 +87,11 @@ export const AuthProvider = ({ children }) => {
         businessId,
         customerId,
         adminId,
+        shareToken,
         isLoggedIn,
         login,
         logout,
+        saveShareData,
       }}
     >
       {children}

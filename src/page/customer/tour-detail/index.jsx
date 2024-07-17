@@ -35,6 +35,8 @@ import policyimg from "@/assets/image/policy.png";
 import tourimg from "@/assets/image/tour.png";
 import React, { Suspense, lazy } from "react";
 import "@/page/customer/news/news-detail/news-detail.scss";
+import ShareTour from "@/components/share_tour";
+import NotFound from "@/page/not-found";
 
 const ReportTour = lazy(() => import("@/components/report-tour"));
 const PolicesTour = lazy(() => import("@/components/policies-tour"));
@@ -136,148 +138,185 @@ const TourDetail = () => {
 
   return (
     <>
-      <LoadingBackdrop open={loading} />
-      <Container className="mt-5 pt-5 ">
-        <div className="mt-lg-3">
-          <Link to="/" className="text-decoration-none text-dark ">
-            <RiHome6Line className="fs-4 hover" />
-          </Link>
-          &nbsp;&nbsp;
-          <FaAngleRight /> &nbsp;&nbsp;
-          {tour.tourcategory_id === 1 ? (
-            <>
-              <Link
-                to="/list-tour-vietnam/1"
-                className="text-decoration-none text-dark"
-              >
-                <span className="hover">Du lịch trong nước</span>
+      {tour.status === "Inactive" ? (
+        <>
+          {" "}
+          <NotFound />
+        </>
+      ) : (
+        <>
+          {" "}
+          <LoadingBackdrop open={loading} />
+          <Container className="mt-5 pt-5 ">
+            <div className="mt-lg-3">
+              <Link to="/" className="text-decoration-none text-dark ">
+                <RiHome6Line className="fs-4 hover" />
               </Link>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/list-tour-foreign/2"
-                className="text-decoration-none text-dark"
-              >
-                <span className="hover">Du lịch nước ngoài</span>
-              </Link>
-            </>
-          )}
-          &nbsp;&nbsp;
-          <FaAngleRight /> &nbsp;&nbsp;{" "}
-          <span className="hover">{tour.name}</span>
-        </div>
-        <hr />
-        <div className="mt-3">
-          <Row>
-            <Col className="col-12">
-              <h2 className="fw-bold">{tour.name}</h2>
-              <Row>
-                <Col className="col-10">
-                  {" "}
-                  <Box display="flex" alignItems="center">
-                    {totalRatings !== 0 ? (
-                      <>
-                        <span className="fs-5 fw-bold text-decoration-underline">
-                          {averageRating}&nbsp;
-                        </span>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                    <Rating
-                      value={parseFloat(averageRating)}
-                      precision={0.1}
-                      readOnly
-                      className="text-warning"
-                    />
-                    <span>&nbsp;({totalRatings} lượt đánh giá)</span>
-                  </Box>
-                </Col>
-                <Col>
-                  <Suspense
-                    fallback={
-                      <div>
-                        <LoadingBackdrop open={true} />
-                      </div>
-                    }
+              &nbsp;&nbsp;
+              <FaAngleRight /> &nbsp;&nbsp;
+              {tour.tourcategory_id === 1 ? (
+                <>
+                  <Link
+                    to="/list-tour-vietnam/1"
+                    className="text-decoration-none text-dark"
                   >
-                    <ReportTour accountId={customerId} tourId={tour_id} />
-                  </Suspense>
+                    <span className="hover">Du lịch trong nước</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/list-tour-foreign/2"
+                    className="text-decoration-none text-dark"
+                  >
+                    <span className="hover">Du lịch nước ngoài</span>
+                  </Link>
+                </>
+              )}
+              &nbsp;&nbsp;
+              <FaAngleRight /> &nbsp;&nbsp;{" "}
+              <span className="hover">{tour.name}</span>
+            </div>
+            <hr />
+            <div className="mt-3">
+              <Row>
+                <Col className="col-12">
+                  <h2 className="fw-bold">{tour.name}</h2>
+                  <Row>
+                    <Col className="col-10">
+                      {" "}
+                      <Box display="flex" alignItems="center">
+                        {totalRatings !== 0 ? (
+                          <>
+                            <span className="fs-5 fw-bold text-decoration-underline">
+                              {averageRating}&nbsp;
+                            </span>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                        <Rating
+                          value={parseFloat(averageRating)}
+                          precision={0.1}
+                          readOnly
+                          className="text-warning"
+                        />
+                        <span>&nbsp;({totalRatings} lượt đánh giá)</span>
+                      </Box>
+                    </Col>
+                    <Col>
+                      <Suspense
+                        fallback={
+                          <div>
+                            <LoadingBackdrop open={true} />
+                          </div>
+                        }
+                      >
+                        <ReportTour accountId={customerId} tourId={tour_id} />
+                      </Suspense>
+                    </Col>
+                  </Row>
+                  <p className="">
+                    <span
+                      style={{ color: TEXT_RED_COLOR }}
+                      className="fs-3 fw-bold"
+                    >
+                      {formatPrice(tour.adult_price)}
+                    </span>
+                    / khách
+                  </p>
                 </Col>
               </Row>
-              <p className="">
-                <span
-                  style={{ color: TEXT_RED_COLOR }}
-                  className="fs-3 fw-bold"
-                >
-                  {formatPrice(tour.adult_price)}
-                </span>
-                / khách
-              </p>
-            </Col>
-            <Col className="col-12">
-              <Button
-                onClick={handleClick}
-                className="col-lg-2 col-12 me-2 py-3 mb-2 mb-lg-0"
-                style={{ background: RED1_COLOR, border: "0px" }}
-              >
-                <MdOutlineShoppingCartCheckout className="fs-4" /> Đặt ngay
-              </Button>
-              <Suspense fallback={<div>Loading...</div>}>
-                <ContactModal accountId={tour.business_id} tourId={tour_id} />
-              </Suspense>
-            </Col>
-          </Row>
-          <div>
-            <Row className="my-4">
-              <Col className="col-lg-6 col-12">
-                {loading1 ? (
-                  <Placeholder as="div" animation="wave">
-                    <Placeholder className="rounded-3 sizeimg1 col-12 mb-3 mb-lg-0" />
-                  </Placeholder>
-                ) : (
-                  image[0] && (
-                    <img
-                      src={`data:image/jpeg;base64,${image[0].image}`}
-                      alt={`Tour ${tour_id} Image 1`}
-                      className="rounded-3 shadow sizeimg1 col-12 mb-3 mb-lg-0"
-                      loading="lazy"
+              <Row>
+                <Col className="col-lg-9 col-12">
+                  {" "}
+                  <Button
+                    onClick={handleClick}
+                    className="col-lg-3 col-12 me-2 py-3 mb-2 mb-lg-0"
+                    style={{ background: RED1_COLOR, border: "0px" }}
+                  >
+                    <MdOutlineShoppingCartCheckout className="fs-4" /> Đặt ngay
+                  </Button>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <ContactModal
+                      accountId={tour.business_id}
+                      tourId={tour_id}
                     />
-                  )
-                )}
-              </Col>
-              <Col className="col-lg-6 col-12">
-                <Row className="d-flex flex-column">
-                  <Col className="mb-lg-3">
-                    <Row>
-                      <Col className="col-lg-6 col-12">
-                        {loading1 ? (
-                          <Placeholder as="div" animation="wave">
-                            <Placeholder className="rounded-3 sizeimg2 col-12 mb-3 mb-lg-0" />
-                          </Placeholder>
-                        ) : (
-                          image[1] && (
-                            <img
-                              src={`data:image/jpeg;base64,${image[1].image}`}
-                              alt={`Tour ${tour_id} Image 1`}
-                              className="rounded-3 shadow sizeimg2 col-12 mb-3 mb-lg-0"
-                              loading="lazy"
-                            />
-                          )
-                        )}
+                  </Suspense>
+                </Col>
+                <Col className="col-lg-3 col-12">
+                  <div className="text-end">
+                    <ShareTour tourId={tour_id} customerId={customerId} />
+                  </div>
+                </Col>
+              </Row>
+              <div>
+                <Row className="my-4">
+                  <Col className="col-lg-6 col-12">
+                    {loading1 ? (
+                      <Placeholder as="div" animation="wave">
+                        <Placeholder className="rounded-3 sizeimg1 col-12 mb-3 mb-lg-0" />
+                      </Placeholder>
+                    ) : (
+                      image[0] && (
+                        <img
+                          src={`data:image/jpeg;base64,${image[0].image}`}
+                          alt={`Tour ${tour_id} Image 1`}
+                          className="rounded-3 shadow sizeimg1 col-12 mb-3 mb-lg-0"
+                          loading="lazy"
+                        />
+                      )
+                    )}
+                  </Col>
+                  <Col className="col-lg-6 col-12">
+                    <Row className="d-flex flex-column">
+                      <Col className="mb-lg-3">
+                        <Row>
+                          <Col className="col-lg-6 col-12">
+                            {loading1 ? (
+                              <Placeholder as="div" animation="wave">
+                                <Placeholder className="rounded-3 sizeimg2 col-12 mb-3 mb-lg-0" />
+                              </Placeholder>
+                            ) : (
+                              image[1] && (
+                                <img
+                                  src={`data:image/jpeg;base64,${image[1].image}`}
+                                  alt={`Tour ${tour_id} Image 1`}
+                                  className="rounded-3 shadow sizeimg2 col-12 mb-3 mb-lg-0"
+                                  loading="lazy"
+                                />
+                              )
+                            )}
+                          </Col>
+                          <Col className="col-lg-6 col-12">
+                            {loading1 ? (
+                              <Placeholder as="div" animation="wave">
+                                <Placeholder className="rounded-3 sizeimg2 col-12 mb-3 mb-lg-0" />
+                              </Placeholder>
+                            ) : (
+                              image[2] && (
+                                <img
+                                  src={`data:image/jpeg;base64,${image[2].image}`}
+                                  alt={`Tour ${tour_id} Image 1`}
+                                  className="rounded-2 shadow sizeimg2 col-12 mb-3 mb-lg-0"
+                                  loading="lazy"
+                                />
+                              )
+                            )}
+                          </Col>
+                        </Row>
                       </Col>
-                      <Col className="col-lg-6 col-12">
+                      <Col>
                         {loading1 ? (
                           <Placeholder as="div" animation="wave">
-                            <Placeholder className="rounded-3 sizeimg2 col-12 mb-3 mb-lg-0" />
+                            <Placeholder className="rounded-3 sizeimg3 col-12 mb-3 mb-lg-0" />
                           </Placeholder>
                         ) : (
-                          image[2] && (
+                          image[3] && (
                             <img
-                              src={`data:image/jpeg;base64,${image[2].image}`}
+                              src={`data:image/jpeg;base64,${image[3].image}`}
                               alt={`Tour ${tour_id} Image 1`}
-                              className="rounded-2 shadow sizeimg2 col-12 mb-3 mb-lg-0"
+                              className="rounded-3 shadow sizeimg3 col-12 mb-3 mb-lg-0"
                               loading="lazy"
                             />
                           )
@@ -285,233 +324,221 @@ const TourDetail = () => {
                       </Col>
                     </Row>
                   </Col>
-                  <Col>
-                    {loading1 ? (
-                      <Placeholder as="div" animation="wave">
-                        <Placeholder className="rounded-3 sizeimg3 col-12 mb-3 mb-lg-0" />
-                      </Placeholder>
-                    ) : (
-                      image[3] && (
-                        <img
-                          src={`data:image/jpeg;base64,${image[3].image}`}
-                          alt={`Tour ${tour_id} Image 1`}
-                          className="rounded-3 shadow sizeimg3 col-12 mb-3 mb-lg-0"
-                          loading="lazy"
-                        />
-                      )
-                    )}
+                </Row>
+              </div>
+              <div className="pt-lg-3">
+                <Row>
+                  <Col className="col-lg-5 col-12">
+                    <div
+                      style={{
+                        border: "3px solid #ffc107",
+                        background: "white",
+                      }}
+                      className="p-4 rounded-4 shadow"
+                    >
+                      <p>
+                        <LuCalendarDays className="fs-4 text-dark" /> Ngày khởi
+                        hành: &nbsp;
+                        <span className="fw-bold">
+                          {formatDate(tour.start_date)}
+                        </span>
+                      </p>
+                      <p>
+                        <LuCalendarDays className="fs-4 text-dark" /> Ngày kết
+                        thúc: &nbsp;
+                        <span className="fw-bold">
+                          {formatDate(tour.end_date)}
+                        </span>
+                      </p>
+                      <p>
+                        <MdEmojiTransportation className="fs-4 text-dark" />{" "}
+                        Phương tiện :{" "}
+                        <span className="fw-bold">{tour.vehicle}</span>
+                      </p>
+                      <p>
+                        <RiHotelFill className="fs-4 text-dark" /> Khách sạn :
+                        &nbsp;
+                        {[...Array(tour.hotel)].map((_, index) => (
+                          <FaStar key={index} className="text-warning" />
+                        ))}
+                      </p>
+                      <p>
+                        <MdLocationOn className="fs-4 text-danger" /> Nơi khởi
+                        hành:{" "}
+                        <span className="fw-bold">
+                          {tour.departure_location_name}
+                        </span>
+                      </p>
+                      <p className="mb-lg-4">
+                        <FaMapLocationDot className="fs-4 " /> Nơi đến:{" "}
+                        <span className="fw-bold">{destination}</span>
+                      </p>
+                      <p className="pb-lg-2">
+                        <MdOutlineBusinessCenter className="fs-4 " /> Điều hành:{" "}
+                        <span className="fw-bold">{tour.account_name}</span>
+                      </p>
+                    </div>
+                  </Col>
+                  <Col className="col-lg-7 col-12 mt-3 mt-lg-0">
+                    <div
+                      style={{
+                        border: "3px solid var(--gray-600, #475467)",
+                      }}
+                      className="p-4 rounded-4 shadow"
+                    >
+                      <h5 className="fw-bold">
+                        <GiPriceTag className="fs-4 text-dark" /> Bảng giá tour:{" "}
+                      </h5>
+                      <Row className="mt-4">
+                        <Col className="col-lg-5 col-7">
+                          <p className="fw-bold">
+                            <IoManSharp className="fs-4 text-dark" /> Loại khách
+                          </p>
+                          <p className="mt-4 fw-bold fontp">
+                            Người lớn ({">"} 12 tuổi) :
+                          </p>
+                          <p className="mt-4   fw-bold fontp">
+                            Trẻ em ( 5 - 11 tuổi ) :
+                          </p>
+                          <p className="mt-4   fw-bold fontp">
+                            Trẻ nhỏ ( {"<"} 5 tuổi ) :
+                          </p>
+                          <p className="fw-bold mt-4 text-decoration-underline">
+                            Số lượng còn nhận
+                          </p>
+                        </Col>
+                        <Col className="col-lg-7 col-5">
+                          <p className="fw-bold">
+                            <FaRegMoneyBillAlt className="fs-4 text-dark" /> Giá
+                            tour
+                          </p>
+                          <p
+                            className="mt-4 fw-bold fontp"
+                            style={{ color: TEXT_RED_COLOR }}
+                          >
+                            {formatPrice(tour.adult_price)}
+                          </p>
+                          <p
+                            className="mt-4 fw-bold fontp"
+                            style={{ color: TEXT_RED_COLOR }}
+                          >
+                            {formatPrice(tour.child_price)}
+                          </p>
+                          <p
+                            className="mt-4 fw-bold fontp "
+                            style={{ color: TEXT_RED_COLOR }}
+                          >
+                            {formatPrice(tour.infant_price)}
+                          </p>
+                          <p className="mt-4 fw-bold text-dark fs-5 ">
+                            {" "}
+                            {tour.quantity} chỗ
+                          </p>
+                        </Col>
+                      </Row>
+                    </div>
                   </Col>
                 </Row>
-              </Col>
-            </Row>
-          </div>
-          <div className="pt-lg-3">
-            <Row>
-              <Col className="col-lg-5 col-12">
-                <div
+              </div>
+              <h2 className="text-center fw-bold mt-5">
+                <img
+                  src={picturetourimg}
+                  className="mb-2"
                   style={{
-                    border: "3px solid #ffc107",
-                    background: "white",
+                    width: "3.5rem",
+                    height: "3.5rem",
+                    objectFit: "cover",
                   }}
-                  className="p-4 rounded-4 shadow"
-                >
-                  <p>
-                    <LuCalendarDays className="fs-4 text-dark" /> Ngày khởi
-                    hành: &nbsp;
-                    <span className="fw-bold">
-                      {formatDate(tour.start_date)}
-                    </span>
-                  </p>
-                  <p>
-                    <LuCalendarDays className="fs-4 text-dark" /> Ngày kết thúc:
-                    &nbsp;
-                    <span className="fw-bold">{formatDate(tour.end_date)}</span>
-                  </p>
-                  <p>
-                    <MdEmojiTransportation className="fs-4 text-dark" /> Phương
-                    tiện : <span className="fw-bold">{tour.vehicle}</span>
-                  </p>
-                  <p>
-                    <RiHotelFill className="fs-4 text-dark" /> Khách sạn :
-                    &nbsp;
-                    {[...Array(tour.hotel)].map((_, index) => (
-                      <FaStar key={index} className="text-warning" />
-                    ))}
-                  </p>
-                  <p>
-                    <MdLocationOn className="fs-4 text-danger" /> Nơi khởi hành:{" "}
-                    <span className="fw-bold">
-                      {tour.departure_location_name}
-                    </span>
-                  </p>
-                  <p className="mb-lg-4">
-                    <FaMapLocationDot className="fs-4 " /> Nơi đến:{" "}
-                    <span className="fw-bold">{destination}</span>
-                  </p>
-                  <p className="pb-lg-2">
-                    <MdOutlineBusinessCenter className="fs-4 " /> Điều hành:{" "}
-                    <span className="fw-bold">{tour.account_name}</span>
-                  </p>
-                </div>
-              </Col>
-              <Col className="col-lg-7 col-12 mt-3 mt-lg-0">
-                <div
+                  loading="lazy"
+                />{" "}
+                HÌNH ẢNH TOUR
+              </h2>
+              <div className=" my-4">
+                <Suspense fallback={<div>Loading...</div>}>
+                  {" "}
+                  <TourImagesCarousel tourId={tour_id} />
+                </Suspense>
+              </div>
+              <h2 className="text-center fw-bold mt-5">
+                <img
+                  src={scheduleimg}
+                  className="mb-2"
                   style={{
-                    border: "3px solid var(--gray-600, #475467)",
+                    width: "3.5rem",
+                    height: "3.5rem",
+                    objectFit: "cover",
                   }}
-                  className="p-4 rounded-4 shadow"
-                >
-                  <h5 className="fw-bold">
-                    <GiPriceTag className="fs-4 text-dark" /> Bảng giá tour:{" "}
-                  </h5>
-                  <Row className="mt-4">
-                    <Col className="col-lg-5 col-7">
-                      <p className="fw-bold">
-                        <IoManSharp className="fs-4 text-dark" /> Loại khách
-                      </p>
-                      <p className="mt-4 fw-bold fontp">
-                        Người lớn ({">"} 12 tuổi) :
-                      </p>
-                      <p className="mt-4   fw-bold fontp">
-                        Trẻ em ( 5 - 11 tuổi ) :
-                      </p>
-                      <p className="mt-4   fw-bold fontp">
-                        Trẻ nhỏ ( {"<"} 5 tuổi ) :
-                      </p>
-                      <p className="fw-bold mt-4 text-decoration-underline">
-                        Số lượng còn nhận
-                      </p>
-                    </Col>
-                    <Col className="col-lg-7 col-5">
-                      <p className="fw-bold">
-                        <FaRegMoneyBillAlt className="fs-4 text-dark" /> Giá
-                        tour
-                      </p>
-                      <p
-                        className="mt-4 fw-bold fontp"
-                        style={{ color: TEXT_RED_COLOR }}
-                      >
-                        {formatPrice(tour.adult_price)}
-                      </p>
-                      <p
-                        className="mt-4 fw-bold fontp"
-                        style={{ color: TEXT_RED_COLOR }}
-                      >
-                        {formatPrice(tour.child_price)}
-                      </p>
-                      <p
-                        className="mt-4 fw-bold fontp "
-                        style={{ color: TEXT_RED_COLOR }}
-                      >
-                        {formatPrice(tour.infant_price)}
-                      </p>
-                      <p className="mt-4 fw-bold text-dark fs-5 ">
-                        {" "}
-                        {tour.quantity} chỗ
-                      </p>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-            </Row>
-          </div>
-          <h2 className="text-center fw-bold mt-5">
-            <img
-              src={picturetourimg}
-              className="mb-2"
-              style={{
-                width: "3.5rem",
-                height: "3.5rem",
-                objectFit: "cover",
-              }}
-              loading="lazy"
-            />{" "}
-            HÌNH ẢNH TOUR
-          </h2>
-          <div className=" my-4">
-            <Suspense fallback={<div>Loading...</div>}>
-              {" "}
-              <TourImagesCarousel tourId={tour_id} />
-            </Suspense>
-          </div>
-          <h2 className="text-center fw-bold mt-5">
-            <img
-              src={scheduleimg}
-              className="mb-2"
-              style={{
-                width: "3.5rem",
-                height: "3.5rem",
-                objectFit: "cover",
-              }}
-            />{" "}
-            LỊCH TRÌNH
-          </h2>
-          <div
-            style={{
-              border: "3px solid var(--gray-600, #475467)",
-              background: "white",
-            }}
-            className="rounded-3 p-lg-5 p-4 shadow my-5"
-          >
-            <HTMLContent htmlContent={tour.description} />
-          </div>
-          <h2 className="text-center fw-bold my-5">
-            <img
-              src={policyimg}
-              style={{
-                width: "3.5rem",
-                height: "3.5rem",
-                objectFit: "cover",
-                cursor: "pointer",
-              }}
-            />{" "}
-            CHÍNH SÁCH/ QUY ĐỊNH TOUR
-          </h2>
-          <Suspense fallback={<div>Loading...</div>}>
-            <PolicesTour
-              businessId={tour.business_id}
-              category={tour.category_name}
-            />
-          </Suspense>
+                />{" "}
+                LỊCH TRÌNH
+              </h2>
+              <div
+                style={{
+                  border: "3px solid var(--gray-600, #475467)",
+                  background: "white",
+                }}
+                className="rounded-3 p-lg-5 p-4 shadow my-5"
+              >
+                <HTMLContent htmlContent={tour.description} />
+              </div>
+              <h2 className="text-center fw-bold my-5">
+                <img
+                  src={policyimg}
+                  style={{
+                    width: "3.5rem",
+                    height: "3.5rem",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                  }}
+                />{" "}
+                CHÍNH SÁCH/ QUY ĐỊNH TOUR
+              </h2>
+              <Suspense fallback={<div>Loading...</div>}>
+                <PolicesTour
+                  businessId={tour.business_id}
+                  category={tour.category_name}
+                />
+              </Suspense>
 
-          <h4 className=" fw-bold mt-5 sizetextrate">
-            <img
-              src={ratingimg}
-              className="mb-2 "
-              style={{
-                width: "4rem",
-                height: "4rem",
-                objectFit: "cover",
-              }}
-            />{" "}
-            ĐÁNH GIÁ TỪ KHÁCH HÀNG
-          </h4>
-          <div>
-            <Suspense fallback={<div>Loading...</div>}>
-              {" "}
-              <TourReviews tour_code={tour.tour_code} />
-            </Suspense>
-          </div>
-          <h4 className=" fw-bold mt-5  sizetextrate">
-            <img
-              src={tourimg}
-              style={{
-                width: "4rem",
-                height: "4rem",
-                objectFit: "cover",
-                cursor: "pointer",
-              }}
-            />{" "}
-            CÁC TOUR KHÁC CỦA {tour.account_name}
-          </h4>
-          <div className="mb-5">
-            <Suspense fallback={<div>Loading...</div>}>
-              {" "}
-              <TourListBusiness accountId={tour.business_id} />
-            </Suspense>
-          </div>
-        </div>
-      </Container>
+              <h4 className=" fw-bold mt-5 sizetextrate">
+                <img
+                  src={ratingimg}
+                  className="mb-2 "
+                  style={{
+                    width: "4rem",
+                    height: "4rem",
+                    objectFit: "cover",
+                  }}
+                />{" "}
+                ĐÁNH GIÁ TỪ KHÁCH HÀNG
+              </h4>
+              <div>
+                <Suspense fallback={<div>Loading...</div>}>
+                  {" "}
+                  <TourReviews tour_code={tour.tour_code} />
+                </Suspense>
+              </div>
+              <h4 className=" fw-bold mt-5  sizetextrate">
+                <img
+                  src={tourimg}
+                  style={{
+                    width: "4rem",
+                    height: "4rem",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                  }}
+                />{" "}
+                CÁC TOUR KHÁC CỦA {tour.account_name}
+              </h4>
+              <div className="mb-5">
+                <Suspense fallback={<div>Loading...</div>}>
+                  {" "}
+                  <TourListBusiness accountId={tour.business_id} />
+                </Suspense>
+              </div>
+            </div>
+          </Container>
+        </>
+      )}
     </>
   );
 };

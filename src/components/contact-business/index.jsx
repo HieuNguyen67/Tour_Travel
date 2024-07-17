@@ -40,7 +40,7 @@ const ContactModal = ({ accountId, tourId }) => {
   return (
     <>
       <Button
-        className="col-lg-2 col-12  py-3"
+        className="col-lg-3 col-12  py-3"
         style={{ background: GREY_COLOR, border: "0px" }}
         onClick={handleShow}
       >

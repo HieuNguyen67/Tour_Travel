@@ -35,7 +35,7 @@ const TourListBusiness = ({ accountId, customerId }) => {
       try {
         if (accountId) {
           const response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-tours/${accountId}`
+            `${BASE_URL_BUSINESS}/list-tours/${accountId}/Active`
           );
           setTours(response.data);
         } else if (customerId) {
