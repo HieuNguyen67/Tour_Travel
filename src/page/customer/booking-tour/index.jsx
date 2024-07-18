@@ -45,7 +45,7 @@ const PaymentMethod = lazy(() => import("@/components/payment-method"));
 
 const BookTour = () => {
   const { tour_id } = useParams();
-  const { customerId, isLoggedIn, accountId, token } = useAuth();
+  const { customerId, isLoggedIn, accountId, token, shareToken } = useAuth();
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(0);
   const [infantQuantity, setInfantQuantity] = useState(0);
@@ -62,6 +62,8 @@ const BookTour = () => {
   const [paymentMethod, setPaymentMethod] = useState("captureWallet");
   const [paymentUrl, setPaymentUrl] = useState("");
   const [file, setFile] = useState(null);
+
+  console.log(shareToken);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -249,7 +251,7 @@ const BookTour = () => {
           formData.append("passengers", JSON.stringify(passengers));
 
         const response = await axios.post(
-          `${BASE_URL_CUSTOMER}/book-tour/${tour_id}/${customerId}`,
+          `${BASE_URL_CUSTOMER}/book-tour/${tour_id}/${customerId}/${shareToken}`,
             formData,
           {
             headers: {
@@ -271,7 +273,7 @@ const BookTour = () => {
          formData.append("child_quantity", childQuantity);
          formData.append("infant_quantity", infantQuantity);
          formData.append("note", note);
-           formData.append("paymentMethod", paymentMethod);
+        formData.append("paymentMethod", paymentMethod);
          formData.append("passengers", JSON.stringify(passengers));
 
         const response = await axios.post(

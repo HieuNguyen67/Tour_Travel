@@ -58,7 +58,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("business_id");
     localStorage.removeItem("customer_id");
     localStorage.removeItem("admin_id");
-    localStorage.removeItem("share_token");
     localStorage.removeItem("tour_id");
     setToken(null);
     setRole(null);
@@ -67,13 +66,11 @@ export const AuthProvider = ({ children }) => {
     setBusinessId(null);
     setCustomerId(null);
     setAdminId(null);
-    setShareToken(null);
     navigate("/login");
   };
 
   const saveShareData = (shareToken, tourId) => {
     localStorage.setItem("share_token", shareToken);
-    localStorage.setItem("tour_id", tourId);
     setShareToken(shareToken);
   };
 

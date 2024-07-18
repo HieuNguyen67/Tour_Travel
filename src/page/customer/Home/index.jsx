@@ -95,7 +95,6 @@ const Home = () => {
           <Suspense fallback={<div>Loading...</div>}>
             <TabSearch />
           </Suspense>
-          <TourListBusiness customerId={customerId}/>
 
           <Row className="fw-bold mt-5 px-2 ">
             <Col className="col-lg-1 col-3">

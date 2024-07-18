@@ -20,7 +20,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import BookTour from "@/page/customer/booking-tour";
 import Checkout from "@/page/customer/checkout";
 import Banking from "@/page/customer/banking";
-import SuggestTourPage from "@/page/customer/suggest-tour";
+import SharedTour from "@/page/customer/link-share-tour";
 
 
 const Apps: React.FC = () => {
@@ -68,7 +68,10 @@ const Apps: React.FC = () => {
         <Route path="/list-tour-foreign/:location" element={<TourSearch />} />
         <Route path="/tour-details/:tour_id" element={<TourDetail />} />
         <Route path="/booking-tour/:tour_id" element={<BookTour />} />
-        <Route path="/suggest-tour" element={<SuggestTourPage />} />
+        <Route
+          path="/tour-share-link/:tour_id/:sharelinkToken"
+          element={<SharedTour />}
+        />
       </Routes>
     </>
   );

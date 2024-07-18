@@ -51,7 +51,7 @@ const TourReviews = lazy(() => import("@/components/rating-tour"));
 
 const TourDetail = () => {
   const { tour_id } = useParams();
-  const { accountId, customerId } = useAuth();
+  const { accountId, customerId, shareToken } = useAuth();
   const [tour, setTour] = useState({});
   const [loading, setLoading] = useState(true);
   const [loading1, setLoading1] = useState(true);
@@ -59,6 +59,7 @@ const TourDetail = () => {
   const [destination, setDestination] = useState("");
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
+  console.log(shareToken);
 
   useEffect(() => {
     const fetchTourData = async () => {

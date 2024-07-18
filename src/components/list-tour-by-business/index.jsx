@@ -13,10 +13,9 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "@/page/customer/business-link/business-link.scss";
 import LazyLoad from "react-lazyload";
-import { Button, Col, Row } from "react-bootstrap";
-import travelmanimg from "@/assets/image/manlook.png";
 
-const TourListBusiness = ({ accountId, customerId }) => {
+
+const TourListBusiness = ({ accountId }) => {
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,19 +37,14 @@ const TourListBusiness = ({ accountId, customerId }) => {
             `${BASE_URL_BUSINESS}/list-tours/${accountId}/Active`
           );
           setTours(response.data);
-        } else if (customerId) {
-          const response = await axios.get(
-            `${BASE_URL_CUSTOMER}/suggest-tours/${customerId}`
-          );
-          setTours(response.data.suggestedTours);
-        }
+        } 
       } catch (error) {
         console.error("Error fetching tours:", error);
       }
     };
 
     fetchTours();
-  }, [accountId, customerId]);
+  }, [accountId]);
 
   const truncateString = (str, maxLength) => {
     if (str.length <= maxLength) {
@@ -84,34 +78,7 @@ const TourListBusiness = ({ accountId, customerId }) => {
     <>
       {tours.length > 0 && (
         <>
-          {customerId ? (
-            <>
-              <Row className="fw-bold mt-5 px-2 ">
-                <Col className="col-lg-1 col-3">
-                  {" "}
-                  <img
-                    src={travelmanimg}
-                    className="mb-2 "
-                    style={{ width: "10rem", height: "10rem" }}
-                  />{" "}
-                </Col>
-                <Col>
-                  <div
-                    style={{
-                      height: "10rem",
-                      placeItems: "center start",
-                      display: "grid",
-                    }}
-                    className="ms-lg-4 ms-5 fstour fw-bold"
-                  >
-                    GỢI Ý GIÀNH CHO BẠN
-                  </div>
-                </Col>
-              </Row>
-            </>
-          ) : (
-            <></>
-          )}
+         
           <Carousel
             responsive={responsive}
             infinite={true}
@@ -209,28 +176,7 @@ const TourListBusiness = ({ accountId, customerId }) => {
               </div>
             ))}
           </Carousel>
-          {customerId ? (
-            <>
-              <div className="text-center">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.8 }}
-                >
-                  <Link
-                    to="/suggest-tour"
-                    className="text-decoration-none"
-                  >
-                    <Button style={{ background: RED1_COLOR, border: "0px" }}>
-                      Xem gợi ý&nbsp;&nbsp;
-                      <FaCircleArrowRight />
-                    </Button>
-                  </Link>
-                </motion.div>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
+          
         </>
       )}
     </>
