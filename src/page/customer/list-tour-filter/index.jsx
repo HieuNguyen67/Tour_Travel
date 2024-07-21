@@ -192,6 +192,7 @@ const handleSearch = () => {
         <p className="fw-bold fs-3">GỢI Ý TOUR LIÊN QUAN</p>
       </>
     );
+    
     const related = tours.filter((tour) => {
           const meetsMinPriceCriteria =
             !minAdultPrice || tour.adult_price >= parseFloat(minAdultPrice);

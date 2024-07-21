@@ -70,7 +70,7 @@ const endDate = format(
         setRevenues(response.data.total_revenue);
       }else{
         const response = await axios.get(
-          `${BASE_URL_BUSINESS}/total-revenue-business/${businessId}/`,
+          `${BASE_URL_BUSINESS}/total-revenue-business/${businessId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -98,8 +98,9 @@ const endDate = format(
 
    const fetchRevenuesUnpaid = async () => {
      try {
+      if(role ==3 ){
          const response = await axios.get(
-           `${BASE_URL_BUSINESS}/total-revenue-business/${businessId}/`,
+           `${BASE_URL_BUSINESS}/total-revenue-business/${businessId}`,
            {
              headers: {
                Authorization: `Bearer ${token}`,
@@ -113,6 +114,7 @@ const endDate = format(
          );
          setUnPaidRevenue(response.data.total_revenue);
        setLoading(false);
+      }
      } catch (error) {
        console.error("Error fetching revenues:", error);
        setLoading(false);
@@ -240,22 +242,28 @@ const endDate = format(
 
   return (
     <>
-      <div className="">
+      <div className="mb-3">
         <Row>
           <Col className="col-lg-8 col-12">
             {" "}
             <h4 className="fw-bold mb-lg-0 mb-3">
               {" "}
-              <img
-                src={payrevenue}
-                style={{
-                  width: "3.5rem",
-                  height: "3.5rem",
-                  objectFit: "cover",
-                }}
-                loading="lazy"
-              />{" "}
-              THANH TOÁN HÀNG THÁNG
+              {role == 3 ? (
+                <>
+                  <img
+                    src={payrevenue}
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      objectFit: "cover",
+                    }}
+                    loading="lazy"
+                  />{" "}
+                  THANH TOÁN HÀNG THÁNG
+                </>
+              ) : (
+                <></>
+              )}
             </h4>
           </Col>
           <Col className="col-lg-4 col-12">

@@ -46,13 +46,9 @@ const SignUp = () => {
       toast.success("Đăng ký thành công !");
       navigate("/confirm");
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        toast.error("Tên đăng nhập hoặc email đã tồn tại.");
-        setError("Tên đăng nhập hoặc email đã tồn tại.");
-      } else {
-        console.error("Đăng ký không thành công:", error);
-        toast.error("Đăng ký không thành công. Vui lòng thử lại sau.");
-      }
+          error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+  toast.error(error.response.data.message);
+     
     }
   };
   useEffect(() => {

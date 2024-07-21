@@ -32,8 +32,8 @@ const ContactModal = ({ accountId, tourId }) => {
       handleClose();
       toast.success("Gửi tư vấn thành công !");
     } catch (error) {
-      console.error("Error sending contact:", error);
-      toast.error("Gửi tư vấn thất bại !");
+        error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+        toast.error(error.response.data.message);
     }
   };
 

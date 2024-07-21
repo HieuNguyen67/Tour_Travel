@@ -72,6 +72,7 @@ const RegisterUser = () => {
         navigate("/admin/list-admin");
       }
     } catch (error) {
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
       toast.error(error.response.data.message);
       setError(error.response.data.message);
     }

@@ -156,10 +156,8 @@ const Profile = () => {
 
       toast.success("Thông tin tài khoản đã được cập nhật!");
     } catch (error) {
-      console.error("Failed to update account data:", error);
-      toast.error(
-        "Cập nhật thông tin tài khoản không thành công. Vui lòng thử lại sau."
-      );
+       error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+       toast.error(error.response.data.message);
     }
   };
 

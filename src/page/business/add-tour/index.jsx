@@ -214,7 +214,7 @@ const AddTourForm = () => {
       setLoading(false);
     } catch (error) {
       console.error("Error adding tour: ", error.response.data.error);
-      toast.error("Thêm Tour thất bại. Vui lòng thử lại !");
+    error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
     }
     setLoading1(false);
   };
@@ -250,6 +250,8 @@ const AddTourForm = () => {
     } catch (error) {
       console.error("Error updating tour:", error);
       toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+
     }
 
     const data = new FormData();

@@ -63,7 +63,12 @@ const BookTour = () => {
   const [paymentUrl, setPaymentUrl] = useState("");
   const [file, setFile] = useState(null);
 
-  console.log(shareToken);
+
+  const validateName = (name) => /^[a-zA-Z\s]+$/.test(name); 
+
+  const validatePassportNumber = (passportNumber) => {
+    return passportNumber === "" || /^[\d]+$/.test(passportNumber);
+  };
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -146,7 +151,7 @@ const BookTour = () => {
       (type === "infant" ? value : infantQuantity);
 
     if (tour && totalQuantity > tour.quantity) {
-      toast.error(`Tổng số lượng không được vượt quá ${tour.quantity}`);
+      toast.error(`Số lượng KH còn nhận không được vượt quá ${tour.quantity}`);
     } else {
       if (type === "adult") {
         setAdultQuantity(value);
@@ -227,6 +232,15 @@ const BookTour = () => {
 
   const handlePassengerChange = (index, e) => {
     const { name, value } = e.target;
+     if (name === "name" && !validateName(value)) {
+       alert("Tên không hợp lệ. Vui lòng nhập lại.");
+       return;
+     }
+     
+     if (name === "passport_number" && !validatePassportNumber(value)) {
+       alert("Số CCCD/Passport không hợp lệ.");
+       return;
+     }
     setPassengers((prevPassengers) => {
       const updatedPassengers = [...prevPassengers];
       updatedPassengers[index][name] = value;
@@ -277,7 +291,7 @@ const BookTour = () => {
          formData.append("passengers", JSON.stringify(passengers));
 
         const response = await axios.post(
-          `${BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}`,
+          `${BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}/${shareToken}`,
           formData,
           {
             headers: {

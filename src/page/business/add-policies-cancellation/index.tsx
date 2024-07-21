@@ -85,11 +85,8 @@ const AddPolicyCancellation: React.FC = () => {
         );
         toast.success("Thêm thành công!");
         navigate("/business/list-policies-cancellation");
-      } catch (error) {
-        toast.error("Thêm thất bại!");
-
-        console.error("Error adding policy:", error);
-        setMessage("Error adding policy");
+      } catch (error: any) {
+        toast.error(error.response.data.message);
       }
     } else {
       try {
@@ -103,9 +100,8 @@ const AddPolicyCancellation: React.FC = () => {
         );
         toast.success("Cập nhật thành công!");
         navigate("/business/list-policies-cancellation");
-      } catch (error) {
-        toast.error("Cập nhật thất bại!");
-
+      } catch (error: any) {
+ toast.error(error.response.data.message);
         console.error("Error updating policy cancellation:", error);
       }
     }

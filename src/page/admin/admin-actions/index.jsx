@@ -67,7 +67,7 @@ const AdminActionsList = () => {
         LOG GIÁM SÁT
       </h3>{" "}
       <LazyLoad>
-        <div style={{ height: 400, width: "100%" }}>
+        <div style={{ height: 500, width: "100%" }}>
           <DataGrid
             rows={actions}
             columns={columns}

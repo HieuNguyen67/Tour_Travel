@@ -17,8 +17,6 @@ import { BASE_URL_ADMIN, BASE_URL_USER, RED1_COLOR } from "@/constants";
 import { useAuth } from "@/context";
 import {
   FormControl,
-  InputLabel,
-  Input,
   IconButton,
   InputAdornment,
   OutlinedInput,
@@ -74,10 +72,13 @@ const Login: React.FC = () => {
       else if (role === 5) navigate("/admin/news");
       else if (role === 6) navigate("/admin/contact");
     } catch (error: any) {
-      toast.error("Đăng nhập thất bại !");
+      error.response.data.errors.forEach((errorMsg: string) =>
+            toast.error(errorMsg)
+          );
+
       console.error("Đăng nhập không thành công:", error.response.data.message);
-      setError(error.response.data.message);
-      setShow(true);
+      
+       toast.error(error.response.data.message);
     }
   };
 
