@@ -66,12 +66,14 @@ const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, mon
     try {
       const response = await axios.put(
         `${BASE_URL_ADMIN}/update-payment-status/${business_id}`,
-        null,
+        {
+          month,
+          year
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          params: { month, year },
         }
       );
       setMessage(response.data.message);
@@ -79,7 +81,7 @@ const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, mon
         handleClose(false);
         window.location.reload();
     } catch (error) {
-    toast.error("Xác nhận thanh toán thất bại !");
+    toast.error(error.response.data.message);
       setMessage(
         "Lỗi khi cập nhật trạng thái thanh toán. Vui lòng thử lại sau."
       );
