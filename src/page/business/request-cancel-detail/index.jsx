@@ -29,7 +29,7 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
         );
         setRequestDetail(response.data);
         setStatus(response.data.status);
-                setStatusold(response.data.status);
+        setStatusold(response.data.status);
 
         setLoading(false);
       } catch (err) {

@@ -20,11 +20,13 @@ const ShareTour = ({ tourId, customerId }) => {
     }
     setShow(true);
     try {
-      const response = await axios.post(
-        `${BASE_URL_CUSTOMER}/share-tour/${tourId}/${customerId}`
-      );
-      const { shareLink } = response.data;
-      setShareLink(shareLink);
+      if(customerId){
+        const response = await axios.post(
+          `${BASE_URL_CUSTOMER}/share-tour/${tourId}/${customerId}`
+        );
+        const { shareLink } = response.data;
+        setShareLink(shareLink);
+      }
     } catch (error) {
       setError("Lỗi khi tạo link chia sẻ tour. Vui lòng thử lại sau.");
       console.error("Lỗi khi gọi API tạo link chia sẻ:", error);

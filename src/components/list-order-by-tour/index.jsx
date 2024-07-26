@@ -64,7 +64,7 @@ const ListOrdersByTour = ({tourId}) => {
      renderCell: (params) => {
        let buttonColor;
        let buttonColor1;
-               let status_order;
+       let status_order;
 
        switch (params.value) {
          case "Pending":

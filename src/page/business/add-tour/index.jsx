@@ -159,14 +159,22 @@ const AddTourForm = () => {
     }));
   };
 
-  const handleDestinationChange = (index, value) => {
-    const destinations = [...formData.destination_locations];
-    destinations[index] = value;
-    setFormData((prevState) => ({
-      ...prevState,
-      destination_locations: destinations,
-    }));
-  };
+ const handleDestinationChange = (index, value) => {
+   const isDuplicate = formData.destination_locations.some(
+     (destination, i) => destination === value && i !== index
+   );
+
+   if (isDuplicate) {
+     toast.error("Điểm đến này đã tồn tại trong danh sách!"); 
+   } else {
+     const destinations = [...formData.destination_locations];
+     destinations[index] = value;
+     setFormData((prevState) => ({
+       ...prevState,
+       destination_locations: destinations,
+     }));
+   }
+ };
 
   const handleRemoveDestination = (index) => {
     const destinations = [...formData.destination_locations];

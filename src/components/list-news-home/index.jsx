@@ -23,10 +23,7 @@ const ListNewsHome = () => {
           `${BASE_URL_USER}/list-news-travel/Tin tức du lịch`
         );
 
-        const sortedNews = response.data.sort(
-          (a, b) => new Date(b.created_at) - new Date(a.created_at)
-        );
-        setNews(sortedNews);
+        setNews(response.data);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching tours", err);

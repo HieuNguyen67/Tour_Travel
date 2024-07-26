@@ -34,6 +34,24 @@ const SignUp = () => {
   const { isLoggedIn } = useAuth();
 
   const [error, setError] = useState("");
+  
+  const validateUsername = (username) => {
+    return username.length >= 3;
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 6;
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phoneNumber);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,6 +59,29 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+     const isUsernameValid = validateUsername(formData.username);
+     const isPasswordValid = validatePassword(formData.password);
+     const isEmailValid = validateEmail(formData.email);
+     const isPhoneNumberValid = validatePhoneNumber(formData.phone_number);
+
+     if (
+       !isUsernameValid ||
+       !isPasswordValid ||
+       !isEmailValid ||
+       !isPhoneNumberValid
+     ) {
+       let errorMessage = "";
+       if (!isUsernameValid)
+         errorMessage += "Tên đăng nhập phải có ít nhất 3 ký tự.\n";
+       if (!isPasswordValid)
+         errorMessage += "Mật khẩu phải có ít nhất 6 ký tự.\n";
+       if (!isEmailValid) errorMessage += "Địa chỉ email không hợp lệ.\n";
+       if (!isPhoneNumberValid)
+         errorMessage += "Số điện thoại phải gồm chính xác 10 chữ số.\n";
+
+       alert(errorMessage);
+       return;
+     }
     try {
       await axios.post(`${BASE_URL_CUSTOMER}/register`, formData);
       toast.success("Đăng ký thành công !");

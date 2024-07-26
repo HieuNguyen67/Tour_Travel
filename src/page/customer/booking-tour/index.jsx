@@ -64,7 +64,7 @@ const BookTour = () => {
   const [file, setFile] = useState(null);
 
 
-  const validateName = (name) => /^[a-zA-Z\s]+$/.test(name); 
+  const validateName = (name) => /^[A-Za-zÀ-ỹà-ỹ\s]+$/.test(name); 
 
   const validatePassportNumber = (passportNumber) => {
     return passportNumber === "" || /^[\d]+$/.test(passportNumber);
@@ -196,39 +196,51 @@ const BookTour = () => {
     }
   };
 
-  useEffect(() => {
-    const updatedPassengers = [];
+useEffect(() => {
+  setPassengers((prevPassengers) => {
+    const updatedPassengers = [...prevPassengers];
 
-    for (let i = 0; i < adultQuantity; i++) {
-      updatedPassengers.push({
-        name: "",
-        birthdate: "",
-        gender: "",
-        passport_number: "",
-        type: "Người lớn",
-      });
-    }
-    for (let i = 0; i < childQuantity; i++) {
-      updatedPassengers.push({
-        name: "",
-        birthdate: "",
-        gender: "",
-        passport_number: "",
-        type: "Trẻ em",
-      });
-    }
-    for (let i = 0; i < infantQuantity; i++) {
-      updatedPassengers.push({
-        name: "",
-        birthdate: "",
-        gender: "",
-        passport_number: "",
-        type: "Trẻ nhỏ",
-      });
-    }
+    const currentAdults = updatedPassengers.filter(
+      (p) => p.type === "Người lớn"
+    ).length;
+    const currentChildren = updatedPassengers.filter(
+      (p) => p.type === "Trẻ em"
+    ).length;
+    const currentInfants = updatedPassengers.filter(
+      (p) => p.type === "Trẻ nhỏ"
+    ).length;
 
-    setPassengers(updatedPassengers);
-  }, [adultQuantity, childQuantity, infantQuantity]);
+    const adjustPassengers = (quantity, type, currentCount) => {
+      if (quantity > currentCount) {
+        for (let i = currentCount; i < quantity; i++) {
+          updatedPassengers.push({
+            name: "",
+            birthdate: "",
+            gender: "",
+            passport_number: "",
+            type: type,
+          });
+        }
+      } else if (quantity < currentCount) {
+        let countToRemove = currentCount - quantity;
+        for (let i = updatedPassengers.length - 1; i >= 0; i--) {
+          if (updatedPassengers[i].type === type && countToRemove > 0) {
+            updatedPassengers.splice(i, 1);
+            countToRemove--;
+          }
+        }
+      }
+    };
+
+    adjustPassengers(adultQuantity, "Người lớn", currentAdults);
+    adjustPassengers(childQuantity, "Trẻ em", currentChildren);
+    adjustPassengers(infantQuantity, "Trẻ nhỏ", currentInfants);
+
+    return updatedPassengers;
+  });
+}, [adultQuantity, childQuantity, infantQuantity]);
+
+
 
   const handlePassengerChange = (index, e) => {
     const { name, value } = e.target;
@@ -241,6 +253,18 @@ const BookTour = () => {
        alert("Số CCCD/Passport không hợp lệ.");
        return;
      }
+
+       if (
+         name === "passport_number" &&
+         passengers.some(
+           (passenger, i) => i !== index && passenger.passport_number === value
+         )
+       ) {
+         alert("Số CCCD/Passport đã tồn tại. Vui lòng nhập số khác.");
+         return;
+       }
+     
+    
     setPassengers((prevPassengers) => {
       const updatedPassengers = [...prevPassengers];
       updatedPassengers[index][name] = value;

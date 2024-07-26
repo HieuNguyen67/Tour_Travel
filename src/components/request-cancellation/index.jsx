@@ -78,9 +78,6 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
    Navigate("/business/list-request-cancel");
  }
       toast.success(response.data.message);
-     
-
-      
       
     } catch (err) {
       setError(err.response.data.message);

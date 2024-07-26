@@ -99,7 +99,7 @@ const AddNews = () => {
         : navigate("/business/list-news");
     } catch (error) {
       console.error("Failed to post news:", error);
-      toast.error("Thêm tin tức thất bại. Vui lòng điền đầy đủ thông tin !");
+          error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
     }
   };
 

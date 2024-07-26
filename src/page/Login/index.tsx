@@ -50,7 +50,7 @@ const Login: React.FC = () => {
         token,
         role,
         account_id,
-        username,
+        username, 
         business_id,
         customer_id,
         admin_id,
