@@ -195,9 +195,8 @@ const RefundDetailsModal = ({ show, handleClose, refundId }) => {
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="Pendind">Pending</option>
-                    <option value="Refunded">Refunded</option>
-                    <option value="Reject">Reject</option>
+                    <option value="Pendind">Chờ xác nhận</option>
+                    <option value="Refunded">Đã hoàn tiền</option>
                   </Form.Control>
                 </Form.Group>
 

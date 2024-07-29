@@ -217,7 +217,7 @@ useEffect(() => {
             name: "",
             birthdate: "",
             gender: "",
-            passport_number: "",
+            passport_number: type === "Người lớn" ? "" : null,
             type: type,
           });
         }
@@ -708,7 +708,7 @@ useEffect(() => {
               DANH SÁCH KHÁCH HÀNG ĐI TOUR
             </h3>
 
-            {adultQuantity + childQuantity + infantQuantity <= 3 && (
+            {adultQuantity + childQuantity + infantQuantity <= 10 && (
               <>
                 {passengers.map((passenger, index) => (
                   <div
@@ -772,27 +772,30 @@ useEffect(() => {
                           </Form.Select>
                         </Form.Group>
                       </Col>
-                      <Col>
-                        {" "}
-                        <Form.Group className="my-lg-3 mb-2 ">
-                          <Form.Label className="fw-bold">
-                            Số CCCD/Passport (Nếu có):
-                            <span className="text-danger"></span>
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="passport_number"
-                            value={passenger.passport_number}
-                            onChange={(e) => handlePassengerChange(index, e)}
-                          />
-                        </Form.Group>
-                      </Col>
+                      {passenger.passport_number !== null && (
+                        <Col>
+                          {" "}
+                          <Form.Group className="my-lg-3 mb-2 ">
+                            <Form.Label className="fw-bold">
+                              Số CCCD/Passport :
+                              <span className="text-danger"></span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="passport_number"
+                              value={passenger.passport_number}
+                              onChange={(e) => handlePassengerChange(index, e)}
+                              required
+                            />
+                          </Form.Group>
+                        </Col>
+                      )}{" "}
                     </Row>
                   </div>
                 ))}
               </>
             )}
-            {adultQuantity + childQuantity + infantQuantity > 3 && (
+            {adultQuantity + childQuantity + infantQuantity > 10 && (
               <>
                 {" "}
                 <div style={{ display: "grid", placeItems: "end" }}>

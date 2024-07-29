@@ -217,9 +217,9 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
                           >
-                            <option value="Pending">Pending</option>
-                            <option value="Confirm">Confirm</option>
-                            <option value="Reject">Reject</option>
+                            <option value="Pending">Chờ xác nhận</option>
+                            <option value="Confirm">Đã xác nhận</option>
+                           
                           </Form.Control>
                         </Form.Group>
 

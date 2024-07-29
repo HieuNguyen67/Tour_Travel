@@ -23,15 +23,16 @@ import {
 } from "@mui/material";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import profile1img from "@/assets/image/profile1.png";
+import GoogleLoginButton from "@/components/google-login";
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
   const { login, isLoggedIn } = useAuth();
-  const [usernameOrEmail, setUsernameOrEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [show, setShow] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleClose = () => setShow(false);
 
@@ -39,7 +40,7 @@ const Login: React.FC = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL_USER}/login`, {
@@ -50,7 +51,7 @@ const Login: React.FC = () => {
         token,
         role,
         account_id,
-        username, 
+        username,
         business_id,
         customer_id,
         admin_id,
@@ -71,16 +72,43 @@ const Login: React.FC = () => {
       else if (role === 4) navigate("/admin/list-customer");
       else if (role === 5) navigate("/admin/news");
       else if (role === 6) navigate("/admin/contact");
-    } catch (error: any) {
-      error.response.data.errors.forEach((errorMsg: string) =>
-            toast.error(errorMsg)
-          );
-
+    } catch (error) {
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
       console.error("Đăng nhập không thành công:", error.response.data.message);
-      
-       toast.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
+
+    const handleLoginSuccess = async (credential) => {
+      try {
+        const response = await axios.post(`${BASE_URL_USER}/auth/google`, {
+          tokenId: credential,
+        });
+         const {
+           token,
+           role,
+           account_id,
+           username,
+           business_id,
+           customer_id,
+           admin_id,
+         } = response.data;
+        login(
+          token,
+          role,
+          username,
+          account_id,
+          business_id,
+          customer_id,
+          admin_id
+        );
+        toast.success("Đăng nhập thành công !");
+        if (role === 1) navigate("/");
+
+      } catch (error) {
+        console.error("Error during login:", error);
+      }
+    };
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -96,9 +124,9 @@ const Login: React.FC = () => {
         animate={{ opacity: 1, y: 1 }}
         transition={{ type: "spring", duration: 0.6 }}
       >
-        <Container className="mt-5 mx-auto pt-lg-5 pt-3 ">
+        <Container className="mt-5 mx-auto pt-lg-5 pt-3">
           <div className="mt-5">
-            <h1 className="text-center fw-bold ">
+            <h1 className="text-center fw-bold">
               <img
                 src={profile1img}
                 className="mb-2"
@@ -114,11 +142,11 @@ const Login: React.FC = () => {
           </div>
         </Container>
         <br />
-        <Container className="mb-5 pb-md-5 ">
+        <Container className="mb-5 pb-md-5">
           <div className="col-lg-4 mt-3 col-12 mx-auto px-2 px-lg-0">
-            <Form onSubmit={handleSubmit} noValidate>
+            <Form onSubmit={handleSubmit} noValidate className="mb-4">
               <Form.Group className="mb-4" controlId="formBasicEmail">
-                <Form.Label className=" ">
+                <Form.Label>
                   <CgProfile className="fs-4" /> Username or Email
                   <span className="text-danger">*</span>
                 </Form.Label>
@@ -130,7 +158,7 @@ const Login: React.FC = () => {
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
                 />
               </Form.Group>
-              <Form.Label className=" ">
+              <Form.Label>
                 <MdOutlinePassword className="fs-4" /> Password{" "}
                 <span className="text-danger">*</span>
               </Form.Label>
@@ -156,20 +184,27 @@ const Login: React.FC = () => {
                   }
                 />
               </FormControl>
-              <Button style={{background:RED1_COLOR, border:'0px'}} type="submit" className="col-12 py-2 mt-4  ">
-                <span className=" ">
+              <Button
+                style={{ background: RED1_COLOR, border: "0px" }}
+                type="submit"
+                className="col-12 py-2 mt-4"
+              >
+                <span>
                   Đăng Nhập <IoLogInSharp className="fs-4" />
                 </span>
               </Button>
             </Form>
+            <p className="fw-bold text-center">-----hoặc-----</p>
+            <GoogleLoginButton onLoginSuccess={handleLoginSuccess} />
           </div>
           <br />
+
           <div>
             <Row>
               <Col></Col>
               <Col className="col-12">
-                <h6 className="text-center text-break  ">
-                  <NavLink to="/" className=" link-dark text-danger decorate  ">
+                <h6 className="text-center text-break">
+                  <NavLink to="/" className="link-dark text-danger decorate">
                     <IoChevronBackSharp style={{ fontSize: 20 }} />
                     Go back
                   </NavLink>
@@ -178,17 +213,17 @@ const Login: React.FC = () => {
               <Col></Col>
             </Row>
           </div>
-          <hr></hr>
+          <hr />
           <div>
             <Row>
               <Col></Col>
               <Col className="col-12 col-md-12 mt-3">
                 <Col>
-                  <h6 className="text-secondary  text-center text-break fw-bold  ">
+                  <h6 className="text-secondary text-center text-break fw-bold">
                     Bạn không có tài khoản?
                     <NavLink
                       to="/SignUp"
-                      className=" link-dark text-danger decorate "
+                      className="link-dark text-danger decorate"
                     >
                       {" "}
                       Đăng ký
