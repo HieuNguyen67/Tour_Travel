@@ -1,9 +1,11 @@
 import React from "react";
 import { Backdrop, Container, LinearProgress } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { helix } from 'ldrs'
 
-helix.register()
+
+import { square } from 'ldrs'
+
+square.register()
 
 
 const LoadingBackdrop = ({ open }) => {
@@ -21,7 +23,14 @@ const LoadingBackdrop = ({ open }) => {
           <Container>
             <div className="text-center">
               {" "}
-              <l-helix size="150" speed="1.6" color="#161108"></l-helix>
+              <l-square
+                size="150"
+                stroke="6"
+                stroke-length="0.25"
+                bg-opacity="0.1"
+                speed="1.2"
+                color="#161108"
+              ></l-square>
             </div>
           </Container>
         </Container>

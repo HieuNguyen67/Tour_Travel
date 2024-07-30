@@ -6,6 +6,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { TbCoinFilled } from "react-icons/tb";
 import profile1img from "@/assets/image/profile1.png";
 import { RiRefund2Line } from "react-icons/ri";
+import { MdStars } from "react-icons/md";
 
 const InformationLayout = ({ children }) => {
   const { role } = useAuth();
@@ -105,7 +106,7 @@ const InformationLayout = ({ children }) => {
                   <Nav.Item>
                     <NavLink
                       className="nav-link "
-                      to="/information/coupons"
+                      to="/information/rate"
                       style={({ isActive }) => {
                         return {
                           fontWeight: isActive ? "bold" : "",
@@ -115,7 +116,7 @@ const InformationLayout = ({ children }) => {
                     >
                       {" "}
                       <span className="text-dark">
-                        <TbCoinFilled className="fs-3 text-warning" /> XU
+                        <MdStars className="fs-3 text-warning" /> ĐÁNH GIÁ
                       </span>
                     </NavLink>
                   </Nav.Item>

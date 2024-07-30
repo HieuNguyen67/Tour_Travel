@@ -15,7 +15,7 @@ import "@/page/customer/business-link/business-link.scss";
 import LazyLoad from "react-lazyload";
 
 
-const TourListBusiness = ({ accountId }) => {
+const TourListBusiness = ({ accountId, tour_category }) => {
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,17 +34,17 @@ const TourListBusiness = ({ accountId }) => {
       try {
         if (accountId) {
           const response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-tours/${accountId}/Active`
+            `${BASE_URL_CUSTOMER}/list-tours-filter/${accountId}?tourcategory_name=${tour_category}`
           );
           setTours(response.data);
-        } 
+        }
       } catch (error) {
         console.error("Error fetching tours:", error);
       }
     };
 
     fetchTours();
-  }, [accountId]);
+  }, [accountId, tour_category]);
 
   const truncateString = (str, maxLength) => {
     if (str.length <= maxLength) {
@@ -72,13 +72,10 @@ const TourListBusiness = ({ accountId }) => {
     },
   };
 
-
-
   return (
     <>
       {tours.length > 0 && (
         <>
-         
           <Carousel
             responsive={responsive}
             infinite={true}
@@ -176,7 +173,6 @@ const TourListBusiness = ({ accountId }) => {
               </div>
             ))}
           </Carousel>
-          
         </>
       )}
     </>

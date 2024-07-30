@@ -82,16 +82,16 @@ const CouponsList: React.FC = () => {
           <img
             src={coin1}
             style={{
-              width: "7rem",
-              height: "7rem",
+              width: "3.5rem",
+              height: "3.5rem",
               objectFit: "cover",
             }}
             loading="lazy"
           />
         </Col>
         <Col>
-          <p className="ms-3 mt-4">
-            <span className="fs-4 fw-bold text-warning">
+          <p className="">
+            <span className="fs-5 fw-bold text-warning">
               {totalUsedPoints} Xu đang có
             </span>
             <br />

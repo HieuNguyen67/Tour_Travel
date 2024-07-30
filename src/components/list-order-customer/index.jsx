@@ -118,7 +118,7 @@ const OrdersList = ({ customerId, status }) => {
     {
       field: "status",
       headerName: "Trạng thái",
-      width: 140,
+      width: 160,
       renderCell: (params) => {
         let buttonColor;
         let buttonColor1;

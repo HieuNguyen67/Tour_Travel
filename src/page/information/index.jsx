@@ -7,10 +7,9 @@ import InformationLayout from "./layout";
 import ListOrder from "./order";
 import Profile from "./profile";
 import Header from "@/components/layout/header";
-import Coupons from "./coupons";
 import Refunds from "./refunds";
 import OrderDetail from "../business/order-detail";
-
+import Rating from "./rating";
 const Information = () => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const Information = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/list-order" element={<ListOrder />} />
-          <Route path="/coupons" element={<Coupons />} />
+          <Route path="/rate" element={<Rating />} />
           <Route path="/refunds" element={<Refunds />} />
           <Route path="/order-detail" element={<OrderDetail />} />
           <Route path="*" element={<Navigate to="/information/profile" />} />

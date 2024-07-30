@@ -18,6 +18,7 @@ import { RiBankCardFill } from "react-icons/ri";
 import { GrUserAdmin } from "react-icons/gr";
 import { BASE_URL_ADMIN, BASE_URL_USER, RED1_COLOR } from "@/constants";
 import { RiBankFill } from "react-icons/ri";
+import CouponsList from "@/components/modal-history-coupons";
 
 const Profile = () => {
   const { accountId, isLoggedIn, token, role } = useAuth();
@@ -176,6 +177,15 @@ const Profile = () => {
           </Col>
           <Col className="col-lg-9 col-12 ">
             {" "}
+            {role == 1 ? (
+              <>
+                {" "}
+                <CouponsList />
+                <hr />
+              </>
+            ) : (
+              <></>
+            )}
             <form onSubmit={handleSubmit}>
               <Row>
                 {role != 1 && role != 3 ? (
@@ -326,11 +336,10 @@ const Profile = () => {
                           value={formData.bank_name}
                           onChange={handleChange}
                           name="bank_name"
-                          required
                         >
                           <option value="">Chọn ngân hàng</option>
                           {banknames.map((item) => (
-                            <option key={item.id} value={item.name+(item.code)}>
+                            <option key={item.id} value={item.name + item.code}>
                               {item.name} - ({item.code})
                             </option>
                           ))}
@@ -344,7 +353,6 @@ const Profile = () => {
                           hàng:
                         </Form.Label>
                         <Form.Control
-                          required
                           type="text"
                           name="bank_account_name"
                           value={formData.bank_account_name}
@@ -359,7 +367,6 @@ const Profile = () => {
                           <RiBankCardFill className="fs-4" /> STK ngân hàng:
                         </Form.Label>
                         <Form.Control
-                          required
                           type="number"
                           name="bank_account_number"
                           value={formData.bank_account_number}

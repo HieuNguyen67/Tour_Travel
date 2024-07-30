@@ -22,7 +22,7 @@ const GoogleLoginButton = ({ onLoginSuccess }) => {
           onSuccess={onSuccess}
           onError={onFailure}
           useOneTap
-          width={500}
+        
           size="large"
           theme="filled_black"
           shape="pill"

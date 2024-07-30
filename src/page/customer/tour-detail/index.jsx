@@ -533,7 +533,7 @@ const TourDetail = () => {
               <div className="mb-5">
                 <Suspense fallback={<div>Loading...</div>}>
                   {" "}
-                  <TourListBusiness accountId={tour.business_id} />
+                  <TourListBusiness accountId={tour.business_id} tour_category={tour.category_name}/>
                 </Suspense>
               </div>
             </div>

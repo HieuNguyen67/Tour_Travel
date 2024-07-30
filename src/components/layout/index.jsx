@@ -18,7 +18,7 @@ const MainLayout = ({ children }) => {
         location.pathname == "/contact" ||
         location.pathname == "/login" ||
         location.pathname == "/information/profile" ||
-        location.pathname == "/information/coupons" ||
+        location.pathname == "/information/rate" ||
         location.pathname == "/information/list-order" ||
         location.pathname == "/information/change-password" ||
         location.pathname == "/signup";
