@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/context";
-import {  DARKBLUE, GREY_COLOR, RED1_COLOR } from "@/constants";
+import { DARKBLUE, GREY_COLOR, RED1_COLOR } from "@/constants";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -35,7 +35,7 @@ const AddTourForm = () => {
   const location = useLocation();
   const { tour_id } = location.state || {};
   const { businessId, token } = useAuth();
-  const {   add_tour} = useParams();
+  const { add_tour } = useParams();
   const [error, setError] = useState(null);
   const [tourCategories, setTourCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,15 +51,15 @@ const AddTourForm = () => {
     quantity: "",
     vehicle: "",
     hotel: "",
-    tour_code:"",
+    tour_code: "",
     tourcategory_id: "",
     location_departure_id: "",
     destination_locations: [],
   });
   const [provinces, setProvinces] = useState([]);
-  const [end_date, setEnd_date]= useState([]);
+  const [end_date, setEnd_date] = useState([]);
   const [start_date, setStart_date] = useState([]);
-  const [tourStatus, setTourStatus]= useState([]);
+  const [tourStatus, setTourStatus] = useState([]);
   const [regions, setRegions] = useState([]);
   const [images, setImages] = useState([]);
 
@@ -68,7 +68,9 @@ const AddTourForm = () => {
   useEffect(() => {
     const fetchTourCategories = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL_BUSINESS}/tourcategories`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/tourcategories`
+        );
         setTourCategories(response.data);
       } catch (error) {
         console.error("Error fetching tour categories:", error);
@@ -159,22 +161,22 @@ const AddTourForm = () => {
     }));
   };
 
- const handleDestinationChange = (index, value) => {
-   const isDuplicate = formData.destination_locations.some(
-     (destination, i) => destination === value && i !== index
-   );
+  const handleDestinationChange = (index, value) => {
+    const isDuplicate = formData.destination_locations.some(
+      (destination, i) => destination === value && i !== index
+    );
 
-   if (isDuplicate) {
-     toast.error("Điểm đến này đã tồn tại trong danh sách!"); 
-   } else {
-     const destinations = [...formData.destination_locations];
-     destinations[index] = value;
-     setFormData((prevState) => ({
-       ...prevState,
-       destination_locations: destinations,
-     }));
-   }
- };
+    if (isDuplicate) {
+      toast.error("Điểm đến này đã tồn tại trong danh sách!");
+    } else {
+      const destinations = [...formData.destination_locations];
+      destinations[index] = value;
+      setFormData((prevState) => ({
+        ...prevState,
+        destination_locations: destinations,
+      }));
+    }
+  };
 
   const handleRemoveDestination = (index) => {
     const destinations = [...formData.destination_locations];
@@ -190,7 +192,6 @@ const AddTourForm = () => {
     e.preventDefault();
     setLoading1(true);
 
-    
     if (images.length < 4) {
       alert("Vui lòng chọn từ 4 hình ảnh trở lên");
       return;
@@ -211,18 +212,22 @@ const AddTourForm = () => {
     }
 
     try {
-      await axios.post(`${process.env.REACT_APP_BASE_URL_BUSINESS}/add-tours/${businessId}`, formData1, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL_BUSINESS}/add-tours/${businessId}`,
+        formData1,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       toast.success("Thêm Tour thành công!");
       navigate("/business/list-tour");
       setLoading(false);
     } catch (error) {
       console.error("Error adding tour: ", error.response.data.error);
-    error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
     }
     setLoading1(false);
   };
@@ -259,7 +264,6 @@ const AddTourForm = () => {
       console.error("Error updating tour:", error);
       toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
       error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
-
     }
 
     const data = new FormData();
@@ -311,14 +315,12 @@ const AddTourForm = () => {
     fetchTourImages();
   }, [isHomePage, tour_id]);
 
-    const handleDuplicateTour = () => {
-      const duplicatedTour = { ...formData };
-      navigate(`/business/add-tour/1/duplicate`, {
-        state: { formData: duplicatedTour },
-      });
-    };
-
-
+  const handleDuplicateTour = () => {
+    const duplicatedTour = { ...formData };
+    navigate(`/business/add-tour/1/duplicate`, {
+      state: { formData: duplicatedTour },
+    });
+  };
 
   return (
     <>
@@ -446,7 +448,7 @@ const AddTourForm = () => {
                     <Form.Label className="  fw-bold">
                       <LuImagePlus className="fs-4" /> Chọn hình ảnh tour ({">"}
                       = 4 ảnh){" "}
-                      <span className="text-danger">(*) ({"< 1MB"})</span>:
+                      <span className="text-danger">(*) </span>:
                     </Form.Label>
                     <Form.Control
                       type="file"
@@ -463,7 +465,7 @@ const AddTourForm = () => {
                   <Form.Group className="mb-4">
                     <Form.Label className="  fw-bold">
                       <LuImagePlus className="fs-4" /> Thay đổi ảnh tour ({">"}=
-                      4 ảnh) {"< 1MB"}:
+                      4 ảnh):
                     </Form.Label>
                     <Form.Control
                       type="file"

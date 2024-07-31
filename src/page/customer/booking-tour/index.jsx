@@ -37,6 +37,8 @@ import { FaUser } from "react-icons/fa6";
 import { Suspense, lazy } from "react";
 import DownloadExcelTemplate from "@/components/form-excel-passengers";
 import uploadimg from "@/assets/image/upload.png";
+import { Checkbox } from "@mui/material";
+import { TbCoinFilled } from "react-icons/tb";
 
 const PaymentMethod = lazy(() => import("@/components/payment-method"));
 
@@ -59,6 +61,9 @@ const BookTour = () => {
   const [paymentMethod, setPaymentMethod] = useState("captureWallet");
   const [paymentUrl, setPaymentUrl] = useState("");
   const [file, setFile] = useState(null);
+const [coupons, setCoupons] = useState([]);
+const [selectedCouponIds, setSelectedCouponIds] = useState([]);
+const [totalCoupons, setTotalCoupons] = useState(0);
 
   const validateName = (name) => /^[A-Za-zÀ-ỹà-ỹ\s]+$/.test(name);
 
@@ -91,14 +96,45 @@ const BookTour = () => {
   }, [tour_id]);
 
   useEffect(() => {
+    const fetchCoupons = async () => {
+      try {
+        if (tour.business_id) {
+          const response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/coupons/${customerId}/${tour.business_id}`
+          );
+          setCoupons(response.data.coupons);
+          setTotalCoupons(response.data.total_points);
+        }
+      } catch (error) {
+        console.error("Error fetching coupons:", error);
+      }
+    };
+
+    fetchCoupons();
+  }, [customerId, tour.business_id]);
+
+  const handleSelectAll = (event) => {
+    if (event.target.checked) {
+      setSelectedCouponIds(coupons.map((coupon) => coupon.coupon_id));
+    } else {
+      setSelectedCouponIds([]);
+    }
+  };
+
+  useEffect(() => {
     if (tour) {
       const total =
         tour.adult_price * adultQuantity +
         tour.child_price * childQuantity +
         tour.infant_price * infantQuantity;
-      setTotalPrice(total);
+      if (selectedCouponIds.length > 0) {
+        var discount = (total - totalCoupons);
+      }else{
+         var discount = total ;
+      }
+      setTotalPrice(discount);
     }
-  }, [tour, adultQuantity, childQuantity, infantQuantity]);
+  }, [tour, adultQuantity, childQuantity, infantQuantity, selectedCouponIds]);
 
   useEffect(() => {
     const fetchTourImages = async () => {
@@ -139,6 +175,10 @@ const BookTour = () => {
 
     fetchAccountData();
   }, [accountId]);
+
+
+
+
 
   const handleQuantityChange = (type, value) => {
     const totalQuantity =
@@ -280,6 +320,7 @@ const BookTour = () => {
         formData.append("infant_quantity", infantQuantity);
         formData.append("note", note);
         formData.append("passengers", JSON.stringify(passengers));
+          formData.append("coupon_ids", JSON.stringify(selectedCouponIds));
 
         const response = await axios.post(
           `${process.env.REACT_APP_BASE_URL_CUSTOMER}/book-tour/${tour_id}/${customerId}/${shareToken}`,
@@ -306,6 +347,8 @@ const BookTour = () => {
         formData.append("note", note);
         formData.append("paymentMethod", paymentMethod);
         formData.append("passengers", JSON.stringify(passengers));
+        formData.append("coupon_ids", JSON.stringify(selectedCouponIds));
+
 
         const response = await axios.post(
           `${process.env.REACT_APP_BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}/${shareToken}`,
@@ -679,6 +722,37 @@ const BookTour = () => {
               </Col>
             </Row>
             <hr />
+            <div style={{ display: "grid", placeItems: "end" }}>
+              <label className="fw-bold">
+                <Checkbox
+                  onChange={handleSelectAll}
+                  disabled={totalCoupons === 0}
+                />
+                &nbsp;
+                <TbCoinFilled className="fs-4 text-warning" />
+                &nbsp; Bạn đang có {totalCoupons} Xu của {tour.account_name}
+              </label>
+            </div>
+            <div style={{ display: "none" }}>
+              {coupons.map((coupon) => (
+                <div key={coupon.coupon_id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={selectedCouponIds.includes(coupon.coupon_id)}
+                      onChange={() => {
+                        setSelectedCouponIds((prev) =>
+                          prev.includes(coupon.coupon_id)
+                            ? prev.filter((id) => id !== coupon.coupon_id)
+                            : [...prev, coupon.coupon_id]
+                        );
+                      }}
+                    />
+                    {coupon.description} (Points: {coupon.points})
+                  </label>
+                </div>
+              ))}
+            </div>
             <h4 className="text-end">
               TỔNG TIỀN: &nbsp;
               <span className="fw-bold fs-2" style={{ color: TEXT_RED_COLOR }}>

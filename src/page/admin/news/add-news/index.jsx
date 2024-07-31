@@ -29,11 +29,14 @@ const AddNews = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL_USER}/news-categories`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL_USER}/news-categories`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setCategories(response.data);
       } catch (error) {
         console.error("Failed to fetch news categories:", error);
@@ -98,7 +101,10 @@ const AddNews = () => {
         : navigate("/business/list-news");
     } catch (error) {
       console.error("Failed to post news:", error);
-      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      toast.error(error.response.data.message);
+      if (error.response.data.errors) {
+        error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      }
     }
   };
 
@@ -176,7 +182,7 @@ const AddNews = () => {
                 <Form.Group className="mb-4" controlId="formBasicEmail">
                   <Form.Label className="  fw-bold">
                     <LuImagePlus className="fs-4" /> Ảnh tiêu đề{" "}
-                    <span className="text-danger">(*) </span>:
+                    <span className="text-danger">(*) </span> :
                   </Form.Label>
                   <Form.Control
                     type="file"
