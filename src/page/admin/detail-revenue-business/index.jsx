@@ -1,11 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import {
-  BASE_URL_ADMIN,
-  BASE_URL_USER,
   BLUE_COLOR,
   GREEN_COLOR,
   RED1_COLOR,
@@ -17,39 +14,48 @@ import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 
-const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, month, year, revenue, statusPayment }) => {
+const DetailRevenueBusiness = ({
+  show,
+  handleClose,
+  account_id,
+  business_id,
+  month,
+  year,
+  revenue,
+  statusPayment,
+}) => {
   const [business, setBusiness] = useState([]);
   const [loading, setLoading] = useState(false);
-    const [loading1, setLoading1] = useState(false);
+  const [loading1, setLoading1] = useState(false);
 
   const { token } = useAuth();
   const [message, setMessage] = useState("");
 
-      useEffect(() => {
-        const fetchAccountData = async () => {
-          try {
-            if(account_id){
-              var response = await axios.get(
-                `${BASE_URL_USER}/account/${account_id}`,
-                {
-                  params: { role: 3 },
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
+  useEffect(() => {
+    const fetchAccountData = async () => {
+      try {
+        if (account_id) {
+          var response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL_USER}/account/${account_id}`,
+            {
+              params: { role: 3 },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
+          );
+        }
 
-            setBusiness(response.data);
-            setLoading(false);
-          } catch (error) {
-            console.error("Failed to fetch account data:", error);
-            setLoading(false);
-          }
-        };
+        setBusiness(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch account data:", error);
+        setLoading(false);
+      }
+    };
 
-        fetchAccountData();
-      }, [account_id]);
+    fetchAccountData();
+  }, [account_id]);
 
   const formatPrice = (price) => {
     if (typeof price !== "number") {
@@ -61,14 +67,14 @@ const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, mon
     }).format(price);
   };
   const handleUpdatePaymentStatus = async (e) => {
-     e.preventDefault();
+    e.preventDefault();
     setLoading1(true);
     try {
       const response = await axios.put(
-        `${BASE_URL_ADMIN}/update-payment-status/${business_id}`,
+        `${process.env.REACT_APP_BASE_URL_ADMIN}/update-payment-status/${business_id}`,
         {
           month,
-          year
+          year,
         },
         {
           headers: {
@@ -77,17 +83,16 @@ const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, mon
         }
       );
       setMessage(response.data.message);
-            toast.success("Xác nhận thanh toán thành công!");
-        handleClose(false);
-        window.location.reload();
+      toast.success("Xác nhận thanh toán thành công!");
+      handleClose(false);
+      window.location.reload();
     } catch (error) {
-    toast.error(error.response.data.message);
+      toast.error(error.response.data.message);
       setMessage(
         "Lỗi khi cập nhật trạng thái thanh toán. Vui lòng thử lại sau."
       );
     }
     setLoading1(false);
-
   };
   if (loading) return <p>Loading...</p>;
   return (
@@ -152,7 +157,8 @@ const DetailRevenueBusiness = ({ show, handleClose, account_id, business_id, mon
                   <>Loading...</>
                 ) : (
                   <>
-                    <FaCheck className="fs-4" /> XÁC NHẬN ĐÃ THANH TOÁN CHO DOANH NGHIỆP
+                    <FaCheck className="fs-4" /> XÁC NHẬN ĐÃ THANH TOÁN CHO
+                    DOANH NGHIỆP
                   </>
                 )}
               </Button>

@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { BASE_URL_BUSINESS, BLUE_COLOR, DARKBLUE } from "@/constants";
+import {  BLUE_COLOR, DARKBLUE } from "@/constants";
 import { useAuth } from "@/context";
 import { Button, Col, Row } from "react-bootstrap";
 import excelimg from "@/assets/image/excel.png";
@@ -11,7 +11,7 @@ const ExportPassengers = ({ tourId }) => {
   const handleExport = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL_BUSINESS}/export-list-passengers-tour/${tourId}`,
+        `${process.env.REACT_APP_BASE_URL_BUSINESS}/export-list-passengers-tour/${tourId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

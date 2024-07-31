@@ -3,16 +3,16 @@ import axios from "axios";
 import { Form, Button, Modal, Alert } from "react-bootstrap";
 import Rating from "@mui/material/Rating";
 import { useAuth } from "@/context";
-import { BASE_URL_CUSTOMER, RED1_COLOR } from "@/constants";
+import {  RED1_COLOR } from "@/constants";
 import { MdRateReview } from "react-icons/md";
 import { FaStar } from "react-icons/fa6";
 
-const RateTour = ({ customerId, tourId,code_order, show, handleClose }) => {
+const RateTour = ({ customerId, tourId, code_order, show, handleClose }) => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const{token}= useAuth();
+  const { token } = useAuth();
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
   };
@@ -26,7 +26,7 @@ const RateTour = ({ customerId, tourId,code_order, show, handleClose }) => {
 
     try {
       const response = await axios.post(
-        `${BASE_URL_CUSTOMER}/rate-tour/${customerId}/${tourId}/${code_order}`,
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/rate-tour/${customerId}/${tourId}/${code_order}`,
         { rating, review },
         {
           headers: {
@@ -67,7 +67,6 @@ const RateTour = ({ customerId, tourId,code_order, show, handleClose }) => {
               name="rating"
               value={rating}
               onChange={handleRatingChange}
-              
             />
           </Form.Group>
           <Form.Group controlId="review">

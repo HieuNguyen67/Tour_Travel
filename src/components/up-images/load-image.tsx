@@ -3,7 +3,6 @@ import axios from "axios";
 import { useAuth } from "@/context";
 import { Col } from "react-bootstrap";
 import defaultImage from "../../assets/image/6945124.png";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import "./load-image.scss";
 
 const DisplayImage: React.FC = () => {
@@ -16,7 +15,7 @@ const DisplayImage: React.FC = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/account/image/${accountId}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/account/image/${accountId}`,
           {
             responseType: "blob",
             headers: {

@@ -9,7 +9,9 @@ import Header from "@/components/layout/header";
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, RED1_COLOR } from "@/constants";
+import {
+  RED1_COLOR,
+} from "@/constants";
 import infoimg from "@/assets/image/info.png";
 import contactimg from "@/assets/image/contact.png";
 
@@ -32,7 +34,10 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-     const response = await axios.post(`${BASE_URL_CUSTOMER}/send-contact`, formData);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/send-contact`,
+        formData
+      );
       setSuccessMessage("Contact sent successfully");
       setFormData({
         fullname: "",

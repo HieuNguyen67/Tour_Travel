@@ -1,6 +1,6 @@
 import { Container, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_URL_BUSINESS, BLUE_COLOR, DARKBLUE, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
+import {  BLUE_COLOR, DARKBLUE, GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
 import tourimg from "@/assets/image/tour.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -32,7 +32,7 @@ const TourList = () => {
     const fetchTours = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_BUSINESS}/list-tours/${businessId}`
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-tours/${businessId}`
         );
         const formattedTours = response.data.map((tour) => ({
           ...tour,

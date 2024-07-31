@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { BASE_URL_CUSTOMER, DARKBLUE } from "@/constants";
+import {  DARKBLUE } from "@/constants";
 import { Button } from "react-bootstrap";
 import { IoMdDownload } from "react-icons/io";
 import excelimg from "@/assets/image/excel.png";
@@ -8,9 +8,12 @@ import excelimg from "@/assets/image/excel.png";
 const DownloadExcelTemplate = () => {
   const downloadTemplate = async () => {
     try {
-      const response = await axios.get(`${BASE_URL_CUSTOMER}/download-excel-template`, {
-        responseType: "blob", 
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/download-excel-template`,
+        {
+          responseType: "blob",
+        }
+      );
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");

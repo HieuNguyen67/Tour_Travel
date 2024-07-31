@@ -8,7 +8,6 @@ import { motion, useAnimation } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { ImNewspaper } from "react-icons/im";
 import { GiConfirmed } from "react-icons/gi";
 import { BLUE_COLOR } from "@/constants";
@@ -30,7 +29,7 @@ const AddNews = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${BASE_URL_USER}/news-categories`, {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL_USER}/news-categories`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -69,7 +68,7 @@ const AddNews = () => {
     try {
       if (role == 2 || role == 5) {
         await axios.post(
-          `${BASE_URL_ADMIN}/add-news/${adminId}/${adminId}`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/add-news/${adminId}/${adminId}`,
           formDataToSend,
           {
             headers: {
@@ -81,7 +80,7 @@ const AddNews = () => {
         );
       } else {
         await axios.post(
-          `${BASE_URL_ADMIN}/add-news/${businessId}`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/add-news/${businessId}`,
           formDataToSend,
           {
             headers: {
@@ -99,7 +98,7 @@ const AddNews = () => {
         : navigate("/business/list-news");
     } catch (error) {
       console.error("Failed to post news:", error);
-          error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
     }
   };
 

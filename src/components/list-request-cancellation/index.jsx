@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "react-bootstrap";
-import { BASE_URL_CUSTOMER, BLUE_COLOR, GREEN_COLOR, RED1_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
+import {
+  BLUE_COLOR,
+  GREEN_COLOR,
+  RED1_COLOR,
+  RED_COLOR,
+  YELLOW_COLOR,
+} from "@/constants";
 import { format } from "date-fns";
 import LoadingBackdrop from "../backdrop";
 import CancellationRequestDetail from "@/page/business/request-cancel-detail";
@@ -14,11 +20,11 @@ const CancellationRequests = ({ customerId, businessId }) => {
   const [loading, setLoading] = useState(true);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [showModal, setShowModal] = useState(false);
-const{token}=useAuth();
-   const handleRowClick = (params) => {
-     setSelectedRequestId(params.row.request_id);
-     setShowModal(true);
-   };
+  const { token } = useAuth();
+  const handleRowClick = (params) => {
+    setSelectedRequestId(params.row.request_id);
+    setShowModal(true);
+  };
 
   const handleClose = () => {
     setShowModal(false);
@@ -27,15 +33,18 @@ const{token}=useAuth();
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get(`${BASE_URL_CUSTOMER}/list-cancellation-requests`, {
-          params: {
-            customerId,
-            businessId,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-cancellation-requests`,
+          {
+            params: {
+              customerId,
+              businessId,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setRequests(response.data);
       } catch (error) {
@@ -62,26 +71,26 @@ const{token}=useAuth();
       renderCell: (params) => {
         let buttonColor;
         let buttonColor1;
-                let status_order;
+        let status_order;
 
         switch (params.value) {
           case "Pending":
             buttonColor = YELLOW_COLOR;
             buttonColor1 = "black";
-status_order = "Chờ xác nhận";
+            status_order = "Chờ xác nhận";
 
             break;
           case "Confirm":
             buttonColor = GREEN_COLOR;
             buttonColor1 = "black";
-status_order = "Đã xác nhận";
+            status_order = "Đã xác nhận";
 
             break;
 
           case "Reject":
             buttonColor = RED1_COLOR;
             buttonColor1 = "white";
-status_order = "Đã từ chối";
+            status_order = "Đã từ chối";
 
             break;
           default:
@@ -101,7 +110,7 @@ status_order = "Đã từ chối";
         );
       },
     },
-    
+
     {
       field: "request_date",
       headerName: "Ngày yêu cầu",
@@ -137,13 +146,7 @@ status_order = "Đã từ chối";
       headerName: "Thao tác",
       width: 150,
       renderCell: (params) => {
-        return (
-          <p
-          
-          >
-            Xem chi tiết...
-          </p>
-        );
+        return <p>Xem chi tiết...</p>;
       },
     },
   ];

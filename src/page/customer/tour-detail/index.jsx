@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Col, Container, Row, Placeholder } from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
@@ -65,7 +64,7 @@ const TourDetail = () => {
     const fetchTourData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/get-tour/${tour_id}`
+          `${process.env.REACT_APP_BASE_URL_USER}/get-tour/${tour_id}`
         );
         setTour(response.data);
         setDestination(response.data.destination_location_name.join(", "));
@@ -84,7 +83,7 @@ const TourDetail = () => {
       try {
         setLoading1(true);
         const response = await axios.get(
-          `${BASE_URL_USER}/get-all-tour-images/${tour_id}`
+          `${process.env.REACT_APP_BASE_URL_USER}/get-all-tour-images/${tour_id}`
         );
         setImage(response.data);
         setLoading1(false);
@@ -103,7 +102,7 @@ const TourDetail = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/get-ratings-tour/${tourCode}`
+          `${process.env.REACT_APP_BASE_URL_USER}/get-ratings-tour/${tourCode}`
         );
         setAverageRating(response.data.averageRating);
         setTotalRatings(response.data.totalRatings);
@@ -533,7 +532,10 @@ const TourDetail = () => {
               <div className="mb-5">
                 <Suspense fallback={<div>Loading...</div>}>
                   {" "}
-                  <TourListBusiness accountId={tour.business_id} tour_category={tour.category_name}/>
+                  <TourListBusiness
+                    accountId={tour.business_id}
+                    tour_category={tour.category_name}
+                  />
                 </Suspense>
               </div>
             </div>

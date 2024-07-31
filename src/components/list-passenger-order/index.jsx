@@ -2,29 +2,28 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { TextField, Button } from "@mui/material";
-import { BASE_URL_CUSTOMER } from "@/constants";
 import { useAuth } from "@/context";
 import { format } from "date-fns";
 import LazyLoad from "react-lazyload";
 
 const PassengersList = ({ orderId }) => {
   const [passengers, setPassengers] = useState([]);
-    const {token}= useAuth();
+  const { token } = useAuth();
   const fetchPassengers = async () => {
     try {
-      const response = await axios.get(`${BASE_URL_CUSTOMER}/list-passengers/${orderId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-passengers/${orderId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setPassengers(response.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách hành khách:", error);
     }
   };
-
-  
 
   useEffect(() => {
     if (orderId) {
@@ -44,10 +43,7 @@ const PassengersList = ({ orderId }) => {
       headerName: "Ngày sinh",
       width: 200,
       renderCell: (params) => (
-        <span
-          className="fw-bold text-primary"
-          style={{ cursor: "pointer" }}
-        >
+        <span className="fw-bold text-primary" style={{ cursor: "pointer" }}>
           {format(new Date(params.value), "dd/MM/yyyy")}
         </span>
       ),

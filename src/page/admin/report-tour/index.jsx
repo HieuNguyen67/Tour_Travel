@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import { BASE_URL_ADMIN } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { GREEN_COLOR, RED1_COLOR, YELLOW_COLOR } from "@/constants";
 import { Button } from "react-bootstrap";
@@ -17,7 +16,9 @@ const ReportList = () => {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await axios.get(`${BASE_URL_ADMIN}/report-list`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/report-list`
+        );
         setReports(response.data);
         setLoading(false);
       } catch (error) {
@@ -32,9 +33,9 @@ const ReportList = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-        const data = { report_id: params.row.report_id };
+    const data = { report_id: params.row.report_id };
 
-    navigate(`/admin/report-detail`,{state: data});
+    navigate(`/admin/report-detail`, { state: data });
   };
 
   const columns = [

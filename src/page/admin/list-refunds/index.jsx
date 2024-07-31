@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
-import { BASE_URL_ADMIN, BLUE_COLOR, GREEN_COLOR, RED1_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
+import {
+  BLUE_COLOR,
+  GREEN_COLOR,
+  RED1_COLOR,
+  RED_COLOR,
+  YELLOW_COLOR,
+} from "@/constants";
 import { useAuth } from "@/context";
 import refundimg from "@/assets/image/refund.png";
 import { Button } from "react-bootstrap";
@@ -12,17 +18,20 @@ import LazyLoad from "react-lazyload";
 const RefundsList = () => {
   const [refunds, setRefunds] = useState([]);
   const [loading, setLoading] = useState(true);
-const {token}= useAuth();
-const [selectedRefundId, setSelectedRefundId] = useState(null);
-const [showModal, setShowModal] = useState(false);
+  const { token } = useAuth();
+  const [selectedRefundId, setSelectedRefundId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     const fetchRefunds = async () => {
       try {
-        const response = await axios.get(`${BASE_URL_ADMIN}/list-refunds`, {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/list-refunds`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setRefunds(response.data);
         setLoading(false);
       } catch (error) {
@@ -34,19 +43,19 @@ const [showModal, setShowModal] = useState(false);
     fetchRefunds();
   }, []);
 
-    const formatPrice = (price) => {
-      if (typeof price !== "number") {
-        return price;
-      }
-      return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-      }).format(price);
-    };
-     const handleRowClick = (params) => {
-       setSelectedRefundId(params.row.refund_id);
-       setShowModal(true);
-     };
+  const formatPrice = (price) => {
+    if (typeof price !== "number") {
+      return price;
+    }
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
+  const handleRowClick = (params) => {
+    setSelectedRefundId(params.row.refund_id);
+    setShowModal(true);
+  };
 
   const columns = [
     {
@@ -142,7 +151,6 @@ const [showModal, setShowModal] = useState(false);
       width: 300,
       renderCell: (params) => <span className="fw-bold">{params.value}</span>,
     },
-    
   ];
 
   return (

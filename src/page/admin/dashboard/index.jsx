@@ -1,7 +1,6 @@
 import dashboardimg from "@/assets/image/dashboard.png";
 import { Col, Row } from "react-bootstrap";
 import {
-  BASE_URL_BUSINESS,
   BLUE_COLOR,
   BORDER,
   DARKBLUE,

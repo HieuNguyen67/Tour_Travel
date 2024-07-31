@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { BASE_URL_CUSTOMER, RED_COLOR } from "@/constants";
+import {  RED_COLOR } from "@/constants";
 import { Button, InputGroup, FormControl, Modal } from "react-bootstrap";
 import { FaShareAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ const ShareTour = ({ tourId, customerId }) => {
   const [shareLink, setShareLink] = useState("");
   const [error, setError] = useState("");
   const { isLoggedIn, token } = useAuth();
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,9 +20,9 @@ const ShareTour = ({ tourId, customerId }) => {
     }
     setShow(true);
     try {
-      if(customerId){
+      if (customerId) {
         const response = await axios.post(
-          `${BASE_URL_CUSTOMER}/share-tour/${tourId}/${customerId}`
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/share-tour/${tourId}/${customerId}`
         );
         const { shareLink } = response.data;
         setShareLink(shareLink);
@@ -38,8 +38,7 @@ const ShareTour = ({ tourId, customerId }) => {
     alert("Link đã được sao chép vào clipboard!");
   };
 
-    const handleClose = () => setShow(false);
-
+  const handleClose = () => setShow(false);
 
   return (
     <div>
@@ -77,7 +76,9 @@ const ShareTour = ({ tourId, customerId }) => {
                 color: "black",
               }}
             >
-              <h5 className="fw-bold">Hướng Dẫn Chia Sẻ Link Tour và Nhận Điểm Thưởng</h5>
+              <h5 className="fw-bold">
+                Hướng Dẫn Chia Sẻ Link Tour và Nhận Điểm Thưởng
+              </h5>
               <ul>
                 <li>
                   <strong>Bước 1: Truy cập trang tour bạn muốn chia sẻ</strong>
@@ -112,12 +113,13 @@ const ShareTour = ({ tourId, customerId }) => {
                   <strong>Bước 4: Nhận xu</strong>
                   <ul>
                     <li>
-                      Khi bạn bè của bạn nhấn vào link chia sẻ và đặt tour thanh toán thành
-                      công, hệ thống sẽ tự động cộng xu vào tài khoản của bạn.
+                      Khi bạn bè của bạn nhấn vào link chia sẻ và đặt tour thanh
+                      toán thành công, hệ thống sẽ tự động cộng xu vào tài khoản
+                      của bạn.
                     </li>
                     <li>
-                      Xu thưởng sẽ hiển thị trong phần "Xu" trong tài
-                      khoản của bạn.
+                      Xu thưởng sẽ hiển thị trong phần "Xu" trong tài khoản của
+                      bạn.
                     </li>
                   </ul>
                 </li>
@@ -128,7 +130,9 @@ const ShareTour = ({ tourId, customerId }) => {
                   Đảm bảo bạn bè của bạn sử dụng link chia sẻ để truy cập trang
                   tour và đặt tour.
                 </li>
-                <li>Xu thưởng chỉ được cộng khi việc đặt tour thanh toán hoàn tất.</li>
+                <li>
+                  Xu thưởng chỉ được cộng khi việc đặt tour thanh toán hoàn tất.
+                </li>
               </ul>
               <p>Chúc bạn chia sẻ thành công và nhận nhiều xu thưởng!</p>
             </div>

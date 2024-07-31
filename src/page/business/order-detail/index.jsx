@@ -14,10 +14,6 @@ import { format } from "date-fns";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context";
 import {
-  BASE_URL_ADMIN,
-  BASE_URL_BUSINESS,
-  BASE_URL_CUSTOMER,
-  BASE_URL_USER,
   BLUE_COLOR,
   GREY_COLOR,
   RED1_COLOR,
@@ -153,7 +149,7 @@ const OrderDetail = () => {
     const fetchOrderDetail = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/order-detail/${order_id}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/order-detail/${order_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -182,7 +178,7 @@ const OrderDetail = () => {
       if (orderDetail.status_payment === "Paid") {
         try {
           var response = await axios.get(
-            `${BASE_URL_USER}/payment-detail/${order_id}`,
+            `${process.env.REACT_APP_BASE_URL_USER}/payment-detail/${order_id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -209,7 +205,7 @@ const OrderDetail = () => {
    
       const cancel= "Cancel";
       await axios.put(
-        `${BASE_URL_BUSINESS}/update-status-orders/${order_id}`,
+        `${process.env.REACT_APP_BASE_URL_BUSINESS}/update-status-orders/${order_id}`,
         {
           status: cancel,
         },
@@ -233,7 +229,7 @@ const OrderDetail = () => {
     try {
       if (role == 3) {
         await axios.put(
-          `${BASE_URL_BUSINESS}/update-status-orders/${order_id}`,
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/update-status-orders/${order_id}`,
           {
             status,
           },
@@ -249,7 +245,7 @@ const OrderDetail = () => {
       } else {
         const paid = "Paid";
         await axios.put(
-          `${BASE_URL_ADMIN}/update-status-payment-orders/${order_id}`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/update-status-payment-orders/${order_id}`,
           {
             statuspayments: paid,
           },
@@ -290,7 +286,7 @@ const OrderDetail = () => {
        );
       } else {
         const response = await axios.post(
-          `${BASE_URL_CUSTOMER}/payment-tour-momopay/${orderDetail.code_order}/${orderDetail.total_price}`,
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/payment-tour-momopay/${orderDetail.code_order}/${orderDetail.total_price}`,
           {
             paymentMethod: paymentMethod,
           },

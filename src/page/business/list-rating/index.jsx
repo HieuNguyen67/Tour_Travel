@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, CircularProgress, Rating } from "@mui/material";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS } from "@/constants";
 import { useAuth } from "@/context";
 import LoadingBackdrop from "@/components/backdrop";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +17,7 @@ const ToursList = () => {
     const fetchTours = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_BUSINESS}/tours-rating/${businessId}`
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/tours-rating/${businessId}`
         );
         setTours(response.data);
         setLoading(false);

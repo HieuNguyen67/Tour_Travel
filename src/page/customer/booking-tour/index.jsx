@@ -3,9 +3,6 @@ import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context";
 import {
-  BASE_URL_ADMIN,
-  BASE_URL_CUSTOMER,
-  BASE_URL_USER,
   BORDER,
   RED1_COLOR,
   TEXT_RED_COLOR,
@@ -63,8 +60,7 @@ const BookTour = () => {
   const [paymentUrl, setPaymentUrl] = useState("");
   const [file, setFile] = useState(null);
 
-
-  const validateName = (name) => /^[A-Za-zÀ-ỹà-ỹ\s]+$/.test(name); 
+  const validateName = (name) => /^[A-Za-zÀ-ỹà-ỹ\s]+$/.test(name);
 
   const validatePassportNumber = (passportNumber) => {
     return passportNumber === "" || /^[\d]+$/.test(passportNumber);
@@ -81,7 +77,7 @@ const BookTour = () => {
     const fetchTourDetails = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/get-tour/${tour_id}`
+          `${process.env.REACT_APP_BASE_URL_USER}/get-tour/${tour_id}`
         );
         setTour(response.data);
         setLoading(false);
@@ -108,7 +104,7 @@ const BookTour = () => {
     const fetchTourImages = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/get-all-tour-images/${tour_id}`
+          `${process.env.REACT_APP_BASE_URL_USER}/get-all-tour-images/${tour_id}`
         );
         setImage(response.data);
         setLoading1(false);
@@ -125,7 +121,7 @@ const BookTour = () => {
     const fetchAccountData = async () => {
       try {
         var response = await axios.get(
-          `${BASE_URL_USER}/account/${accountId}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/account/${accountId}`,
           {
             params: { role: 1 },
             headers: {
@@ -196,75 +192,72 @@ const BookTour = () => {
     }
   };
 
-useEffect(() => {
-  setPassengers((prevPassengers) => {
-    const updatedPassengers = [...prevPassengers];
+  useEffect(() => {
+    setPassengers((prevPassengers) => {
+      const updatedPassengers = [...prevPassengers];
 
-    const currentAdults = updatedPassengers.filter(
-      (p) => p.type === "Người lớn"
-    ).length;
-    const currentChildren = updatedPassengers.filter(
-      (p) => p.type === "Trẻ em"
-    ).length;
-    const currentInfants = updatedPassengers.filter(
-      (p) => p.type === "Trẻ nhỏ"
-    ).length;
+      const currentAdults = updatedPassengers.filter(
+        (p) => p.type === "Người lớn"
+      ).length;
+      const currentChildren = updatedPassengers.filter(
+        (p) => p.type === "Trẻ em"
+      ).length;
+      const currentInfants = updatedPassengers.filter(
+        (p) => p.type === "Trẻ nhỏ"
+      ).length;
 
-    const adjustPassengers = (quantity, type, currentCount) => {
-      if (quantity > currentCount) {
-        for (let i = currentCount; i < quantity; i++) {
-          updatedPassengers.push({
-            name: "",
-            birthdate: "",
-            gender: "",
-            passport_number: type === "Người lớn" ? "" : null,
-            type: type,
-          });
-        }
-      } else if (quantity < currentCount) {
-        let countToRemove = currentCount - quantity;
-        for (let i = updatedPassengers.length - 1; i >= 0; i--) {
-          if (updatedPassengers[i].type === type && countToRemove > 0) {
-            updatedPassengers.splice(i, 1);
-            countToRemove--;
+      const adjustPassengers = (quantity, type, currentCount) => {
+        if (quantity > currentCount) {
+          for (let i = currentCount; i < quantity; i++) {
+            updatedPassengers.push({
+              name: "",
+              birthdate: "",
+              gender: "",
+              passport_number: type === "Người lớn" ? "" : null,
+              type: type,
+            });
+          }
+        } else if (quantity < currentCount) {
+          let countToRemove = currentCount - quantity;
+          for (let i = updatedPassengers.length - 1; i >= 0; i--) {
+            if (updatedPassengers[i].type === type && countToRemove > 0) {
+              updatedPassengers.splice(i, 1);
+              countToRemove--;
+            }
           }
         }
-      }
-    };
+      };
 
-    adjustPassengers(adultQuantity, "Người lớn", currentAdults);
-    adjustPassengers(childQuantity, "Trẻ em", currentChildren);
-    adjustPassengers(infantQuantity, "Trẻ nhỏ", currentInfants);
+      adjustPassengers(adultQuantity, "Người lớn", currentAdults);
+      adjustPassengers(childQuantity, "Trẻ em", currentChildren);
+      adjustPassengers(infantQuantity, "Trẻ nhỏ", currentInfants);
 
-    return updatedPassengers;
-  });
-}, [adultQuantity, childQuantity, infantQuantity]);
-
-
+      return updatedPassengers;
+    });
+  }, [adultQuantity, childQuantity, infantQuantity]);
 
   const handlePassengerChange = (index, e) => {
     const { name, value } = e.target;
-     if (name === "name" && !validateName(value)) {
-       alert("Tên không hợp lệ. Vui lòng nhập lại.");
-       return;
-     }
-     
-     if (name === "passport_number" && !validatePassportNumber(value)) {
-       alert("Số CCCD/Passport không hợp lệ.");
-       return;
-     }
+    if (name === "name" && !validateName(value)) {
+      alert("Tên không hợp lệ. Vui lòng nhập lại.");
+      return;
+    }
 
-       if (
-         name === "passport_number" &&
-         passengers.some(
-           (passenger, i) => i !== index && passenger.passport_number === value
-         )
-       ) {
-         alert("Số CCCD/Passport đã tồn tại. Vui lòng nhập số khác.");
-         return;
-       }
-     
-    
+    if (name === "passport_number" && !validatePassportNumber(value)) {
+      alert("Số CCCD/Passport không hợp lệ.");
+      return;
+    }
+
+    if (
+      name === "passport_number" &&
+      passengers.some(
+        (passenger, i) => i !== index && passenger.passport_number === value
+      )
+    ) {
+      alert("Số CCCD/Passport đã tồn tại. Vui lòng nhập số khác.");
+      return;
+    }
+
     setPassengers((prevPassengers) => {
       const updatedPassengers = [...prevPassengers];
       updatedPassengers[index][name] = value;
@@ -280,17 +273,17 @@ useEffect(() => {
     setLoading2(true);
     try {
       if (paymentMethod === "bank") {
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append("adult_quantity", adultQuantity);
-          formData.append("child_quantity", childQuantity);
-          formData.append("infant_quantity", infantQuantity);
-          formData.append("note", note);
-          formData.append("passengers", JSON.stringify(passengers));
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("adult_quantity", adultQuantity);
+        formData.append("child_quantity", childQuantity);
+        formData.append("infant_quantity", infantQuantity);
+        formData.append("note", note);
+        formData.append("passengers", JSON.stringify(passengers));
 
         const response = await axios.post(
-          `${BASE_URL_CUSTOMER}/book-tour/${tour_id}/${customerId}/${shareToken}`,
-            formData,
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/book-tour/${tour_id}/${customerId}/${shareToken}`,
+          formData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -305,17 +298,17 @@ useEffect(() => {
           `/banking/${response.data.order.code_order}/${response.data.order.total_price}/${response.data.order.child_quantity}/${response.data.order.adult_quantity}/${response.data.order.infant_quantity}/*${response.data.order.note}`
         );
       } else {
-         const formData = new FormData();
-         formData.append("file", file);
-         formData.append("adult_quantity", adultQuantity);
-         formData.append("child_quantity", childQuantity);
-         formData.append("infant_quantity", infantQuantity);
-         formData.append("note", note);
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("adult_quantity", adultQuantity);
+        formData.append("child_quantity", childQuantity);
+        formData.append("infant_quantity", infantQuantity);
+        formData.append("note", note);
         formData.append("paymentMethod", paymentMethod);
-         formData.append("passengers", JSON.stringify(passengers));
+        formData.append("passengers", JSON.stringify(passengers));
 
         const response = await axios.post(
-          `${BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}/${shareToken}`,
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/book-tour-momopay/${tour_id}/${customerId}/${shareToken}`,
           formData,
           {
             headers: {
@@ -335,7 +328,6 @@ useEffect(() => {
       console.error("Failed to book tour:", error);
       setMessage("Đặt tour không thành công. Vui lòng thử lại sau.");
       toast.error(error.response.data.message);
-
     }
     setLoading2(false);
   };

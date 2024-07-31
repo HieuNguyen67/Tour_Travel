@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Button, Col, Container, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { BASE_URL_CUSTOMER, BLUE_COLOR } from "@/constants";
+import { BLUE_COLOR } from "@/constants";
 import { Link, useNavigate } from "react-router-dom";
 
 const ConfirmationForm = () => {
@@ -18,7 +18,7 @@ const ConfirmationForm = () => {
     e.preventDefault();
     try {
       const response = await axios.get(
-        `${BASE_URL_CUSTOMER}/confirm/${confirmationCode}`
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/confirm/${confirmationCode}`
       );
       setMessage(response.data.message);
       toast.success("Tài khoản đã được kích hoạt thành công!");

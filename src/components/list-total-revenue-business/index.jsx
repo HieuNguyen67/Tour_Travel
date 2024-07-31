@@ -12,7 +12,7 @@ import {
   setYear,
   subYears,
 } from "date-fns";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS, BLUE_COLOR, DARKBLUE, GREEN_COLOR, RED1_COLOR } from "@/constants";
+import { BLUE_COLOR, DARKBLUE, GREEN_COLOR, RED1_COLOR } from "@/constants";
 import LoadingBackdrop from "../backdrop";
 import { useAuth } from "@/context";
 import { Col, Row } from "react-bootstrap";
@@ -56,7 +56,7 @@ const endDate = format(
       
       if(role ==2 ){
         const response = await axios.get(
-          `${BASE_URL_ADMIN}/list-total-revenue-business`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/list-total-revenue-business`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ const endDate = format(
         setRevenues(response.data.total_revenue);
       }else{
         const response = await axios.get(
-          `${BASE_URL_BUSINESS}/total-revenue-business/${businessId}`,
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/total-revenue-business/${businessId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -100,7 +100,7 @@ const endDate = format(
      try {
       if(role ==3 ){
          const response = await axios.get(
-           `${BASE_URL_BUSINESS}/total-revenue-business/${businessId}`,
+           `${process.env.REACT_APP_BASE_URL_BUSINESS}/total-revenue-business/${businessId}`,
            {
              headers: {
                Authorization: `Bearer ${token}`,

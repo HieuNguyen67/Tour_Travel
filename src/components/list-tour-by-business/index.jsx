@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS, BASE_URL_CUSTOMER, RED1_COLOR } from "@/constants";
+import { RED1_COLOR } from "@/constants";
 import { TEXT_MAIN_COLOR } from "@/constants";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
@@ -34,7 +34,7 @@ const TourListBusiness = ({ accountId, tour_category }) => {
       try {
         if (accountId) {
           const response = await axios.get(
-            `${BASE_URL_CUSTOMER}/list-tours-filter/${accountId}?tourcategory_name=${tour_category}`
+            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter/${accountId}?tourcategory_name=${tour_category}`
           );
           setTours(response.data);
         }

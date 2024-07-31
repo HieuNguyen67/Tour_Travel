@@ -16,7 +16,9 @@ import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiBankCardFill } from "react-icons/ri";
 import { GrUserAdmin } from "react-icons/gr";
-import { BASE_URL_ADMIN, BASE_URL_USER, RED1_COLOR } from "@/constants";
+import {
+  RED1_COLOR,
+} from "@/constants";
 import { RiBankFill } from "react-icons/ri";
 import CouponsList from "@/components/modal-history-coupons";
 
@@ -59,7 +61,7 @@ const Profile = () => {
       try {
         if (role == 1) {
           var response = await axios.get(
-            `${BASE_URL_USER}/account/${accountId}`,
+            `${process.env.REACT_APP_BASE_URL_USER}/account/${accountId}`,
             {
               params: { role: 1 },
               headers: {
@@ -69,7 +71,7 @@ const Profile = () => {
           );
         } else if (role == 3) {
           var response = await axios.get(
-            `${BASE_URL_USER}/account/${accountId}`,
+            `${process.env.REACT_APP_BASE_URL_USER}/account/${accountId}`,
             {
               params: { role: 3 },
               headers: {
@@ -79,7 +81,7 @@ const Profile = () => {
           );
         } else {
           var response = await axios.get(
-            `${BASE_URL_USER}/account/${accountId}`,
+            `${process.env.REACT_APP_BASE_URL_USER}/account/${accountId}`,
             {
               params: { role: 2 },
               headers: {
@@ -114,7 +116,7 @@ const Profile = () => {
       const formattedDate = formatDate(formData.birth_of_date);
       if (role == 1) {
         await axios.put(
-          `${BASE_URL_USER}/account/${accountId}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/account/${accountId}`,
           {
             ...formData,
             birth_of_date: formattedDate,
@@ -128,7 +130,7 @@ const Profile = () => {
         );
       } else if (role == 3) {
         await axios.put(
-          `${BASE_URL_USER}/account/${accountId}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/account/${accountId}`,
           {
             ...formData,
             birth_of_date: formattedDate,
@@ -142,7 +144,7 @@ const Profile = () => {
         );
       } else {
         await axios.put(
-          `${BASE_URL_USER}/account/${accountId}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/account/${accountId}`,
           {
             ...formData,
             birth_of_date: formattedDate,
@@ -157,8 +159,8 @@ const Profile = () => {
 
       toast.success("Thông tin tài khoản đã được cập nhật!");
     } catch (error) {
-       error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
-       toast.error(error.response.data.message);
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      toast.error(error.response.data.message);
     }
   };
 

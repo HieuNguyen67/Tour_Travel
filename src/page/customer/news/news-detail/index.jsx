@@ -13,7 +13,6 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { RiHome6Line } from "react-icons/ri";
 import { FaAngleRight } from "react-icons/fa";
 import LinearProgress from "@mui/material/LinearProgress";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 
 const NewsDetailCustomer = () => {
   const [news, setNews] = useState(null);
@@ -25,7 +24,7 @@ const NewsDetailCustomer = () => {
     const fetchNews = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/news-detail/${news_id}`
+          `${process.env.REACT_APP_BASE_URL_USER}/news-detail/${news_id}`
         );
         setNews(response.data);
         setCate(response.data[0]);

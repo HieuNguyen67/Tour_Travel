@@ -6,7 +6,6 @@ import {
 
 } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
-import { BASE_URL_BUSINESS } from "@/constants";
 import { Alert } from "react-bootstrap";
 import { useAuth } from "@/context";
 import chartbarimg from "@/assets/image/chartbar.png";
@@ -26,7 +25,7 @@ const MonthlyRevenueChart = ({ businessId }) => {
     try {
       if (businessId) {
         var response = await axios.get(
-          `${BASE_URL_BUSINESS}/revenue-by-month/${year}/${businessId}`,
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/revenue-by-month/${year}/${businessId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -35,7 +34,7 @@ const MonthlyRevenueChart = ({ businessId }) => {
         );
       } else {
         var response = await axios.get(
-          `${BASE_URL_BUSINESS}/revenue-by-month/${year}`,
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/revenue-by-month/${year}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

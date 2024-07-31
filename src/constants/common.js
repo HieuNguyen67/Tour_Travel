@@ -352,16 +352,9 @@ const CHECKINDAILY = [
   { id: 6, point: "1000", icon: coin, date: "Ngày 6" },
   { id: 7, point: "1000", icon: coin, date: "Ngày 7" },
 ];
-const BASE_URL_ADMIN = "http://localhost:5020/v1/api/admin";
-const BASE_URL_USER = "http://localhost:5020/v1/api/user";
-const BASE_URL_BUSINESS = "http://localhost:5020/v1/api/business";
-const BASE_URL_CUSTOMER = "http://localhost:5020/v1/api/customer";
+
 export {
   HEADER,
-  BASE_URL_ADMIN,
-  BASE_URL_USER,
-  BASE_URL_BUSINESS,
-  BASE_URL_CUSTOMER,
   ADMIN,
   ACCOUNTMANAGEMENT,
   NEWSMANAGEMENT,

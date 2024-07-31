@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { TextField, Button, Box } from "@mui/material";
 import axios from "axios";
-import { BASE_URL_CUSTOMER, BLUE_COLOR, GREEN_COLOR, RED1_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
+import {
+  BLUE_COLOR,
+  GREEN_COLOR,
+  RED1_COLOR,
+  RED_COLOR,
+  YELLOW_COLOR,
+} from "@/constants";
 import { useAuth } from "@/context";
 import LazyLoad from "react-lazyload";
 import { TbCoinFilled } from "react-icons/tb";
@@ -16,18 +22,16 @@ const ListRateTour = ({ statusRating }) => {
   const fetchOrders = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL_CUSTOMER}/list-rate-tour/${customerId}`,
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-rate-tour/${customerId}`,
         {
           params: { statusRating },
         }
       );
       setOrders(response.data);
-              setLoading(false);
-
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching orders:", error);
-              setLoading(false);
-
+      setLoading(false);
     }
   };
 
@@ -133,8 +137,7 @@ const ListRateTour = ({ statusRating }) => {
       ),
     },
   ];
-    if (loading) return <LoadingBackdrop open={loading} />;
-
+  if (loading) return <LoadingBackdrop open={loading} />;
 
   return (
     <>

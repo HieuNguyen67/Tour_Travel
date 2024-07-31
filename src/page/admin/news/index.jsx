@@ -10,7 +10,6 @@ import { BiEdit } from "react-icons/bi";
 import { GREEN_COLOR, RED_COLOR, YELLOW_COLOR } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN } from "@/constants";
 import newsimg from "@/assets/image/news.png";
 import addimg from "@/assets/image/add.png";
 import deleteimg from "@/assets/image/delete.png";
@@ -26,14 +25,17 @@ const News = () => {
     const fetchNews = async () => {
       try {
         if (role == 2 || role == 5) {
-          var response = await axios.get(`${BASE_URL_ADMIN}/list-news`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL_ADMIN}/list-news`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         } else {
           var response = await axios.get(
-            `${BASE_URL_ADMIN}/list-news/${businessId}`,
+            `${process.env.REACT_APP_BASE_URL_ADMIN}/list-news/${businessId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -61,15 +63,15 @@ const News = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    const data= {news_id: params.row.news_id};
+    const data = { news_id: params.row.news_id };
     {
       role == 2 || role == 5
-        ? navigate(`/admin/news-detail`, {state: data})
-        : navigate(`/business/news-detail`, {state: data});
+        ? navigate(`/admin/news-detail`, { state: data })
+        : navigate(`/business/news-detail`, { state: data });
     }
   };
   const handleRowClick1 = (params) => {
-    const data= {news_id: params.row.news_id}
+    const data = { news_id: params.row.news_id };
     {
       role == 2 || role == 5
         ? navigate(`/admin/edit-news`, { state: data })
@@ -94,14 +96,17 @@ const News = () => {
       await Promise.all(
         selectedRows.map(async (row) => {
           if (role == 3) {
-            await axios.delete(`${BASE_URL_ADMIN}/delete-news/${row.news_id}`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
+            await axios.delete(
+              `${process.env.REACT_APP_BASE_URL_ADMIN}/delete-news/${row.news_id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
           } else {
             await axios.delete(
-              `${BASE_URL_ADMIN}/delete-news/${row.news_id}/${adminId}`,
+              `${process.env.REACT_APP_BASE_URL_ADMIN}/delete-news/${row.news_id}/${adminId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,

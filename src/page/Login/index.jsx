@@ -13,7 +13,9 @@ import {
 } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import Header from "@/components/layout/header";
-import { BASE_URL_ADMIN, BASE_URL_USER, RED1_COLOR } from "@/constants";
+import {
+  RED1_COLOR,
+} from "@/constants";
 import { useAuth } from "@/context";
 import {
   FormControl,
@@ -43,7 +45,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL_USER}/login`, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL_USER}/login`, {
         usernameOrEmail,
         password,
       });
@@ -79,36 +81,35 @@ const Login = () => {
     }
   };
 
-    const handleLoginSuccess = async (credential) => {
-      try {
-        const response = await axios.post(`${BASE_URL_USER}/auth/google`, {
-          tokenId: credential,
-        });
-         const {
-           token,
-           role,
-           account_id,
-           username,
-           business_id,
-           customer_id,
-           admin_id,
-         } = response.data;
-        login(
-          token,
-          role,
-          username,
-          account_id,
-          business_id,
-          customer_id,
-          admin_id
-        );
-        toast.success("Đăng nhập thành công !");
-        if (role === 1) navigate("/");
-
-      } catch (error) {
-        console.error("Error during login:", error);
-      }
-    };
+  const handleLoginSuccess = async (credential) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL_USER}/auth/google`, {
+        tokenId: credential,
+      });
+      const {
+        token,
+        role,
+        account_id,
+        username,
+        business_id,
+        customer_id,
+        admin_id,
+      } = response.data;
+      login(
+        token,
+        role,
+        username,
+        account_id,
+        business_id,
+        customer_id,
+        admin_id
+      );
+      toast.success("Đăng nhập thành công !");
+      if (role === 1) navigate("/");
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
 
   useEffect(() => {
     if (isLoggedIn) {

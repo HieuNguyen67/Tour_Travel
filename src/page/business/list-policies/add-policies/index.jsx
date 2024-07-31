@@ -3,7 +3,6 @@ import axios from "axios";
 import { useAuth } from "@/context";
 import { toast } from "react-toastify";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS } from "@/constants";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button, Form } from "react-bootstrap";
@@ -30,7 +29,7 @@ const AddPolicyForm = () => {
       if (!isHomePage) {
         try {
           const response = await axios.get(
-            `${BASE_URL_BUSINESS}/policies/${policy_id}`,
+            `${process.env.REACT_APP_BASE_URL_BUSINESS}/policies/${policy_id}`,
             { params: { role: 3 } }
           );
           setPolicytype(response.data.policytype);
@@ -49,7 +48,7 @@ const AddPolicyForm = () => {
     if (isHomePage) {
       try {
         const response = await axios.post(
-          `${BASE_URL_BUSINESS}/add-policies/${businessId}`,
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/add-policies/${businessId}`,
           {
             policytype,
             description,
@@ -71,7 +70,7 @@ const AddPolicyForm = () => {
     } else {
       try {
         await axios.put(
-          `${BASE_URL_BUSINESS}/policies/${policy_id}`,
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/policies/${policy_id}`,
           {
             policytype,
             description,

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { Card, Col, Placeholder, Row } from "react-bootstrap";
 import { format } from "date-fns";
@@ -20,7 +19,7 @@ const ListNewsHome = () => {
     const fetchTours = async () => {
       try {
         var response = await axios.get(
-          `${BASE_URL_USER}/list-news-travel/Tin tức du lịch`
+          `${process.env.REACT_APP_BASE_URL_USER}/list-news-travel/Tin tức du lịch`
         );
 
         setNews(response.data);

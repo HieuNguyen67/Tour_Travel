@@ -9,7 +9,7 @@ import { FaSave } from "react-icons/fa";
 import LoadImage from "./load-image";
 import { IoArrowBackOutline } from "react-icons/io5";
 import LoadingBackdrop from "@/components/backdrop";
-import { BASE_URL_USER, BLUE_COLOR, RED_COLOR } from "@/constants";
+import {  BLUE_COLOR, RED_COLOR } from "@/constants";
 import { MdAccountBox } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -19,14 +19,13 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RxUpdate } from "react-icons/rx";
 import { RiBankCardFill } from "react-icons/ri";
 import { FaAddressCard } from "react-icons/fa6";
-import { BASE_URL_ADMIN } from "@/constants";
 
 const EditProfile = () => {
-  const {  role_id } = useParams();
+  const { role_id } = useParams();
   const { isLoggedIn, token, accountId, adminId } = useAuth();
   const [loading, setLoading] = useState(true);
-  const location= useLocation();
-  const {account_id}= location.state || {};
+  const location = useLocation();
+  const { account_id } = location.state || {};
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -43,15 +42,18 @@ const EditProfile = () => {
     const fetchAccountData = async () => {
       try {
         if (role_id == 1) {
-          var response = await axios.get(`${BASE_URL_USER}/account/${account_id}`, {
-            params: { role: 1 },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL_USER}/account/${account_id}`,
+            {
+              params: { role: 1 },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         } else if (role_id == 3) {
           var response = await axios.get(
-            `${BASE_URL_USER}/account/${account_id}`,
+            `${process.env.REACT_APP_BASE_URL_USER}/account/${account_id}`,
             {
               params: { role: 3 },
               headers: {
@@ -61,7 +63,7 @@ const EditProfile = () => {
           );
         } else {
           var response = await axios.get(
-            `${BASE_URL_USER}/account/${account_id}?role=2`,
+            `${process.env.REACT_APP_BASE_URL_USER}/account/${account_id}?role=2`,
             {
               params: { role: 2 },
               headers: {
@@ -92,7 +94,7 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `${BASE_URL_ADMIN}/update-status-accounts/${account_id}/${adminId}`,
+        `${process.env.REACT_APP_BASE_URL_ADMIN}/update-status-accounts/${account_id}/${adminId}`,
         {
           ...formData,
         },
@@ -113,9 +115,7 @@ const EditProfile = () => {
       }
     } catch (error) {
       console.error("Failed to update account data:", error);
-      toast.error(
-       error.response.data.message
-      );
+      toast.error(error.response.data.message);
     }
   };
 
@@ -131,13 +131,17 @@ const EditProfile = () => {
           <Link to="/admin/list-business">
             <IoArrowBackOutline className="fs-3 mb-3" />
           </Link>
-        ) :role_id == 1 ?  (
+        ) : role_id == 1 ? (
           <Link to="/admin/list-customer">
             <IoArrowBackOutline className="fs-3 mb-3" />
           </Link>
-        ):(<><Link to="/admin/list-admin">
-            <IoArrowBackOutline className="fs-3 mb-3" />
-          </Link></>)}
+        ) : (
+          <>
+            <Link to="/admin/list-admin">
+              <IoArrowBackOutline className="fs-3 mb-3" />
+            </Link>
+          </>
+        )}
 
         {role_id == 3 ? (
           <>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS } from "@/constants";
 import { toast } from "react-toastify";
 import { Button, Container, Form } from "react-bootstrap";
 import { FaSave } from "react-icons/fa";
@@ -26,7 +25,7 @@ const ContactDetail = () => {
       try {
         if (role == 2) {
           var response = await axios.get(
-            `${BASE_URL_ADMIN}/contacts-detail/${contact_id}`,
+            `${process.env.REACT_APP_BASE_URL_ADMIN}/contacts-detail/${contact_id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -35,7 +34,7 @@ const ContactDetail = () => {
           );
         } else {
           var response = await axios.get(
-            `${BASE_URL_BUSINESS}/contacts-detail-business/${contact_id}`,
+            `${process.env.REACT_APP_BASE_URL_BUSINESS}/contacts-detail-business/${contact_id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -62,7 +61,7 @@ const ContactDetail = () => {
     try {
       if (role == 2) {
         await axios.put(
-          `${BASE_URL_ADMIN}/update-status-contact/${contact_id}/${adminId}`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/update-status-contact/${contact_id}/${adminId}`,
           {
             status,
           },
@@ -78,7 +77,7 @@ const ContactDetail = () => {
         window.location.reload();
       } else {
         await axios.put(
-          `${BASE_URL_BUSINESS}/update-status-contact-business/${contact_id}`,
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/update-status-contact-business/${contact_id}`,
           {
             status,
           },

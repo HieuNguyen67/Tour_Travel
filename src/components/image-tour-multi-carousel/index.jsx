@@ -3,7 +3,6 @@ import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "@/page/customer/tour-detail/tour-detail.scss";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import LazyLoad from "react-lazyload";
 
 const TourImagesCarousel = ({ tourId }) => {
@@ -16,7 +15,7 @@ const TourImagesCarousel = ({ tourId }) => {
       try {
         if (tourId) {
           const response = await axios.get(
-            `${BASE_URL_USER}/get-all-tour-images/${tourId}`
+            `${process.env.REACT_APP_BASE_URL_USER}/get-all-tour-images/${tourId}`
           );
           setImages(response.data);
         }

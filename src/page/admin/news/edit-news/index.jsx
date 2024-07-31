@@ -10,11 +10,10 @@ import { FaSave } from "react-icons/fa";
 import { Backdrop, CircularProgress } from "@mui/material";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN } from "@/constants";
 
 const UpdateNews = () => {
   const location = useLocation();
-  const {news_id}= location.state || {};
+  const { news_id } = location.state || {};
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
@@ -25,7 +24,7 @@ const UpdateNews = () => {
     const fetchNewsDetails = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_ADMIN}/select-status-note/${news_id}`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/select-status-note/${news_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -50,7 +49,7 @@ const UpdateNews = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `${BASE_URL_ADMIN}/update-news/${news_id}`,
+        `${process.env.REACT_APP_BASE_URL_ADMIN}/update-news/${news_id}`,
         {
           title,
           content,

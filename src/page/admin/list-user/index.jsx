@@ -7,7 +7,6 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { BLUE_COLOR, GREEN_COLOR, RED_COLOR } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN } from "@/constants";
 import userimg from "@/assets/image/profile1.png";
 import businessimg from "@/assets/image/business1.png";
 import adminimg from "@/assets/image/admin.png";
@@ -31,7 +30,7 @@ const ListUser = () => {
       try {
         if (isHomePage) {
           var response = await axios.get(
-            `${BASE_URL_ADMIN}/get-users?role_id=1`,
+            `${process.env.REACT_APP_BASE_URL_ADMIN}/get-users?role_id=1`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -40,7 +39,7 @@ const ListUser = () => {
           );
         } else if (isHomePage1) {
           var response = await axios.get(
-            `${BASE_URL_ADMIN}/get-users?role_id=3`,
+            `${process.env.REACT_APP_BASE_URL_ADMIN}/get-users?role_id=3`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -48,11 +47,14 @@ const ListUser = () => {
             }
           );
         } else {
-          var response = await axios.get(`${BASE_URL_ADMIN}/get-admins`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          var response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL_ADMIN}/get-admins`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         }
 
         setUsers(response.data);
@@ -82,7 +84,7 @@ const ListUser = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-        const data = { account_id: params.row.account_id };
+    const data = { account_id: params.row.account_id };
 
     navigate(`/admin/edit-profile/${params.row.role_id}`, { state: data });
   };

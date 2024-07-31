@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS } from "@/constants";
 import { GREEN_COLOR, YELLOW_COLOR } from "@/constants";
 import { Button, Container } from "react-bootstrap";
 import { format } from "date-fns";
@@ -22,14 +21,14 @@ const ContactList = () => {
     const fetchContacts = async () => {
       try {
         if (isHomePage) {
-          var response = await axios.get(`${BASE_URL_ADMIN}/get-contacts`, {
+          var response = await axios.get(`${process.env.REACT_APP_BASE_URL_ADMIN}/get-contacts`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
         } else {
           var response = await axios.get(
-            `${BASE_URL_BUSINESS}/get-contacts-business/${businessId}`,
+            `${process.env.REACT_APP_BASE_URL_BUSINESS}/get-contacts-business/${businessId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

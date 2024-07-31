@@ -1,4 +1,4 @@
-import { BASE_URL_BUSINESS, RED1_COLOR } from "@/constants";
+import {  RED1_COLOR } from "@/constants";
 import { useAuth } from "@/context";
 import {
   FormControl,
@@ -27,7 +27,7 @@ const ChangeOrderTour = ({ tourId, order_id }) => {
       try {
         if(businessId){  
           const response = await axios.get(
-          `${BASE_URL_BUSINESS}/list-tours/${businessId}/Active`
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-tours/${businessId}/Active`
         );
         setTours(response.data);
         setLoading(false);
@@ -46,7 +46,7 @@ const ChangeOrderTour = ({ tourId, order_id }) => {
     setLoading2(true);
     try {
       await axios.put(
-        `${BASE_URL_BUSINESS}/change-order-tour/${order_id}`,
+        `${process.env.REACT_APP_BASE_URL_BUSINESS}/change-order-tour/${order_id}`,
         {
           tourCode,
         },

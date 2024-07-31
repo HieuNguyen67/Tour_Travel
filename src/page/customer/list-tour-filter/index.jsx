@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, BASE_URL_USER, TEXT_RED_COLOR } from "@/constants";
+import {
+  TEXT_RED_COLOR,
+} from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
@@ -25,7 +27,7 @@ const useQuery = () => {
 const TourSearch = () => {
   const query = useQuery();
   const initialDestinationLocation = query.get("destinationLocation") || "";
-    const initialDepartureLocation = query.get("departureLocation") || "";
+  const initialDepartureLocation = query.get("departureLocation") || "";
   const initialTourName = query.get("tourName") || "";
   const [departureLocation, setDepartureLocation] = useState(
     initialDepartureLocation
@@ -42,13 +44,13 @@ const TourSearch = () => {
   const [start_date, setStartdate] = useState("");
   const [tours, setTours] = useState([]);
   const [filteredTours, setFilteredTours] = useState([]);
-    const [filteredSuggestTours, setFilteredSuggestTours] = useState([]);
+  const [filteredSuggestTours, setFilteredSuggestTours] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [loading1, setLoading1] = useState(true);
   const [regions, setRegions] = useState([]);
   const [provinces, setProvinces] = useState([]);
-  const [message, setMessage]= useState("");
+  const [message, setMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
@@ -59,11 +61,11 @@ const TourSearch = () => {
       try {
         if (location == 1) {
           var response = await axios.get(
-            `${BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=Du lịch trong nước`
+            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=Du lịch trong nước`
           );
         } else {
           var response = await axios.get(
-            `${BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=Du lịch nước ngoài`
+            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=Du lịch nước ngoài`
           );
         }
         setLoading1(false);
@@ -86,13 +88,13 @@ const TourSearch = () => {
     };
 
     fetchTours();
-  }, [initialDestinationLocation,initialDepartureLocation, initialTourName]);
+  }, [initialDestinationLocation, initialDepartureLocation, initialTourName]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/locations?location_type=nội địa`
+          `${process.env.REACT_APP_BASE_URL_USER}/locations?location_type=nội địa`
         );
         setProvinces(response.data);
         setLoading(false);
@@ -109,7 +111,7 @@ const TourSearch = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/locations?location_type=nước ngoài`
+          `${process.env.REACT_APP_BASE_URL_USER}/locations?location_type=nước ngoài`
         );
         setRegions(response.data);
         setLoading(false);
@@ -126,7 +128,12 @@ const TourSearch = () => {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   };
 
-  const filterTours = (tours, destinationLocation,departureLocation, tourName) => {
+  const filterTours = (
+    tours,
+    destinationLocation,
+    departureLocation,
+    tourName
+  ) => {
     const filtered = tours.filter((tour) => {
       return (
         (departureLocation
@@ -145,59 +152,20 @@ const TourSearch = () => {
     setFilteredTours(filtered);
   };
 
-  
-const handleSearch = () => {
-  setTourName("");
-   setMessage("");
-  const filtered = tours.filter((tour) => {
-    const meetsMinPriceCriteria =
-      !minAdultPrice || tour.adult_price >= parseFloat(minAdultPrice);
-    const meetsMaxPriceCriteria =
-      !maxAdultPrice || tour.adult_price <= parseFloat(maxAdultPrice);
-    const matchesDepartureLocation = departureLocation
-      ? tour.location_departure_id === parseInt(departureLocation)
-      : true;
-    const matchesDestinationLocation = destinationLocation
-      ? tour.destination_locations.includes(parseInt(destinationLocation))
-      : true;
-    const matchesHotel = hotel ? tour.hotel === parseInt(hotel) : true;
-    const matchesVehicle = vehicle ? tour.vehicle.includes(vehicle) : true;
-    const matchesStartDate = start_date
-      ? new Date(tour.start_date) >= new Date(start_date)
-      : true;
-
-    return (
-      matchesDepartureLocation &&
-      matchesDestinationLocation &&
-      meetsMinPriceCriteria &&
-      meetsMaxPriceCriteria &&
-      matchesHotel &&
-      matchesVehicle &&
-      matchesStartDate
-    );
-  });
-
-  if (filtered.length === 0) {
-    setMessage(
-      <>
-        <p
-          style={{ background: "#f2dede", color: TEXT_RED_COLOR }}
-          className="text-center py-5 fw-bold shadow-sm"
-        >
-          Không tìm thấy du lịch{" "}
-          <span className="fs-5">{destinationLocationName}</span> khởi hành từ{" "}
-          <span className="fs-5">{departureLocationName}</span> mà bạn yêu cầu!
-        </p>
-        <hr />
-        <p className="fw-bold fs-3">GỢI Ý TOUR LIÊN QUAN</p>
-      </>
-    );
-    
-    const related = tours.filter((tour) => {
-          const meetsMinPriceCriteria =
-            !minAdultPrice || tour.adult_price >= parseFloat(minAdultPrice);
-          const meetsMaxPriceCriteria =
-            !maxAdultPrice || tour.adult_price <= parseFloat(maxAdultPrice);
+  const handleSearch = () => {
+    setTourName("");
+    setMessage("");
+    const filtered = tours.filter((tour) => {
+      const meetsMinPriceCriteria =
+        !minAdultPrice || tour.adult_price >= parseFloat(minAdultPrice);
+      const meetsMaxPriceCriteria =
+        !maxAdultPrice || tour.adult_price <= parseFloat(maxAdultPrice);
+      const matchesDepartureLocation = departureLocation
+        ? tour.location_departure_id === parseInt(departureLocation)
+        : true;
+      const matchesDestinationLocation = destinationLocation
+        ? tour.destination_locations.includes(parseInt(destinationLocation))
+        : true;
       const matchesHotel = hotel ? tour.hotel === parseInt(hotel) : true;
       const matchesVehicle = vehicle ? tour.vehicle.includes(vehicle) : true;
       const matchesStartDate = start_date
@@ -205,12 +173,8 @@ const handleSearch = () => {
         : true;
 
       return (
-        (departureLocation
-          ? tour.destination_locations.includes(parseInt(departureLocation))
-          : true) &&
-        (destinationLocation
-          ? tour.destination_locations.includes(parseInt(destinationLocation))
-          : true) &&
+        matchesDepartureLocation &&
+        matchesDestinationLocation &&
         meetsMinPriceCriteria &&
         meetsMaxPriceCriteria &&
         matchesHotel &&
@@ -218,17 +182,60 @@ const handleSearch = () => {
         matchesStartDate
       );
     });
-    setFilteredTours(related);
-  } else {
-    setFilteredTours(filtered);
-  }
 
-  setCurrentPage(1);
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-};
+    if (filtered.length === 0) {
+      setMessage(
+        <>
+          <p
+            style={{ background: "#f2dede", color: TEXT_RED_COLOR }}
+            className="text-center py-5 fw-bold shadow-sm"
+          >
+            Không tìm thấy du lịch{" "}
+            <span className="fs-5">{destinationLocationName}</span> khởi hành từ{" "}
+            <span className="fs-5">{departureLocationName}</span> mà bạn yêu
+            cầu!
+          </p>
+          <hr />
+          <p className="fw-bold fs-3">GỢI Ý TOUR LIÊN QUAN</p>
+        </>
+      );
+
+      const related = tours.filter((tour) => {
+        const meetsMinPriceCriteria =
+          !minAdultPrice || tour.adult_price >= parseFloat(minAdultPrice);
+        const meetsMaxPriceCriteria =
+          !maxAdultPrice || tour.adult_price <= parseFloat(maxAdultPrice);
+        const matchesHotel = hotel ? tour.hotel === parseInt(hotel) : true;
+        const matchesVehicle = vehicle ? tour.vehicle.includes(vehicle) : true;
+        const matchesStartDate = start_date
+          ? new Date(tour.start_date) >= new Date(start_date)
+          : true;
+
+        return (
+          (departureLocation
+            ? tour.destination_locations.includes(parseInt(departureLocation))
+            : true) &&
+          (destinationLocation
+            ? tour.destination_locations.includes(parseInt(destinationLocation))
+            : true) &&
+          meetsMinPriceCriteria &&
+          meetsMaxPriceCriteria &&
+          matchesHotel &&
+          matchesVehicle &&
+          matchesStartDate
+        );
+      });
+      setFilteredTours(related);
+    } else {
+      setFilteredTours(filtered);
+    }
+
+    setCurrentPage(1);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const handlePageClick = (event, value) => {
     setCurrentPage(value);
     window.scrollTo({
@@ -269,9 +276,12 @@ const handleSearch = () => {
     location == 1
       ? getLocationNameById(destinationLocation, provinces)
       : getLocationNameById(destinationLocation, regions);
-      
-  const departureLocationName =getLocationNameById(departureLocation, provinces);
-      
+
+  const departureLocationName = getLocationNameById(
+    departureLocation,
+    provinces
+  );
+
   if (loading1) {
     return <LoadingBackdrop open={loading1} />;
   }
@@ -622,7 +632,6 @@ const handleSearch = () => {
               )}
             </div>
           </Col>
-        
         </Row>
       </Container>
     </>

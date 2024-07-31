@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER } from "@/constants";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { MdReportProblem } from "react-icons/md";
@@ -33,7 +32,7 @@ const ReportTour = ({ tourId, accountId }) => {
     try {
       if (accountId) {
         const response = await axios.post(
-          `${BASE_URL_CUSTOMER}/report-tour/${tourId}/${accountId}`,
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/report-tour/${tourId}/${accountId}`,
           {
             type_report: typeReport,
             description,

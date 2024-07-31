@@ -12,7 +12,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
-import { BASE_URL_ADMIN, BASE_URL_USER, BORDER, RED_COLOR } from "@/constants";
+import {
+  BORDER,
+  RED_COLOR,
+} from "@/constants";
 import axios from "axios";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import searchimg from "@/assets/image/search.png";
@@ -22,7 +25,7 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 const TabSearch = () => {
   const [destinationLocation, setDestinationLocation] = useState("");
-   const [departurenLocation, setDepartureLocation] = useState("");
+  const [departurenLocation, setDepartureLocation] = useState("");
   const [tourName, setTourName] = useState("");
   const [loading, setLoading] = useState(true);
   const [regions, setRegions] = useState([]);
@@ -33,7 +36,7 @@ const TabSearch = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/locations?location_type=nội địa`
+          `${process.env.REACT_APP_BASE_URL_USER}/locations?location_type=nội địa`
         );
         setProvinces(response.data);
         setLoading(false);
@@ -50,7 +53,7 @@ const TabSearch = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/locations?location_type=nước ngoài`
+          `${process.env.REACT_APP_BASE_URL_USER}/locations?location_type=nước ngoài`
         );
         setRegions(response.data);
         setLoading(false);
@@ -65,7 +68,9 @@ const TabSearch = () => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    navigate(`/list-tour-vietnam/1?destinationLocation=${destinationLocation}&departureLocation=${departurenLocation}`);
+    navigate(
+      `/list-tour-vietnam/1?destinationLocation=${destinationLocation}&departureLocation=${departurenLocation}`
+    );
   };
   const handleSearch1 = () => {
     navigate(`/list-tour-vietnam/1?tourName=${tourName}`);

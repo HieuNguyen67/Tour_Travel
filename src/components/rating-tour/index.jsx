@@ -9,7 +9,6 @@ import {
   Rating,
   Pagination,
 } from "@mui/material";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import { format } from "date-fns";
 import { TEXT_RED_COLOR } from "@/constants";
 import { Col } from "react-bootstrap";
@@ -28,7 +27,7 @@ const TourReviews = ({ tour_code }) => {
       try {
         if (tour_code) {
           const response = await axios.get(
-            `${BASE_URL_USER}/get-ratings-tour/${tour_code}`
+            `${process.env.REACT_APP_BASE_URL_USER}/get-ratings-tour/${tour_code}`
           );
           setReviews(response.data.reviews);
           setAverageRating(response.data.averageRating);

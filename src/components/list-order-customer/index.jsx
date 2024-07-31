@@ -4,9 +4,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { format } from "date-fns";
 import { Alert,  } from "@mui/material";
 import {
-  BASE_URL_ADMIN,
-  BASE_URL_BUSINESS,
-  BASE_URL_CUSTOMER,
   BLUE_COLOR,
   GREEN1_COLOR,
   GREEN_COLOR,
@@ -32,7 +29,7 @@ const OrdersList = ({ customerId, status }) => {
         if (role == 1) {
           if (status) {
             var response = await axios.get(
-              `${BASE_URL_CUSTOMER}/list-orders-customer/${customerId}/${status}`,
+              `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-orders-customer/${customerId}/${status}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -41,7 +38,7 @@ const OrdersList = ({ customerId, status }) => {
             );
           } else {
             var response = await axios.get(
-              `${BASE_URL_CUSTOMER}/list-orders-customer/${customerId}`,
+              `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-orders-customer/${customerId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -52,7 +49,7 @@ const OrdersList = ({ customerId, status }) => {
         } else {
           if (status) {
             var response = await axios.get(
-              `${BASE_URL_BUSINESS}/list-orders-business/${customerId}/${status}`,
+              `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-orders-business/${customerId}/${status}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -61,7 +58,7 @@ const OrdersList = ({ customerId, status }) => {
             );
           } else {
             var response = await axios.get(
-              `${BASE_URL_BUSINESS}/list-orders-business/${customerId}`,
+              `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-orders-business/${customerId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,

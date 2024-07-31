@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
 import axios from "axios";
-import { TextField, Button } from "@mui/material";
-import { BASE_URL_BUSINESS } from "@/constants";
 import chartpieimg from "@/assets/image/chartpie.png";
 
 const OrderStatusRatio=({businessId})=> {
@@ -10,7 +8,7 @@ const OrderStatusRatio=({businessId})=> {
 
   const fetchOrderStatusRatio = async () => {
     try {
-      const response = await axios.get(`${BASE_URL_BUSINESS}/order-status-ratio/${businessId}`);
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL_BUSINESS}/order-status-ratio/${businessId}`);
       setData(response.data);
     } catch (error) {
       console.error("Lỗi khi lấy dữ liệu tỷ lệ trạng thái đơn hàng:", error);

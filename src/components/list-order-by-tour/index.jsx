@@ -4,7 +4,6 @@ import axios from "axios";
 import {   Alert } from "@mui/material";
 import LoadingBackdrop from "../backdrop";
 import {
-  BASE_URL_BUSINESS,
   BLUE_COLOR,
   GREEN_COLOR,
   RED1_COLOR,
@@ -26,7 +25,7 @@ const ListOrdersByTour = ({tourId}) => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_BUSINESS}/list-orders-by-tour/${tourId}`
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-orders-by-tour/${tourId}`
         );
         setOrders(response.data);
          setTour(response.data[0].tour_name);

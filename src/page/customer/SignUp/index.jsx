@@ -16,7 +16,9 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 import { TiLocation } from "react-icons/ti";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER, RED1_COLOR } from "@/constants";
+import {
+  RED1_COLOR,
+} from "@/constants";
 import registerimg from "@/assets/image/register.png";
 
 const SignUp = () => {
@@ -34,7 +36,7 @@ const SignUp = () => {
   const { isLoggedIn } = useAuth();
 
   const [error, setError] = useState("");
-  
+
   const validateUsername = (username) => {
     return username.length >= 3;
   };
@@ -59,37 +61,36 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     const isUsernameValid = validateUsername(formData.username);
-     const isPasswordValid = validatePassword(formData.password);
-     const isEmailValid = validateEmail(formData.email);
-     const isPhoneNumberValid = validatePhoneNumber(formData.phone_number);
+    const isUsernameValid = validateUsername(formData.username);
+    const isPasswordValid = validatePassword(formData.password);
+    const isEmailValid = validateEmail(formData.email);
+    const isPhoneNumberValid = validatePhoneNumber(formData.phone_number);
 
-     if (
-       !isUsernameValid ||
-       !isPasswordValid ||
-       !isEmailValid ||
-       !isPhoneNumberValid
-     ) {
-       let errorMessage = "";
-       if (!isUsernameValid)
-         errorMessage += "Tên đăng nhập phải có ít nhất 3 ký tự.\n";
-       if (!isPasswordValid)
-         errorMessage += "Mật khẩu phải có ít nhất 6 ký tự.\n";
-       if (!isEmailValid) errorMessage += "Địa chỉ email không hợp lệ.\n";
-       if (!isPhoneNumberValid)
-         errorMessage += "Số điện thoại phải gồm chính xác 10 chữ số.\n";
+    if (
+      !isUsernameValid ||
+      !isPasswordValid ||
+      !isEmailValid ||
+      !isPhoneNumberValid
+    ) {
+      let errorMessage = "";
+      if (!isUsernameValid)
+        errorMessage += "Tên đăng nhập phải có ít nhất 3 ký tự.\n";
+      if (!isPasswordValid)
+        errorMessage += "Mật khẩu phải có ít nhất 6 ký tự.\n";
+      if (!isEmailValid) errorMessage += "Địa chỉ email không hợp lệ.\n";
+      if (!isPhoneNumberValid)
+        errorMessage += "Số điện thoại phải gồm chính xác 10 chữ số.\n";
 
-       alert(errorMessage);
-       return;
-     }
+      alert(errorMessage);
+      return;
+    }
     try {
-      await axios.post(`${BASE_URL_CUSTOMER}/register`, formData);
+      await axios.post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/register`, formData);
       toast.success("Đăng ký thành công !");
       navigate("/confirm");
     } catch (error) {
-          error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
-  toast.error(error.response.data.message);
-     
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      toast.error(error.response.data.message);
     }
   };
   useEffect(() => {

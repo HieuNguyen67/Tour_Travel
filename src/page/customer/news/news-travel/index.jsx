@@ -10,10 +10,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import LoadingBackdrop from "@/components/backdrop";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 import newsimg from "@/assets/image/news.png";
 import LazyLoad from "react-lazyload";
-
 
 const truncateString = (str, maxLength) => {
   if (str.length <= maxLength) {
@@ -48,11 +46,11 @@ const NewsTravel = () => {
       var response;
       if (isHomePage) {
         response = await axios.get(
-          `${BASE_URL_USER}/list-news-travel/${news_travel}`
+          `${process.env.REACT_APP_BASE_URL_USER}/list-news-travel/${news_travel}`
         );
       } else {
         response = await axios.get(
-          `${BASE_URL_USER}/list-news-travel/${travel_guide}`
+          `${process.env.REACT_APP_BASE_URL_USER}/list-news-travel/${travel_guide}`
         );
       }
       setNews(response.data);

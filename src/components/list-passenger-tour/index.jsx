@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { TextField, Button, Alert } from "@mui/material";
-import { BASE_URL_BUSINESS, BLUE_COLOR, GREEN_COLOR } from "@/constants";
+import {  BLUE_COLOR, GREEN_COLOR } from "@/constants";
 import { useAuth } from "@/context";
 import LoadingBackdrop from "../backdrop";
 import { format } from "date-fns";
@@ -19,7 +19,7 @@ const PassengersListTour =({tourId})=> {
   const fetchPassengersByTour = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL_BUSINESS}/list-passengers-tour/${tourId}`,
+        `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-passengers-tour/${tourId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS, BASE_URL_USER, DARKBLUE, GREY_COLOR, RED1_COLOR } from "@/constants";
+import {  DARKBLUE, GREY_COLOR, RED1_COLOR } from "@/constants";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -68,7 +68,7 @@ const AddTourForm = () => {
   useEffect(() => {
     const fetchTourCategories = async () => {
       try {
-        const response = await axios.get(`${BASE_URL_BUSINESS}/tourcategories`);
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL_BUSINESS}/tourcategories`);
         setTourCategories(response.data);
       } catch (error) {
         console.error("Error fetching tour categories:", error);
@@ -82,7 +82,7 @@ const AddTourForm = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/locations?location_type=nội địa`
+          `${process.env.REACT_APP_BASE_URL_USER}/locations?location_type=nội địa`
         );
         setProvinces(response.data);
         setLoading(false);
@@ -98,7 +98,7 @@ const AddTourForm = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/locations?location_type=nước ngoài`
+          `${process.env.REACT_APP_BASE_URL_USER}/locations?location_type=nước ngoài`
         );
         setRegions(response.data);
         setLoading(false);
@@ -116,7 +116,7 @@ const AddTourForm = () => {
       try {
         if (add_tour != 1) {
           const response = await axios.get(
-            `${BASE_URL_USER}/get-tour/${tour_id}`
+            `${process.env.REACT_APP_BASE_URL_USER}/get-tour/${tour_id}`
           );
           const tour = response.data;
           setFormData({
@@ -211,7 +211,7 @@ const AddTourForm = () => {
     }
 
     try {
-      await axios.post(`${BASE_URL_BUSINESS}/add-tours/${businessId}`, formData1, {
+      await axios.post(`${process.env.REACT_APP_BASE_URL_BUSINESS}/add-tours/${businessId}`, formData1, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -243,7 +243,7 @@ const AddTourForm = () => {
 
     try {
       const response = await axios.put(
-        `${BASE_URL_BUSINESS}/update-tour/${formData.tour_id}`,
+        `${process.env.REACT_APP_BASE_URL_BUSINESS}/update-tour/${formData.tour_id}`,
         formData,
         {
           headers: {
@@ -269,7 +269,7 @@ const AddTourForm = () => {
 
     try {
       const response = await axios.put(
-        `${BASE_URL_BUSINESS}/update-tour-images/${tour_id}`,
+        `${process.env.REACT_APP_BASE_URL_BUSINESS}/update-tour-images/${tour_id}`,
         data,
         {
           headers: {
@@ -297,7 +297,7 @@ const AddTourForm = () => {
       try {
         if (add_tour != 1) {
           const response = await axios.get(
-            `${BASE_URL_USER}/get-all-tour-images/${tour_id}`
+            `${process.env.REACT_APP_BASE_URL_USER}/get-all-tour-images/${tour_id}`
           );
           setImage(response.data);
           setLoading(false);

@@ -3,7 +3,6 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { format } from "date-fns";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import logfileimg from "@/assets/image/logfile.png";
 import LazyLoad from "react-lazyload";
@@ -17,7 +16,7 @@ const AdminActionsList = () => {
     const fetchAdminActions = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_ADMIN}/list-admin-actions`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/list-admin-actions`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

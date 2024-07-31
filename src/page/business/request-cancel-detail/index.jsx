@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
-import { BASE_URL_BUSINESS, BASE_URL_USER, BLUE_COLOR, GREEN_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
+import {BLUE_COLOR, GREEN_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
 import { useAuth } from "@/context";
 import { MdCancel } from "react-icons/md";
 import { format } from "date-fns";
@@ -20,7 +20,7 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
     const fetchRequestDetail = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/detail-cancellation-request/${requestId}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/detail-cancellation-request/${requestId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ const CancellationRequestDetail = ({ requestId, show, handleClose }) => {
   const handleUpdate = async () => {
     try {
      const response = await axios.post(
-       `${BASE_URL_BUSINESS}/update-cancellation-status/${requestId}`,
+       `${process.env.REACT_APP_BASE_URL_BUSINESS}/update-cancellation-status/${requestId}`,
        {
          status,
        },

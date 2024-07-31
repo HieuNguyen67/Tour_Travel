@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS, TEXT_RED_COLOR } from "@/constants";
+import { TEXT_RED_COLOR } from "@/constants";
 import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import Accordion from "@mui/material/Accordion";
@@ -20,7 +20,7 @@ const PolicesTour = ({ businessId , category}) => {
       try {
         if (businessId) {
           const response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-policies/${businessId}`
+            `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-policies/${businessId}`
           );
           setPolicies(response.data);
         }
@@ -42,7 +42,7 @@ const PolicesTour = ({ businessId , category}) => {
               var type = "Nước ngoài";
             }
           const response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}?type=${type}`
+            `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}?type=${type}`
           );
           setPolicyCancellation(response.data);
         }

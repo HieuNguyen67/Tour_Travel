@@ -15,12 +15,11 @@ import LoadingBackdrop from "@/components/backdrop";
 import { useAuth } from "@/context";
 import { RxUpdate } from "react-icons/rx";
 import { PiNotePencilFill } from "react-icons/pi";
-import { BASE_URL_USER, BLUE_COLOR } from "@/constants";
-import { BASE_URL_ADMIN } from "@/constants";
+import { BLUE_COLOR } from "@/constants";
 import LazyLoad from "react-lazyload";
 const NewsDetail = () => {
-  const location= useLocation();
-  const {news_id} = location.state || {};
+  const location = useLocation();
+  const { news_id } = location.state || {};
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -32,7 +31,7 @@ const NewsDetail = () => {
     const fetchNews = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/news-detail/${news_id}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/news-detail/${news_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -55,7 +54,7 @@ const NewsDetail = () => {
     const fetchNewsDetails = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_ADMIN}/select-status-note/${news_id}`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/select-status-note/${news_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -80,7 +79,7 @@ const NewsDetail = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `${BASE_URL_ADMIN}/update-status-news/${news_id}/${adminId}`,
+        `${process.env.REACT_APP_BASE_URL_ADMIN}/update-status-news/${news_id}/${adminId}`,
         {
           status,
           note,

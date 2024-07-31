@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { TextField, Button, Typography, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { useAuth } from "@/context";
 import {
   subMonths,
@@ -11,7 +19,7 @@ import {
   format,
 } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
-import { BASE_URL_ADMIN, DARKBLUE } from "@/constants";
+import {  DARKBLUE } from "@/constants";
 import { Col, Form, Row } from "react-bootstrap";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import revenueimg from "@/assets/image/revenue.png";
@@ -24,8 +32,8 @@ const RevenueAll = () => {
   const [error, setError] = useState(null);
   const [dateRange, setDateRange] = useState("thisMonth");
   const today = formatInTimeZone(new Date(), timeZone, "yyyy-MM-dd");
-    const {token}= useAuth();
-      const [startDate, setStartDate] = useState(
+  const { token } = useAuth();
+  const [startDate, setStartDate] = useState(
     format(startOfMonth(today), "yyyy-MM-dd")
   );
   const [endDate, setEndDate] = useState(
@@ -52,25 +60,28 @@ const RevenueAll = () => {
       setEndDate("");
     }
   };
-useEffect(() => {
-  const fetchRevenue = async () => {
-    if ( startDate && endDate) {
-      try {
-        const response = await axios.get(`${BASE_URL_ADMIN}/revenue-all`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: { startDate, endDate },
-        });
-        setTotalRevenue(response.data.totalRevenue);
-      } catch (error) {
-        console.error("Error fetching revenue:", error);
-        setTotalRevenue(null);
+  useEffect(() => {
+    const fetchRevenue = async () => {
+      if (startDate && endDate) {
+        try {
+          const response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL_ADMIN}/revenue-all`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              params: { startDate, endDate },
+            }
+          );
+          setTotalRevenue(response.data.totalRevenue);
+        } catch (error) {
+          console.error("Error fetching revenue:", error);
+          setTotalRevenue(null);
+        }
       }
-    }
-  };
-  fetchRevenue();
-}, [ startDate, endDate]);
+    };
+    fetchRevenue();
+  }, [startDate, endDate]);
 
   const totalPriceInt = parseInt(totalRevenue, 10);
   const price = totalPriceInt - (totalPriceInt * 10) / 100;
@@ -105,7 +116,7 @@ useEffect(() => {
         </Col>
         <Col className="col-lg-4 col-12">
           <div style={{ display: "grid", placeItems: "end" }}>
-            <FormControl fullWidth sx={{background:'white'}}>
+            <FormControl fullWidth sx={{ background: "white" }}>
               <InputLabel id="demo-simple-select-label">Thời gian</InputLabel>
               <Select
                 labelId="demo-simple-select-label"

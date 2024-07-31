@@ -1,7 +1,6 @@
 import React, { useEffect, useState, ReactNode } from "react";
 import Badge from "@mui/material/Badge";
 import axios from "axios";
-import { BASE_URL_ADMIN } from "@/constants";
 import { useAuth } from "@/context";
 
 interface PendingBadgeProps {
@@ -10,21 +9,25 @@ interface PendingBadgeProps {
   business_id: SVGStringList;
 }
 
-const PendingBadge: React.FC<PendingBadgeProps> = ({ endpoint, icon, business_id }) => {
+const PendingBadge: React.FC<PendingBadgeProps> = ({
+  endpoint,
+  icon,
+  business_id,
+}) => {
   const [pendingCount, setPendingCount] = useState<number>(0);
-  const{businessId}= useAuth();
+  const { businessId } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (business_id) {
           const response = await axios.get<{ count: number }>(
-            `${BASE_URL_ADMIN}${endpoint}/${businessId}`
+            `${process.env.REACT_APP_BASE_URL_ADMIN}${endpoint}/${businessId}`
           );
           setPendingCount(response.data.count);
         } else {
           const response = await axios.get<{ count: number }>(
-            `${BASE_URL_ADMIN}${endpoint}`
+            `${process.env.REACT_APP_BASE_URL_ADMIN}${endpoint}`
           );
           setPendingCount(response.data.count);
         }

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL_ADMIN, BASE_URL_CUSTOMER } from "@/constants";
 import { Card, Col, Placeholder, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -14,7 +13,6 @@ import "react-multi-carousel/lib/styles.css";
 import "@/page/customer/business-link/business-link.scss";
 import LazyLoad from "react-lazyload";
 
-
 const ListTourVietnam = ({ tour_category }) => {
   const [tours, setTours] = useState([]);
   const [error, setError] = useState("");
@@ -24,7 +22,7 @@ const ListTourVietnam = ({ tour_category }) => {
     const fetchTours = async () => {
       try {
         var response = await axios.get(
-          `${BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=${tour_category}`
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=${tour_category}`
         );
 
         const sortedTours = response.data.sort(

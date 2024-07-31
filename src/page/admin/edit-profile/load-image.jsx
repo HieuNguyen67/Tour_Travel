@@ -4,11 +4,10 @@ import { Col } from "react-bootstrap";
 import { useLocation, useParams } from "react-router-dom";
 import defaultImage from "@/assets/image/6945124.png";
 import { useAuth } from "@/context";
-import { BASE_URL_ADMIN, BASE_URL_USER } from "@/constants";
 
 const LoadImage = () => {
-   const location = useLocation();
-   const { account_id } = location.state || {};
+  const location = useLocation();
+  const { account_id } = location.state || {};
 
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
@@ -18,7 +17,7 @@ const LoadImage = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_USER}/account/image/${account_id}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/account/image/${account_id}`,
           {
             responseType: "blob",
           },

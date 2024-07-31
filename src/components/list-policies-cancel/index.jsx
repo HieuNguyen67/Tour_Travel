@@ -1,4 +1,3 @@
-import { BASE_URL_BUSINESS } from "@/constants";
 import { useAuth } from "@/context";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -22,7 +21,7 @@ const ListPoliciesCancel = ({ businessId , type}) => {
     const fetchPolicies = async () => {
       try {
         var response = await axios.get(
-          `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}?type=${type}`
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}?type=${type}`
         );
 
         setPolicies(response.data);
@@ -53,7 +52,7 @@ const ListPoliciesCancel = ({ businessId , type}) => {
          await Promise.all(
            selectedRows.map(async (row) => {
              await axios.delete(
-               `${BASE_URL_BUSINESS}/delete-policy/${row.policy_id}`,
+               `${process.env.REACT_APP_BASE_URL_BUSINESS}/delete-policy/${row.policy_id}`,
                {
                  params: { role: 2 },
                  headers: {

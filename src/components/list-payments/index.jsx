@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import { Container, CircularProgress, Alert } from "@mui/material";
-import { BASE_URL_ADMIN, BLUE_COLOR, GREEN_COLOR } from "@/constants";
+import { BLUE_COLOR, GREEN_COLOR } from "@/constants";
 import { Button } from "react-bootstrap";
 import LoadingBackdrop from "@/components/backdrop";
 import { format } from "date-fns";
@@ -22,7 +22,7 @@ const PaymentsList = ({ status }) => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_ADMIN}/list-orders/${status}`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/list-orders/${status}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ const PaymentsList = ({ status }) => {
     }).format(price);
   };
   var handleRowClick = (params) => {
-        const data = { order_id: params.row.order_id };
+    const data = { order_id: params.row.order_id };
 
     navigate(`/admin/order-detail`, { state: data });
   };

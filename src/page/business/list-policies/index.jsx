@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import { BASE_URL_ADMIN, BASE_URL_BUSINESS } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
@@ -32,7 +31,7 @@ const PoliciesList = () => {
       try {
         if (isHomePage) {
           var response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-policies/${businessId}`
+            `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-policies/${businessId}`
           );
         }
 
@@ -64,7 +63,7 @@ const PoliciesList = () => {
         await Promise.all(
           selectedRows.map(async (row) => {
             await axios.delete(
-              `${BASE_URL_BUSINESS}/delete-policy/${row.policy_id}`,
+              `${process.env.REACT_APP_BASE_URL_BUSINESS}/delete-policy/${row.policy_id}`,
               {
                 params: { role: 3 },
                 headers: {

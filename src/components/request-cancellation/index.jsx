@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useAuth } from '@/context';
-import { BASE_URL_BUSINESS, BASE_URL_CUSTOMER, RED1_COLOR, TEXT_MAIN_COLOR } from '@/constants';
+import {  RED1_COLOR, TEXT_MAIN_COLOR } from '@/constants';
 import { MdCancel } from "react-icons/md";
 import { MdRateReview } from "react-icons/md";
 import Accordion from "@mui/material/Accordion";
@@ -34,7 +34,7 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
             var type = "Nước ngoài";
           }
           const response = await axios.get(
-            `${BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}?type=${type}`
+            `${process.env.REACT_APP_BASE_URL_BUSINESS}/list-policies-cancellation/${businessId}?type=${type}`
           );
           setPolicyCancellation(response.data);
         }
@@ -62,7 +62,7 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
        }
 
       const response = await axios.post(
-        `${BASE_URL_CUSTOMER}/request-cancellation/${orderId}/${businessId}/${customerId}`,
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/request-cancellation/${orderId}/${businessId}/${customerId}`,
         { reason,
            statusOrder: status
            },

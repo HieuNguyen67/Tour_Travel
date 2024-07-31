@@ -16,8 +16,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlinePassword } from "react-icons/md";
 import businessimg from "@/assets/image/business1.png";
 import adminimg from "@/assets/image/admin.png";
-import { BASE_URL_BUSINESS, RED_COLOR } from "@/constants";
-import { BASE_URL_ADMIN } from "@/constants";
+import { RED_COLOR } from "@/constants";
 import { GrUserAdmin } from "react-icons/gr";
 
 const RegisterUser = () => {
@@ -48,7 +47,7 @@ const RegisterUser = () => {
     try {
       if (role_id == 3) {
         await axios.post(
-          `${BASE_URL_BUSINESS}/register-business/${adminId}`,
+          `${process.env.REACT_APP_BASE_URL_BUSINESS}/register-business/${adminId}`,
           formData,
           {
             headers: {
@@ -60,7 +59,7 @@ const RegisterUser = () => {
         navigate("/admin/list-business");
       } else {
         await axios.post(
-          `${BASE_URL_ADMIN}/register-admin/${adminId}`,
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/register-admin/${adminId}`,
           formData,
           {
             headers: {

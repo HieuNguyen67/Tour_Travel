@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
-import { BASE_URL_ADMIN, BLUE_COLOR, GREEN_COLOR, RED1_COLOR, RED_COLOR, TEXT_RED_COLOR } from "@/constants";
+import {
+  BLUE_COLOR,
+  GREEN_COLOR,
+  RED1_COLOR,
+  RED_COLOR,
+  TEXT_RED_COLOR,
+} from "@/constants";
 import { useAuth } from "@/context";
 import { format } from "date-fns";
 import { RiRefund2Line } from "react-icons/ri";
@@ -12,22 +18,22 @@ import { FaSave } from "react-icons/fa";
 const RefundDetailsModal = ({ show, handleClose, refundId }) => {
   const [refundDetails, setRefundDetails] = useState([]);
   const [dateRefund, setDateRefund] = useState(null);
-      const [status, setStatus] = useState("");
-        const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
-
-    const {token}= useAuth();
+  const { token } = useAuth();
   useEffect(() => {
     if (refundId) {
-      axios.get(`${BASE_URL_ADMIN}/refunds-detail/${refundId}`, {
+      axios
+        .get(`${process.env.REACT_APP_BASE_URL_ADMIN}/refunds-detail/${refundId}`, {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
           setRefundDetails(response.data);
           setDateRefund(response.data.refund_date);
-          setStatus(response.data.status)
+          setStatus(response.data.status);
         })
         .catch((error) => {
           console.error("Lỗi khi lấy thông tin hoàn tiền:", error);
@@ -35,41 +41,40 @@ const RefundDetailsModal = ({ show, handleClose, refundId }) => {
     }
   }, [refundId]);
 
-    const formatPrice = (price) => {
-      if (typeof price !== "number") {
-        return price;
-      }
-      return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-      }).format(price);
-    };
-     const handleUpdate = async (e) => {
-          e.preventDefault();
+  const formatPrice = (price) => {
+    if (typeof price !== "number") {
+      return price;
+    }
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
+  };
+  const handleUpdate = async (e) => {
+    e.preventDefault();
 
-      setLoading(true);
-       try {
-         const response = await axios.put(
-           `${BASE_URL_ADMIN}/update-status-refund/${refundId}`,
-           {
-             status,
-           },
-           {
-             headers: {
-               Authorization: `Bearer ${token}`,
-             },
-           }
-         );
-         toast.success(response.data.message);
-         handleClose(false);
+    setLoading(true);
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_BASE_URL_ADMIN}/update-status-refund/${refundId}`,
+        {
+          status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(response.data.message);
+      handleClose(false);
 
-         window.location.reload();
-       } catch (error) {
-         toast.error(error.response.data.message);
-
-       }
-       setLoading(false);
-     };
+      window.location.reload();
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    setLoading(false);
+  };
 
   return (
     <Modal show={show} onHide={handleClose} centered size="lg">

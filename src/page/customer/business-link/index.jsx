@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import LoadingBackdrop from "@/components/backdrop";
 import { IoBusinessSharp } from "react-icons/io5";
 import axios from "axios";
-import { BASE_URL_ADMIN } from "@/constants";
 import imgdefault from "@/assets/image/6945124.png";
 import businessimg from "@/assets/image/business.png";
 import LazyLoad from "react-lazyload";
@@ -22,7 +21,7 @@ const BusinessLink = () => {
     const fetchAccounts = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL_ADMIN}/get-users?role_id=3`
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/get-users?role_id=3`
         );
         setAccounts(response.data);
         setLoading(false);

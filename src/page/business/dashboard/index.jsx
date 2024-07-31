@@ -1,7 +1,7 @@
 import { useAuth } from "@/context";
 import { Col, Form, Row } from "react-bootstrap";
 import dashboardimg from "@/assets/image/dashboard.png";
-import { BASE_URL_BUSINESS, BLUE_COLOR, BORDER, DARKBLUE, GREY_COLOR, PURPLE_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
+import { BLUE_COLOR, BORDER, DARKBLUE, GREY_COLOR, PURPLE_COLOR, RED1_COLOR, RED_COLOR } from "@/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BiMoneyWithdraw } from "react-icons/bi";
@@ -111,7 +111,7 @@ const DashboardBusiness = ()=>{
 
            try {
              const response = await axios.get(
-               `${BASE_URL_BUSINESS}/total-revenue/${businessId}?startDate=${startDate}&endDate=${endDate}`
+               `${process.env.REACT_APP_BASE_URL_BUSINESS}/total-revenue/${businessId}?startDate=${startDate}&endDate=${endDate}`
              );
                       setTotalRevenue(response.data.total_revenue);
 
