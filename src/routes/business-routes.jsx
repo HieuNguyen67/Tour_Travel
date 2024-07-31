@@ -1,6 +1,5 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import SidebarLayout from "@/components/side-bar";
-import EditProfile from "@/page/admin/edit-profile";
 import News from "@/page/admin/news";
 import AddNews from "@/page/admin/news/add-news";
 import UpdateNews from "@/page/admin/news/edit-news";
