@@ -109,47 +109,59 @@ const CouponsList: React.FC = () => {
           <TbCoinFilled className="fs-1 text-warning" />
         </Modal.Header>
         <Modal.Body>
-          {currentCoupons.map((item) => (
-            <div key={item.coupon_id}>
-              <Row>
-                <Col className="col-lg-2">
-                  <img
-                    src={coin}
-                    style={{
-                      width: "5rem",
-                      height: "5rem",
-                      objectFit: "cover",
-                    }}
-                    loading="lazy"
-                  />
-                </Col>
-                <Col className="col-lg-8 col-12">
-                  <p className="mt-lg-0 mt-2">
-                    <span className="fs-5 fw-bold">
-                      Nhận xu từ {item.description}
-                    </span>
-                    <br />
-                    <span
-                      style={{ fontSize: "0.9rem" }}
-                      className="text-secondary"
-                    >
-                      Hạn sử dụng:&nbsp;
-                      {format(new Date(item.created_at), "dd/MM/yyyy")} -{" "}
-                      {format(new Date(item.expires_at), "dd/MM/yyyy")}
-                    </span>
-                    <br />
-                    <span>
-                      {item.is_used == "Unused" ? "Chưa dùng" : "Đã dùng"}
-                    </span>
-                  </p>
-                </Col>
-                <Col>
-                  <p className="fs-4 text-warning mt-lg-4">+ {item.points}</p>
-                </Col>
-              </Row>
-              <hr />
-            </div>
-          ))}
+          {coupons.length > 0 ? (
+            <>
+              {" "}
+              {currentCoupons.map((item) => (
+                <div key={item.coupon_id}>
+                  <Row>
+                    <Col className="col-lg-2">
+                      <img
+                        src={coin}
+                        style={{
+                          width: "5rem",
+                          height: "5rem",
+                          objectFit: "cover",
+                        }}
+                        loading="lazy"
+                      />
+                    </Col>
+                    <Col className="col-lg-8 col-12">
+                      <p className="mt-lg-0 mt-2">
+                        <span className="fs-5 fw-bold">
+                          Nhận xu từ {item.description}
+                        </span>
+                        <br />
+                        <span
+                          style={{ fontSize: "0.9rem" }}
+                          className="text-secondary"
+                        >
+                          Hạn sử dụng:&nbsp;
+                          {format(
+                            new Date(item.created_at),
+                            "dd/MM/yyyy"
+                          )} - {format(new Date(item.expires_at), "dd/MM/yyyy")}
+                        </span>
+                        <br />
+                        <span>
+                          {item.is_used == "Unused" ? "Chưa dùng" : "Đã dùng"}
+                        </span>
+                      </p>
+                    </Col>
+                    <Col>
+                      <p className="fs-4 text-warning mt-lg-4">
+                        + {item.points}
+                      </p>
+                    </Col>
+                  </Row>
+                  <hr />
+                </div>
+              ))}
+            </>
+          ) : (
+            <>Bạn chưa có Xu thưởng. Hãy tìm kiếm Xu bằng cách chia sẻ tour cho bạn bè!</>
+          )}
+
           <Box display="flex" justifyContent="center" mt={2}>
             <Pagination
               variant="outlined"

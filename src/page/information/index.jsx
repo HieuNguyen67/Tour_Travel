@@ -10,6 +10,7 @@ import Header from "@/components/layout/header";
 import Refunds from "./refunds";
 import OrderDetail from "../business/order-detail";
 import Rating from "./rating";
+import ListFavorite from "./list-favorites";
 const Information = () => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const Information = () => {
           <Route path="/rate" element={<Rating />} />
           <Route path="/refunds" element={<Refunds />} />
           <Route path="/order-detail" element={<OrderDetail />} />
+          <Route path="/favorites" element={<ListFavorite />} />
           <Route path="*" element={<Navigate to="/information/profile" />} />
         </Routes>
       </InformationLayout>

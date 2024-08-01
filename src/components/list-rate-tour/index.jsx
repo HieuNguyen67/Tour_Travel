@@ -13,6 +13,7 @@ import { useAuth } from "@/context";
 import LazyLoad from "react-lazyload";
 import { TbCoinFilled } from "react-icons/tb";
 import LoadingBackdrop from "../backdrop";
+import { useNavigate } from "react-router-dom";
 
 const ListRateTour = ({ statusRating }) => {
   const [orders, setOrders] = useState([]);
@@ -40,6 +41,13 @@ const ListRateTour = ({ statusRating }) => {
       fetchOrders();
     }
   }, [customerId, statusRating]);
+
+  const navigate= useNavigate();
+
+   const handleRowClick = (params) => {
+     const data = { order_id: params.row.order_id };
+    navigate(`/information/order-detail`, { state: data });
+   };
 
   const columns = [
     {
@@ -152,6 +160,7 @@ const ListRateTour = ({ statusRating }) => {
             rowsPerPageOptions={[5, 10, 20]}
             pagination
             getRowHeight={(params) => 80}
+            onRowClick={handleRowClick}
           />
         </Box>{" "}
       </LazyLoad>

@@ -36,6 +36,7 @@ import React, { Suspense, lazy } from "react";
 import "@/page/customer/news/news-detail/news-detail.scss";
 import ShareTour from "@/components/share_tour";
 import NotFound from "@/page/not-found";
+import FavoriteCheckbox from "@/components/favorite-checkbox";
 
 const ReportTour = lazy(() => import("@/components/report-tour"));
 const PolicesTour = lazy(() => import("@/components/policies-tour"));
@@ -58,7 +59,6 @@ const TourDetail = () => {
   const [destination, setDestination] = useState("");
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
-  console.log(shareToken);
 
   useEffect(() => {
     const fetchTourData = async () => {
@@ -216,15 +216,21 @@ const TourDetail = () => {
                       </Suspense>
                     </Col>
                   </Row>
-                  <p className="">
-                    <span
-                      style={{ color: TEXT_RED_COLOR }}
-                      className="fs-3 fw-bold"
-                    >
-                      {formatPrice(tour.adult_price)}
-                    </span>
-                    / khách
-                  </p>
+                  <Row>
+                    <Col>
+                      {" "}
+                      <p className="">
+                        <span
+                          style={{ color: TEXT_RED_COLOR }}
+                          className="fs-3 fw-bold"
+                        >
+                          {formatPrice(tour.adult_price)}
+                        </span>
+                        / khách
+                      </p>
+                    </Col>
+                    <Col><FavoriteCheckbox customerId={customerId} tourId={tour_id}/> </Col>
+                  </Row>
                 </Col>
               </Row>
               <Row>

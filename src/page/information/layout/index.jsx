@@ -7,6 +7,7 @@ import { TbCoinFilled } from "react-icons/tb";
 import profile1img from "@/assets/image/profile1.png";
 import { RiRefund2Line } from "react-icons/ri";
 import { MdStars } from "react-icons/md";
+import { IoHeartCircle } from "react-icons/io5";
 
 const InformationLayout = ({ children }) => {
   const { role } = useAuth();
@@ -122,6 +123,23 @@ const InformationLayout = ({ children }) => {
                   </Nav.Item>
                 </>
               )}
+              <Nav.Item>
+                <NavLink
+                  className="nav-link "
+                  to="/information/favorites"
+                  style={({ isActive }) => {
+                    return {
+                      fontWeight: isActive ? "bold" : "",
+                      borderBottom: isActive ? "3px solid #f3c324" : "",
+                    };
+                  }}
+                >
+                  {" "}
+                  <span className="text-dark">
+                    <IoHeartCircle className="fs-3 text-danger" /> YÊU THÍCH
+                  </span>
+                </NavLink>
+              </Nav.Item>
               <Nav.Item>
                 <NavLink
                   className="nav-link "
