@@ -6,8 +6,9 @@ import {
   RED1_COLOR,
   GREY_COLOR,
 } from "@/constants";
+import { RiMailSendLine } from "react-icons/ri";
 
-const ContactModal = ({ accountId, tourId }) => {
+const ContactModal = ({ accountId, tourId , css, text}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -43,11 +44,11 @@ const ContactModal = ({ accountId, tourId }) => {
   return (
     <>
       <Button
-        className="col-lg-3 col-12  py-3"
+        className={css}
         style={{ background: GREY_COLOR, border: "0px" }}
         onClick={handleShow}
       >
-        Liên hệ tư vấn
+        <RiMailSendLine className="fs-4" /> {text}
       </Button>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>

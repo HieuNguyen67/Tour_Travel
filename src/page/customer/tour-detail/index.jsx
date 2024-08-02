@@ -37,6 +37,7 @@ import "@/page/customer/news/news-detail/news-detail.scss";
 import ShareTour from "@/components/share_tour";
 import NotFound from "@/page/not-found";
 import FavoriteCheckbox from "@/components/favorite-checkbox";
+import InfoBusiness from "@/components/info-business";
 
 const ReportTour = lazy(() => import("@/components/report-tour"));
 const PolicesTour = lazy(() => import("@/components/policies-tour"));
@@ -229,7 +230,12 @@ const TourDetail = () => {
                         / khách
                       </p>
                     </Col>
-                    <Col><FavoriteCheckbox customerId={customerId} tourId={tour_id}/> </Col>
+                    <Col>
+                      <FavoriteCheckbox
+                        customerId={customerId}
+                        tourId={tour_id}
+                      />{" "}
+                    </Col>
                   </Row>
                 </Col>
               </Row>
@@ -247,6 +253,8 @@ const TourDetail = () => {
                     <ContactModal
                       accountId={tour.business_id}
                       tourId={tour_id}
+                      css={"col-lg-3 col-12  py-3"}
+                      text={"Liên hệ tư vấn"}
                     />
                   </Suspense>
                 </Col>
@@ -446,6 +454,7 @@ const TourDetail = () => {
                   </Col>
                 </Row>
               </div>
+              <InfoBusiness tour={tour} />
               <h2 className="text-center fw-bold mt-5">
                 <img
                   src={picturetourimg}

@@ -69,6 +69,10 @@ const Apps: React.FC = () => {
         <Route path="/tour-details/:tour_id" element={<TourDetail />} />
         <Route path="/booking-tour/:tour_id" element={<BookTour />} />
         <Route
+          path="/tour-by-business/:location/:business_id"
+          element={<TourSearch />}
+        />
+        <Route
           path="/tour-share-link/:tour_id/:sharelinkToken"
           element={<SharedTour />}
         />

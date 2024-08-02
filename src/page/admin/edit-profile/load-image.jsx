@@ -17,7 +17,7 @@ const LoadImage = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL_USER}/account/image/${account_id}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/accounts/image/${account_id}`,
           {
             responseType: "blob",
           },

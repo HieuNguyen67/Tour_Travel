@@ -22,7 +22,7 @@ const ListTourVietnam = ({ tour_category }) => {
     const fetchTours = async () => {
       try {
         var response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=${tour_category}`
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter/${tour_category}`
         );
 
         const sortedTours = response.data.sort(

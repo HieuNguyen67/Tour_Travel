@@ -34,7 +34,7 @@ const TourListBusiness = ({ accountId, tour_category }) => {
       try {
         if (accountId) {
           const response = await axios.get(
-            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter/${accountId}?tourcategory_name=${tour_category}`
+            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter/${tour_category}/${accountId}`
           );
           setTours(response.data);
         }

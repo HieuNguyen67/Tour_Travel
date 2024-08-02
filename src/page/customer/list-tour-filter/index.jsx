@@ -5,7 +5,7 @@ import {
   TEXT_RED_COLOR,
 } from "@/constants";
 import LoadingBackdrop from "@/components/backdrop";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Tab, Tabs } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import { LuFilter } from "react-icons/lu";
 import { FaFilter } from "react-icons/fa6";
@@ -54,18 +54,22 @@ const TourSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
-  const { location } = useParams();
+  const { location , business_id} = useParams();
 
   useEffect(() => {
     const fetchTours = async () => {
       try {
         if (location == 1) {
           var response = await axios.get(
-            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=Du lịch trong nước`
+            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter/Du lịch trong nước`
+          );
+        } else if (location == 2) {
+          var response = await axios.get(
+            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter/Du lịch nước ngoài`
           );
         } else {
           var response = await axios.get(
-            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter?tourcategory_name=Du lịch nước ngoài`
+            `${process.env.REACT_APP_BASE_URL_CUSTOMER}/list-tours-filter/?/${business_id}`
           );
         }
         setLoading1(false);
@@ -88,7 +92,13 @@ const TourSearch = () => {
     };
 
     fetchTours();
-  }, [initialDestinationLocation, initialDepartureLocation, initialTourName]);
+  }, [
+    initialDestinationLocation,
+    initialDepartureLocation,
+    initialTourName,
+    business_id,
+    location,
+  ]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -349,7 +359,7 @@ const TourSearch = () => {
                         ))}
                       </Form.Select>
                     </>
-                  ) : (
+                  ) : location == 2 ? (
                     <>
                       <Form.Select
                         aria-label="Default select example"
@@ -369,6 +379,61 @@ const TourSearch = () => {
                           </option>
                         ))}
                       </Form.Select>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <Tabs
+                        defaultActiveKey="first"
+                        id="fill-tab-example"
+                        className="my-2"
+                        fill
+                      >
+                        <Tab eventKey="first" title="Trong nước">
+                          <Form.Select
+                            aria-label="Default select example"
+                            className="shadow-sm"
+                            style={{ border: "3px solid #ffc107" }}
+                            value={destinationLocation}
+                            onChange={(e) =>
+                              setDestinationLocation(e.target.value)
+                            }
+                            required
+                          >
+                            <option value="">----Tất cả----</option>
+                            {provinces.map((province) => (
+                              <option
+                                key={province.location_id}
+                                value={province.location_id}
+                              >
+                                {province.location_name}
+                              </option>
+                            ))}
+                          </Form.Select>
+                        </Tab>
+                        <Tab eventKey="second" title="Nước ngoài">
+                          <Form.Select
+                            aria-label="Default select example"
+                            className="shadow-sm"
+                            style={{ border: "3px solid #ffc107" }}
+                            value={destinationLocation}
+                            onChange={(e) =>
+                              setDestinationLocation(e.target.value)
+                            }
+                            required
+                          >
+                            <option value="">----Tất cả----</option>
+                            {regions.map((region) => (
+                              <option
+                                key={region.location_id}
+                                value={region.location_id}
+                              >
+                                {region.location_name}
+                              </option>
+                            ))}
+                          </Form.Select>
+                        </Tab>
+                      </Tabs>
                     </>
                   )}
                 </div>
@@ -493,8 +558,10 @@ const TourSearch = () => {
                         {" "}
                         {location == 1 ? (
                           <>DU LỊCH TRONG NƯỚC</>
-                        ) : (
+                        ) : location == 2 ? (
                           <>DU LỊCH NƯỚC NGOÀI</>
+                        ) : (
+                          <></>
                         )}
                       </>
                     )}

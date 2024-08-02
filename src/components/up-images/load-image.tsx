@@ -7,7 +7,6 @@ import "./load-image.scss";
 
 const DisplayImage: React.FC = () => {
   const { accountId, token } = useAuth();
-
   const [imageSrc, setImageSrc] = useState<string>("");
   const [error, setError] = useState<string>("");
 
@@ -15,7 +14,7 @@ const DisplayImage: React.FC = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL_USER}/account/image/${accountId}`,
+          `${process.env.REACT_APP_BASE_URL_USER}/accounts/image/${accountId}`,
           {
             responseType: "blob",
             headers: {

@@ -118,6 +118,9 @@ const ShareTour = ({ tourId, customerId }) => {
                       của bạn.
                     </li>
                     <li>
+                      Mỗi lượt chia sẻ thành công bạn nhận được 5000 Xu.
+                    </li>
+                    <li>
                       Xu thưởng sẽ hiển thị trong phần "Xu" trong tài khoản của
                       bạn.
                     </li>

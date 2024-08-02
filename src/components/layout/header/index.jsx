@@ -41,7 +41,7 @@ const Header = (props) => {
       try {
         if (isLoggedIn) {
           const response = await axios.get(
-            `${process.env.REACT_APP_BASE_URL_USER}/account/image/${accountId}`,
+            `${process.env.REACT_APP_BASE_URL_USER}/accounts/image/${accountId}`,
             {
               responseType: "blob",
             }
