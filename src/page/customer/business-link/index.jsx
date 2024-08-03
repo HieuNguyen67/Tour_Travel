@@ -11,6 +11,8 @@ import axios from "axios";
 import imgdefault from "@/assets/image/6945124.png";
 import businessimg from "@/assets/image/business.png";
 import LazyLoad from "react-lazyload";
+import { motion } from "framer-motion";
+import { TEXT_MAIN_COLOR } from "@/constants";
 
 const BusinessLink = () => {
   const [loading, setLoading] = useState(true);
@@ -56,24 +58,38 @@ const BusinessLink = () => {
           {accounts.map((account) => (
             <Col className="col-lg-4  col-12 mb-lg-0 mb-3">
               <LazyLoad key={account.account_id}>
-                <div className="boxborderr rounded-5 p-3 shadow-sm px-lg-4 p-3 ">
-                  {account.image ? (
-                    <img
-                      src={`data:image/jpeg;base64,${account.image}`}
-                      alt={account.name}
-                      className="rounded-5 col-12 mb-4 sizei shadow"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <img
-                      src={imgdefault}
-                      alt={account.name}
-                      className="rounded-5 col-12 mb-4 sizei shadow"
-                      loading="lazy"
-                    />
-                  )}
-                  <h5 className="fw-bold text-center mt-3">{account.name}</h5>
-                </div>
+                <Link
+                  to={`/tour-by-business/3/${account.business_id}`}
+                  className="text-decoration-none"
+                  style={{color:TEXT_MAIN_COLOR}}
+                >
+                  {" "}
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.8 }}
+                  >
+                    <div className="boxborderr rounded-5 p-3 shadow-sm px-lg-4 p-3 ">
+                      {account.image ? (
+                        <img
+                          src={`data:image/jpeg;base64,${account.image}`}
+                          alt={account.name}
+                          className="rounded-5 col-12 mb-4 sizei shadow"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <img
+                          src={imgdefault}
+                          alt={account.name}
+                          className="rounded-5 col-12 mb-4 sizei shadow"
+                          loading="lazy"
+                        />
+                      )}
+                      <h5 className="fw-bold text-center mt-3">
+                        {account.name}
+                      </h5>
+                    </div>
+                  </motion.div>
+                </Link>
               </LazyLoad>
             </Col>
           ))}

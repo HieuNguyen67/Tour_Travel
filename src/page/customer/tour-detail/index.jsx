@@ -454,7 +454,7 @@ const TourDetail = () => {
                   </Col>
                 </Row>
               </div>
-              <InfoBusiness tour={tour} />
+              <InfoBusiness  business_id={tour.business_id} />
               <h2 className="text-center fw-bold mt-5">
                 <img
                   src={picturetourimg}
