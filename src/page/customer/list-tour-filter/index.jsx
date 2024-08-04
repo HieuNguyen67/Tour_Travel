@@ -303,7 +303,13 @@ const TourSearch = () => {
     <>
       <LoadingBackdrop open={loading} />
       <Container className="mt-5 pt-5">
-        <InfoBusiness tour={tour} business_id={business_id} />
+        {location == 3 ? (
+          <>
+            <InfoBusiness tour={tour} business_id={business_id} />
+          </>
+        ) : (
+          <></>
+        )}
         {tours.length > 0 ? (
           <>
             <Row className="mt-lg-3">
