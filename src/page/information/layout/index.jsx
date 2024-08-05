@@ -100,7 +100,7 @@ const InformationLayout = ({ children }) => {
                       {" "}
                       <span className="text-dark">
                         <RiRefund2Line className="fs-3 text-warning" />
-                        REFUNDS
+                        HOÀN TIỀN
                       </span>
                     </NavLink>
                   </Nav.Item>

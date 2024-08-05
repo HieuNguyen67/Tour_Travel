@@ -218,17 +218,45 @@ const TourDetail = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col>
+                    <Col className="col-7">
                       {" "}
-                      <p className="">
-                        <span
-                          style={{ color: TEXT_RED_COLOR }}
-                          className="fs-3 fw-bold"
-                        >
-                          {formatPrice(tour.adult_price)}
-                        </span>
-                        / khách
-                      </p>
+                      {tour.discount_percentage > 0 ? (
+                        <>
+                          {" "}
+                          <p className="">
+                            <span className="text-decoration-line-through text-secondary fs-5">
+                              {formatPrice(tour.adult_price)}
+                            </span>{" "}
+                            <span
+                              className="fw-bold text-light ms-2 fs-5"
+                              style={{ background: "red" }}
+                            >
+                              -{tour.discount_percentage}%
+                            </span>
+                            <br />
+                            <span
+                              className="fs-3 fw-bold"
+                              style={{ color: TEXT_RED_COLOR }}
+                            >
+                              {formatPrice(tour.adult_price_discount)}
+                            </span>
+                            / khách{" "}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <p className="">
+                            <span
+                              style={{ color: TEXT_RED_COLOR }}
+                              className="fs-3 fw-bold"
+                            >
+                              {formatPrice(tour.adult_price)}
+                            </span>
+                            / khách
+                          </p>
+                        </>
+                      )}
                     </Col>
                     <Col>
                       <FavoriteCheckbox

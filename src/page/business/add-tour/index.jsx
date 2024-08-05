@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@/context";
 import { DARKBLUE, GREY_COLOR, RED1_COLOR } from "@/constants";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Placeholder, Row } from "react-bootstrap";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdAddLocationAlt } from "react-icons/md";
@@ -30,6 +30,7 @@ import LoadingBackdrop from "@/components/backdrop";
 import tourimg from "@/assets/image/tour.png";
 import { AiOutlineBarcode } from "react-icons/ai";
 import LazyLoad from "react-lazyload";
+import DiscountInfo from "@/components/discount-info";
 
 const AddTourForm = () => {
   const location = useLocation();
@@ -39,6 +40,7 @@ const AddTourForm = () => {
   const [error, setError] = useState(null);
   const [tourCategories, setTourCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+    const [loadingImage, setLoadingImage] = useState(true);
   const [loading1, setLoading1] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -304,11 +306,11 @@ const AddTourForm = () => {
             `${process.env.REACT_APP_BASE_URL_USER}/get-all-tour-images/${tour_id}`
           );
           setImage(response.data);
-          setLoading(false);
+          setLoadingImage(false);
         }
       } catch (error) {
         console.error("Error fetching tour images:", error);
-        setLoading(false);
+        setLoadingImage(false);
       }
     };
 
@@ -332,15 +334,9 @@ const AddTourForm = () => {
         </Link>
         <h3 className="fw-bold my-3">
           <img src={tourimg} className="mb-2 location" loading="lazy" />{" "}
-          {add_tour == 2 || add_tour == 1 ? (
-            <>THÊM TOUR</>
-          ) : (
-            <>CHỈNH SỬA TOUR</>
-          )}
+          {add_tour == 1 ? <>THÊM TOUR</> : <>CHỈNH SỬA TOUR</>}
         </h3>
         {add_tour == 1 ? (
-          <></>
-        ) : add_tour == 2 ? (
           <></>
         ) : (
           <>
@@ -373,27 +369,49 @@ const AddTourForm = () => {
         )}
         <div>
           <Row className="mb-lg-4">
-            {image.map((image, index) => (
-              <Col key={index} className="col-lg-3 col-12">
-                <LazyLoad>
-                  <img
-                    src={`data:image/jpeg;base64,${image.image}`}
-                    alt={`Tour ${tour_id} Image ${index + 1}`}
-                    loading="lazy"
-                    className="rounded-3 sizeimgg col-12 mb-3 mb-lg-0"
-                  />
-                </LazyLoad>
-              </Col>
-            ))}
+            {loadingImage ? (
+              <>
+                {" "}
+                <Placeholder animation="glow">
+                  <Placeholder xs={12} style={{ height: "200px" }} />
+                </Placeholder>
+              </>
+            ) : (
+              <>
+                {" "}
+                {image.map((image, index) => (
+                  <Col key={index} className="col-lg-3 col-12">
+                    <LazyLoad>
+                      <img
+                        src={`data:image/jpeg;base64,${image.image}`}
+                        alt={`Tour ${tour_id} Image ${index + 1}`}
+                        loading="lazy"
+                        className="rounded-3 sizeimgg col-12 mb-3 mb-lg-0"
+                      />
+                    </LazyLoad>
+                  </Col>
+                ))}
+              </>
+            )}
           </Row>
         </div>
+        {add_tour != 1 ? (
+          <>
+            {" "}
+            <DiscountInfo
+              tourId={tour_id}
+              adult_price={formData.adult_price}
+              child_price={formData.child_price}
+              infant_price={formData.infant_price}
+              start_date_tour={formData.start_date}
+            />
+          </>
+        ) : (
+          <></>
+        )}
 
         <form
-          onSubmit={
-            add_tour == 2 || add_tour == 1
-              ? handleSubmitAdd
-              : handleSubmitUpdate
-          }
+          onSubmit={add_tour == 1 ? handleSubmitAdd : handleSubmitUpdate}
           className=""
         >
           <Row>
@@ -441,14 +459,13 @@ const AddTourForm = () => {
             </Col>
 
             <Col className="col-lg-6 col-12">
-              {add_tour == 2 || add_tour == 1 ? (
+              {add_tour == 1 ? (
                 <>
                   {" "}
                   <Form.Group className="mb-4">
                     <Form.Label className="  fw-bold">
                       <LuImagePlus className="fs-4" /> Chọn hình ảnh tour ({">"}
-                      = 4 ảnh){" "}
-                      <span className="text-danger">(*) </span>:
+                      = 4 ảnh) <span className="text-danger">(*) </span>:
                     </Form.Label>
                     <Form.Control
                       type="file"

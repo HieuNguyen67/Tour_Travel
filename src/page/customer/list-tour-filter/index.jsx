@@ -682,12 +682,38 @@ const TourSearch = () => {
                                         {tour.departure_location_name}
                                       </span>
                                     </div>
-                                    <div
-                                      className="fs-5 fw-bold mb-2"
-                                      style={{ color: "#e01600" }}
-                                    >
-                                      {formatPrice(tour.adult_price)}
-                                    </div>
+                                    {tour.discount_percentage > 0 ? (
+                                      <>
+                                        {" "}
+                                        <p className=" mb-2">
+                                          <span className="text-decoration-line-through text-secondary">
+                                            {formatPrice(tour.adult_price)}
+                                          </span>
+                                          &nbsp;
+                                          <span
+                                            className="fs-5 fw-bold"
+                                            style={{ color: "#e01600" }}
+                                          >
+                                            {formatPrice(
+                                              tour.adult_price_discount
+                                            )}
+                                          </span>
+                                          <span className="fw-bold text-light ms-2 fs-5" style={{background:'red'}}>
+                                            -{tour.discount_percentage}%
+                                          </span>
+                                        </p>
+                                      </>
+                                    ) : (
+                                      <>
+                                        {" "}
+                                        <div
+                                          className="fs-5 fw-bold mb-2"
+                                          style={{ color: "#e01600" }}
+                                        >
+                                          {formatPrice(tour.adult_price)}
+                                        </div>
+                                      </>
+                                    )}
 
                                     <div className="text-end fw-bold">
                                       <span

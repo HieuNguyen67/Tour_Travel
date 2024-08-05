@@ -167,7 +167,7 @@ const RefundsList = () => {
           }}
           loading="lazy"
         />{" "}
-        REFUNDS
+        HOÀN TIỀN
       </h3>{" "}
       <LazyLoad>
         <div style={{ height: 600, width: "100%" }}>

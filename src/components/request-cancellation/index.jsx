@@ -145,7 +145,7 @@ const CancellationRequestModal = ({ show, handleClose, orderId, businessId, cust
               <p className="fw-bold">
                 Bạn sẽ được hoàn 100% vì doanh nghiệp chưa xác nhận đơn này. Sau
                 khi huỷ chờ chúng tôi hoàn tiền, để xem chi tiết vui lòng truy
-                cập mục REFUNDS.
+                cập mục HOÀN TIỀN.
               </p>
             </>
           )}
