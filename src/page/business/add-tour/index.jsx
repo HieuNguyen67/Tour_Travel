@@ -228,8 +228,11 @@ const AddTourForm = () => {
       navigate("/business/list-tour");
       setLoading(false);
     } catch (error) {
+      toast.error(error.response.data.error);
       console.error("Error adding tour: ", error.response.data.error);
-      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      if (error.response.data.errors){
+        error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      }
     }
     setLoading1(false);
   };
@@ -250,7 +253,7 @@ const AddTourForm = () => {
 
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_BASE_URL_BUSINESS}/update-tour/${formData.tour_id}`,
+        `${process.env.REACT_APP_BASE_URL_BUSINESS}/update-tour/${formData.tour_id}/${businessId}`,
         formData,
         {
           headers: {
@@ -264,8 +267,10 @@ const AddTourForm = () => {
       window.location.reload();
     } catch (error) {
       console.error("Error updating tour:", error);
-      toast.error("Chỉnh sửa Tour thất bại. Vui lòng thử lại !");
-      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      toast.error(error.response.data.error);
+      if (error.response.data.errors){
+        error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+      }
     }
 
     const data = new FormData();
@@ -369,7 +374,7 @@ const AddTourForm = () => {
         )}
         <div>
           <Row className="mb-lg-4">
-            {loadingImage ? (
+            {add_tour != 1 && loadingImage ? (
               <>
                 {" "}
                 <Placeholder animation="glow">

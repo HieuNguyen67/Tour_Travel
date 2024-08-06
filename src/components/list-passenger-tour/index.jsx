@@ -42,7 +42,14 @@ const PassengersListTour =({tourId})=> {
     }
   }, [tourId]);
 
+
   const columns = [
+    {
+      field: "stt",
+      headerName: "STT",
+      width: 60,
+      renderCell: (params) => <span className="fw-bold">{params.value}</span>,
+    },
     {
       field: "code_order",
       headerName: "Mã Booking",
@@ -68,6 +75,7 @@ const PassengersListTour =({tourId})=> {
     { field: "type", headerName: "Loại KH", width: 120 },
     { field: "note", headerName: "Ghi chú", width: 180 },
   ];
+ 
    if (loading)
      return (
        <>

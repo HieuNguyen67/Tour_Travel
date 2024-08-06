@@ -75,7 +75,8 @@ const Login = () => {
       else if (role === 5) navigate("/admin/news");
       else if (role === 6) navigate("/admin/contact");
     } catch (error) {
-      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+       if (error.response.data.errors){
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));}
       console.error("Đăng nhập không thành công:", error.response.data.message);
       toast.error(error.response.data.message);
     }

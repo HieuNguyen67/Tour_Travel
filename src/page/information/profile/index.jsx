@@ -159,7 +159,8 @@ const Profile = () => {
 
       toast.success("Thông tin tài khoản đã được cập nhật!");
     } catch (error) {
-      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+       if (error.response.data.errors){
+      error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));}
       toast.error(error.response.data.message);
     }
   };

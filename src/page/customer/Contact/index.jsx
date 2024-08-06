@@ -48,7 +48,9 @@ const Contact = () => {
       });
       toast.success(response.data.message);
     } catch (error) {
+       if (error.response.data.errors){
       error.response.data.errors.forEach((errorMsg) => toast.error(errorMsg));
+       }
       toast.error(error.response.data.message);
     }
   };
