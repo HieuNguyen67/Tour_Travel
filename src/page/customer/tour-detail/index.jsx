@@ -454,24 +454,68 @@ const TourDetail = () => {
                             <FaRegMoneyBillAlt className="fs-4 text-dark" /> Giá
                             tour
                           </p>
-                          <p
-                            className="mt-4 fw-bold fontp"
-                            style={{ color: TEXT_RED_COLOR }}
-                          >
-                            {formatPrice(tour.adult_price)}
-                          </p>
-                          <p
-                            className="mt-4 fw-bold fontp"
-                            style={{ color: TEXT_RED_COLOR }}
-                          >
-                            {formatPrice(tour.child_price)}
-                          </p>
-                          <p
-                            className="mt-4 fw-bold fontp "
-                            style={{ color: TEXT_RED_COLOR }}
-                          >
-                            {formatPrice(tour.infant_price)}
-                          </p>
+                          {tour.discount_percentage > 0 ? (
+                            <>
+                              {" "}
+                              <p className="mt-4  ">
+                                <span className="text-decoration-line-through">
+                                  {formatPrice(tour.adult_price)}
+                                </span>
+                                &nbsp;
+                                <span
+                                  className="fontp fw-bold"
+                                  style={{ color: TEXT_RED_COLOR }}
+                                >
+                                  {formatPrice(tour.adult_price_discount)}
+                                </span>
+                              </p>
+                              <p className="mt-4  ">
+                                <span className="text-decoration-line-through">
+                                  {formatPrice(tour.child_price)}
+                                </span>
+                                &nbsp;
+                                <span
+                                  className="fontp fw-bold"
+                                  style={{ color: TEXT_RED_COLOR }}
+                                >
+                                  {formatPrice(tour.child_price_discount)}
+                                </span>
+                              </p>
+                              <p className="mt-4  ">
+                                <span className="text-decoration-line-through">
+                                  {formatPrice(tour.infant_price)}
+                                </span>
+                                &nbsp;
+                                <span
+                                  className="fontp fw-bold"
+                                  style={{ color: TEXT_RED_COLOR }}
+                                >
+                                  {formatPrice(tour.infant_price_discount)}
+                                </span>
+                              </p>
+                            </>
+                          ) : (
+                            <>
+                              <p
+                                className="mt-4 fw-bold fontp"
+                                style={{ color: TEXT_RED_COLOR }}
+                              >
+                                {formatPrice(tour.adult_price)}
+                              </p>
+                              <p
+                                className="mt-4 fw-bold fontp"
+                                style={{ color: TEXT_RED_COLOR }}
+                              >
+                                {formatPrice(tour.child_price)}
+                              </p>
+                              <p
+                                className="mt-4 fw-bold fontp "
+                                style={{ color: TEXT_RED_COLOR }}
+                              >
+                                {formatPrice(tour.infant_price)}
+                              </p>
+                            </>
+                          )}
                           <p className="mt-4 fw-bold text-dark fs-5 ">
                             {" "}
                             {tour.quantity} chỗ

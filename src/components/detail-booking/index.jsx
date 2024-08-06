@@ -159,13 +159,25 @@ const DetailBooking = ({tour}) => {
             <tr>
               <td>Giá</td>
               <td className="text-danger fw-bold">
-                {formatPrice(tour.adult_price)}
+                {tour.discount_percentage > 0 ? (
+                  <>{formatPrice(tour.adult_price_discount)}</>
+                ) : (
+                  <>{formatPrice(tour.adult_price)}</>
+                )}
               </td>
               <td className="text-danger fw-bold">
-                {formatPrice(tour.child_price)}
+                {tour.discount_percentage > 0 ? (
+                  <>{formatPrice(tour.child_price_discount)}</>
+                ) : (
+                  <>{formatPrice(tour.child_price)}</>
+                )}
               </td>
               <td className="text-danger fw-bold">
-                {formatPrice(tour.infant_price)}
+                {tour.discount_percentage > 0 ? (
+                  <>{formatPrice(tour.infant_price_discount)}</>
+                ) : (
+                  <>{formatPrice(tour.infant_price)}</>
+                )}
               </td>
             </tr>
           </tbody>

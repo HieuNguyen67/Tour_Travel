@@ -199,20 +199,20 @@ const AddDiscount = ({
                   <p className="fw-bold mt-3">
                     Người lớn:{" "}
                     <span style={{ color: TEXT_RED_COLOR }}>
-                      {discountedPrices.adultPrice} VND
+                      {discountedPrices.adultPrice.toFixed(0)} VND
                     </span>
                   </p>
                   <p className="fw-bold">
                     {" "}
                     Trẻ em:{" "}
                     <span style={{ color: TEXT_RED_COLOR }}>
-                      {discountedPrices.childPrice} VND
+                      {discountedPrices.childPrice.toFixed(0)} VND
                     </span>
                   </p>
                   <p className="fw-bold">
                     Em bé:{" "}
                     <span style={{ color: TEXT_RED_COLOR }}>
-                      {discountedPrices.infantPrice} VND
+                      {discountedPrices.infantPrice.toFixed(0)} VND
                     </span>
                   </p>
                 </div>

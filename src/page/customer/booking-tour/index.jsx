@@ -112,10 +112,14 @@ useEffect(() => {
 
   useEffect(() => {
     if (tour) {
-      const total =
-        tour.adult_price * adultQuantity +
-        tour.child_price * childQuantity +
-        tour.infant_price * infantQuantity;
+      if(tour.discount_percentage >0){ var total =
+        tour.adult_price_discount * adultQuantity +
+        tour.child_price_discount * childQuantity +
+        tour.infant_price_discount * infantQuantity;}else{ var total =
+          tour.adult_price * adultQuantity +
+          tour.child_price * childQuantity +
+          tour.infant_price * infantQuantity;}
+     
       if (selectedCouponIds.length > 0) {
         var discount = total - totalCoupons;
       } else {
@@ -355,7 +359,11 @@ useEffect(() => {
               <h5>Người lớn</h5>
               <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
                 {" "}
-                {formatPrice(tour.adult_price)}
+                {tour.discount_percentage > 0 ? (
+                  <>{formatPrice(tour.adult_price_discount)}</>
+                ) : (
+                  <>{formatPrice(tour.adult_price)}</>
+                )}
               </h3>
               <p>Trên 11 tuổi</p>
             </Col>
@@ -404,7 +412,11 @@ useEffect(() => {
               <h5>Trẻ em</h5>
               <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
                 {" "}
-                {formatPrice(tour.child_price)}
+                {tour.discount_percentage > 0 ? (
+                  <>{formatPrice(tour.child_price_discount)}</>
+                ) : (
+                  <>{formatPrice(tour.child_price)}</>
+                )}
               </h3>
               <p>Từ 5 - 11 tuổi</p>
             </Col>
@@ -452,7 +464,11 @@ useEffect(() => {
               <h5>Trẻ nhỏ</h5>
               <h3 className="fw-bold" style={{ color: TEXT_RED_COLOR }}>
                 {" "}
-                {formatPrice(tour.infant_price)}
+                {tour.discount_percentage > 0 ? (
+                  <>{formatPrice(tour.infant_price_discount)}</>
+                ) : (
+                  <>{formatPrice(tour.infant_price)}</>
+                )}
               </h3>
               <p>{"<"} 5 tuổi</p>
             </Col>
