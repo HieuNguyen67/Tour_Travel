@@ -320,6 +320,11 @@ useEffect(() => {
       console.error("Failed to book tour:", error);
       setMessage("Đặt tour không thành công. Vui lòng thử lại sau.");
       toast.error(error.response.data.message);
+       if (error.response.data.errors) {
+         error.response.data.errors.forEach((errorMsg) =>
+           toast.error(errorMsg)
+         );
+       }
     }
     setLoading2(false);
   };
