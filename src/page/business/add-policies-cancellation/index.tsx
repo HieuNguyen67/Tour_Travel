@@ -87,6 +87,11 @@ const AddPolicyCancellation: React.FC = () => {
         navigate("/business/list-policies-cancellation");
       } catch (error: any) {
         toast.error(error.response.data.message);
+          if (error.response.data.errors) {
+            error.response.data.errors.forEach((errorMsg:any) =>
+              toast.error(errorMsg)
+            );
+          }
       }
     } else {
       try {
@@ -126,7 +131,7 @@ const AddPolicyCancellation: React.FC = () => {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-4 col-lg-2 col-12">
             <Form.Label className="fw-bold">Áp dụng đối với Tour:</Form.Label>
-        
+
             <Form.Select
               required
               name="type"
@@ -149,6 +154,8 @@ const AddPolicyCancellation: React.FC = () => {
               name="days_before_departure"
               value={policy.days_before_departure}
               onChange={handleChange}
+              min={1}
+              max={365}
               required
             />
           </Form.Group>
@@ -159,6 +166,8 @@ const AddPolicyCancellation: React.FC = () => {
               name="refund_percentage"
               value={policy.refund_percentage}
               onChange={handleChange}
+              min={1}
+              max={100}
               required
             />
           </Form.Group>

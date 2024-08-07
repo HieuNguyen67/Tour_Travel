@@ -121,25 +121,26 @@ const InformationLayout = ({ children }) => {
                       </span>
                     </NavLink>
                   </Nav.Item>
+                  <Nav.Item>
+                    <NavLink
+                      className="nav-link "
+                      to="/information/favorites"
+                      style={({ isActive }) => {
+                        return {
+                          fontWeight: isActive ? "bold" : "",
+                          borderBottom: isActive ? "3px solid #f3c324" : "",
+                        };
+                      }}
+                    >
+                      {" "}
+                      <span className="text-dark">
+                        <IoHeartCircle className="fs-3 text-danger" /> YÊU THÍCH
+                      </span>
+                    </NavLink>
+                  </Nav.Item>
                 </>
               )}
-              <Nav.Item>
-                <NavLink
-                  className="nav-link "
-                  to="/information/favorites"
-                  style={({ isActive }) => {
-                    return {
-                      fontWeight: isActive ? "bold" : "",
-                      borderBottom: isActive ? "3px solid #f3c324" : "",
-                    };
-                  }}
-                >
-                  {" "}
-                  <span className="text-dark">
-                    <IoHeartCircle className="fs-3 text-danger" /> YÊU THÍCH
-                  </span>
-                </NavLink>
-              </Nav.Item>
+
               <Nav.Item>
                 <NavLink
                   className="nav-link "

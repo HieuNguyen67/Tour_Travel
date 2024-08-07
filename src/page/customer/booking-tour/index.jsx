@@ -233,7 +233,7 @@ useEffect(() => {
     }
 
     if (name === "passport_number" && !validatePassportNumber(value)) {
-      alert("Số CCCD/Passport không hợp lệ.");
+      toast.error("Số CCCD/Passport không hợp lệ.");
       return;
     }
 
@@ -243,7 +243,7 @@ useEffect(() => {
         (passenger, i) => i !== index && passenger.passport_number === value
       )
     ) {
-      alert("Số CCCD/Passport đã tồn tại. Vui lòng nhập số khác.");
+      toast.error("Số CCCD/Passport đã tồn tại. Vui lòng nhập số khác.");
       return;
     }
 

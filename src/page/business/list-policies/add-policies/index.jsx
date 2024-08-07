@@ -59,13 +59,18 @@ const AddPolicyForm = () => {
             },
           }
         );
-        setMessage("Policy added successfully");
+       
         toast.success("Thêm thành công!");
         navigate("/business/list-policies");
       } catch (error) {
         console.error("Error adding policy:", error);
-        setMessage("Failed to add policy");
-        toast.error("Thêm thất bại!");
+      
+        toast.error(error.response.data.error);
+          if (error.response.data.errors) {
+            error.response.data.errors.forEach((errorMsg) =>
+              toast.error(errorMsg)
+            );
+          }
       }
     } else {
       try {
@@ -83,6 +88,11 @@ const AddPolicyForm = () => {
       } catch (error) {
         console.error("Error updating policy:", error);
         toast.error("Cập nhật thất bại!");
+         if (error.response.data.errors) {
+           error.response.data.errors.forEach((errorMsg) =>
+             toast.error(errorMsg)
+           );
+         }
       }
     }
   };
