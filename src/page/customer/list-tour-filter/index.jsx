@@ -183,9 +183,9 @@ const TourSearch = () => {
       const matchesHotel = hotel ? tour.hotel === parseInt(hotel) : true;
       const matchesVehicle = vehicle ? tour.vehicle.includes(vehicle) : true;
       const matchesStartDate = start_date
-        ? new Date(tour.start_date) >= new Date(start_date)
+        ? format(new Date(tour.start_date), "dd/MM/yyyy") >= format(new Date(start_date), "dd/MM/yyyy")
         : true;
-
+        
       return (
         matchesDepartureLocation &&
         matchesDestinationLocation &&
@@ -222,7 +222,7 @@ const TourSearch = () => {
         const matchesHotel = hotel ? tour.hotel === parseInt(hotel) : true;
         const matchesVehicle = vehicle ? tour.vehicle.includes(vehicle) : true;
         const matchesStartDate = start_date
-          ? new Date(tour.start_date) >= new Date(start_date)
+          ? format(new Date(tour.start_date),"dd/MM/yyyy")  >= format(new Date(start_date),"dd/MM/yyyy")
           : true;
 
         return (
