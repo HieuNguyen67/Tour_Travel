@@ -22,10 +22,7 @@ const Footer = () => {
                 <span style={{ fontSize: "15px" }}>
                   1. Nguyễn Minh Hiếu - DH52004983 - D20_TH09
                 </span>
-                <br />
-                <span style={{ fontSize: "15px" }}>
-                  2. Phan Đức Tiến - DH52006111 - D20_TH09
-                </span>
+               
               </p>
               <br />
               <p>
